@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('wali_baptis_ibu');
             $table->unsignedBigInteger('id_romo');
             $table->unsignedBigInteger('parokis_id');
+            $table->string('nama_paroki');
             $table->string('jenis');
             $table->dateTime('jadwal');
             $table->enum('status', ['belum selesai', 'selesai']);
