@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ParokiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,17 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('/', function ($tenant) {
         return view('welcome');
     });
+
+    Route::get('/sbadmin2', function () {
+        return view('layouts.sbadmin2');
+    });
+
+    //Parkoki
+    Route::resource('parokis', ParokiController::class);
+    Route::post('/parokis/EditForm', [ParokiController::class, 'EditForm'])->name('parokis.EditForm');
+
+
+
 });
 
 
