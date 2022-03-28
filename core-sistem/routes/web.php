@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ParokiController;
+use App\Http\Controllers\LingkunganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //Parkoki
     Route::resource('parokis', ParokiController::class);
     Route::post('/parokis/EditForm', [ParokiController::class, 'EditForm'])->name('parokis.EditForm');
+
+    //Lingkungan
+    Route::resource('lingkungans', LingkunganController::class);
+    Route::post('/lingkungans/EditForm', [LingkunganController::class, 'EditForm'])->name('lingkungans.EditForm');
 
 
 
