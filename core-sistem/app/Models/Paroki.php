@@ -15,4 +15,9 @@ class Paroki extends Model
     {
     	return $this->hasMany(Lingkungan::class, 'paroki_id', 'id');
     }
+
+    public function keluarga()
+    {
+    	return $this->hasMany(Keluarga::class, 'paroki_id', 'id');
+    }
 }

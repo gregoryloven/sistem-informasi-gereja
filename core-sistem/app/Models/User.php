@@ -26,6 +26,11 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $primaryKey = 'id';
 
+    public function keluarga()
+    {
+    	return $this->hasMany(Keluarga::class, 'user_id', 'id');
+    }
+
     protected $fillable = [
         'name',
         'email',

@@ -20,4 +20,9 @@ class Lingkungan extends Model
     {
     	return $this->hasMany(Kbg::class, 'lingkungan_id', 'id');
     }
+
+    public function keluarga()
+    {
+    	return $this->hasMany(Keluarga::class, 'paroki_id', 'id');
+    }
 }

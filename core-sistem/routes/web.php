@@ -5,6 +5,7 @@ use App\Http\Controllers\ParokiController;
 use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\KbgController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KeluargaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //User
     Route::resource('users', UserController::class);
+
+    //Keluarga
+    Route::resource('keluargas', KeluargaController::class);
+
 
 });
 
