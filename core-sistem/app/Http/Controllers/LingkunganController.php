@@ -46,7 +46,7 @@ class LingkunganController extends Controller
         
         $data->save();
 
-        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Produk Berhasil ditambahkan');
+        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Lingkungan Berhasil ditambahkan');
 
     }
 

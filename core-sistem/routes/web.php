@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ParokiController;
 use App\Http\Controllers\LingkunganController;
+use App\Http\Controllers\KbgController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,9 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::resource('lingkungans', LingkunganController::class);
     Route::post('/lingkungans/EditForm', [LingkunganController::class, 'EditForm'])->name('lingkungans.EditForm');
 
-
+    //KBG
+    Route::resource('kbgs', KbgController::class);
+    Route::post('/kbgs/EditForm', [KbgController::class, 'EditForm'])->name('kbgs.EditForm');
 
 });
 

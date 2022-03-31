@@ -15,4 +15,9 @@ class Lingkungan extends Model
     {
     	return $this->belongsTo(Paroki::class, 'paroki_id');
     }
+
+    public function kbg()
+    {
+    	return $this->hasMany(Kbg::class, 'lingkungan_id', 'id');
+    }
 }
