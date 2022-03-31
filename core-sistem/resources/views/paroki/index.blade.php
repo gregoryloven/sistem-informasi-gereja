@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-    Daftar Paroki
+    Paroki
 @endsection
 
 @section('content')

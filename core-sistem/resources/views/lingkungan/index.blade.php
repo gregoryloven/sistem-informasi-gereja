@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-    Daftar Lingkungan
+    Lingkungan
 @endsection
 
 @section('content')

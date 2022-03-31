@@ -72,6 +72,12 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('users.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>User</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Paroki</span></a>
