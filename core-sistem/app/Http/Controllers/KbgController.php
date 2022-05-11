@@ -100,11 +100,17 @@ class KbgController extends Controller
     public function destroy(Request $request)
     {
         $kbg=Kbg::find($request->id);
-        $kbg->delete();
-        return redirect()->route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'KBG Berhasil Dihapus');
-
-        $msg = "Gagal menghapus data KBG";
-        return redirect()->route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);
+        try
+        {
+            $kbg->delete();
+            return redirect()->route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'KBG Berhasil Dihapus');
+        
+        }
+        catch(\Exception $e)
+        {
+            $msg = "Gagal menghapus data KBG";
+            return redirect()->route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+        }
     }
 
     public function EditForm(Request $request)

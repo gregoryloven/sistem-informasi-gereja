@@ -73,51 +73,75 @@
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('users.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-user"></i>
                     <span>User</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('keluargas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-users"></i>
                     <span>Keluarga</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-church"></i>
                     <span>Paroki</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-users"></i>
                     <span>Lingkungan</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-users"></i>
                     <span>KBG</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('baptiss.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-cross"></i>
                     <span>Baptis</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-circle"></i>
                     <span>Komuni Pertama</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-cross"></i>
                     <span>Krisma</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-ring"></i>
+                    <span>Perkawinan</span></a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-pray"></i>
+                    <span>Misa</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-head-side-virus"></i>
+                    <span>Pengurapan Orang Sakit</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-hands"></i>
+                    <span>Pengakuan Dosa</span></a>
             </li>
 
             <!-- Divider -->

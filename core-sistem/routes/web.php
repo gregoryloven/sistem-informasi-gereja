@@ -9,6 +9,7 @@ use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\BaptisController;
 use App\Http\Controllers\KomuniPertamaController;
 use App\Http\Controllers\KrismaController;
+use App\Http\Controllers\MisaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,12 +57,19 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //Baptis
     Route::resource('baptiss', BaptisController::class);
+    Route::post('/baptiss/EditForm', [BaptisController::class, 'EditForm'])->name('baptiss.EditForm');
+
 
     //Komuni Pertama
     Route::resource('komunipertamas', KomuniPertamaController::class);
 
     //Krisma
     Route::resource('krismas', KrismaController::class);
+
+    //Misa
+    Route::resource('misas', MisaController::class);
+    Route::post('/misas/EditForm', [MisaController::class, 'EditForm'])->name('misas.EditForm');
+    Route::get('/misas/DetailMisa/{id}', [MisaController::class, 'show'])->name('misas.DetailMisa');
 
 });
 

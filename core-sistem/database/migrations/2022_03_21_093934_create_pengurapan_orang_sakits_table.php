@@ -15,7 +15,7 @@ class CreatePengurapanOrangSakitsTable extends Migration
     {
         Schema::create('pengurapan_orang_sakits', function (Blueprint $table) {
             $table->id();
-            $table->string('jadwal');
+            $table->dateTime('jadwal');
             $table->string('lokasi');
             $table->string('keterangan');
             $table->timestamps();

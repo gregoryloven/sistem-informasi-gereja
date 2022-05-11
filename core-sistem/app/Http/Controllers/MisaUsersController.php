@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MisaUsers;
 use Illuminate\Http\Request;
-use App\Models\KomuniPertama;
-use App\Models\User;
-use App\Models\Paroki;
 
-class KomuniPertamaController extends Controller
+class MisaUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +14,7 @@ class KomuniPertamaController extends Controller
      */
     public function index()
     {
-        $data=KomuniPertama::all();
-        $users=User::all();
-        $paroki=Paroki::all();
-        return view('komunipertama.index',compact("data", "users","paroki"));
+        //
     }
 
     /**
@@ -46,10 +41,10 @@ class KomuniPertamaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\KomuniPertama  $komuniPertama
+     * @param  \App\Models\MisaUsers  $misaUsers
      * @return \Illuminate\Http\Response
      */
-    public function show(KomuniPertama $komuniPertama)
+    public function show(MisaUsers $misaUsers)
     {
         //
     }
@@ -57,10 +52,10 @@ class KomuniPertamaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\KomuniPertama  $komuniPertama
+     * @param  \App\Models\MisaUsers  $misaUsers
      * @return \Illuminate\Http\Response
      */
-    public function edit(KomuniPertama $komuniPertama)
+    public function edit(MisaUsers $misaUsers)
     {
         //
     }
@@ -69,10 +64,10 @@ class KomuniPertamaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\KomuniPertama  $komuniPertama
+     * @param  \App\Models\MisaUsers  $misaUsers
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KomuniPertama $komuniPertama)
+    public function update(Request $request, MisaUsers $misaUsers)
     {
         //
     }
@@ -80,10 +75,10 @@ class KomuniPertamaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\KomuniPertama  $komuniPertama
+     * @param  \App\Models\MisaUsers  $misaUsers
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KomuniPertama $komuniPertama)
+    public function destroy(MisaUsers $misaUsers)
     {
         //
     }

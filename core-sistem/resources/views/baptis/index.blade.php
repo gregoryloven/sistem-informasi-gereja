@@ -90,19 +90,32 @@
                         @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label >Jenis</label>
+                        <select class="form-control" id='jenis' name='jenis'>
+                        <option value="">Choose</option>
+                        <option value="bayi">bayi</option>
+                        <option value="dewasa">dewasa</option>
+                        </select>
+                    </div>
                     <div class="form-body">
                         <div class="form-group">
-                            <label >Jenis</label>
-                            <input type="text" class="form-control" id='jenis' name='jenis' placeholder="Jenis" required>
-                        </div>
-                        <div class="form-group">
                             <label >Tanggal Pembaptisan</label>
-                            <input type="date" class="form-control" id='tanggal_pembaptisan' name='tanggal_pembaptisan' placeholder="Tanggal Pembaptisan" required>
+                            <input type="date" class="form-control" id='jadwal' name='jadwal' placeholder="Tanggal Pembaptisan" required>
                         </div>
+                    <div class="form-group">
+                        <label >Status</label>
+                        <select class="form-control" id='status' name='status'>
+                        <option value="">Choose</option>
+                        <option value="belum selesai">Belum Selesai</option>
+                        <option value="selesai">Selesai</option>
+                        </select>
+                    </div>
                         <div class="form-group">
-                            <label >Status</label>
-                            <input type="text" class="form-control" id='status' name='status' placeholder="Batasan Wilayah" required>
+                            <label>File Sertifikat</label>
+                            <input type="file" value="" name="file_sertifikat" class="form-control" id="file_sertifikat" placeholder="File Sertifikat" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
                         </div>
+                        <img id="output" src="" width="200px" height="200px">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -110,6 +123,17 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT WITH MODAL-->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
         </div>
     </div>
 </div>
@@ -130,6 +154,8 @@
                         <th>Jenis</th>
                         <th>Tanggal Baptis</th>
                         <th>Status</th>
+                        <th>File Sertifikat</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -147,6 +173,18 @@
                         <td st>{{$d->jenis}}</td>
                         <td st>{{$d->jadwal}}</td>
                         <td st>{{$d->status}}</td>
+                        <td><img src="{{asset('file_sertifikat/baptis/'.$d->file_sertifikat)}}" height='40px'/></td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                <form role="form" method="POST" action="{{ url('baptiss/'.$d->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -155,4 +193,22 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+@endsection
+
+@section('javascript')
+<script>
+function EditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('baptiss.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+</script>
 @endsection

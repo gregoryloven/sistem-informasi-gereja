@@ -19,8 +19,8 @@ class CreatePerkawinansTable extends Migration
             $table->unsignedBigInteger('id_calon_istri');
             $table->unsignedBigInteger('id_romo');
             $table->string('tempat_kpp');
-            $table->dateTime('tanggal_kpp');
-            $table->dateTime('tanggal_kononik');
+            $table->date('tanggal_kpp');
+            $table->date('tanggal_kononik');
             $table->string('tempat_perkawinan');
             $table->string('tanggal_perkawinan');
             $table->string('ttd_calon_suami');

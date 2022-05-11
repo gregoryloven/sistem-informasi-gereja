@@ -7,12 +7,12 @@
 @endpush
 
 @section('title')
-    Lingkungan
+    Misa
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Daftar Lingkungan</h1>
+<h1 class="h3 mb-2 text-gray-800">Jadwal Misa</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -23,37 +23,36 @@
         {{ session('error') }}
     </div>
 @endif
-<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Lingkungan</a><br><br>
+<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Misa</a><br><br>
 
 <!-- CREATE WITH MODAL -->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" >
-            <form role="form" method="POST" action="{{ url('lingkungans') }}" enctype="multipart/form-data">
+            <form role="form" method="POST" action="{{ url('misas') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Tambah Lingkungan</h4>
+                    <h4 class="modal-title">Tambah Misa</h4>
                 </div>
                 <div class="modal-body">
                     @csrf
-                    <div class="form-group">
-                            <label >Paroki</label>
-                            <select class="form-control" id='paroki_id' name='paroki_id'>
-                            <option value="">Choose</option>
-                            @foreach($par as $p)
-                            <option value="{{ $p->id }}">{{ $p->nama }}</option>
-                            @endforeach
-                            </select>
-                        </div>
                     <div class="form-body">
                         <div class="form-group">
-                            <label >Nama</label>
-                            <input type="text" class="form-control" id='nama' name='nama' placeholder="Nama" required>
+                            <label >Jenis</label>
+                            <input type="text" class="form-control" id='jenis' name='jenis' placeholder="Jenis" required>
                         </div>
                         <div class="form-group">
-                            <label >Batasan Wilayah</label>
-                            <input type="text" class="form-control" id='batasan_wilayah' name='batasan_wilayah' placeholder="Batasan Wilayah" required>
+                            <label >Jadwal</label>
+                            <input type="datetime-local" class="form-control" id='jadwal' name='jadwal' placeholder="Jadwal" required>
+                        </div>
+                        <div class="form-group">
+                            <label >Lokasi</label>
+                            <input type="text" class="form-control" id='lokasi' name='lokasi' placeholder="Lokasi" required>
+                        </div>
+                        <div class="form-group">
+                            <label >Kuota</label>
+                            <input type="text" class="form-control" id='kuota' name='kuota' placeholder="Kuota" required>
                         </div>
                     </div>
                 </div>
@@ -85,9 +84,10 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Paroki</th>
-                        <th>Nama</th>
-                        <th>Batasan Wilayah</th>
+                        <th>Jenis</th>
+                        <th>Jadwal</th>
+                        <th>Lokasi</th>
+                        <th>Kuota</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -97,14 +97,15 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        
-                        <td st>{{$d->Paroki->nama}}</td>
-                        <td st>{{$d->nama}}</td>
-                        <td st>{{$d->batasan_wilayah}}</td>
+                        <td st>{{$d->jenis}}</td>
+                        <td st>{{$d->jadwal}}</td>
+                        <td st>{{$d->lokasi}}</td>
+                        <td st>{{$d->kuota}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href= "{{ url('misas/DetailMisa/'.$d->id) }}" class="btn btn-xs btn-flat btn-info"><i class="fa fa-info"></i></a>
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
-                                <form role="form" method="POST" action="{{ url('lingkungans/'.$d->id) }}">
+                                <form role="form" method="POST" action="{{ url('misas/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
@@ -128,7 +129,7 @@ function EditForm(id)
 {
   $.ajax({
     type:'POST',
-    url:'{{ route('lingkungans.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    url:'{{ route('misas.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
     data:{'_token':'<?php echo csrf_token() ?>',
           'id':id
          },

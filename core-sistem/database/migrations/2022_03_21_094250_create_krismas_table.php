@@ -18,7 +18,6 @@ class CreateKrismasTable extends Migration
             $table->unsignedBigInteger('users_id');
             $table->unsignedBigInteger('id_romo');
             $table->unsignedBigInteger('parokis_id');
-            $table->string('nama_paroki');
             $table->dateTime('jadwal');
             $table->enum('status', ['belum selesai', 'selesai']);
             $table->string('file_sertifikat');

@@ -41,6 +41,11 @@ class User extends Authenticatable
     	return $this->hasMany(KomuniPertama::class, 'user_id', 'id_romo', 'id');
     }
 
+    public function misas()
+    {
+        return $this->belongsToMany(Misa::class);
+    }
+
     protected $fillable = [
         'name',
         'email',

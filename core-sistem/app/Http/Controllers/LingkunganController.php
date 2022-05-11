@@ -46,7 +46,7 @@ class LingkunganController extends Controller
         
         $data->save();
 
-        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Lingkungan Berhasil ditambahkan');
+        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Lingkungan Berhasil ditambahkan');
 
     }
 
@@ -88,7 +88,7 @@ class LingkunganController extends Controller
 
         $lingkungan->save();
 
-        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Paroki Berhasil Diubah');
+        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Lingkungan Berhasil Diubah');
     }
 
     /**
@@ -100,11 +100,16 @@ class LingkunganController extends Controller
     public function destroy(Request $request)
     {
         $lingkungan=Lingkungan::find($request->id);
-        $lingkungan->delete();
-        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Lingkungan Berhasil Dihapus');
-
-        $msg = "Gagal menghapus data paroki";
-        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);
+        try
+        {
+            $lingkungan->delete();
+            return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Lingkungan Berhasil Dihapus');    
+        }
+        catch(\Exception $e)
+        {
+            $msg = "Gagal menghapus data paroki";
+            return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+        }
     }
 
     public function EditForm(Request $request)
