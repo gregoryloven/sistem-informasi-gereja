@@ -7,12 +7,12 @@
 @endpush
 
 @section('title')
-    User
+    Sakramen Komuni Pertama
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Daftar User</h1>
+<h1 class="h3 mb-2 text-gray-800">Daftar Penerima Sakramen Komuni Pertama</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -32,14 +32,11 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>ID Kepala Keluarga</th>
-                        <th>Nama User</th>
-                        <th>Tempat Lahir</th>
-                        <th>Tanggal Lahir</th>
-                        <th>Agama</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Telepon</th>
-                        <th>Role</th>
+                        <th>Nama Penerima</th>
+                        <th>Paroki</th>
+                        <th>Jenis</th>
+                        <th>Tanggal Baptis</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,14 +45,12 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->keluarga_id}}</td>
-                        <td st>{{$d->nama}}</td>
-                        <td st>{{$d->tempat_lahir}}</td>
-                        <td st>{{$d->tanggal_lahir}}</td>
-                        <td st>{{$d->agama}}</td>
-                        <td st>{{$d->jenis_kelamin}}</td>
-                        <td st>{{$d->telepon}}</td>
-                        <td st>{{$d->role}}</td>
+                        
+                        <td st>{{$d->User->nama}}</td>
+                        <td st>{{$d->Paroki->nama}}</td>
+                        <td st>{{$d->jenis}}</td>
+                        <td st>{{$d->jadwal}}</td>
+                        <td st>{{$d->status}}</td>
                     </tr>
                     @endforeach
                 </tbody>

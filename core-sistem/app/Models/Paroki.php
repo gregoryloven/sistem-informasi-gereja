@@ -20,4 +20,14 @@ class Paroki extends Model
     {
     	return $this->hasMany(Keluarga::class, 'paroki_id', 'id');
     }
+
+    public function baptis()
+    {
+    	return $this->hasMany(Baptis::class, 'paroki_id', 'id');
+    }
+
+    public function komunipertama()
+    {
+    	return $this->hasMany(KomuniPertama::class, 'paroki_id', 'id');
+    }
 }

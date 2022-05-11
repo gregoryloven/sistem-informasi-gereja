@@ -13,11 +13,15 @@
 @section('content')
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Daftar KBG</h1>
-@if (session('status'))
-    <div class="alert alert-success alert-dismissible" style="display: none;">{{ session('status') }}</div>
+@if(session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
 @endif
-@if (session('error'))
-    <div class="alert alert-danger alert-dismissible" style="display: none;">{{ session('error') }}</div>
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
 @endif
 <a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah KBG</a><br><br>
 
@@ -34,14 +38,14 @@
                 <div class="modal-body">
                     @csrf
                     <div class="form-group">
-                            <label >Lingkungan</label>
-                            <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
-                            <option value="">Choose</option>
-                            @foreach($ling as $l)
-                            <option value="{{ $l->id }}">{{ $l->nama }}</option>
-                            @endforeach
-                            </select>
-                        </div>
+                        <label >Lingkungan</label>
+                        <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
+                        <option value="">Choose</option>
+                        @foreach($ling as $l)
+                        <option value="{{ $l->id }}">{{ $l->nama }}</option>
+                        @endforeach
+                        </select>
+                    </div>
                     <div class="form-body">
                         <div class="form-group">
                             <label >Nama</label>
@@ -99,7 +103,7 @@
                         <td st>{{$d->batasan_wilayah}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
                                 <form role="form" method="POST" action="{{ url('kbgs/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')

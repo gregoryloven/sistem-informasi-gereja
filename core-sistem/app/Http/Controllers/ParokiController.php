@@ -44,7 +44,7 @@ class ParokiController extends Controller
 
         $data->save();
 
-        return redirect()->route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Category Berhasil ditambahkan');
+        return redirect()->route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Paroki Berhasil ditambahkan');
     }
 
     /**
@@ -85,7 +85,7 @@ class ParokiController extends Controller
         $paroki->telepon=$request->get('telepon');
 
         $paroki->save();
-
+        
         return redirect()->route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Paroki Berhasil Diubah');
     }
 
@@ -98,11 +98,15 @@ class ParokiController extends Controller
     public function destroy(Request $request)
     {
         $paroki=Paroki::find($request->id);
-        $paroki->delete();
-        return redirect()->route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Paroki Berhasil Dihapus');
-
-        $msg = "Gagal menghapus data paroki";
-        return redirect()->route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);
+        try
+        {
+            $paroki->delete();
+            return redirect()->route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Paroki Berhasil Dihapus');
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', "Gagal menghapus data paroki");
+        }
     }
 
     public function EditForm(Request $request)

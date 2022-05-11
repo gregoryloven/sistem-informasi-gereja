@@ -28,7 +28,17 @@ class User extends Authenticatable
 
     public function keluarga()
     {
-    	return $this->hasMany(Keluarga::class, 'user_id', 'id');
+    	return $this->hasMany(Keluarga::class, 'keluarga_id', 'id');
+    }
+
+    public function baptis()
+    {
+    	return $this->hasMany(Baptis::class, 'user_id', 'id');
+    }
+
+    public function komunipertama()
+    {
+    	return $this->hasMany(KomuniPertama::class, 'user_id', 'id_romo', 'id');
     }
 
     protected $fillable = [

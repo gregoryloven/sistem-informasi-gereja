@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Keluarga;
+use App\Models\Krisma;
 use App\Models\User;
-use App\Models\Kbg;
-use App\Models\Lingkungan;
 use App\Models\Paroki;
 use Illuminate\Http\Request;
 
-class KeluargaController extends Controller
+class KrismaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +16,10 @@ class KeluargaController extends Controller
      */
     public function index()
     {
-        $data=Keluarga::all();
+        $data=Krisma::all();
         $user=User::all();
-        $kbg=Kbg::all();
-        $ling=Lingkungan::all();
         $par=Paroki::all();
-        return view('keluarga.index',compact("data", "user","kbg","ling","par"));
+        return view('krisma.index',compact("data","user","par"));
     }
 
     /**
@@ -50,10 +46,10 @@ class KeluargaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Keluarga  $keluarga
+     * @param  \App\Models\Krisma  $krisma
      * @return \Illuminate\Http\Response
      */
-    public function show(Keluarga $keluarga)
+    public function show(Krisma $krisma)
     {
         //
     }
@@ -61,10 +57,10 @@ class KeluargaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Keluarga  $keluarga
+     * @param  \App\Models\Krisma  $krisma
      * @return \Illuminate\Http\Response
      */
-    public function edit(Keluarga $keluarga)
+    public function edit(Krisma $krisma)
     {
         //
     }
@@ -73,10 +69,10 @@ class KeluargaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Keluarga  $keluarga
+     * @param  \App\Models\Krisma  $krisma
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Keluarga $keluarga)
+    public function update(Request $request, Krisma $krisma)
     {
         //
     }
@@ -84,10 +80,10 @@ class KeluargaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Keluarga  $keluarga
+     * @param  \App\Models\Krisma  $krisma
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Keluarga $keluarga)
+    public function destroy(Krisma $krisma)
     {
         //
     }

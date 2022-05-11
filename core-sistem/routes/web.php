@@ -6,6 +6,9 @@ use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\KbgController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KeluargaController;
+use App\Http\Controllers\BaptisController;
+use App\Http\Controllers\KomuniPertamaController;
+use App\Http\Controllers\KrismaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +36,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         return view('layouts.sbadmin2');
     });
 
-    //Parkoki
+    //Paroki
     Route::resource('parokis', ParokiController::class);
     Route::post('/parokis/EditForm', [ParokiController::class, 'EditForm'])->name('parokis.EditForm');
 
@@ -51,6 +54,14 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //Keluarga
     Route::resource('keluargas', KeluargaController::class);
 
+    //Baptis
+    Route::resource('baptiss', BaptisController::class);
+
+    //Komuni Pertama
+    Route::resource('komunipertamas', KomuniPertamaController::class);
+
+    //Krisma
+    Route::resource('krismas', KrismaController::class);
 
 });
 

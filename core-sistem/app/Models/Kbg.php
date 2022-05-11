@@ -18,6 +18,6 @@ class Kbg extends Model
 
     public function keluarga()
     {
-    	return $this->hasMany(Keluarga::class, 'paroki_id', 'id');
+    	return $this->hasMany(Keluarga::class, 'kbg_id', 'id');
     }
 }

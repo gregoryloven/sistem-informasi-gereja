@@ -78,6 +78,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('keluargas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Keluarga</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Paroki</span></a>
@@ -94,6 +100,24 @@
                 <a class="nav-link" href="{{ route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>KBG</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('baptiss.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Baptis</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Komuni Pertama</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Krisma</span></a>
             </li>
 
             <!-- Divider -->

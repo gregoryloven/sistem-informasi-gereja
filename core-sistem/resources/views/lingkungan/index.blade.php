@@ -99,7 +99,7 @@
                         <td st>{{$d->batasan_wilayah}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
                                 <form role="form" method="POST" action="{{ url('lingkungans/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')

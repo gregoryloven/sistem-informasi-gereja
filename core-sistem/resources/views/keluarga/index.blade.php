@@ -13,11 +13,15 @@
 @section('content')
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Daftar Keluarga</h1>
-@if (session('status'))
-    <div class="alert alert-success alert-dismissible" style="display: none;">{{ session('status') }}</div>
+@if(session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
 @endif
-@if (session('error'))
-    <div class="alert alert-danger alert-dismissible" style="display: none;">{{ session('error') }}</div>
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
 @endif
 
 <div class="card shadow mb-4">
