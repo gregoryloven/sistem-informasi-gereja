@@ -71,6 +71,14 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/misas/EditForm', [MisaController::class, 'EditForm'])->name('misas.EditForm');
     Route::get('/misas/DetailMisa/{id}', [MisaController::class, 'show'])->name('misas.DetailMisa');
 
+    //Complete Register
+    Route::get('/complete-register', function () {
+        return view('auth.complete-register');
+    });
+
+    Route::get('/auth/redirect', [UserController::class, 'redirect'])->name('auth.redirect');
+    Route::post('/auth/complete-register', [UserController::class, 'complete_register'])->name('auth.complete-register');
+
 });
 
 
