@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-    Misa
+    Detail Misa
 @endsection
 
 @section('content')

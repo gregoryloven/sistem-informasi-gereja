@@ -133,15 +133,15 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                <a class="nav-link" href="{{ route('pengurapansakits.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-head-side-virus"></i>
                     <span>Pengurapan Orang Sakit</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                <a class="nav-link" href="{{ route('tobats.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-hands"></i>
-                    <span>Pengakuan Dosa</span></a>
+                    <span>Tobat</span></a>
             </li>
 
             <!-- Divider -->

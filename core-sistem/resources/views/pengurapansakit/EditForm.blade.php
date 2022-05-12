@@ -1,7 +1,7 @@
-<form role="form" method='POST' action="{{ url('tobats/'.$data->id )}}" enctype="multipart/form-data">
+<form role="form" method='POST' action="{{ url('pengurapansakits/'.$data->id )}}" enctype="multipart/form-data">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title">Edit Jadwal Misa</h4>
+        <h4 class="modal-title">Edit Jadwal Pengurapan Orang Sakit</h4>
     </div>
     <div class="modal-body">
         @csrf
@@ -17,8 +17,8 @@
                 <input type="text" class="form-control" id='lokasi' name='lokasi' placeholder="Lokasi" value="{{$data->lokasi}}">
             </div>
             <div class="form-group">
-                <label >Kuota</label>
-                <input type="text" class="form-control" id='kuota' name='kuota' placeholder="Kuota" value="{{$data->kuota}}">
+                <label >Keterangan</label>
+                <input type="text" class="form-control" id='keterangan' name='keterangan' placeholder="Keterangan" value="{{$data->keterangan}}">
             </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\KomuniPertamaController;
 use App\Http\Controllers\KrismaController;
 use App\Http\Controllers\MisaController;
 use App\Http\Controllers\TobatController;
+use App\Http\Controllers\PengurapanOrangSakitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,10 +73,15 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/misas/EditForm', [MisaController::class, 'EditForm'])->name('misas.EditForm');
     Route::get('/misas/DetailMisa/{id}', [MisaController::class, 'show'])->name('misas.DetailMisa');
 
-    //Misa
+    //Tobat
     Route::resource('tobats', TobatController::class);
     Route::post('/tobats/EditForm', [TobatController::class, 'EditForm'])->name('tobats.EditForm');
     Route::get('/tobats/DetailTobat/{id}', [TobatController::class, 'show'])->name('tobats.DetailTobat');
+
+    //Pengurapan Orang Sakit
+    Route::resource('pengurapansakits', PengurapanOrangSakitController::class);
+    Route::post('/pengurapansakits/EditForm', [PengurapanOrangSakitController::class, 'EditForm'])->name('pengurapansakits.EditForm');
+    Route::get('/pengurapansakits/DetailPengurapan/{id}', [PengurapanOrangSakitController::class, 'show'])->name('pengurapansakits.DetailTobat');
 
     //Complete Register
     Route::get('/complete-register', function () {

@@ -91,7 +91,6 @@ class TobatController extends Controller
 
         return redirect()->route('tobats.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Jadwal Tobat Berhasil diubah');
     
-    
     }
 
     /**

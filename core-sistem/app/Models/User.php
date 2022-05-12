@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Tobat::class);
     }
 
+    public function pengurapanorangsakits()
+    {
+        return $this->belongsToMany(PengurapanOrangSakit::class);
+    }
+
     protected $fillable = [
         'name',
         'email',

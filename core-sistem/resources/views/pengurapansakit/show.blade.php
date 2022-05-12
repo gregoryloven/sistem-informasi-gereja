@@ -7,12 +7,12 @@
 @endpush
 
 @section('title')
-    Detail Tobat
+    Detail Pengurapan Orang Sakit
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Detail Tobat</h1>
+<h1 class="h3 mb-2 text-gray-800">Detail Pengurapan Orang Sakit</h1>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3"></div>
@@ -22,9 +22,8 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>ID Tobat</th>
+                        <th>ID Pengurapan Orang Sakit</th>
                         <th>ID User</th>
-                        <th>Kode Booking </th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -34,9 +33,8 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->tobats_id}}</td>
+                        <td st>{{$d->pengurapan_orang_sakits_id}}</td>
                         <td st>{{$d->users_id}}</td>
-                        <td st>{{$d->kode_booking}}</td>
                         <td st>{{$d->status}}</td>
                     </tr>
                     @endforeach
