@@ -10,6 +10,7 @@ use App\Http\Controllers\BaptisController;
 use App\Http\Controllers\KomuniPertamaController;
 use App\Http\Controllers\KrismaController;
 use App\Http\Controllers\MisaController;
+use App\Http\Controllers\TobatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,11 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::resource('misas', MisaController::class);
     Route::post('/misas/EditForm', [MisaController::class, 'EditForm'])->name('misas.EditForm');
     Route::get('/misas/DetailMisa/{id}', [MisaController::class, 'show'])->name('misas.DetailMisa');
+
+    //Misa
+    Route::resource('tobats', TobatController::class);
+    Route::post('/tobats/EditForm', [TobatController::class, 'EditForm'])->name('tobats.EditForm');
+    Route::get('/tobats/DetailTobat/{id}', [TobatController::class, 'show'])->name('tobats.DetailTobat');
 
     //Complete Register
     Route::get('/complete-register', function () {

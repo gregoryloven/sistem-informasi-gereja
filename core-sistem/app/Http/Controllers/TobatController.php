@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Misa;
-use DB;
+use App\Models\Tobat;
 use Illuminate\Http\Request;
+use DB;
 
-class MisaController extends Controller
+class TobatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class MisaController extends Controller
      */
     public function index()
     {
-        $data=Misa::all();
-        return view('misa.index',compact("data"));
+        $data=Tobat::all();
+        return view('tobat.index',compact("data"));
     }
 
     /**
@@ -37,38 +37,38 @@ class MisaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Misa();
+        $data = new Tobat();
 
-        $data->jenis = $request->get('jenis');
         $data->jadwal = $request->get('jadwal');
         $data->lokasi = $request->get('lokasi');
         $data->kuota = $request->get('kuota');
 
         $data->save();
 
-        return redirect()->route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Jadwal Misa Berhasil ditambahkan');
+        return redirect()->route('tobats.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Jadwal Tobat Berhasil ditambahkan');
+    
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Misa  $misa
+     * @param  \App\Models\Tobat  $tobat
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
         $id = $request->id;
-        $data = DB::table('misa_users')->where('misas_id', $id)->get();
-        return view('misa.show',compact('data'));
+        $data = DB::table('tobat_users')->where('tobats_id', $id)->get();
+        return view('tobat.show',compact('data'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Misa  $misa
+     * @param  \App\Models\Tobat  $tobat
      * @return \Illuminate\Http\Response
      */
-    public function edit(Misa $misa)
+    public function edit(Tobat $tobat)
     {
         //
     }
@@ -77,49 +77,49 @@ class MisaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Misa  $misa
+     * @param  \App\Models\Tobat  $tobat
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        $misa=Misa::find($request->id);
-        $misa->jenis = $request->get('jenis');
-        $misa->jadwal = $request->get('jadwal');
-        $misa->lokasi = $request->get('lokasi');
-        $misa->kuota = $request->get('kuota');
+        $tobat=Tobat::find($request->id);
+        $tobat->jadwal = $request->get('jadwal');
+        $tobat->lokasi = $request->get('lokasi');
+        $tobat->kuota = $request->get('kuota');
 
-        $misa->save();
+        $tobat->save();
 
-        return redirect()->route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Jadwal Misa Berhasil diubah');
+        return redirect()->route('tobats.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Jadwal Tobat Berhasil diubah');
+    
     
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Misa  $misa
+     * @param  \App\Models\Tobat  $tobat
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $misa=Misa::find($request->id);
+        $tobat=Tobat::find($request->id);
         try
         {
-            $misa->delete();
-            return redirect()->route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Jadwal Misa Berhasil Dihapus');
+            $tobat->delete();
+            return redirect()->route('tobats.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Jadwal Tobat Berhasil Dihapus');
         }
         catch(\Exception $e)
         {
-            return redirect()->route('misas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', "Gagal Menghapus Jadwal Misa");
+            return redirect()->route('tobats.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', "Gagal Menghapus Jadwal Tobat");
         }
     }
 
     public function EditForm(Request $request)
     {
         $id=$request->get("id");
-        $data=Misa::find($id);
+        $data=Tobat::find($id);
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('misa.EditForm',compact('data'))->render()),200);
+            'msg'=>view('tobat.EditForm',compact('data'))->render()),200);
     }
 }

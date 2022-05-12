@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Misa::class);
     }
 
+    public function tobats()
+    {
+        return $this->belongsToMany(Tobat::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
