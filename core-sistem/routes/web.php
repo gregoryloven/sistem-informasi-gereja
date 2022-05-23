@@ -70,6 +70,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //Misa
     Route::resource('misas', MisaController::class);
+    Route::get('reservasi', [MisaController::class, 'reservasi'])->name('misas.reservasi');
+    Route::post('/misas/BookMisa', [MisaController::class, 'BookMisa'])->name('misas.BookMisa');
     Route::post('/misas/EditForm', [MisaController::class, 'EditForm'])->name('misas.EditForm');
     Route::get('/misas/DetailMisa/{id}', [MisaController::class, 'show'])->name('misas.DetailMisa');
 

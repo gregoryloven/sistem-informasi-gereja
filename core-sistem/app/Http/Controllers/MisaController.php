@@ -122,4 +122,19 @@ class MisaController extends Controller
             'status'=>'oke',
             'msg'=>view('misa.EditForm',compact('data'))->render()),200);
     }
+
+    public function reservasi(Request $request)
+    {
+        $data=Misa::all();
+        return view('misa.reservasi',compact("data"));
+    }
+
+    public function BookMisa(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Misa::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('misa.BookMisa',compact('data'))->render()),200);
+    }
 }

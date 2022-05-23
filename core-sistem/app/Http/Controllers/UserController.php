@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Keluarga;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -16,9 +17,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data=User::all();
-        $kel=Keluarga::all();
-        return view('user.index',compact("data", "kel"));
+        // $id_ketua_lingkungan = DB::table('lingkungans')
+        //     ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
+        //     ->where('keluargas.id', '=', Auth::id)
+        //     ->select('lingkungans.*')
+        //     ->get();
+            dd(Auth);
+        $users = DB::table('users')
+            ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
+            ->join('lingkungans', 'lingkungans.id', '=', 'keluargas.lingkungan_id')
+            ->where('')
+            ->select('users.*', 'keluargas.*', 'lingkungans.*')
+            ->get();
+
+        return view('user.index',compact("users"));
     }
 
     /**

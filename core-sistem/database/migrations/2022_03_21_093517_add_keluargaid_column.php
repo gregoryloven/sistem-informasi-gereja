@@ -15,7 +15,7 @@ class AddKeluargaidColumn extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('keluarga_id')->after('id')->nullable();
-            $table->foreign('keluarga_id')->references('id')->on('users'); 
+            $table->foreign('keluarga_id')->references('id')->on('keluargas'); 
         });
     }
 

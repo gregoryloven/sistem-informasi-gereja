@@ -39,23 +39,27 @@
                         <th>Agama</th>
                         <th>Jenis Kelamin</th>
                         <th>Telepon</th>
+                        <th>Alamat</th>
+                        <th>Lingkungan</th>
                         <th>Role</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
-                    @foreach($data as $d)
+                    @foreach($users as $user)
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->keluarga_id}}</td>
-                        <td st>{{$d->nama}}</td>
-                        <td st>{{$d->tempat_lahir}}</td>
-                        <td st>{{$d->tanggal_lahir}}</td>
-                        <td st>{{$d->agama}}</td>
-                        <td st>{{$d->jenis_kelamin}}</td>
-                        <td st>{{$d->telepon}}</td>
-                        <td st>{{$d->role}}</td>
+                        <td st>{{$user->keluarga_id}}</td>
+                        <td st>{{$user->nama}}</td>
+                        <td st>{{$user->tempat_lahir}}</td>
+                        <td st>{{$user->tanggal_lahir}}</td>
+                        <td st>{{$user->agama}}</td>
+                        <td st>{{$user->jenis_kelamin}}</td>
+                        <td st>{{$user->telepon}}</td>
+                        <td st>{{$user->alamat}}</td>
+                        <td st>{{$user->nama_lingkungan}}</td>
+                        <td st>{{$user->role}}</td>
                     </tr>
                     @endforeach
                 </tbody>
