@@ -27,7 +27,7 @@ class KbgController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**

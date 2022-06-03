@@ -24,7 +24,7 @@ class ParokiController extends Controller
      */
     public function create()
     {
-        return view("paroki.create");
+        //
     }
 
     /**

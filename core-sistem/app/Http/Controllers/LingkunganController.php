@@ -16,8 +16,7 @@ class LingkunganController extends Controller
     public function index()
     {
         $data=Lingkungan::all();
-        $par=Paroki::all();
-        return view('lingkungan.index',compact("data", "par"));
+        return view('lingkungan.index',compact("data"));
     }
 
     /**
@@ -27,8 +26,7 @@ class LingkunganController extends Controller
      */
     public function create()
     {
-        $par=Paroki::all();
-        return view("lingkungan.create", compact('par'));
+        //
     }
 
     /**
@@ -40,7 +38,6 @@ class LingkunganController extends Controller
     public function store(Request $request)
     {
         $data = new Lingkungan();
-        $data->paroki_id = $request->get('paroki_id');
         $data->nama_lingkungan = $request->get('nama_lingkungan');
         $data->batasan_wilayah = $request->get('batasan_wilayah');
         
@@ -82,7 +79,6 @@ class LingkunganController extends Controller
     public function update(Request $request)
     {
         $lingkungan=Lingkungan::find($request->id);
-        $lingkungan->paroki_id=$request->get('paroki_id');
         $lingkungan->nama_lingkungan=$request->get('nama_lingkungan');
         $lingkungan->batasan_wilayah=$request->get('batasan_wilayah');
 
@@ -116,9 +112,8 @@ class LingkunganController extends Controller
     {
         $id=$request->get("id");
         $data=Lingkungan::find($id);
-        $par=Paroki::all();
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('lingkungan.EditForm',compact('data','par'))->render()),200);
+            'msg'=>view('lingkungan.EditForm',compact('data'))->render()),200);
     }
 }

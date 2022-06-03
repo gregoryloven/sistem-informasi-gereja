@@ -37,15 +37,6 @@
                 </div>
                 <div class="modal-body">
                     @csrf
-                    <div class="form-group">
-                            <label >Paroki</label>
-                            <select class="form-control" id='paroki_id' name='paroki_id'>
-                            <option value="">Choose</option>
-                            @foreach($par as $p)
-                            <option value="{{ $p->id }}">{{ $p->nama_paroki }}</option>
-                            @endforeach
-                            </select>
-                        </div>
                     <div class="form-body">
                         <div class="form-group">
                             <label >Nama</label>
@@ -85,7 +76,6 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Paroki</th>
                         <th>Nama</th>
                         <th>Batasan Wilayah</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
@@ -97,8 +87,6 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        
-                        <td st>{{$d->Paroki->nama_paroki}}</td>
                         <td st>{{$d->nama_lingkungan}}</td>
                         <td st>{{$d->batasan_wilayah}}</td>
                         <td>
