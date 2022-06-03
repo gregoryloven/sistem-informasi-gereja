@@ -16,10 +16,11 @@ class KrismaController extends Controller
      */
     public function index()
     {
-        $data=Krisma::all();
-        $users=User::all();
-        $par=Paroki::all();
-        return view('krisma.index',compact("data","user","par"));
+        $data = Krisma::all();
+        $users = User::all();
+        $romo = User::where('role','romo')->get();
+        $par = Paroki::all();
+        return view('krisma.index',compact("data","users","romo","par"));
     }
 
     /**

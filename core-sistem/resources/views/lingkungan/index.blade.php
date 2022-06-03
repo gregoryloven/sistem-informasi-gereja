@@ -42,14 +42,14 @@
                             <select class="form-control" id='paroki_id' name='paroki_id'>
                             <option value="">Choose</option>
                             @foreach($par as $p)
-                            <option value="{{ $p->id }}">{{ $p->nama }}</option>
+                            <option value="{{ $p->id }}">{{ $p->nama_paroki }}</option>
                             @endforeach
                             </select>
                         </div>
                     <div class="form-body">
                         <div class="form-group">
                             <label >Nama</label>
-                            <input type="text" class="form-control" id='nama' name='nama' placeholder="Nama" required>
+                            <input type="text" class="form-control" id='nama_lingkungan' name='nama_lingkungan' placeholder="Nama" required>
                         </div>
                         <div class="form-group">
                             <label >Batasan Wilayah</label>
@@ -98,8 +98,8 @@
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         
-                        <td st>{{$d->Paroki->nama}}</td>
-                        <td st>{{$d->nama}}</td>
+                        <td st>{{$d->Paroki->nama_paroki}}</td>
+                        <td st>{{$d->nama_lingkungan}}</td>
                         <td st>{{$d->batasan_wilayah}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">

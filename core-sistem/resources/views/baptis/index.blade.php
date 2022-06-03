@@ -39,12 +39,10 @@
                     @csrf
                     <div class="form-group">
                         <label >User</label>
-                        <select class="form-control" id='users_id' name='users_id'>
+                        <select class="form-control" id='user_id' name='user_id'>
                         <option value="">Choose</option>
                         @foreach($users as $u)
-                        @if($u->role == "umat")
-                        <option value="{{ $u->id }}">{{ $u->nama }}</option>
-                        @endif
+                        <option value="{{ $u->id }}">{{ $u->nama_user }}</option>
                         @endforeach
                         </select>
                     </div>
@@ -52,10 +50,8 @@
                         <label >Wali Baptis Ayah</label>
                         <select class="form-control" id='wali_baptis_ayah' name='wali_baptis_ayah'>
                         <option value="">Choose</option>
-                        @foreach($users as $u)
-                        @if($u->role == "umat" && $u->jenis_kelamin == "Pria")
-                        <option value="{{ $u->id }}">{{ $u->nama }}</option>
-                        @endif
+                        @foreach($wali_baptis_ayah as $wba)
+                        <option value="{{ $wba->id }}">{{ $wba->nama_user }}</option>
                         @endforeach
                         </select>
                     </div>
@@ -63,10 +59,8 @@
                         <label >Wali Baptis Ibu</label>
                         <select class="form-control" id='wali_baptis_ibu' name='wali_baptis_ibu'>
                         <option value="">Choose</option>
-                        @foreach($users as $u)
-                        @if($u->role == "umat" && $u->jenis_kelamin == "Wanita")
-                        <option value="{{ $u->id }}">{{ $u->nama }}</option>
-                        @endif
+                        @foreach($wali_baptis_ibu as $wbu)
+                        <option value="{{ $wbu->id }}">{{ $wbu->nama_user }}</option>
                         @endforeach
                         </select>
                     </div>
@@ -74,19 +68,17 @@
                         <label >Romo</label>
                         <select class="form-control" id='id_romo' name='id_romo'>
                         <option value="">Choose</option>
-                        @foreach($users as $u)
-                        @if($u->role == "romo")
-                        <option value="{{ $u->id }}">{{ $u->nama }}</option>
-                        @endif
+                        @foreach($romo as $r)
+                        <option value="{{ $r->id }}">{{ $r->nama_user }}</option>
                         @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label >Paroki</label>
-                        <select class="form-control" id='parokis_id' name='parokis_id'>
+                        <select class="form-control" id='paroki_id' name='paroki_id'>
                         <option value="">Choose</option>
                         @foreach($paroki as $p)
-                        <option value="{{ $p->id }}">{{ $p->nama }}</option>
+                        <option value="{{ $p->id }}">{{ $p->nama_paroki }}</option>
                         @endforeach
                         </select>
                     </div>
@@ -94,8 +86,8 @@
                         <label >Jenis</label>
                         <select class="form-control" id='jenis' name='jenis'>
                         <option value="">Choose</option>
-                        <option value="bayi">bayi</option>
-                        <option value="dewasa">dewasa</option>
+                        <option value="Bayi">Bayi</option>
+                        <option value="Dewasa">Dewasa</option>
                         </select>
                     </div>
                     <div class="form-body">
@@ -107,8 +99,8 @@
                         <label >Status</label>
                         <select class="form-control" id='status' name='status'>
                         <option value="">Choose</option>
-                        <option value="belum selesai">Belum Selesai</option>
-                        <option value="selesai">Selesai</option>
+                        <option value="Belum Selesai">Belum Selesai</option>
+                        <option value="Selesai">Selesai</option>
                         </select>
                     </div>
                         <div class="form-group">
@@ -165,11 +157,11 @@
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         
-                        <td st>{{$d->User->nama}}</td>
-                        <td st>{{$d->Wali_baptis_ayah->nama}}</td>
-                        <td st>{{$d->Wali_baptis_ibu->nama}}</td>
-                        <td st>{{$d->Romo->nama}}</td>
-                        <td st>{{$d->Paroki->nama}}</td>
+                        <td st>{{$d->User->nama_user}}</td>
+                        <td st>{{$d->Wali_baptis_ayah->nama_user}}</td>
+                        <td st>{{$d->Wali_baptis_ibu->nama_user}}</td>
+                        <td st>{{$d->Romo->nama_user}}</td>
+                        <td st>{{$d->Paroki->nama_paroki}}</td>
                         <td st>{{$d->jenis}}</td>
                         <td st>{{$d->jadwal}}</td>
                         <td st>{{$d->status}}</td>

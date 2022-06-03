@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label >Nama</label>
                 <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$data->id}}">
-                <input type="text" class="form-control" id='nama' name='nama' placeholder="Nama" value="{{$data->nama}}">
+                <input type="text" class="form-control" id='nama_paroki' name='nama_paroki' placeholder="Nama" value="{{$data->nama_paroki}}">
             </div>
             <div class="form-group">
                 <label >Alamat</label>

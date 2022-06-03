@@ -12,7 +12,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Daftar User</h1>
+<h1 class="h3 mb-2 text-gray-800">Daftar Umat</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -33,7 +33,7 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>ID Kepala Keluarga</th>
-                        <th>Nama User</th>
+                        <th>Nama Umat</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Agama</th>
@@ -51,7 +51,7 @@
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$user->keluarga_id}}</td>
-                        <td st>{{$user->nama}}</td>
+                        <td st>{{$user->nama_user}}</td>
                         <td st>{{$user->tempat_lahir}}</td>
                         <td st>{{$user->tanggal_lahir}}</td>
                         <td st>{{$user->agama}}</td>

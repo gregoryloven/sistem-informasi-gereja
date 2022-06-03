@@ -40,7 +40,7 @@
                     <div class="form-body">
                         <div class="form-group">
                             <label >Nama</label>
-                            <input type="text" class="form-control" id='nama' name='nama' placeholder="Nama" required>
+                            <input type="text" class="form-control" id='nama_paroki' name='nama_paroki' placeholder="Nama" required>
                         </div>
                         <div class="form-group">
                             <label >Alamat</label>
@@ -97,7 +97,7 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->nama}}</td>
+                        <td st>{{$d->nama_paroki}}</td>
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->email}}</td>
                         <td st>{{$d->telepon}}</td>

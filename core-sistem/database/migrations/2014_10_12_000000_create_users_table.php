@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nama')->nullable();
+            $table->string('nama_user')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->enum('agama', ['Katolik', 'Kristen', 'Islam', 'Hindu', 'Buddha', 'Khonghucu'])->nullable();
             $table->enum('jenis_kelamin', ['Pria', 'Wanita'])->nullable();
             $table->string('telepon')->nullable();
-            $table->enum('role', ['admin', 'umat', 'romo', 'ketua lingkungan', 'ketua kbg'])->nullable()->default('umat')   ;
+            $table->enum('role', ['admin', 'umat', 'romo', 'ketua lingkungan', 'ketua kbg'])->nullable()->default('umat');
             $table->string('file_akta_kelahiran')->nullable();
             $table->string('file_ktp')->nullable();
             $table->string('name');

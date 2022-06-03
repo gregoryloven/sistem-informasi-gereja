@@ -17,10 +17,13 @@ class BaptisController extends Controller
      */
     public function index()
     {
-        $data=Baptis::all();
+        $data = Baptis::all();
         $users = User::all();
-        $paroki=Paroki::all();
-        return view('baptis.index',compact("data","users","paroki"));
+        $wali_baptis_ayah = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Pria']])->get;
+        $wali_baptis_ibu = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Wanita']])->get;
+        $romo = User::where('role','romo')->get();
+        $paroki = Paroki::all();
+        return view('baptis.index',compact("data","users","wali_baptis_ayah","wali_baptis_ibu","romo","paroki"));
     }
 
     /**

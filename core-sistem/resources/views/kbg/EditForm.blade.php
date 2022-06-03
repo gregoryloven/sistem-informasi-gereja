@@ -10,16 +10,16 @@
         <div class="form-group">
                 <label >KBG</label>
                 <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
-                <option value="{{ $data->Lingkungan->id }}">{{ $data->Lingkungan->nama }}</option>
+                <option value="{{ $data->Lingkungan->id }}">{{ $data->Lingkungan->nama_lingkungan }}</option>
                 @foreach($ling as $l)
-                <option value="{{ $l->id }}">{{ $l->nama }}</option>
+                <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
                 @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label >Nama</label>
                 <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$data->id}}">
-                <input type="text" class="form-control" id='nama' name='nama' placeholder="Nama" value="{{$data->nama}}">
+                <input type="text" class="form-control" id='nama_kbg' name='nama_kbg' placeholder="Nama" value="{{$data->nama_kbg}}">
             </div>
             <div class="form-group">
                 <label >Batasan Wilayah</label>

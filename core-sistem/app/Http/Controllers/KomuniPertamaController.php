@@ -16,10 +16,11 @@ class KomuniPertamaController extends Controller
      */
     public function index()
     {
-        $data=KomuniPertama::all();
-        $users=User::all();
-        $paroki=Paroki::all();
-        return view('komunipertama.index',compact("data", "users","paroki"));
+        $data = KomuniPertama::all();
+        $users = User::all();
+        $romo = User::where('role','romo')->get();
+        $paroki = Paroki::all();
+        return view('komunipertama.index',compact("data","users","romo","paroki"));
     }
 
     /**
