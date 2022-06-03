@@ -58,7 +58,7 @@ class TobatController extends Controller
     public function show(Request $request)
     {
         $id = $request->id;
-        $data = DB::table('tobat_users')->where('tobats_id', $id)->get();
+        $data = DB::table('tobat_users')->where('tobat_id', $id)->get();
         return view('tobat.show',compact('data'));
     }
 

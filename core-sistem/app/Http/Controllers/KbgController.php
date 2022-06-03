@@ -41,7 +41,7 @@ class KbgController extends Controller
     {
         $data = new Kbg();
         $data->lingkungan_id = $request->get('lingkungan_id');
-        $data->nama = $request->get('nama');
+        $data->nama_kbg = $request->get('nama_kbg');
         $data->batasan_wilayah = $request->get('batasan_wilayah');
         
         $data->save();
@@ -83,7 +83,7 @@ class KbgController extends Controller
     {
         $kbg=Kbg::find($request->id);
         $kbg->lingkungan_id=$request->get('lingkungan_id');
-        $kbg->nama=$request->get('nama');
+        $kbg->nama_kbg=$request->get('nama_kbg');
         $kbg->batasan_wilayah=$request->get('batasan_wilayah');
 
         $kbg->save();

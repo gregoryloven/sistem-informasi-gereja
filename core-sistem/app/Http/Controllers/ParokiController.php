@@ -37,7 +37,7 @@ class ParokiController extends Controller
     {
         $data = new Paroki();
 
-        $data->nama = $request->get('nama');
+        $data->nama_paroki = $request->get('nama_paroki');
         $data->alamat = $request->get('alamat');
         $data->email = $request->get('email');
         $data->telepon = $request->get('telepon');
@@ -79,7 +79,7 @@ class ParokiController extends Controller
     public function update(Request $request)
     {
         $paroki=Paroki::find($request->id);
-        $paroki->nama=$request->get('nama');
+        $paroki->nama_paroki=$request->get('nama_paroki');
         $paroki->alamat=$request->get('alamat');
         $paroki->email=$request->get('email');
         $paroki->telepon=$request->get('telepon');

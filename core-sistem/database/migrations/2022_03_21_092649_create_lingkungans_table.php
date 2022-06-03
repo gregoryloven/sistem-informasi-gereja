@@ -16,7 +16,7 @@ class CreateLingkungansTable extends Migration
         Schema::create('lingkungans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('paroki_id');
-            $table->string('nama');
+            $table->string('nama_lingkungan');
             $table->string('batasan_wilayah');
             $table->foreign('paroki_id')->references('id')->on('parokis');
             $table->timestamps();

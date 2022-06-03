@@ -58,7 +58,7 @@ class MisaController extends Controller
     public function show(Request $request)
     {
         $id = $request->id;
-        $data = DB::table('misa_users')->where('misas_id', $id)->get();
+        $data = DB::table('misa_users')->where('misa_id', $id)->get();
         return view('misa.show',compact('data'));
     }
 

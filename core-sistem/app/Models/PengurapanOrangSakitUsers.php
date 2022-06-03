@@ -13,11 +13,11 @@ class PengurapanOrangSakitUsers extends Model
 
     public function users()
     {
-        return $this->belongsToOne(User::class, 'users_id', 'id');
+        return $this->belongsToOne(User::class, 'user_id', 'id');
     }
 
     public function pengurapan_orang_sakits()
     {
-        return $this->belongsToOne(Tobat::class, 'pengurapan_orang_sakits_id', 'id');
+        return $this->belongsToOne(Tobat::class, 'pengurapan_orang_sakit_id', 'id');
     }
 }

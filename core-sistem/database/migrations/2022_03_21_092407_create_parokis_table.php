@@ -15,7 +15,7 @@ class CreateParokisTable extends Migration
     {
         Schema::create('parokis', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->string('nama_paroki');
             $table->string('alamat');
             $table->string('email');
             $table->string('telepon');

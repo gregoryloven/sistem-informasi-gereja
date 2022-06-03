@@ -44,11 +44,11 @@ class BaptisController extends Controller
     public function store(Request $request)
     {
         $data = new Baptis();
-        $data->users_id = $request->get('users_id');
+        $data->user_id = $request->get('user_id');
         $data->wali_baptis_ayah = $request->get('wali_baptis_ayah');
         $data->wali_baptis_ibu = $request->get('wali_baptis_ibu');
         $data->id_romo = $request->get('id_romo');
-        $data->parokis_id = $request->get('parokis_id');
+        $data->paroki_id = $request->get('paroki_id');
         $data->jenis = $request->get('jenis');
         $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
         $data->status = $request->get('status');
@@ -99,11 +99,11 @@ class BaptisController extends Controller
     public function update(Request $request)
     {
         $baptis=Baptis::find($request->id);
-        $baptis->users_id = $request->get('users_id');
+        $baptis->user_id = $request->get('user_id');
         $baptis->wali_baptis_ayah = $request->get('wali_baptis_ayah');
         $baptis->wali_baptis_ibu = $request->get('wali_baptis_ibu');
         $baptis->id_romo = $request->get('id_romo');
-        $baptis->parokis_id = $request->get('parokis_id');
+        $baptis->paroki_id = $request->get('paroki_id');
         $baptis->jenis = $request->get('jenis');
         $baptis->jadwal = $request->get('jadwal');
         $baptis->status = $request->get('status');

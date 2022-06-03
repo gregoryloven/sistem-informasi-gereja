@@ -15,20 +15,20 @@ class CreateBaptissTable extends Migration
     {
         Schema::create('baptiss', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('users_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('wali_baptis_ayah'); 
             $table->unsignedBigInteger('wali_baptis_ibu');
             $table->unsignedBigInteger('id_romo');
-            $table->unsignedBigInteger('parokis_id');
+            $table->unsignedBigInteger('paroki_id');
             $table->enum('jenis', ['bayi', 'dewasa']);
             $table->dateTime('jadwal');
             $table->enum('status', ['belum selesai', 'selesai']);
             $table->string('file_sertifikat');
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('wali_baptis_ayah')->references('id')->on('users');
             $table->foreign('wali_baptis_ibu')->references('id')->on('users');
             $table->foreign('id_romo')->references('id')->on('users');
-            $table->foreign('parokis_id')->references('id')->on('parokis');
+            $table->foreign('paroki_id')->references('id')->on('parokis');
             $table->timestamps();
         });
     }

@@ -13,11 +13,16 @@ class KomuniPertama extends Model
 
     public function user()
     {
-    	return $this->belongsTo(User::class, 'users_id');
+    	return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function romo()
+    {
+    	return $this->belongsTo(User::class, 'id_romo');
+    }
+    
     public function paroki()
     {
-    	return $this->belongsTo(Paroki::class, 'parokis_id');
+    	return $this->belongsTo(Paroki::class, 'paroki_id');
     }
 }

@@ -15,15 +15,15 @@ class CreateKrismasTable extends Migration
     {
         Schema::create('krismas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('users_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('id_romo');
             $table->unsignedBigInteger('parokis_id');
             $table->dateTime('jadwal');
             $table->enum('status', ['belum selesai', 'selesai']);
             $table->string('file_sertifikat');
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('id_romo')->references('id')->on('users');
-            $table->foreign('parokis_id')->references('id')->on('parokis');
+            $table->foreign('paroki_id')->references('id')->on('parokis');
             $table->timestamps();
         });
     }

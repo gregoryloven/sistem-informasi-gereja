@@ -22,11 +22,10 @@ class UserController extends Controller
         //     ->where('keluargas.id', '=', Auth::id)
         //     ->select('lingkungans.*')
         //     ->get();
-            dd(Auth);
+            // dd(Auth);
         $users = DB::table('users')
             ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
             ->join('lingkungans', 'lingkungans.id', '=', 'keluargas.lingkungan_id')
-            ->where('')
             ->select('users.*', 'keluargas.*', 'lingkungans.*')
             ->get();
 

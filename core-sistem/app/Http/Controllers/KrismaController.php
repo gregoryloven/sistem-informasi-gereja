@@ -17,7 +17,7 @@ class KrismaController extends Controller
     public function index()
     {
         $data=Krisma::all();
-        $user=User::all();
+        $users=User::all();
         $par=Paroki::all();
         return view('krisma.index',compact("data","user","par"));
     }

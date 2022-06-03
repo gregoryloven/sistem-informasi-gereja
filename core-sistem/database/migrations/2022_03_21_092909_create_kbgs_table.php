@@ -16,7 +16,7 @@ class CreateKbgsTable extends Migration
         Schema::create('kbgs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('lingkungan_id');
-            $table->string('nama');
+            $table->string('nama_kbg');
             $table->string('batasan_wilayah');
             $table->foreign('lingkungan_id')->references('id')->on('lingkungans');
             $table->timestamps();

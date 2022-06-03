@@ -13,7 +13,7 @@ class Baptis extends Model
 
     public function user()
     {
-    	return $this->belongsTo(User::class, 'users_id');
+    	return $this->belongsTo(User::class, 'user_id');
     }
 
     public function wali_baptis_ayah()
@@ -33,6 +33,6 @@ class Baptis extends Model
     
     public function paroki()
     {
-    	return $this->belongsTo(Paroki::class, 'parokis_id');
+    	return $this->belongsTo(Paroki::class, 'paroki_id');
     }
 }

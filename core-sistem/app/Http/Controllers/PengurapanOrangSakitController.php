@@ -58,7 +58,7 @@ class PengurapanOrangSakitController extends Controller
     public function show(Request $request)
     {
         $id = $request->id;
-        $data = DB::table('pengurapan_orang_sakit_users')->where('pengurapan_orang_sakits_id', $id)->get();
+        $data = DB::table('pengurapan_orang_sakit_users')->where('pengurapan_orang_sakit_id', $id)->get();
         return view('pengurapansakit.show',compact('data'));
     }
 

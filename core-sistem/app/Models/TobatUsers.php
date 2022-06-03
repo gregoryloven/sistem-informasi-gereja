@@ -13,11 +13,11 @@ class TobatUsers extends Model
 
     public function users()
     {
-        return $this->belongsToOne(User::class, 'users_id', 'id');
+        return $this->belongsToOne(User::class, 'user_id', 'id');
     }
 
     public function tobats()
     {
-        return $this->belongsToOne(Tobat::class, 'tobats_id', 'id');
+        return $this->belongsToOne(Tobat::class, 'tobat_id', 'id');
     }
 }

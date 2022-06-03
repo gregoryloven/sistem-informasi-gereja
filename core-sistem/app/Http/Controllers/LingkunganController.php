@@ -41,7 +41,7 @@ class LingkunganController extends Controller
     {
         $data = new Lingkungan();
         $data->paroki_id = $request->get('paroki_id');
-        $data->nama = $request->get('nama');
+        $data->nama_lingkungan = $request->get('nama_lingkungan');
         $data->batasan_wilayah = $request->get('batasan_wilayah');
         
         $data->save();
@@ -83,7 +83,7 @@ class LingkunganController extends Controller
     {
         $lingkungan=Lingkungan::find($request->id);
         $lingkungan->paroki_id=$request->get('paroki_id');
-        $lingkungan->nama=$request->get('nama');
+        $lingkungan->nama_lingkungan=$request->get('nama_lingkungan');
         $lingkungan->batasan_wilayah=$request->get('batasan_wilayah');
 
         $lingkungan->save();
