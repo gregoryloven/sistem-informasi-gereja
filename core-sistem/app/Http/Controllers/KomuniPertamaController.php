@@ -41,7 +41,25 @@ class KomuniPertamaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new KomuniPertama();
+        $data->user_id = $request->get('user_id');
+        $data->id_romo = $request->get('id_romo');
+        $data->paroki_id = $request->get('paroki_id');
+        $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
+        $data->status = $request->get('status');
+
+        //File Sertifikat
+        $file=$request->file('file_sertifikat');
+        $imgFolder = 'file_sertifikat/komunipertama';
+        $extension = $request->file('file_sertifikat')->extension();
+        $imgFile=time()."_".$request->get('nama').".".$extension;
+        $file->move($imgFolder,$imgFile);
+        $data->file_sertifikat=$imgFile;
+        
+        $data->save();
+
+        return redirect()->route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Komuni Pertama Berhasil ditambahkan');
+
     }
 
     /**
@@ -73,9 +91,27 @@ class KomuniPertamaController extends Controller
      * @param  \App\Models\KomuniPertama  $komuniPertama
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KomuniPertama $komuniPertama)
+    public function update(Request $request)
     {
-        //
+        $komunipertama=KomuniPertama::find($request->id);
+        $komunipertama->user_id = $request->get('user_id');
+        $komunipertama->id_romo = $request->get('id_romo');
+        $komunipertama->paroki_id = $request->get('paroki_id');
+        $komunipertama->jadwal = $request->get('jadwal');
+        $komunipertama->status = $request->get('status');
+
+        //File Sertifikat
+        $file=$request->file('file_sertifikat');
+        $imgFolder = 'file_sertifikat/komunipertama';
+        $extension = $request->file('file_sertifikat')->extension();
+        $imgFile=time()."_".$request->get('nama').".".$extension;
+        $file->move($imgFolder,$imgFile);
+        $komunipertama->file_sertifikat=$imgFile;
+        
+        $komunipertama->save();
+
+        return redirect()->route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Komuni Pertama Berhasil ditambahkan');
+
     }
 
     /**
@@ -84,8 +120,31 @@ class KomuniPertamaController extends Controller
      * @param  \App\Models\KomuniPertama  $komuniPertama
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KomuniPertama $komuniPertama)
+    public function destroy(Request $request)
     {
-        //
+        $komunipertama=KomuniPertama::find($request->id);
+        try
+        {
+            $komunipertama->delete();
+            return redirect()->route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Komuni Pertama Berhasil Dihapus');
+        
+        }
+        catch(\Exception $e)
+        {
+            $komunipertama = "Gagal Menghapus Data Komuni Pertama";
+            return redirect()->route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+        }
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=KomuniPertama::find($id);
+        $users=User::all();
+        $romo = User::where('role','romo')->get();
+        $paroki=Paroki::all();
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('komunipertama.EditForm',compact("data","users","romo","paroki"))->render()),200);
     }
 }

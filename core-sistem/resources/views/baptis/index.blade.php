@@ -99,7 +99,7 @@
                         <label >Status</label>
                         <select class="form-control" id='status' name='status'>
                         <option value="">Choose</option>
-                        <option value="Belum Selesai">Belum Selesai</option>
+                        <option value="Diproses">Diproses</option>
                         <option value="Selesai">Selesai</option>
                         </select>
                     </div>

@@ -27,8 +27,7 @@ class KbgController extends Controller
      */
     public function create()
     {
-        $ling=Lingkungan::all();
-        return view("kbg.create", compact('ling'));
+        
     }
 
     /**

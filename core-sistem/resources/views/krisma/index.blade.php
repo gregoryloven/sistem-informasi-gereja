@@ -73,7 +73,7 @@
                         <label >Status</label>
                         <select class="form-control" id='status' name='status'>
                         <option value="">Choose</option>
-                        <option value="Belum Selesai">Belum Selesai</option>
+                        <option value="Diproses">Diproses</option>
                         <option value="sSelesai">Selesai</option>
                         </select>
                     </div>
@@ -128,4 +128,22 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+@endsection
+
+@section('javascript')
+<script>
+function EditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('krismas.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+</script>
 @endsection

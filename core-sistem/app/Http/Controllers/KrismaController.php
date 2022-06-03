@@ -41,7 +41,25 @@ class KrismaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Krisma();
+        $data->user_id = $request->get('user_id');
+        $data->id_romo = $request->get('id_romo');
+        $data->paroki_id = $request->get('paroki_id');
+        $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
+        $data->status = $request->get('status');
+
+        //File Sertifikat
+        $file=$request->file('file_sertifikat');
+        $imgFolder = 'file_sertifikat/krisma';
+        $extension = $request->file('file_sertifikat')->extension();
+        $imgFile=time()."_".$request->get('nama').".".$extension;
+        $file->move($imgFolder,$imgFile);
+        $data->file_sertifikat=$imgFile;
+        
+        $data->save();
+
+        return redirect()->route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Krisma Berhasil ditambahkan');
+
     }
 
     /**
@@ -73,9 +91,27 @@ class KrismaController extends Controller
      * @param  \App\Models\Krisma  $krisma
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Krisma $krisma)
+    public function update(Request $request)
     {
-        //
+        $krisma=Krisma::find($request->id);
+        $krisma->user_id = $request->get('user_id');
+        $krisma->id_romo = $request->get('id_romo');
+        $krisma->paroki_id = $request->get('paroki_id');
+        $krisma->jadwal = $request->get('jadwal');
+        $krisma->status = $request->get('status');
+
+        //File Sertifikat
+        $file=$request->file('file_sertifikat');
+        $imgFolder = 'file_sertifikat/krisma';
+        $extension = $request->file('file_sertifikat')->extension();
+        $imgFile=time()."_".$request->get('nama').".".$extension;
+        $file->move($imgFolder,$imgFile);
+        $krisma->file_sertifikat=$imgFile;
+        
+        $krisma->save();
+
+        return redirect()->route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Krisma Berhasil ditambahkan');
+
     }
 
     /**
@@ -86,6 +122,29 @@ class KrismaController extends Controller
      */
     public function destroy(Krisma $krisma)
     {
-        //
+        $krisma=Krisma::find($request->id);
+        try
+        {
+            $krisma->delete();
+            return redirect()->route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Krisma Berhasil Dihapus');
+        
+        }
+        catch(\Exception $e)
+        {
+            $krisma = "Gagal Menghapus Data Krisma";
+            return redirect()->route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+        }
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Krisma::find($id);
+        $users=User::all();
+        $romo = User::where('role','romo')->get();
+        $paroki=Paroki::all();
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('krisma.EditForm',compact("data","users","romo","paroki"))->render()),200);
     }
 }

@@ -33,9 +33,7 @@ class BaptisController extends Controller
      */
     public function create()
     {
-        $user=User::all();
-        $par=Paroki::all();
-        return view("baptis.create", compact('user', 'par'));
+        //
     }
 
     /**
@@ -121,7 +119,7 @@ class BaptisController extends Controller
         
         $baptis->save();
 
-        return redirect()->route('baptiss.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data KBG Berhasil ditambahkan');
+        return redirect()->route('baptiss.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Baptis Berhasil ditambahkan');
 
     }
 
@@ -152,9 +150,12 @@ class BaptisController extends Controller
         $id=$request->get("id");
         $data=Baptis::find($id);
         $users=User::all();
+        $wali_baptis_ayah = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Pria']])->get;
+        $wali_baptis_ibu = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Wanita']])->get;
+        $romo = User::where('role','romo')->get();
         $paroki=Paroki::all();
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('baptis.EditForm',compact('data','users','paroki'))->render()),200);
+            'msg'=>view('baptis.EditForm',compact("data","users","wali_baptis_ayah","wali_baptis_ibu","romo","paroki"))->render()),200);
     }
 }

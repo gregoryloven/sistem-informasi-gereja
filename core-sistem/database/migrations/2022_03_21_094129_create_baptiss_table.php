@@ -22,7 +22,7 @@ class CreateBaptissTable extends Migration
             $table->unsignedBigInteger('paroki_id');
             $table->enum('jenis', ['Bayi', 'Dewasa']);
             $table->dateTime('jadwal');
-            $table->enum('status', ['Belum Selesai', 'Selesai']);
+            $table->enum('status', ['Diproses', 'Selesai']);
             $table->string('file_sertifikat');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('wali_baptis_ayah')->references('id')->on('users');
