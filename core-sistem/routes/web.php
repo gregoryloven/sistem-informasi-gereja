@@ -64,9 +64,11 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //Komuni Pertama
     Route::resource('komunipertamas', KomuniPertamaController::class);
+    Route::post('/komunipertamas/EditForm', [BaptisController::class, 'EditForm'])->name('komunipertamas.EditForm');
 
     //Krisma
     Route::resource('krismas', KrismaController::class);
+    Route::post('/krismas/EditForm', [BaptisController::class, 'EditForm'])->name('krismas.EditForm');
 
     //Misa
     Route::resource('misas', MisaController::class);

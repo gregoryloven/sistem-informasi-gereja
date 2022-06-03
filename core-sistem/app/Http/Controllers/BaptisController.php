@@ -19,8 +19,8 @@ class BaptisController extends Controller
     {
         $data = Baptis::all();
         $users = User::all();
-        $wali_baptis_ayah = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Pria']])->get;
-        $wali_baptis_ibu = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Wanita']])->get;
+        $wali_baptis_ayah = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Pria']])->get();
+        $wali_baptis_ibu = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Wanita']])->get();
         $romo = User::where('role','romo')->get();
         $paroki = Paroki::all();
         return view('baptis.index',compact("data","users","wali_baptis_ayah","wali_baptis_ibu","romo","paroki"));
