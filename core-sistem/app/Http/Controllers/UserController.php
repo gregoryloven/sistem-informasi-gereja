@@ -107,7 +107,7 @@ class UserController extends Controller
     {
         $id = Auth::user()->id;
         $user=User::find($id);
-        $user->nama=$request->get('nama');
+        $user->nama_user=$request->get('nama_user');
         $user->tempat_lahir=$request->get('tempat_lahir');
         $user->tanggal_lahir=$request->get('tanggal_lahir');
         $user->agama=$request->get('agama');
@@ -116,7 +116,6 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Daftar User Berhasil');
-    
+        return redirect('/sbadmin2')->with('status', 'Daftar User Berhasil');
     }
 }

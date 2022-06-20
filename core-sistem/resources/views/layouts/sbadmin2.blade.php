@@ -71,6 +71,12 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('validate.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Validasi</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('users.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-user"></i>
                     <span>User</span></a>
