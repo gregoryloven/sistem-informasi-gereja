@@ -1,4 +1,4 @@
-@extends('layouts.sbuser')
+@extends('layouts.sbofficer2')
 
 @push('css')
 <style>

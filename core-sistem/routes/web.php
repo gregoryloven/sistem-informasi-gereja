@@ -14,7 +14,10 @@ use App\Http\Controllers\TobatController;
 use App\Http\Controllers\PengurapanOrangSakitController;
 use App\Http\Controllers\PelayananLainnyaController;
 use App\Http\Controllers\PendaftaranPetugasController;
+use App\Http\Controllers\PemindahanKbgController;
 use App\Http\Controllers\ValidateController;
+use App\Http\Controllers\ValidasiKbgController;
+use App\Http\Controllers\ValidasiKLController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,9 +49,23 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         return view('layouts.sbofficer2');
     });
 
+    Route::get('/sbkbg', function () {
+        return view('layouts.sbkbg');
+    });
+
+    Route::get('/sbkl', function () {
+        return view('layouts.sbkl');
+    });
+
     Route::get('/sbuser', function () {
         return view('layouts.sbuser');
     });
+
+    //User KL
+    Route::resource('userkl', UserKLController::class);
+
+    //User Kbg
+    Route::resource('usersKbg', UserKbgController::class);
 
     //Paroki
     Route::resource('parokis', ParokiController::class);
@@ -104,18 +121,31 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/pelayananlainnya/InputFormAll', [PelayananLainnyaController::class, 'InputFormAll'])->name('pelayananlainnya.InputFormAll');
     Route::post('/pelayananlainnya/UpdateForm', [PelayananLainnyaController::class, 'UpdateForm'])->name('pelayananlainnya.UpdateForm');
 
-    // Pendaftaran Petugas Liturgi
+    //Pendaftaran Petugas Liturgi
     Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);
     Route::post('/pendaftaranpetugas/InputForm', [PendaftaranPetugasController::class, 'InputForm'])->name('pendaftaranpetugas.InputForm');
 
 
-    // Validate
+    //Validasi Admin
     Route::resource('validate', ValidateController::class);
     Route::post('/validateMisa/accept', [ValidateController::class, 'Accept'])->name('validate.Accept');
     Route::post('/validateMisa/decline', [ValidateController::class, 'Decline'])->name('validate.Decline');
     Route::post('/validatePetugas/accept', [ValidateController::class, 'AcceptPetugas'])->name('validate.AcceptPetugas');
     Route::post('/validatePetugas/decline', [ValidateController::class, 'DeclinePetugas'])->name('validate.DeclinePetugas');
 
+    // Validate Kbg
+    Route::resource('validasiKbg', ValidasiKbgController::class);
+    Route::post('/validateMisaKbg/accept', [ValidasiKbgController::class, 'Accept'])->name('validate.Accept');
+    Route::post('/validateMisaKbg/decline', [ValidasiKbgController::class, 'Decline'])->name('validate.Decline');
+
+    // Validate KL
+    Route::resource('validasiKL', ValidasiKLController::class);
+    Route::post('/validateMisaKL/accept', [ValidasiKLController::class, 'Accept'])->name('validate.Accept');
+    Route::post('/validateMisaKL/decline', [ValidasiKLController::class, 'Decline'])->name('validate.Decline');
+
+    //Pemindahan Kbg
+    Route::resource('pemindahankbg', PemindahanKbgController::class);
+    Route::post('/pemindahanKBG/UpdateForm', [PemindahanKbgController::class, 'UpdateForm'])->name('pemindahanKBG.UpdateForm');
 
     //Complete Register
     Route::get('/complete-register', function () {

@@ -18,12 +18,17 @@ class ValidateController extends Controller
     public function index()
     {
         $reservasi = PendaftaranPelayananLainnya::join('pelayanan_lainnyas', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id', '=', 'pelayanan_lainnyas.id')
+        ->where('status', 'Diterima2')
         ->get(['pelayanan_lainnyas.nama_pelayanan as namaPelayanan', 'pendaftaran_pelayanan_lainnyas.nama_pemohon', 'pendaftaran_pelayanan_lainnyas.id', 'pendaftaran_pelayanan_lainnyas.jadwal', 'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.keterangan', 'pendaftaran_pelayanan_lainnyas.alasan_pembatalan', 'status']); 
         
+        $reservasiAll = PendaftaranPelayananLainnya::join('pelayanan_lainnyas', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id', '=', 'pelayanan_lainnyas.id')
+        ->where("status", "!=", "Diterima2")
+        ->get(['pelayanan_lainnyas.nama_pelayanan as namaPelayanan', 'pendaftaran_pelayanan_lainnyas.nama_pemohon', 'pendaftaran_pelayanan_lainnyas.id', 'pendaftaran_pelayanan_lainnyas.jadwal', 'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.keterangan', 'pendaftaran_pelayanan_lainnyas.alasan_pembatalan', 'status']); 
+
         $petugas = PendaftaranPetugas::join('petugas_liturgis', 'pendaftaran_petugas_liturgis.petugas_liturgi_id', '=', 'petugas_liturgis.id')
         ->join('users', 'pendaftaran_petugas_liturgis.user_id', '=', 'users.id')
         ->get(['users.nama_user', 'petugas_liturgis.petugas_liturgi', 'status', 'pendaftaran_petugas_liturgis.id']); 
-        return view('validate.index',compact("reservasi", "petugas"));
+        return view('validate.index',compact("reservasi", "reservasiAll", "petugas"));
     }
 
     public function Accept(Request $request)

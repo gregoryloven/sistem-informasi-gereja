@@ -1,4 +1,4 @@
-@extends('layouts.sbadmin2')
+@extends('layouts.sbkbg')
 
 @push('css')
 <style>
@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-    Validate
+    Validasi
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Daftar Permohonan Pelayanan
+        Formulir Permohonan Misa
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -47,21 +47,19 @@
                     @foreach($reservasi as $d)
                     @php $i += 1; @endphp
                     <tr>
-                        <td>@php echo $i; @endphp</td>
-                        
                         <td st>{{$d->nama_pemohon}}</td>
                         <td st>{{$d->namaPelayanan}}</td>
                         <td st>{{$d->jadwal}}</td>
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->keterangan}}</td>
                         <td st class="d-flex">
-                            @if($d->status == "Diterima2")
-                            <form action="/validateMisa/accept" method="post">
+                            @if($d->status == "Pending")
+                            <form action="/validateMisaKbg/accept" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validateMisa/decline" class="ml-2" method="post">
+                            <form action="/validateMisaKbg/decline" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-danger" type="submit">Tolak</button>
@@ -96,60 +94,6 @@
                             @else
                             <div class="alert alert-danger" role="alert">
                                 {{$da->status}}
-                            </div>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        List Pendaftaran Petugas Liturgi
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="myTable">
-                <thead>
-                    <tr style="text-align: center;">
-                        <th width="5%">No</th>
-                        <th>Nama</th>
-                        <th>Sebagai</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $i = 0; @endphp
-                    @foreach($petugas as $d)
-                    @php $i += 1; @endphp
-                    <tr>
-                        <td>@php echo $i; @endphp</td>
-                        
-                        <td st>{{$d->nama_user}}</td>
-                        <td st>{{$d->petugas_liturgi}}</td>
-                        <td st class="d-flex">
-                            @if($d->status == "Pending")
-                            <form action="/validatePetugas/accept" method="post">
-                                @csrf
-                                <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                                <button class="btn btn-success" type="submit">Terima</button>
-                            </form>
-                            <form action="/validatePetugas/decline" class="ml-2" method="post">
-                                @csrf
-                                <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                                <button class="btn btn-danger" type="submit">Tolak</button>
-                            </form>
-                            @elseif($d->status == "Diterima")
-                            <div class="alert alert-success" role="alert">
-                                {{$d->status}}
-                            </div>
-                            @else
-                            <div class="alert alert-danger" role="alert">
-                                {{$d->status}}
                             </div>
                             @endif
                         </td>

@@ -36,7 +36,7 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-text mx-3">Officer</div>
+                <div class="sidebar-brand-text mx-3">Umat</div>
             </a>
 
             <!-- Divider -->
@@ -54,9 +54,19 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('umat.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                <a class="nav-link" href="{{ route('pelayananlainnya.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>Cek Permohonan</span></a>
+                    <span>Pelayanan Lainnya</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('pendaftaranpetugas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Petugas Liturgi</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('pendaftaranpetugas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Baptis</span></a>
             </li>
 
         </ul>
