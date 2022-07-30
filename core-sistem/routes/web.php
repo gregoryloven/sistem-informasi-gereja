@@ -14,6 +14,7 @@ use App\Http\Controllers\TobatController;
 use App\Http\Controllers\PengurapanOrangSakitController;
 use App\Http\Controllers\PelayananLainnyaController;
 use App\Http\Controllers\PendaftaranPetugasController;
+use App\Http\Controllers\PendaftaranBaptisController;
 use App\Http\Controllers\PemindahanKbgController;
 use App\Http\Controllers\ValidateController;
 use App\Http\Controllers\ValidasiKbgController;
@@ -125,7 +126,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);
     Route::post('/pendaftaranpetugas/InputForm', [PendaftaranPetugasController::class, 'InputForm'])->name('pendaftaranpetugas.InputForm');
 
-
+    //Pendaftaran Baptis
+    Route::resource('pendaftaranbaptis', PendaftaranBaptisController::class);
+    Route::post('/pendaftaranbaptis/InputForm', [PendaftaranBaptisController::class, 'InputForm'])->name('pendaftaranbaptis.InputForm');
+    
     //Validasi Admin
     Route::resource('validate', ValidateController::class);
     Route::post('/validateMisa/accept', [ValidateController::class, 'Accept'])->name('validate.Accept');

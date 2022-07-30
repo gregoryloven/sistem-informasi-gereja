@@ -64,7 +64,7 @@
                     <span>Petugas Liturgi</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('pendaftaranpetugas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                <a class="nav-link" href="{{ route('pendaftaranbaptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Baptis</span></a>
             </li>

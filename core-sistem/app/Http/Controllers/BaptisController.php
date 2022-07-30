@@ -158,4 +158,5 @@ class BaptisController extends Controller
             'status'=>'oke',
             'msg'=>view('baptis.EditForm',compact("data","users","wali_baptis_ayah","wali_baptis_ibu","romo","paroki"))->render()),200);
     }
+
 }
