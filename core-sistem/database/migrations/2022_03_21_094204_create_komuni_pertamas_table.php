@@ -16,14 +16,12 @@ class CreateKomuniPertamasTable extends Migration
         Schema::create('komuni_pertamas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('id_romo');
-            $table->unsignedBigInteger('paroki_id');
             $table->dateTime('jadwal');
+            $table->string('lokasi');
+            $table->string('romo');
             $table->enum('status', ['Diproses', 'Selesai']);
             $table->string('file_sertifikat');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('id_romo')->references('id')->on('users');
-            $table->foreign('paroki_id')->references('id')->on('parokis');
             $table->timestamps();
         });
     }

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Baptis;
 use App\Models\User;
-use App\Models\Paroki;
 
 class BaptisController extends Controller
 {
@@ -19,11 +18,9 @@ class BaptisController extends Controller
     {
         $data = Baptis::all();
         $users = User::all();
-        $wali_baptis_ayah = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Pria']])->get();
-        $wali_baptis_ibu = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Wanita']])->get();
-        $romo = User::where('role','romo')->get();
-        $paroki = Paroki::all();
-        return view('baptis.index',compact("data","users","wali_baptis_ayah","wali_baptis_ibu","romo","paroki"));
+        $wali_baptis_ayah = User::where([['jenis_kelamin', 'Pria']])->get();
+        $wali_baptis_ibu = User::where([['jenis_kelamin', 'Wanita']])->get();
+        return view('baptis.index',compact("data","users","wali_baptis_ayah","wali_baptis_ibu"));
     }
 
     /**
@@ -48,9 +45,9 @@ class BaptisController extends Controller
         $data->user_id = $request->get('user_id');
         $data->wali_baptis_ayah = $request->get('wali_baptis_ayah');
         $data->wali_baptis_ibu = $request->get('wali_baptis_ibu');
-        $data->id_romo = $request->get('id_romo');
-        $data->paroki_id = $request->get('paroki_id');
         $data->jenis = $request->get('jenis');
+        $data->lokasi = $request->get('lokasi');
+        $data->romo = $request->get('romo');
         $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
         $data->status = $request->get('status');
 
@@ -103,9 +100,9 @@ class BaptisController extends Controller
         $baptis->user_id = $request->get('user_id');
         $baptis->wali_baptis_ayah = $request->get('wali_baptis_ayah');
         $baptis->wali_baptis_ibu = $request->get('wali_baptis_ibu');
-        $baptis->id_romo = $request->get('id_romo');
-        $baptis->paroki_id = $request->get('paroki_id');
         $baptis->jenis = $request->get('jenis');
+        $baptis->lokasi = $request->get('lokasi');
+        $baptis->romo = $request->get('romo');
         $baptis->jadwal = $request->get('jadwal');
         $baptis->status = $request->get('status');
 
@@ -152,8 +149,6 @@ class BaptisController extends Controller
         $users=User::all();
         $wali_baptis_ayah = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Pria']])->get;
         $wali_baptis_ibu = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Wanita']])->get;
-        $romo = User::where('role','romo')->get();
-        $paroki=Paroki::all();
         return response()->json(array(
             'status'=>'oke',
             'msg'=>view('baptis.EditForm',compact("data","users","wali_baptis_ayah","wali_baptis_ibu","romo","paroki"))->render()),200);

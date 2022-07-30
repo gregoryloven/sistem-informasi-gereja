@@ -14,13 +14,12 @@ class CreateTobatUsersTable extends Migration
     public function up()
     {
         Schema::create('tobat_users', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('tobat_id');
+            $table->unsignedBigInteger('users_id');
+            $table->unsignedBigInteger('tobats_id');
             $table->string('kode_booking');
             $table->string('status');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('tobat_id')->references('id')->on('tobats');
+            $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('tobats_id')->references('id')->on('tobats');
             $table->timestamps();
         });
     }

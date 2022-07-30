@@ -16,7 +16,6 @@ class LingkunganSeeder extends Seeder
     public function run()
     {
         DB::table('lingkungans')->insert([
-            'paroki_id' => '1',
         	'nama_lingkungan' => 'Regina Pacis',
             'batasan_wilayah' => 'Sanur-Renon',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -24,7 +23,6 @@ class LingkunganSeeder extends Seeder
         ]);
 
         DB::table('lingkungans')->insert([
-            'paroki_id' => '1',
         	'nama_lingkungan' => 'Ratu Rosari',
             'batasan_wilayah' => 'Panjer-Sesetan',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lingkungan;
-use App\Models\Paroki;
 
 class LingkunganController extends Controller
 {

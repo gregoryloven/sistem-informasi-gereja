@@ -15,7 +15,7 @@ class CreatePetugasLiturgisTable extends Migration
     {
         Schema::create('petugas_liturgis', function (Blueprint $table) {
             $table->id();
-            $table->string('petugas_liturgi');
+            $table->string('jenis_petugas');
             $table->timestamps();
         });
     }

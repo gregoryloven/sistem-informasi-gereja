@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('agama', ['Katolik', 'Kristen', 'Islam', 'Hindu', 'Buddha', 'Khonghucu'])->nullable();
             $table->enum('jenis_kelamin', ['Pria', 'Wanita'])->nullable();
             $table->string('telepon')->nullable();
-            $table->enum('role', ['admin', 'umat', 'romo', 'ketua lingkungan', 'ketua kbg'])->nullable()->default('umat');
+            $table->enum('role', ['admin', 'umat', 'ketua lingkungan', 'ketua kbg'])->nullable()->default('umat');
             $table->string('file_akta_kelahiran')->nullable();
             $table->string('file_ktp')->nullable();
             $table->string('name');

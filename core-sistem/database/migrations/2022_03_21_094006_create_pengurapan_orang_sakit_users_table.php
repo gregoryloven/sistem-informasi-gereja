@@ -14,12 +14,11 @@ class CreatePengurapanOrangSakitUsersTable extends Migration
     public function up()
     {
         Schema::create('pengurapan_orang_sakit_users', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('pengurapan_orang_sakit_id');
+            $table->unsignedBigInteger('users_id');
+            $table->unsignedBigInteger('pengurapan_orang_sakits_id');
             $table->string('status');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('pengurapan_orang_sakit_id')->references('id')->on('pengurapan_orang_sakits');
+            $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('pengurapan_orang_sakits_id')->references('id')->on('pengurapan_orang_sakits');
             $table->timestamps();
         });
     }

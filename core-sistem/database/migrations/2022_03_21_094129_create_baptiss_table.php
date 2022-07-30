@@ -18,17 +18,15 @@ class CreateBaptissTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('wali_baptis_ayah'); 
             $table->unsignedBigInteger('wali_baptis_ibu');
-            $table->unsignedBigInteger('id_romo');
-            $table->unsignedBigInteger('paroki_id');
             $table->enum('jenis', ['Bayi', 'Dewasa']);
             $table->dateTime('jadwal');
+            $table->string('lokasi');
+            $table->string('romo');
             $table->enum('status', ['Diproses', 'Selesai']);
             $table->string('file_sertifikat');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('wali_baptis_ayah')->references('id')->on('users');
             $table->foreign('wali_baptis_ibu')->references('id')->on('users');
-            $table->foreign('id_romo')->references('id')->on('users');
-            $table->foreign('paroki_id')->references('id')->on('parokis');
             $table->timestamps();
         });
     }

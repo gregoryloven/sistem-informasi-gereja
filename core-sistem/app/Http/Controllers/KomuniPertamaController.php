@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\KomuniPertama;
 use App\Models\User;
-use App\Models\Paroki;
 
 class KomuniPertamaController extends Controller
 {
@@ -18,9 +17,7 @@ class KomuniPertamaController extends Controller
     {
         $data = KomuniPertama::all();
         $users = User::all();
-        $romo = User::where('role','romo')->get();
-        $paroki = Paroki::all();
-        return view('komunipertama.index',compact("data","users","romo","paroki"));
+        return view('komunipertama.index',compact("data","users"));
     }
 
     /**

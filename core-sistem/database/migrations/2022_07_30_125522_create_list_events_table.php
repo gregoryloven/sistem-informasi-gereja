@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePelayananLainnyasTable extends Migration
+class CreateListEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreatePelayananLainnyasTable extends Migration
      */
     public function up()
     {
-        Schema::create('pelayanan_lainnyas', function (Blueprint $table) {
+        Schema::create('list_events', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_pelayanan');
+            $table->string('nama_event');
+            $table->enum('jenis_event', ['Baptis', 'Komuni Pertama', 'Krisma', 'Tobat', 'Misa']);
+            $table->datetime('jadwal');
+            $table->string('lokasi');
+            $table->string('romo');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreatePelayananLainnyasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pelayanan_lainnyas');
+        Schema::dropIfExists('list_events');
     }
 }
