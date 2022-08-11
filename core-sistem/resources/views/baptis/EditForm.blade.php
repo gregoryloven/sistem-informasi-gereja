@@ -35,24 +35,6 @@
             </select>
         </div>
         <div class="form-group">
-            <label >Romo</label>
-            <select class="form-control" id='id_romo' name='id_romo'>
-            <option value="">Choose</option>
-            @foreach($romo as $r)
-            <option value="{{ $r->id }}">{{ $r->nama_user }}</option>
-            @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label >Paroki</label>
-            <select class="form-control" id='paroki_id' name='paroki_id'>
-            <option value="">Choose</option>
-            @foreach($paroki as $p)
-            <option value="{{ $p->id }}">{{ $p->nama_paroki }}</option>
-            @endforeach
-            </select>
-        </div>
-        <div class="form-group">
             <label >Jenis</label>
             <select class="form-control" id='jenis' name='jenis'>
             <option value="">Choose</option>
@@ -60,11 +42,18 @@
             <option value="Dewasa">Dewasa</option>
             </select>
         </div>
-        <div class="form-body">
-            <div class="form-group">
-                <label >Tanggal Pembaptisan</label>
-                <input type="date" class="form-control" id='jadwal' name='jadwal' placeholder="Tanggal Pembaptisan" required>
-            </div>
+        <div class="form-group">
+            <label >Tanggal Pembaptisan</label>
+            <input type="date" class="form-control" id='jadwal' name='jadwal' placeholder="Tanggal Pembaptisan" required>
+        </div>
+        <div class="form-group">
+            <label >Lokasi</label>
+            <input type="text" class="form-control" id='lokasi' name='lokasi' placeholder="Lokasi" required>
+        </div>
+        <div class="form-group">
+            <label >Romo</label>
+            <input type="text" class="form-control" id='romo' name='romo' placeholder="Romo" required>
+        </div>
         <div class="form-group">
             <label >Status</label>
             <select class="form-control" id='status' name='status'>
@@ -78,7 +67,6 @@
                 <input type="file" value="" name="file_sertifikat" class="form-control" id="file_sertifikat" placeholder="File Sertifikat" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
             </div>
             <img id="output" src="" width="200px" height="200px">
-      </div>
     </div>
 </div>
   <div class="modal-footer">

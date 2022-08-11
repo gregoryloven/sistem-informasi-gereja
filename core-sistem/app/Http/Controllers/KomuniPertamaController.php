@@ -40,9 +40,9 @@ class KomuniPertamaController extends Controller
     {
         $data = new KomuniPertama();
         $data->user_id = $request->get('user_id');
-        $data->id_romo = $request->get('id_romo');
-        $data->paroki_id = $request->get('paroki_id');
         $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
+        $data->lokasi = $request->get('lokasi');
+        $data->romo = $request->get('romo');
         $data->status = $request->get('status');
 
         //File Sertifikat
@@ -92,9 +92,9 @@ class KomuniPertamaController extends Controller
     {
         $komunipertama=KomuniPertama::find($request->id);
         $komunipertama->user_id = $request->get('user_id');
-        $komunipertama->id_romo = $request->get('id_romo');
-        $komunipertama->paroki_id = $request->get('paroki_id');
         $komunipertama->jadwal = $request->get('jadwal');
+        $komunipertama->lokasi = $request->get('lokasi');
+        $komunipertama->romo = $request->get('romo');
         $komunipertama->status = $request->get('status');
 
         //File Sertifikat
@@ -138,10 +138,8 @@ class KomuniPertamaController extends Controller
         $id=$request->get("id");
         $data=KomuniPertama::find($id);
         $users=User::all();
-        $romo = User::where('role','romo')->get();
-        $paroki=Paroki::all();
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('komunipertama.EditForm',compact("data","users","romo","paroki"))->render()),200);
+            'msg'=>view('komunipertama.EditForm',compact("data","users"))->render()),200);
     }
 }

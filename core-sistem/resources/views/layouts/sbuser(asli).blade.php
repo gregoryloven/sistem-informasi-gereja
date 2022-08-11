@@ -41,15 +41,6 @@
             background-color: #4a70dc !important;
             color: #FFF;
         }
-
-        .carousel-item img {
-            height: 500px;
-            object-fit: cover;
-        }
-
-        nav {
-            border-bottom: 2px solid #E0E0E0;
-        }
     </style>
 </head>
 
@@ -58,34 +49,30 @@
     <!-- Page Container -->
     <div class="container shadow-sm p-0">
         <!-- Page Wrapper -->
-        <div class="shadow-lg" id="wrapper">
+        <div id="wrapper">
 
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg">
-                <!-- <a href="#">
+            <nav class="navbar navbar-expand-lg shadow-lg">
+                <a href="#">
                     <img src="https://i.ibb.co/BC1YQDt/cropped-katedral-logo.png" alt="cropped-katedral-logo" width="100" border="0">
-                </a>     -->
-                @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
-                <h3>{{app('currentTenant')->name}}</h3>
-                @endif
+                </a>    
             
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav mr-auto">
                     </ul>
                     <span class="navbar-text">
                         <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/pelayananlainnya">Misa</a>
+                            </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/dashboarduser">Home</a>
+                                <a class="nav-link" href="/pendaftaranpetugas">Petugas</a>
                             </li> 
                         </ul>
                     </span>
                 </div>
             </nav>
-            <!-- End of Navbar -->
-
-            <!-- Header Image -->
-
-            @yield('carousel')
+            <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">

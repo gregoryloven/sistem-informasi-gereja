@@ -1,4 +1,4 @@
-@extends('layouts.sbofficer2')
+@extends('layouts.sbuser')
 
 @push('css')
 <style>
@@ -87,7 +87,7 @@
                     <label for="exampleFormControlSelect1">Jenis Pelayanan</label>
                     <select class="form-control" name="pelayanan" id="exampleFormControlSelect1">
                         @foreach($pelayanan as $p)
-                        <option value="{{$p->id}}">{{$p->nama_pelayanan}}</option>
+                        <option value="{{$p->id}}">{{$p->jenis_pelayanan}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -153,7 +153,7 @@
                             <tr style="text-align: center;">
                                 <th width="5%">No</th>
                                 <th>Nama</th>
-                                <th>Nama Pelayanan</th>
+                                <th>Jenis Pelayanan</th>
                                 <th>Tanggal Permohonan</th>
                                 <th>Alamat</th>
                                 <th>Keterangan</th>
@@ -168,7 +168,7 @@
                             <tr>
                                 <td>@php echo $i; @endphp</td>
                                 <td st>{{$d->nama_pemohon}}</td>
-                                <td st>{{$d->namaPelayanan}}</td>
+                                <td st>{{$d->jenisPelayanan}}</td>
                                 <td st>{{$d->jadwal}}</td>
                                 <td st>{{$d->alamat}}</td>
                                 <td st>{{$d->keterangan}}</td>
@@ -177,18 +177,31 @@
                                     <div class="alert alert-warning" role="alert">
                                         {{$d->status}}
                                     </div>
-                                    @elseif($d->status == "Diterima")
+                                    @elseif($d->status == "Disetujui KBG")
+                                    <div class="alert alert-warning" role="alert">
+                                        {{$d->status}}
+                                    </div>
+                                    @elseif($d->status == "Disetujui Lingkungan")
+                                    <div class="alert alert-warning" role="alert">
+                                        {{$d->status}}
+                                    </div>
+                                    @elseif($d->status == "Disetujui Paroki")
+                                    <div class="alert alert-success" role="alert">
+                                        {{$d->status}}
+                                    </div>
+                                    @elseif($d->status == "Selesai")
                                     <div class="alert alert-success" role="alert">
                                         {{$d->status}}
                                     </div>
                                     @else
                                     <div class="alert alert-danger" role="alert">
-                                        {{$d->status}}
+                                        {{$d->status}}  
                                     </div>
+                                    <small><b>Alasan: {{$d->alasan_penolakan}}</b></small>
                                     @endif
                                 </td>
                                 <td st>
-                                    @if($d->status == "Pending" || $d->status == "Diterima")
+                                    @if($d->status == "Pending" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
                                     <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Pembatalan</a>
                                     @endif
                                 </td>
@@ -197,7 +210,7 @@
                             <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content" >
-                                        <form role="form" method="POST" action="{{ url('pelayananlainnya/UpdateForm') }}" enctype="multipart/form-data">
+                                        <form role="form" method="POST" action="{{ url('pelayananlainnya/Pembatalan') }}" enctype="multipart/form-data">
                                             @csrf
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>

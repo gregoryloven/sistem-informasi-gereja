@@ -65,24 +65,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label >Romo</label>
-                        <select class="form-control" id='id_romo' name='id_romo'>
-                        <option value="">Choose</option>
-                        @foreach($romo as $r)
-                        <option value="{{ $r->id }}">{{ $r->nama_user }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >Paroki</label>
-                        <select class="form-control" id='paroki_id' name='paroki_id'>
-                        <option value="">Choose</option>
-                        @foreach($paroki as $p)
-                        <option value="{{ $p->id }}">{{ $p->nama_paroki }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label >Jenis</label>
                         <select class="form-control" id='jenis' name='jenis'>
                         <option value="">Choose</option>
@@ -90,11 +72,18 @@
                         <option value="Dewasa">Dewasa</option>
                         </select>
                     </div>
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label >Tanggal Pembaptisan</label>
-                            <input type="date" class="form-control" id='jadwal' name='jadwal' placeholder="Tanggal Pembaptisan" required>
-                        </div>
+                    <div class="form-group">
+                        <label >Tanggal Pembaptisan</label>
+                        <input type="date" class="form-control" id='jadwal' name='jadwal' placeholder="Tanggal Pembaptisan" required>
+                    </div>
+                    <div class="form-group">
+                        <label >Lokasi</label>
+                        <input type="text" class="form-control" id='lokasi' name='lokasi' placeholder="Lokasi" required>
+                    </div>
+                    <div class="form-group">
+                        <label >Romo</label>
+                        <input type="text" class="form-control" id='romo' name='romo' placeholder="Romo" required>
+                    </div>
                     <div class="form-group">
                         <label >Status</label>
                         <select class="form-control" id='status' name='status'>
@@ -103,12 +92,11 @@
                         <option value="Selesai">Selesai</option>
                         </select>
                     </div>
-                        <div class="form-group">
-                            <label>File Sertifikat</label>
-                            <input type="file" value="" name="file_sertifikat" class="form-control" id="file_sertifikat" placeholder="File Sertifikat" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
-                        </div>
-                        <img id="output" src="" width="200px" height="200px">
+                    <div class="form-group">
+                        <label>File Sertifikat</label>
+                        <input type="file" value="" name="file_sertifikat" class="form-control" id="file_sertifikat" placeholder="File Sertifikat" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
                     </div>
+                    <img id="output" src="" width="200px" height="200px"> 
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-info">Submit</button>
@@ -141,10 +129,10 @@
                         <th>Nama Penerima</th>
                         <th>Wali Baptis Ayah</th>
                         <th>Wali Baptis Ibu</th>
-                        <th>Romo</th>
-                        <th>Paroki</th>
                         <th>Jenis</th>
                         <th>Tanggal Baptis</th>
+                        <th>Lokasi</th>
+                        <th>Romo</th>
                         <th>Status</th>
                         <th>File Sertifikat</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
@@ -160,10 +148,10 @@
                         <td st>{{$d->User->nama_user}}</td>
                         <td st>{{$d->Wali_baptis_ayah->nama_user}}</td>
                         <td st>{{$d->Wali_baptis_ibu->nama_user}}</td>
-                        <td st>{{$d->Romo->nama_user}}</td>
-                        <td st>{{$d->Paroki->nama_paroki}}</td>
                         <td st>{{$d->jenis}}</td>
                         <td st>{{$d->jadwal}}</td>
+                        <td st>{{$d->lokasi}}</td>
+                        <td st>{{$d->romo}}</td>
                         <td st>{{$d->status}}</td>
                         <td><img src="{{asset('file_sertifikat/baptis/'.$d->file_sertifikat)}}" height='40px'/></td>
                         <td>

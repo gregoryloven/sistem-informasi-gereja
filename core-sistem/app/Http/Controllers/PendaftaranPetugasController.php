@@ -19,15 +19,13 @@ class PendaftaranPetugasController extends Controller
     public function index()
     {
         $users=User::all();
-        $data = PendaftaranPelayananLainnya::join('pelayanan_lainnyas', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id', '=', 'pelayanan_lainnyas.id')
-        ->get(['pelayanan_lainnyas.nama_pelayanan as namaPelayanan', 'pendaftaran_pelayanan_lainnyas.nama_pemohon', 'pendaftaran_pelayanan_lainnyas.jadwal', 'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.keterangan', 'status']);  
         $pendaftaran_petugas = PendaftaranPetugas::join('petugas_liturgis', 'pendaftaran_petugas_liturgis.petugas_liturgi_id', '=', 'petugas_liturgis.id')
         ->join('users', 'pendaftaran_petugas_liturgis.user_id', '=', 'users.id')
-        ->get(['users.nama_user', 'petugas_liturgis.petugas_liturgi', 'status']); 
+        ->get(['users.nama_user', 'petugas_liturgis.jenis_petugas', 'status']); 
         $petugas = PetugasLiturgi::all();
 
         if(optional(Auth::user())->id){
-            return view('pendaftaranpetugas.index',compact("pendaftaran_petugas", "users", "data", "petugas"));
+            return view('pendaftaranpetugas.index',compact("pendaftaran_petugas", "users", "petugas"));
         }else{
             return redirect('/login');
         }

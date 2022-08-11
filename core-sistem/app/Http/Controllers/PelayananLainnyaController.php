@@ -20,7 +20,7 @@ class PelayananLainnyaController extends Controller
     {
         $data=User::all();
         $reservasi = PendaftaranPelayananLainnya::join('pelayanan_lainnyas', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id', '=', 'pelayanan_lainnyas.id')
-        ->get(['pelayanan_lainnyas.nama_pelayanan as namaPelayanan', 'pendaftaran_pelayanan_lainnyas.id' ,'pendaftaran_pelayanan_lainnyas.nama_pemohon', 'pendaftaran_pelayanan_lainnyas.jadwal', 'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.keterangan', 'status']); 
+        ->get(['pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.id' ,'pendaftaran_pelayanan_lainnyas.nama_pemohon', 'pendaftaran_pelayanan_lainnyas.jadwal', 'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.keterangan', 'status', 'alasan_penolakan']); 
         $kel=Keluarga::all();
         $pelayanan=PelayananLainnya::all();
         $kepalaKeluarga = Keluarga::join('users', 'keluargas.id_kepala_keluarga', '=', 'users.id')
@@ -113,7 +113,7 @@ class PelayananLainnyaController extends Controller
         return redirect('/pelayananlainnya');
     }
 
-    public function UpdateForm(Request $request)
+    public function Pembatalan(Request $request)
     {
         $data=PendaftaranPelayananLainnya::find($request->id);
         $data->status = "Dibatalkan";
@@ -123,6 +123,7 @@ class PelayananLainnyaController extends Controller
 
         return redirect()->route('pelayananlainnya.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pelayanan Berhasil Dibatalkan');
     }
+
 
     // public function InputFormAll(Request $request)
     // {

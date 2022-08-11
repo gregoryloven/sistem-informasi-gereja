@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Krisma;
 use App\Models\User;
-use App\Models\Paroki;
 use Illuminate\Http\Request;
 
 class KrismaController extends Controller
@@ -18,9 +17,7 @@ class KrismaController extends Controller
     {
         $data = Krisma::all();
         $users = User::all();
-        $romo = User::where('role','romo')->get();
-        $par = Paroki::all();
-        return view('krisma.index',compact("data","users","romo","par"));
+        return view('krisma.index',compact("data","users"));
     }
 
     /**
@@ -43,9 +40,9 @@ class KrismaController extends Controller
     {
         $data = new Krisma();
         $data->user_id = $request->get('user_id');
-        $data->id_romo = $request->get('id_romo');
-        $data->paroki_id = $request->get('paroki_id');
         $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
+        $data->lokasi = $request->get('lokasi');
+        $data->romo = $request->get('romo');
         $data->status = $request->get('status');
 
         //File Sertifikat
@@ -95,9 +92,9 @@ class KrismaController extends Controller
     {
         $krisma=Krisma::find($request->id);
         $krisma->user_id = $request->get('user_id');
-        $krisma->id_romo = $request->get('id_romo');
-        $krisma->paroki_id = $request->get('paroki_id');
         $krisma->jadwal = $request->get('jadwal');
+        $krisma->lokasi = $request->get('lokasi');
+        $krisma->romo = $request->get('romo');
         $krisma->status = $request->get('status');
 
         //File Sertifikat
@@ -141,10 +138,8 @@ class KrismaController extends Controller
         $id=$request->get("id");
         $data=Krisma::find($id);
         $users=User::all();
-        $romo = User::where('role','romo')->get();
-        $paroki=Paroki::all();
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('krisma.EditForm',compact("data","users","romo","paroki"))->render()),200);
+            'msg'=>view('krisma.EditForm',compact("data","users"))->render()),200);
     }
 }

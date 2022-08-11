@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('file_akta_kelahiran')->nullable();
             $table->string('file_ktp')->nullable();
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -46,9 +46,9 @@ class BaptisController extends Controller
         $data->wali_baptis_ayah = $request->get('wali_baptis_ayah');
         $data->wali_baptis_ibu = $request->get('wali_baptis_ibu');
         $data->jenis = $request->get('jenis');
+        $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
         $data->lokasi = $request->get('lokasi');
         $data->romo = $request->get('romo');
-        $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
         $data->status = $request->get('status');
 
         //File Sertifikat
@@ -101,9 +101,9 @@ class BaptisController extends Controller
         $baptis->wali_baptis_ayah = $request->get('wali_baptis_ayah');
         $baptis->wali_baptis_ibu = $request->get('wali_baptis_ibu');
         $baptis->jenis = $request->get('jenis');
+        $baptis->jadwal = $request->get('jadwal');
         $baptis->lokasi = $request->get('lokasi');
         $baptis->romo = $request->get('romo');
-        $baptis->jadwal = $request->get('jadwal');
         $baptis->status = $request->get('status');
 
         //File Sertifikat
@@ -147,11 +147,11 @@ class BaptisController extends Controller
         $id=$request->get("id");
         $data=Baptis::find($id);
         $users=User::all();
-        $wali_baptis_ayah = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Pria']])->get;
-        $wali_baptis_ibu = User::where([['role','umat'], ['role', 'ketua_lingkungan'], ['jenis_kelamin', 'Wanita']])->get;
+        $wali_baptis_ayah = User::where([['jenis_kelamin', 'Pria']])->get;
+        $wali_baptis_ibu = User::where([['jenis_kelamin', 'Wanita']])->get;
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('baptis.EditForm',compact("data","users","wali_baptis_ayah","wali_baptis_ibu","romo","paroki"))->render()),200);
+            'msg'=>view('baptis.EditForm',compact("data","users","wali_baptis_ayah","wali_baptis_ibu"))->render()),200);
     }
 
 }

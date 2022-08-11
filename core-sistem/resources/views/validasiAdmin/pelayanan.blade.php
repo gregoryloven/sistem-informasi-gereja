@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-    Validate
+    Validasi Pelayanan
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Daftar Permohonan Pelayanan
+        Daftar Permohonan
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -48,69 +48,60 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        
                         <td st>{{$d->nama_pemohon}}</td>
-                        <td st>{{$d->namaPelayanan}}</td>
+                        <td st>{{$d->jenisPelayanan}}</td>
                         <td st>{{$d->jadwal}}</td>
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->keterangan}}</td>
-                        <td st class="d-flex">
-                            @if($d->status == "Diterima2")
-                            <form action="/validateMisa/accept" method="post">
+                        <td st class="d-flex justify-content-center" >
+                            @if($d->status == "Disetujui Lingkungan")
+                            <form action="/validasiAdmin/acceptpelayanan" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validateMisa/decline" class="ml-2" method="post">
+                            <form action="/validasiAdmin/declinepelayanan" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                                <button class="btn btn-danger" type="submit">Tolak</button>
+                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a>
                             </form>
-                            @elseif($d->status == "Diterima")
-                            <div class="alert alert-success" role="alert">
-                                {{$d->status}}
-                            </div>
-                            @else
-                            <div class="alert alert-danger" role="alert">
-                                {{$d->status}}
-                            </div>
                             @endif
                         </td>
                     </tr>
-                    @endforeach
-                    @php $i = 0; @endphp
-                    @foreach($reservasiAll as $da)
-                    @php $i += 1; @endphp
-                    <tr>
-                        <td>@php echo $i; @endphp</td>
-                        <td st>{{$da->nama_pemohon}}</td>
-                        <td st>{{$da->namaPelayanan}}</td>
-                        <td st>{{$da->jadwal}}</td>
-                        <td st>{{$da->alamat}}</td>
-                        <td st>{{$da->keterangan}}</td>
-                        <td st class="d-flex">
-                            @if($da->status == "Diterima")
-                            <div class="alert alert-success" role="alert">
-                                {{$da->status}}
+                    <!-- EDIT WITH MODAL -->
+                    <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" >
+                                <form role="form" method="POST" action="{{ url('validasiAdmin/declinepelayanan') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                        <h4 class="modal-title">Pembatalan Reservasi</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @csrf
+                                        <label>Alasan Penolakan:</label>
+                                        <input type="hidden" name="id" value="{{$d->id}}">
+                                        <textarea name="alasan_penolakan" class="form-control" id="" cols="30" rows="10" required></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-info">Submit</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
                             </div>
-                            @else
-                            <div class="alert alert-danger" role="alert">
-                                {{$da->status}}
-                            </div>
-                            @endif
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        List Pendaftaran Petugas Liturgi
-    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            Riwayat Validasi
+        </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable">
@@ -118,38 +109,32 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama</th>
-                        <th>Sebagai</th>
+                        <th>Jenis Pelayanan</th>
+                        <th>Tanggal Permohonan</th>
+                        <th>Alamat</th>
+                        <th>Keterangan</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
-                    @foreach($petugas as $d)
+                    @foreach($reservasiAll as $da)
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        
-                        <td st>{{$d->nama_user}}</td>
-                        <td st>{{$d->petugas_liturgi}}</td>
-                        <td st class="d-flex">
-                            @if($d->status == "Pending")
-                            <form action="/validatePetugas/accept" method="post">
-                                @csrf
-                                <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                                <button class="btn btn-success" type="submit">Terima</button>
-                            </form>
-                            <form action="/validatePetugas/decline" class="ml-2" method="post">
-                                @csrf
-                                <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                                <button class="btn btn-danger" type="submit">Tolak</button>
-                            </form>
-                            @elseif($d->status == "Diterima")
+                        <td st>{{$da->nama_pemohon}}</td>
+                        <td st>{{$da->jenisPelayanan}}</td>
+                        <td st>{{$da->jadwal}}</td>
+                        <td st>{{$da->alamat}}</td>
+                        <td st>{{$da->keterangan}}</td>
+                        <td st class="d-flex justify-content-center" >
+                            @if($da->status == "Disetujui Paroki")
                             <div class="alert alert-success" role="alert">
-                                {{$d->status}}
+                                {{$da->status}}
                             </div>
                             @else
                             <div class="alert alert-danger" role="alert">
-                                {{$d->status}}
+                                {{$da->status}}
                             </div>
                             @endif
                         </td>

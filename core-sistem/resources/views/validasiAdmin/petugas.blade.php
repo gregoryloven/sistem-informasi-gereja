@@ -1,4 +1,4 @@
-@extends('layouts.sbkbg')
+@extends('layouts.sbadmin2')
 
 @push('css')
 <style>
@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-    Validasi
+    Validasi Petugas Liturgi
 @endsection
 
 @section('content')
@@ -24,9 +24,10 @@
     </div>
 @endif
 
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Formulir Permohonan Misa
+        List Pendaftaran Petugas Liturgi
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -35,31 +36,26 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama</th>
-                        <th>Jenis Pelayanan</th>
-                        <th>Tanggal Permohonan</th>
-                        <th>Alamat</th>
-                        <th>Keterangan</th>
+                        <th>Sebagai</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
-                    @foreach($reservasi as $d)
+                    @foreach($petugas as $d)
                     @php $i += 1; @endphp
                     <tr>
-                        <td st>{{$d->nama_pemohon}}</td>
-                        <td st>{{$d->namaPelayanan}}</td>
-                        <td st>{{$d->jadwal}}</td>
-                        <td st>{{$d->alamat}}</td>
-                        <td st>{{$d->keterangan}}</td>
-                        <td st class="d-flex">
+                        <td>@php echo $i; @endphp</td>
+                        <td st>{{$d->nama_user}}</td>
+                        <td st>{{$d->jenis_petugas}}</td>
+                        <td st class="d-flex justify-content-center">
                             @if($d->status == "Pending")
-                            <form action="/validateMisaKbg/accept" method="post">
+                            <form action="/validasiAdmin/acceptpetugas" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validateMisaKbg/decline" class="ml-2" method="post">
+                            <form action="/validasiAdmin/declinepetugas" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-danger" type="submit">Tolak</button>
@@ -71,29 +67,6 @@
                             @else
                             <div class="alert alert-danger" role="alert">
                                 {{$d->status}}
-                            </div>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
-                    @php $i = 0; @endphp
-                    @foreach($reservasiAll as $da)
-                    @php $i += 1; @endphp
-                    <tr>
-                        <td>@php echo $i; @endphp</td>
-                        <td st>{{$da->nama_pemohon}}</td>
-                        <td st>{{$da->namaPelayanan}}</td>
-                        <td st>{{$da->jadwal}}</td>
-                        <td st>{{$da->alamat}}</td>
-                        <td st>{{$da->keterangan}}</td>
-                        <td st class="d-flex">
-                            @if($da->status == "Diterima")
-                            <div class="alert alert-success" role="alert">
-                                {{$da->status}}
-                            </div>
-                            @else
-                            <div class="alert alert-danger" role="alert">
-                                {{$da->status}}
                             </div>
                             @endif
                         </td>

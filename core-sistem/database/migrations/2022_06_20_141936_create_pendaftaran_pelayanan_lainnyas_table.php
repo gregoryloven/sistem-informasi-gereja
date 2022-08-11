@@ -20,7 +20,7 @@ class CreatePendaftaranPelayananLainnyasTable extends Migration
             $table->dateTime('jadwal');
             $table->text('alamat');
             $table->text('keterangan')->nullable();
-            $table->text('alasan_pembatalan');
+            $table->text('alasan_pembatalan')->nullable();
             $table->string('status');
             $table->foreign('pelayanan_lainnya_id')->references('id')->on('pelayanan_lainnyas');
             $table->timestamps();
