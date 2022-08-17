@@ -30,7 +30,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable">
+            <table class="table table-bordered">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -59,8 +59,8 @@
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->jenis}}</td>
                         <td st>{{$d->romo}}</td>
-                        <td st>
-                            @if($d->status == "Disetujui KBG")
+                        <td st class="d-flex justify-content-center" >
+                            @if($d->status == "Disetujui Lingkungan")
                             <form action="/validasiAdmin/acceptbaptis" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
@@ -82,7 +82,7 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Pembatalan Reservasi</h4>
+                                        <h4 class="modal-title">Penolakan Validasi</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
@@ -104,6 +104,7 @@
         </div>
     </div>
 </div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         Riwayat Validasi
@@ -122,6 +123,7 @@
                         <th>Lokasi</th>
                         <th>Jenis</th>
                         <th>Romo</th>
+                        <th>Lingkungan</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -139,6 +141,7 @@
                         <td st>{{$da->lokasi}}</td>
                         <td st>{{$da->jenis}}</td>
                         <td st>{{$da->romo}}</td>
+                        <td st>{{$da->nama_lingkungan}}</td>
                         <td st >
                             @if($da->status == "Disetujui Paroki")
                             <div class="alert alert-success" role="alert">

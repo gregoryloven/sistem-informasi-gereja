@@ -157,7 +157,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiAdmin/declinebaptis', [ValidasiAdminController::class, 'DeclineBaptis'])->name('validasiAdmin.DeclineBaptis');
 
 
-    // validasiAdmin Kbg
+    // validasi Kbg
     Route::get('validasiKbgPelayanan', [ValidasiKbgController::class, 'pelayanan'])->name('validasiKbg.pelayanan');
     Route::post('/validasiKbg/acceptpelayanan', [ValidasiKbgController::class, 'AcceptPelayanan'])->name('validasiKbg.AcceptPelayanan');
     Route::post('/validasiKbg/declinepelayanan', [ValidasiKbgController::class, 'DeclinePelayanan'])->name('validasiAdmin.DeclinePelayanan');
@@ -166,12 +166,12 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiKbg/acceptbaptis', [ValidasiKbgController::class, 'AcceptBaptis'])->name('validasiKbg.AcceptBaptis');
     Route::post('/validasiKbg/declinebaptis', [ValidasiKbgController::class, 'DeclineBaptis'])->name('validasiKbg.DeclineBaptis');
 
-    // validasiAdmin KL
+    // validasi KL
     Route::get('validasiKLPelayanan', [ValidasiKLController::class, 'pelayanan'])->name('validasiKL.pelayanan');
     Route::post('/validasiKL/acceptpelayanan', [ValidasiKLController::class, 'AcceptPelayanan'])->name('validasiKL.AcceptPelayanan');
     Route::post('/validasiKL/declinepelayanan', [ValidasiKLController::class, 'DeclinePelayanan'])->name('validasiKL.DeclinePelayanan');
 
-    Route::get('validasiKLBaptis', [ValidasiKLController::class, 'baptis'])->name('validasiKbvalidasiKLg.baptis');
+    Route::get('validasiKLBaptis', [ValidasiKLController::class, 'baptis'])->name('validasiKL.baptis');
     Route::post('/validasiKL/acceptbaptis', [ValidasiKLController::class, 'AcceptBaptis'])->name('validasiKL.AcceptBaptis');
     Route::post('/validasiKL/declinebaptis', [ValidasiKLController::class, 'DeclineBaptis'])->name('validasiKL.DeclineBaptis');
 

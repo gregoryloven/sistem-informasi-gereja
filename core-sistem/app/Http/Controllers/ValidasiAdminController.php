@@ -18,9 +18,19 @@ class ValidasiAdminController extends Controller
      */
     public function baptis()
     {
-        $reservasi = Baptis::where("status", "Disetujui Lingkungan")->get();
+        // $reservasi = Baptis::where("status", "Disetujui Lingkungan")->get();
+        $reservasi = Baptis::join('users', 'baptiss.user_id', '=', 'users.id')
+        ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
+        ->where('status', '=', "Disetujui Lingkungan")
+        ->get(['baptiss.*','keluargas.lingkungan_id']);
         
-        $reservasiAll = Baptis::where("status", "!=", "Disetujui Lingkungan")->get();
+        $reservasiAll = Baptis::join('users', 'baptiss.user_id', '=', 'users.id')
+        ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
+        ->join('lingkungans', 'keluargas.lingkungan_id', '=', 'lingkungans.id')
+        ->where('status','=', 'Disetujui Paroki')
+        ->orWhere('status','=', 'Selesai')
+        ->orderBy('jadwal', 'DESC')
+        ->get(['baptiss.*','lingkungans.nama_lingkungan']);
         
         return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
     }

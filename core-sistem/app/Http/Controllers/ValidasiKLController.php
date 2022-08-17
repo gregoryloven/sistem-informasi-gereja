@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PelayananLainnya;
 use App\Models\PendaftaranPelayananLainnya;
+use App\Models\Baptis;
 use Illuminate\Http\Request;
 
 class ValidasiKLController extends Controller
@@ -64,6 +65,6 @@ class ValidasiKLController extends Controller
         $baptis->alasan_penolakan = $request->get("alasan_penolakan");
         $baptis->save();
 
-        return redirect()->route('validasiKbg.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Ditolak');
+        return redirect()->route('validasiKL.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Ditolak');
     }
 }

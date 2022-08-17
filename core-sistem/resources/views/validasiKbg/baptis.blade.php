@@ -49,7 +49,7 @@
                     @php $i = 0; @endphp
                     @foreach($reservasi as $d)
                     @php $i += 1; @endphp
-                    <tr>
+                    <tr style="text-align: center;">
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->User->nama_user}}</td>
                         <td st>{{$d->Wali_baptis_ayah->nama_user}}</td>
@@ -59,7 +59,7 @@
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->jenis}}</td>
                         <td st>{{$d->romo}}</td>
-                        <td st>
+                        <td >
                             @if($d->status == "Diproses")
                             <form action="/validasiKbg/acceptbaptis" method="post">
                                 @csrf
