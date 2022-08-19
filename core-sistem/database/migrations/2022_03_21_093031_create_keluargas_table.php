@@ -13,17 +13,17 @@ class CreateKeluargasTable extends Migration
      */
     public function up()
     {
-        Schema::create('keluargas', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('id_kepala_keluarga');
-            $table->unsignedBigInteger('lingkungan_id');
-            $table->unsignedBigInteger('kbg_id');
-            $table->text('alamat');
-            $table->foreign('id_kepala_keluarga')->references('id')->on('users');
-            $table->foreign('lingkungan_id')->references('id')->on('lingkungans');
-            $table->foreign('kbg_id')->references('id')->on('kbgs');
-            $table->timestamps();
-        });
+        // Schema::create('keluargas', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->unsignedBigInteger('id_kepala_keluarga');
+        //     $table->unsignedBigInteger('lingkungan_id');
+        //     $table->unsignedBigInteger('kbg_id');
+        //     $table->text('alamat');
+        //     $table->foreign('id_kepala_keluarga')->references('id')->on('users');
+        //     $table->foreign('lingkungan_id')->references('id')->on('lingkungans');
+        //     $table->foreign('kbg_id')->references('id')->on('kbgs');
+        //     $table->timestamps();
+        // });
     }
 
     /**

@@ -85,8 +85,8 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
+                        <th>KBG</th>
                         <th>Lingkungan</th>
-                        <th>Nama</th>
                         <th>Batasan Wilayah</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
@@ -97,9 +97,8 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        
-                        <td st>{{$d->Lingkungan->nama_lingkungan}}</td>
                         <td st>{{$d->nama_kbg}}</td>
+                        <td st>{{$d->Lingkungan->nama_lingkungan}}</td>
                         <td st>{{$d->batasan_wilayah}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">

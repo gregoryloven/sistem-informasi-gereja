@@ -15,6 +15,7 @@ use App\Http\Controllers\PengurapanOrangSakitController;
 use App\Http\Controllers\PelayananLainnyaController;
 use App\Http\Controllers\PendaftaranPetugasController;
 use App\Http\Controllers\PendaftaranBaptisController;
+use App\Http\Controllers\PendaftaranKomuniController;
 use App\Http\Controllers\PemindahanKbgController;
 use App\Http\Controllers\ValidasiAdminController;
 use App\Http\Controllers\ValidasiKbgController;
@@ -64,6 +65,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         return view('layouts.sbuser');
     });
 
+    Route::get('/profile', function () {
+        return view('profile.index');
+    });
+
     //User KL
     Route::resource('userkl', UserKLController::class);
 
@@ -94,6 +99,14 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //User
     Route::resource('users', UserController::class);
+
+    //Tambah Akun Ketua Lingkungan
+    Route::get('userKL', [UserController::class, 'DaftarKL'])->name('user.kl');
+    Route::post('/user/TambahKL', [UserController::class, 'TambahKL'])->name('user.TambahKL');
+
+    //Tambah Akun Ketua Lingkungan
+    Route::get('userKKBG', [UserController::class, 'DaftarKKBG'])->name('user.kkbg');
+    Route::post('/user/TambahKKBG', [UserController::class, 'TambahKKBG'])->name('user.TambahKKBG');
 
     //Keluarga
     Route::resource('keluargas', KeluargaController::class);
@@ -143,6 +156,11 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/pendaftaranbaptis/InputForm', [PendaftaranBaptisController::class, 'InputForm'])->name('pendaftaranbaptis.InputForm');
     Route::get('/pendaftaranbaptis/OpenForm/{id}', [PendaftaranBaptisController::class, 'OpenForm'])->name('pendaftaranbaptis.OpenForm');
     
+    //Pendaftaran Komuni
+    Route::resource('pendaftarankomuni', PendaftaranKomuniController::class);
+    Route::post('/pendaftarankomuni/InputForm', [PendaftaranKomuniController::class, 'InputForm'])->name('pendaftarankomuni.InputForm');
+    Route::get('/pendaftarankomuni/OpenForm/{id}', [PendaftaranKomuniController::class, 'OpenForm'])->name('pendaftarankomuni.OpenForm');
+
     //Validasi Admin
     Route::get('validasiAdminPelayanan', [ValidasiAdminController::class, 'pelayanan'])->name('validasiAdmin.pelayanan');
     Route::post('/validasiAdmin/acceptpelayanan', [ValidasiAdminController::class, 'Accept'])->name('validasiAdmin.Accept');
@@ -156,6 +174,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiAdmin/acceptbaptis', [ValidasiAdminController::class, 'AcceptBaptis'])->name('validasiAdmin.AcceptBaptis');
     Route::post('/validasiAdmin/declinebaptis', [ValidasiAdminController::class, 'DeclineBaptis'])->name('validasiAdmin.DeclineBaptis');
 
+    Route::get('validasiAdminKomuni', [ValidasiAdminController::class, 'komuni'])->name('validasiAdmin.komuni');
+    Route::post('/validasiAdmin/acceptkomuni', [ValidasiAdminController::class, 'AcceptKomuni'])->name('validasiAdmin.AcceptKomuni');
+    Route::post('/validasiAdmin/declinekomuni', [ValidasiAdminController::class, 'DeclineKomuni'])->name('validasiAdmin.DeclineKomuni');
+
 
     // validasi Kbg
     Route::get('validasiKbgPelayanan', [ValidasiKbgController::class, 'pelayanan'])->name('validasiKbg.pelayanan');
@@ -166,6 +188,11 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiKbg/acceptbaptis', [ValidasiKbgController::class, 'AcceptBaptis'])->name('validasiKbg.AcceptBaptis');
     Route::post('/validasiKbg/declinebaptis', [ValidasiKbgController::class, 'DeclineBaptis'])->name('validasiKbg.DeclineBaptis');
 
+    Route::get('validasiKbgKomuni', [ValidasiKbgController::class, 'komuni'])->name('validasiKbg.komuni');
+    Route::post('/validasiKbg/acceptkomuni', [ValidasiKbgController::class, 'AcceptKomuni'])->name('validasiKbg.AcceptKomuni');
+    Route::post('/validasiKbg/declinekomuni', [ValidasiKbgController::class, 'DeclineKomuni'])->name('validasiKbg.DeclineKomuni');
+
+
     // validasi KL
     Route::get('validasiKLPelayanan', [ValidasiKLController::class, 'pelayanan'])->name('validasiKL.pelayanan');
     Route::post('/validasiKL/acceptpelayanan', [ValidasiKLController::class, 'AcceptPelayanan'])->name('validasiKL.AcceptPelayanan');
@@ -174,6 +201,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('validasiKLBaptis', [ValidasiKLController::class, 'baptis'])->name('validasiKL.baptis');
     Route::post('/validasiKL/acceptbaptis', [ValidasiKLController::class, 'AcceptBaptis'])->name('validasiKL.AcceptBaptis');
     Route::post('/validasiKL/declinebaptis', [ValidasiKLController::class, 'DeclineBaptis'])->name('validasiKL.DeclineBaptis');
+    
+    Route::get('validasiKLKomuni', [ValidasiKLController::class, 'komuni'])->name('validasiKL.komuni');
+    Route::post('/validasiKL/acceptkomuni', [ValidasiKLController::class, 'AcceptKomuni'])->name('validasiKL.AcceptKomuni');
+    Route::post('/validasiKL/declinekomuni', [ValidasiKLController::class, 'DeclineKomuni'])->name('validasiKL.DeclineKomuni');
 
 
     //Pemindahan Kbg

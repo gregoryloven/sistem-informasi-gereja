@@ -23,6 +23,7 @@ class CreateBaptissTable extends Migration
             $table->string('lokasi');
             $table->string('romo');
             $table->enum('status', ['Diproses', 'Selesai']);
+            $table->string('alasan_penolakan')->nullable();
             $table->string('file_sertifikat');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('wali_baptis_ayah')->references('id')->on('users');

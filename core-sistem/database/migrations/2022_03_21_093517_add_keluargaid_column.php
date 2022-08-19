@@ -13,10 +13,10 @@ class AddKeluargaidColumn extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('keluarga_id')->after('id')->nullable();
-            $table->foreign('keluarga_id')->references('id')->on('keluargas'); 
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('keluarga_id')->after('id')->nullable();
+        //     $table->foreign('keluarga_id')->references('id')->on('keluargas'); 
+        // });
     }
 
     /**
@@ -26,9 +26,9 @@ class AddKeluargaidColumn extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('keluarga_id');
-            $table->dropColumn('keluarga_id'); 
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->dropForeign('keluarga_id');
+        //     $table->dropColumn('keluarga_id'); 
+        // });
     }
 }

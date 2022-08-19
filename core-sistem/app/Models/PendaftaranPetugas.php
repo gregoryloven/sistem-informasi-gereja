@@ -10,5 +10,4 @@ class PendaftaranPetugas extends Model
     use HasFactory;
     protected $table = 'pendaftaran_petugas_liturgis';
     protected $primaryKey = 'id';
-    public $timestamps = false;
 }

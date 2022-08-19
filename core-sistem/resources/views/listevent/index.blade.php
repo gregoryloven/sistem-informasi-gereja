@@ -55,7 +55,7 @@
                         </div>
                         <div class="form-group">
                             <label >Jadwal</label>
-                            <input type="date" class="form-control" id='jadwal' name='jadwal' placeholder="Jadwal" required>
+                            <input type="datetime-local" class="form-control" id='jadwal' name='jadwal' placeholder="Jadwal" required>
                         </div>
                         <div class="form-group">
                             <label >Lokasi</label>

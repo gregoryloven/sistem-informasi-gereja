@@ -10,8 +10,8 @@
             @csrf
 
             <div>
-                <x-jet-label for="nama_user" value="{{ __('Nama Lengkap') }}" />
-                <x-jet-input id="nama_user" class="block mt-1 w-full" type="text" name="nama_user" :value="old('nama_user')" required autofocus autocomplete="nama" />
+                <x-jet-label for="nama_lengkap" value="{{ __('Nama Lengkap') }}" />
+                <x-jet-input id="nama_lengkap" class="block mt-1 w-full" type="text" name="nama_lengkap" :value="old('nama_lengkap')" required autofocus autocomplete="nama" />
             </div>
 
             <div class="mt-4">
@@ -41,8 +41,8 @@
                 <x-jet-label for="jenis_kelamin" value="{{ __('Jenis Kelamin') }}" /> 
                 <select name="jenis_kelamin" class="block mt-1 w-full" id="jenis_kelamin">
                     <option value=""></option>
-                    <option value="Pria" @if (old('jenis_kelamin') == "Pria") {{ 'selected' }} @endif>Pria</option>
-                    <option value="Wanita" @if (old('jenis_kelamin') == "Wanita") {{ 'selected' }} @endif>Wanita</option>
+                    <option value="Laki-Laki" @if (old('jenis_kelamin') == "Laki-Laki") {{ 'selected' }} @endif>Laki-Laki</option>
+                    <option value="Perempuan" @if (old('jenis_kelamin') == "Perempuan") {{ 'selected' }} @endif>Perempuan</option>
                 </select>
             </div>
 

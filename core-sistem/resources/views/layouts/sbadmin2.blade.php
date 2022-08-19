@@ -71,12 +71,49 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseData"
+                    aria-expanded="true" aria-controls="collapseData">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Data</span>
+                </a>
+                <div id="collapseData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Lingkungan</a>
+                        <a class="collapse-item" href="{{ route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">KBG</a>
+                        <a class="collapse-item" href="#">Umat</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSakramen"
+                    aria-expanded="true" aria-controls="collapseSakramen">
+                    <i class="fas fa-fw fa-cross"></i>
+                    <span>Sakramen</span>
+                </a>
+                <div id="collapseSakramen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">Baptis</a>
+                        <a class="collapse-item" href="#">Komuni Pertama</a>
+                        <a class="collapse-item" href="#">Krisma</a>
+                        <a class="collapse-item" href="#">Perkawinan</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('listevents.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-pray"></i>
+                    <span>Buat Jadwal</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseValidasi"
+                    aria-expanded="true" aria-controls="collapseValidasi">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Validasi</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseValidasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis</a>
                         <a class="collapse-item" href="#">Komuni Pertama</a>
@@ -89,25 +126,20 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('users.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>User</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('keluargas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAkun"
+                    aria-expanded="true" aria-controls="collapseAkun">
                     <i class="fas fa-fw fa-users"></i>
-                    <span>Keluarga</span></a>
+                    <span>Akun</span>
+                </a>
+                <div id="collapseAkun" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('user.kl', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Ketua Lingkungan</a>
+                        <a class="collapse-item" href="{{ route('user.kkbg', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Ketua KBG</a>
+                    </div>
+                </div>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('parokis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-church"></i>
-                    <span>Paroki</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Lingkungan</span></a>
@@ -159,7 +191,7 @@
                 <a class="nav-link" href="{{ route('tobats.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-hands"></i>
                     <span>Tobat</span></a>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -357,10 +389,11 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
+                           
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -383,7 +416,6 @@
                                 </a>
                             </div>
                         </li>
-
                     </ul>
 
                 </nav>

@@ -10,5 +10,4 @@ class PendaftaranPelayananLainnya extends Model
     use HasFactory;
     protected $table = 'pendaftaran_pelayanan_lainnyas';
     protected $primaryKey = 'id';
-    public $timestamps = false;
 }

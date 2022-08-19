@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Baptis;
+use App\Models\KomuniPertama;
 use App\Models\PelayananLainnya;
 use App\Models\PendaftaranPelayananLainnya;
 use App\Models\PendaftaranPetugas;
 use Illuminate\Http\Request;
+use DB;
 
 class ValidasiAdminController extends Controller
 {
@@ -16,44 +18,6 @@ class ValidasiAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function baptis()
-    {
-        // $reservasi = Baptis::where("status", "Disetujui Lingkungan")->get();
-        $reservasi = Baptis::join('users', 'baptiss.user_id', '=', 'users.id')
-        ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
-        ->where('status', '=', "Disetujui Lingkungan")
-        ->get(['baptiss.*','keluargas.lingkungan_id']);
-        
-        $reservasiAll = Baptis::join('users', 'baptiss.user_id', '=', 'users.id')
-        ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
-        ->join('lingkungans', 'keluargas.lingkungan_id', '=', 'lingkungans.id')
-        ->where('status','=', 'Disetujui Paroki')
-        ->orWhere('status','=', 'Selesai')
-        ->orderBy('jadwal', 'DESC')
-        ->get(['baptiss.*','lingkungans.nama_lingkungan']);
-        
-        return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
-    }
-
-    public function AcceptBaptis(Request $request)
-    {
-        $baptis=Baptis::find($request->id);
-        $baptis->status = "Disetujui Paroki";
-        $baptis->save();
-
-        return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Disetujui');
-    }
-
-    public function DeclineBaptis(Request $request)
-    {
-        $baptis=Baptis::find($request->id);
-        $baptis->status = "Ditolak";
-        $baptis->alasan_penolakan = $request->get("alasan_penolakan");
-        $baptis->save();
-
-        return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Ditolak');
-    }
-    
      public function pelayanan()
     {
         $reservasi = PendaftaranPelayananLainnya::join('pelayanan_lainnyas', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id', '=', 'pelayanan_lainnyas.id')
@@ -111,5 +75,74 @@ class ValidasiAdminController extends Controller
         $petugas->save();
 
         return redirect()->route('validasiAdmin.petugas', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Petugas Liturgi Berhasil Ditolak');
+    }
+
+    public function baptis()
+    {
+        // $reservasi = Baptis::where("status", "Disetujui Lingkungan")->get();
+        $reservasi = Baptis::join('users', 'baptiss.user_id', '=', 'users.id')
+        ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
+        ->where('status', '=', "Disetujui Lingkungan")
+        ->get(['baptiss.*','keluargas.lingkungan_id']);
+        
+        $reservasiAll = Baptis::join('users', 'baptiss.user_id', '=', 'users.id')
+        ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
+        ->join('lingkungans', 'keluargas.lingkungan_id', '=', 'lingkungans.id')
+        ->where('status','=', 'Disetujui Paroki')
+        ->orWhere('status','=', 'Selesai')
+        ->orderBy('jadwal', 'DESC')
+        ->get(['baptiss.*','lingkungans.nama_lingkungan']);
+        
+        return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
+    }
+
+    public function AcceptBaptis(Request $request)
+    {
+        $baptis=Baptis::find($request->id);
+        $baptis->status = "Disetujui Paroki";
+        $baptis->save();
+
+        return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Disetujui');
+    }
+
+    public function DeclineBaptis(Request $request)
+    {
+        $baptis=Baptis::find($request->id);
+        $baptis->status = "Ditolak";
+        $baptis->alasan_penolakan = $request->get("alasan_penolakan");
+        $baptis->save();
+
+        return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Ditolak');
+    }
+
+    public function komuni(Request $request)
+    {
+        $reservasi = KomuniPertama::where('status', 'Disetujui Lingkungan')->get();
+        $reservasiAll = DB::table('komuni_pertamas')
+        ->where('status', 'Disetujui Paroki')
+        ->orwhere('status', 'Ditolak')
+        ->orderBy('jadwal', 'DESC')
+        ->get();
+
+        return view('validasiAdmin.komuni',compact("reservasi", "reservasiAll"));
+    }
+
+    public function AcceptKomuni(Request $request)
+    {
+        $komuni=KomuniPertama::find($request->id);
+        $komuni->status = "Disetujui Paroki";
+        $komuni->save();
+
+        return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Komuni Berhasil Disetujui');
+    }
+
+    public function DeclineKomuni(Request $request)
+    {
+        $komuni=KomuniPertama::find($request->id);
+        $komuni->status = "Ditolak";
+        $komuni->alasan_penolakan = $request->get("alasan_penolakan");
+        $komuni->save();
+
+        return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Komuni Berhasil Ditolak');
     }
 }

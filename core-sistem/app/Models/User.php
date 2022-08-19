@@ -26,6 +26,16 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $primaryKey = 'id';
 
+    public function lingkungan()
+    {
+    	return $this->belongsTo(Lingkungan::class, 'lingkungan_id');
+    }
+
+    public function kbg()
+    {
+    	return $this->belongsTo(Kbg::class, 'kbg_id');
+    }
+    
     public function keluarga()
     {
     	return $this->hasMany(Keluarga::class, 'keluarga_id', 'id');

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Keluarga;
+use App\Models\Lingkungan;
+use App\Models\Kbg;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -23,13 +25,13 @@ class UserController extends Controller
         //     ->select('lingkungans.*')
         //     ->get();
             // dd(Auth);
-        $users = DB::table('users')
-            ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
-            ->join('lingkungans', 'lingkungans.id', '=', 'keluargas.lingkungan_id')
-            ->select('users.*', 'keluargas.*', 'lingkungans.*')
-            ->get();
+        // $users = DB::table('users')
+        //     ->join('keluargas', 'users.keluarga_id', '=', 'keluargas.id')
+        //     ->join('lingkungans', 'lingkungans.id', '=', 'keluargas.lingkungan_id')
+        //     ->select('users.*', 'keluargas.*', 'lingkungans.*')
+        //     ->get();
 
-        return view('user.index',compact("users"));
+        // return view('user.index',compact("users"));
     }
 
     /**
@@ -107,7 +109,7 @@ class UserController extends Controller
     {
         $id = Auth::user()->id;
         $user=User::find($id);
-        $user->nama_user=$request->get('nama_user');
+        $user->nama_lengkap=$request->get('nama_lengkap');
         $user->tempat_lahir=$request->get('tempat_lahir');
         $user->tanggal_lahir=$request->get('tanggal_lahir');
         $user->agama=$request->get('agama');
@@ -117,5 +119,45 @@ class UserController extends Controller
         $user->save();
 
         return redirect('/sbadmin2')->with('status', 'Daftar User Berhasil');
+    }
+
+    public function DaftarKL()
+    {
+        $users = User::where([['role', 'ketua lingkungan']])->get();
+        $ling = Lingkungan::all();
+
+        return view('user.kl',compact("users", "ling"));
+    }
+
+    public function TambahKL(Request $request)
+    {
+        $data = new User();
+        $data->email = $request->get('email');
+        $data->password = Hash::make($request->password);
+        $data->lingkungan_id = $request->get('lingkungan_id');
+        $data->role = "ketua lingkungan";
+        $data->save();
+        
+        return redirect()->route('user.kl', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Akun Berhasil');
+    }
+
+    public function DaftarKKBG()
+    {
+        $users = User::where([['role', 'ketua kbg']])->get();
+        $kbg = Kbg::all();
+
+        return view('user.kkbg',compact("users", "kbg"));
+    }
+
+    public function TambahKKBG(Request $request)
+    {
+        $data = new User();
+        $data->email = $request->get('email');
+        $data->password = Hash::make($request->password);
+        $data->kbg_id = $request->get('kbg_id');
+        $data->role = "ketua kbg";
+        $data->save();
+        
+        return redirect()->route('user.kkbg', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Akun Berhasil');
     }
 }

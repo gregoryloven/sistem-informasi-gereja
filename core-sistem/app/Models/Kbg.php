@@ -16,6 +16,11 @@ class Kbg extends Model
     	return $this->belongsTo(Lingkungan::class, 'lingkungan_id');
     }
 
+    public function user()
+    {
+    	return $this->hasMany(User::class, 'kbg_id', 'id');
+    }
+
     public function keluarga()
     {
     	return $this->hasMany(Keluarga::class, 'kbg_id', 'id');

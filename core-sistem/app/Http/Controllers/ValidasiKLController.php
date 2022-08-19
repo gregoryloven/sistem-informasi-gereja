@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\PelayananLainnya;
 use App\Models\PendaftaranPelayananLainnya;
 use App\Models\Baptis;
+use App\Models\KomuniPertama;
 use Illuminate\Http\Request;
+use Auth;
 
 class ValidasiKLController extends Controller
 {
@@ -66,5 +68,34 @@ class ValidasiKLController extends Controller
         $baptis->save();
 
         return redirect()->route('validasiKL.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Ditolak');
+    }
+
+    public function komuni()
+    {
+        $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
+        $reservasi = KomuniPertama::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan]])->get();
+        
+        $reservasiAll = KomuniPertama::where([["status", "!=", "Disetujui KBG"], ['lingkungan', $lingkungan]])->get();
+        
+        return view('validasiKL.komuni',compact("reservasi", "reservasiAll"));
+    }
+
+    public function AcceptKomuni(Request $request)
+    {
+        $komuni=KomuniPertama::find($request->id);
+        $komuni->status = "Disetujui Lingkungan";
+        $komuni->save();
+
+        return redirect()->route('validasiKL.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Komuni Berhasil Disetujui');
+    }
+
+    public function DeclineKomuni(Request $request)
+    {
+        $komuni=KomuniPertama::find($request->id);
+        $komuni->status = "Ditolak";
+        $komuni->alasan_penolakan = $request->get("alasan_penolakan");
+        $komuni->save();
+
+        return redirect()->route('validasiKL.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Komuni Berhasil Ditolak');
     }
 }
