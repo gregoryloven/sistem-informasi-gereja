@@ -26,6 +26,11 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $primaryKey = 'id';
 
+    public function riwayat()
+    {
+    	return $this->hasMany(Riwayat::class, 'user_id', 'id');
+    }
+    
     public function lingkungan()
     {
     	return $this->belongsTo(Lingkungan::class, 'lingkungan_id');
@@ -48,7 +53,7 @@ class User extends Authenticatable
 
     public function komunipertama()
     {
-    	return $this->hasMany(KomuniPertama::class, 'user_id', 'id_romo', 'id');
+    	return $this->hasMany(KomuniPertama::class, 'user_id', 'id');
     }
 
     public function misas()
@@ -70,6 +75,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'agama',
+        'lingkungan_id',
     ];
 
     /**

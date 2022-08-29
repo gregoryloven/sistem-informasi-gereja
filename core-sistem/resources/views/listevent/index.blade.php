@@ -46,7 +46,8 @@
                             <label >Jenis</label>
                             <select class="form-control" id='jenis_event' name='jenis_event'>
                                 <option value="">Choose</option>
-                                <option value="Baptis">Baptis</option>
+                                <option value="Baptis Bayi">Baptis Bayi</option>
+                                <option value="Baptis Dewasa">Baptis Dewasa</option>
                                 <option value="Komuni Pertama">Komuni Pertama</option>
                                 <option value="Krisma">Krisma</option>
                                 <option value="Tobat">Tobat</option>
@@ -54,8 +55,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label >Jadwal</label>
-                            <input type="datetime-local" class="form-control" id='jadwal' name='jadwal' placeholder="Jadwal" required>
+                            <label >Tanggal Buka Pendaftaran</label>
+                            <input type="date" class="form-control" id='tgl_buka_pendaftaran' name='tgl_buka_pendaftaran'  onchange='MinStartDate(this)' min="<?= date('Y-m-d'); ?>" placeholder="Tanggal Buka Pendaftaran" required>
+                        </div>
+                        <div class="form-group">
+                            <label >Tanggal Tutup Pendaftaran</label>
+                            <input type="date" class="form-control" id='tgl_tutup_pendaftaran' name='tgl_tutup_pendaftaran'  onchange='CheckEndDate(this)' placeholder="Tanggal Tutup Pendaftaran" required>
+                        </div>
+                        <div class="form-group">
+                            <label >Jadwal Pelaksanaan</label>
+                            <input type="datetime-local" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksana(this)' placeholder="Jadwal Pelaksanaan" required>
                         </div>
                         <div class="form-group">
                             <label >Lokasi</label>
@@ -97,7 +106,10 @@
                         <th width="5%">No</th>
                         <th>Nama Event</th>
                         <th>Jenis Event</th>
-                        <th>Jadwal</th>
+                        <th>Tanggal Buka Pendaftaran</th>
+                        <th>Tanggal Tutup Pendaftaran</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
                         <th>Romo</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
@@ -111,7 +123,10 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_event}}</td>
                         <td st>{{$d->jenis_event}}</td>
-                        <td st>{{$d->jadwal}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->romo}}</td>
                         <td>
@@ -136,6 +151,7 @@
 @endsection
 
 @section('javascript')
+<script src='http://code.jquery.com/ui/1.11.0/jquery-ui.js'></script>
 <script>
 function EditForm(id)
 {
@@ -150,5 +166,36 @@ function EditForm(id)
     }
   });
 }
+
+function MinStartDate()
+{
+    $('#tgl_tutup_pendaftaran').attr('min', $('#tgl_buka_pendaftaran').val())
+}
+
+function CheckEndDate()
+{
+    if($('#tgl_buka_pendaftaran').val() == '')
+    {   
+        alert('Pilih Tanggal Buka Pendaftaran Terlebih Dahulu')
+        $('#tgl_tutup_pendaftaran').val('')
+        
+    }
+    var h1 = new Date($('#tgl_tutup_pendaftaran').val())
+    h1.setDate(h1.getDate() + 1)
+    // alert(h1.toISOString().substring(0,10))
+    var enddate = h1.toISOString().substring(0,10) + ' 00:00:00' 
+    $('#jadwal_pelaksanaan').attr('min', enddate)
+}
+
+function CheckJadwalPelaksana()
+{
+    if($('#tgl_buka_pendaftaran').val() == '' || $('#tgl_tutup_pendaftaran').val() == '')
+    {   
+        alert('Pilih Tanggal Buka dan Tutup Pendaftaran Terlebih Dahulu')
+        $('#jadwal_pelaksanaan').val('')
+        
+    }
+}
+
 </script>
 @endsection

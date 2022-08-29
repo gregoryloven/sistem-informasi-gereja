@@ -37,10 +37,10 @@
                 Formulir Pendaftaran Komuni Pertama
             </div>
             <div class="card-body">
-            <form id="formIndividu" class="mb-2" method="post" action="/pendaftarankomuni/InputForm">
+            <form id="formIndividu" class="mb-2" method="POST" action="/pendaftarankomuni/InputForm" enctype="multipart/form-data">
             @csrf   
                 <div class="form-group">
-                    <label >Nama Lengkap</label>
+                    <label >Nama Lengkap Pemohon</label>
                     <input type="text" value="{{$user[0]->nama_lengkap}}" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
                 </div>    
                 <div class="form-group">
@@ -49,7 +49,7 @@
                 </div>   
                 <div class="form-group">
                     <label >Tanggal Lahir</label>
-                    <input type="text" value="{{$user[0]->tanggal_lahir}}" class="form-control" id='tanggal_lahir' name='tanggal_lahir' placeholder="Tanggal Lahir" required>
+                    <input type="date" value="{{$user[0]->tanggal_lahir}}" class="form-control" id='tanggal_lahir' name='tanggal_lahir' placeholder="Tanggal Lahir" required>
                 </div>   
                 <div class="form-group">
                     <label >Orang Tua Ayah</label>
@@ -72,13 +72,13 @@
                     <input type="text" value="{{$user[0]->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
                 </div>
                 <div class="form-group">
-                    <label >Tanggal</label>
-                    <input type="text" value="{{tanggal_indonesia($list[0]->jadwal)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
-                    <input type="hidden" value="{{$list[0]->jadwal}}" id='jadwal' name='jadwal'>
+                    <label >Tanggal Pelaksanaan</label>
+                    <input type="text" value="{{tanggal_indonesia($list[0]->jadwal_pelaksanaan)}}" class="form-control" placeholder="Tanggal Pelaksanaan" required readonly>
+                    <input type="hidden" value="{{$list[0]->jadwal_pelaksanaan}}" id='jadwal' name='jadwal'>
                 </div>
                 <div class="form-group">
-                    <label >Waktu</label>
-                    <input type="text" value="{{waktu_indonesia($list[0]->jadwal)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
+                    <label >Waktu Pelaksanaan</label>
+                    <input type="text" value="{{waktu_indonesia($list[0]->jadwal_pelaksanaan)}}" class="form-control" placeholder="Waktu Pelaksanaan" required readonly>
                 </div>
                 <div class="form-group">
                     <label >Lokasi</label>
@@ -88,14 +88,16 @@
                     <label >Romo</label>
                     <input type="text" value="{{$list[0]->romo}}" class="form-control" id='romo' name='romo' placeholder="Romo" required readonly>
                 </div>
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label>Surat Baptis</label>
                     <input type="file" value="" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
-                <img id="output" src="" width="200px" height="200px"> -->
+                <img id="output" src="" width="200px" height="200px">
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Komuni Pertama"
                 </div>
+                <input type="hidden" value="{{$list[0]->id}}" id='event_id' name='event_id'>
+                <input type="hidden" value="{{$list[0]->jenis_event}}" id='jenis_event' name='jenis_event'>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
             </div>

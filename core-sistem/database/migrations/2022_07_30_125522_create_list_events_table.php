@@ -16,10 +16,13 @@ class CreateListEventsTable extends Migration
         Schema::create('list_events', function (Blueprint $table) {
             $table->id();
             $table->string('nama_event');
-            $table->enum('jenis_event', ['Baptis', 'Komuni Pertama', 'Krisma', 'Tobat', 'Misa']);
-            $table->datetime('jadwal');
+            $table->enum('jenis_event', ['Baptis Bayi', 'Baptis Dewasa', 'Komuni Pertama', 'Krisma', 'Tobat', 'Misa']);
+            $table->date('tgl_buka_pendaftaran');
+            $table->date('tgl_tutup_pendaftaran');
+            $table->datetime('jadwal_pelaksanaan');
             $table->string('lokasi');
             $table->string('romo');
+            $table->string('kuota')->nullable();
             $table->timestamps();
         });
     }

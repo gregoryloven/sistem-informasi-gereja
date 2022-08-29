@@ -15,13 +15,17 @@ class CreatePendaftaranPelayananLainnyasTable extends Migration
     {
         Schema::create('pendaftaran_pelayanan_lainnyas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('pelayanan_lainnya_id');
-            $table->string('nama_pemohon');
+            $table->string('nama_lengkap');
+            $table->string('lingkungan');
+            $table->string('kbg');
             $table->dateTime('jadwal');
-            $table->text('alamat');
-            $table->text('keterangan')->nullable();
-            $table->text('alasan_pembatalan')->nullable();
+            $table->string('alamat');
+            $table->string('keterangan')->nullable();
+            $table->string('alasan_pembatalan')->nullable();
             $table->string('status');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pelayanan_lainnya_id')->references('id')->on('pelayanan_lainnyas');
             $table->timestamps();
         });

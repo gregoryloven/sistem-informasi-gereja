@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\PelayananLainnya;
 use App\Models\PendaftaranPelayananLainnya;
-use App\Models\Keluarga;
+use App\Models\Riwayat;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 
 class PelayananLainnyaController extends Controller
 {
@@ -18,19 +19,66 @@ class PelayananLainnyaController extends Controller
      */
     public function index()
     {
-        $data=User::all();
-        $reservasi = PendaftaranPelayananLainnya::join('pelayanan_lainnyas', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id', '=', 'pelayanan_lainnyas.id')
-        ->get(['pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.id' ,'pendaftaran_pelayanan_lainnyas.nama_pemohon', 'pendaftaran_pelayanan_lainnyas.jadwal', 'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.keterangan', 'status', 'alasan_penolakan']); 
-        $kel=Keluarga::all();
-        $pelayanan=PelayananLainnya::all();
-        $kepalaKeluarga = Keluarga::join('users', 'keluargas.id_kepala_keluarga', '=', 'users.id')
-        ->get(['keluargas.id_kepala_keluarga', 'users.nama_user']); 
+        $pelayanan = PelayananLainnya::all();
+        $data = PendaftaranPelayananLainnya::where('user_id', Auth::user()->id)->get();
+        $user = DB::table('users')
+            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
+            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
+            ->where('users.id', Auth::user()->id)
+            ->get();
+        $riwayat = Riwayat::all();
 
         if(optional(Auth::user())->id){
-            return view('pelayananlainnya.index',compact("reservasi", "data", "kepalaKeluarga", "kel", "pelayanan"));
+            return view('pelayananlainnya.index',compact("pelayanan", "data", "user", "riwayat"));
         }else{
             return redirect('/login');
         }
+    }
+
+    public function InputForm(Request $request)
+    {
+        $data = new PendaftaranPelayananLainnya;
+        $data->user_id =  Auth::user()->id;
+        $data->nama_lengkap = $request->get("nama_lengkap");
+        $data->pelayanan_lainnya_id = $request->get("pelayanan_lainnya_id");
+        $data->lingkungan = $request->get("lingkungan");
+        $data->kbg = $request->get("kbg");
+        $data->jadwal = $request->get("jadwal");
+        $data->alamat = $request->get("alamat");
+        $data->keterangan = $request->get("keterangan");
+        $data->status = "Diproses";
+        $data->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->jenis_event =  $data->pelayanan_lainnya_id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->status =  "Diproses";
+        $riwayat->save();
+
+        return redirect()->route('pelayananlainnya.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Pelayanan Berhasil');
+    }
+
+    public function detail(Request $request)
+    {
+        $id=$request->get("id");
+        $log=Riwayat::where('event_id', '=', $id)
+        ->get()->toArray();
+        
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('pelayananlainnya.detail', compact("log"))->render()),200);
+    }
+
+    public function Pembatalan(Request $request)
+    {
+        $data=PendaftaranPelayananLainnya::find($request->id);
+        $data->status = "Dibatalkan";
+        $data->alasan_pembatalan = $request->get("alasan_pembatalan");
+
+        $data->save();
+
+        return redirect()->route('pelayananlainnya.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pelayanan Berhasil Dibatalkan');
     }
 
     /**
@@ -97,31 +145,6 @@ class PelayananLainnyaController extends Controller
     public function destroy(PelayananLainnya $pelayananLainnya)
     {
         //
-    }
-
-    public function InputForm(Request $request)
-    {
-        $pendaftaran_pelayanan = new PendaftaranPelayananLainnya;
-        $pendaftaran_pelayanan->pelayanan_lainnya_id = $request->get("pelayanan");
-        $pendaftaran_pelayanan->nama_pemohon = $request->get("nama_pemohon");
-        $pendaftaran_pelayanan->jadwal = $request->get("jadwal");
-        $pendaftaran_pelayanan->alamat = $request->get("alamat");
-        $pendaftaran_pelayanan->keterangan = $request->get("keterangan");
-        $pendaftaran_pelayanan->status = "Pending";
-        $pendaftaran_pelayanan->save();
-
-        return redirect('/pelayananlainnya');
-    }
-
-    public function Pembatalan(Request $request)
-    {
-        $data=PendaftaranPelayananLainnya::find($request->id);
-        $data->status = "Dibatalkan";
-        $data->alasan_pembatalan = $request->get("alasan_pembatalan");
-
-        $data->save();
-
-        return redirect()->route('pelayananlainnya.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pelayanan Berhasil Dibatalkan');
     }
 
 

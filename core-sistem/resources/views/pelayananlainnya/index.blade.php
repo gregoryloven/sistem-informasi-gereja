@@ -48,6 +48,17 @@
     </div>
 @endif
 
+<!-- TRACKING WITH MODAL -->
+<div class="modal fade" id="modaltracking" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContentt">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row mb-4 mt-4">
     <div class="col-md-4">
     <div class="card shadow">
@@ -55,96 +66,49 @@
                 Formulir Permohonan Pelayanan
             </div>
             <div class="card-body">
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
-                <div class="d-flex justify-content-between">
-                    <!-- <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="exampleRadios" id="individuTab" value="individu" checked>
-                        <label class="form-check-label" for="individuTab">
-                            Individu
-                        </label>
-                    </div> -->
-                    <!-- <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="exampleRadios" id="familyTab" value="family">
-                        <label class="form-check-label" for="familyTab">
-                            Keluarga
-                        </label>
-                    </div> -->
-                </div>
-            </div>
             <form id="formIndividu" class="mb-2" method="post" action="/pelayananlainnya/InputForm">
             @csrf
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Nama</label>
-                    <select  name="nama_pemohon" class="form-control" placeholder="Pilih Nama Anda">
-                        @foreach($data as $d)
-                            <option value="{{$d->nama_user}}">{{$d->nama_user}}</option>
-                        @endforeach
-                    </select>
-                    <!-- <input type="text" readonly class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
+                    <label>Nama Lengkap</label>
+                    <input type="text" class="form-control" value="{{$user[0]->nama_lengkap}}" name="nama_lengkap" id="nama_lengkap" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Jenis Pelayanan</label>
-                    <select class="form-control" name="pelayanan" id="exampleFormControlSelect1">
+                    <label>Jenis Pelayanan</label>
+                    <select class="form-control" name="pelayanan_lainnya_id" id="exampleFormControlSelect1" required>
                         @foreach($pelayanan as $p)
                         <option value="{{$p->id}}">{{$p->jenis_pelayanan}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Tanggal</label>
-                    <input type="datetime-local" name="jadwal" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <label >Lingkungan</label>
+                    <input type="text" value="{{$user[0]->nama_lingkungan}}" class="form-control" id='lingkungan' name='lingkungan' placeholder="Lingkungan" required readonly>
+                </div>       
+                <div class="form-group">
+                    <label >KBG</label>
+                    <input type="text" value="{{$user[0]->nama_kbg}}" class="form-control" id='kbg' name='kbg' placeholder="KBG" required readonly>
+                </div>  
+                <div class="form-group">
+                    <label>Tanggal Pelaksanaan Pelayanan</label>
+                    <input type="datetime-local" class="form-control" name="jadwal"  id="jadwal" required>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Alamat</label>
-                    <textarea class="form-control" name="alamat" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <label for="exampleFormControlTextarea1">Alamat Pelaksanaan Pelayanan</label>
+                    <textarea class="form-control" name="alamat" id="exampleFormControlTextarea1" rows="3" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Keterangan</label>
-                    <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="3" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
-            <!-- <form id="formFamily" class="mb-2" method="post" action="/pelayananlainnya/InputFormAll">
-            @csrf
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Nama Kepala Keluarga</label>
-                    <select name="idKepalaKeluarga" class="form-control" placeholder="Pilih Nama Kepala Keluarga Anda">
-                        @foreach($kepalaKeluarga as $d)
-                            <option value="{{$d->id_kepala_keluarga}}">{{$d->nama_user}}</option>
-                        @endforeach
-                    </select> -->
-                    <!-- <input type="text" readonly class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
-                <!-- </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Jenis Pelayanan</label>
-                    <select class="form-control" name="pelayanan" id="exampleFormControlSelect1">
-                        @foreach($pelayanan as $p)
-                        <option value="{{$p->id}}">{{$p->nama_pelayanan}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Tanggal</label>
-                    <input type="datetime-local" name="jadwal" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Alamat</label>
-                    <textarea class="form-control" name="alamat" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Keterangan</label>
-                    <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
-            </form> -->
             </div>
         </div>
     </div>
     <div class="col-md-8">
         <div class="card shadow">
             <div class="card-header py-3">
-                Jadwal Permohonan Misa
+                Riwayat Pendaftaran Pelayanan
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -152,10 +116,11 @@
                         <thead>
                             <tr style="text-align: center;">
                                 <th width="5%">No</th>
-                                <th>Nama</th>
+                                <th>Nama Lengkap</th>
                                 <th>Jenis Pelayanan</th>
-                                <th>Tanggal Permohonan</th>
-                                <th>Alamat</th>
+                                <th>Tanggal Pelaksanaan</th>
+                                <th>Waktu Pelaksanaan</th>
+                                <th>Alamat Pelaksanaan</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
                                 <th>Tindakan</th>
@@ -163,36 +128,25 @@
                         </thead>
                         <tbody>
                             @php $i = 0; @endphp
-                            @foreach($reservasi as $d)
+                            @foreach($data as $d)
                             @php $i += 1; @endphp
                             <tr>
                                 <td>@php echo $i; @endphp</td>
-                                <td st>{{$d->nama_pemohon}}</td>
-                                <td st>{{$d->jenisPelayanan}}</td>
-                                <td st>{{$d->jadwal}}</td>
+                                <td st>{{$d->nama_lengkap}}</td>
+                                <td st>{{$d->Pelayanan->jenis_pelayanan}}</td>
+                                <td st>{{tanggal_indonesia($d->jadwal)}}</td>
+                                <td st>{{waktu_indonesia($d->jadwal)}}</td>
                                 <td st>{{$d->alamat}}</td>
                                 <td st>{{$d->keterangan}}</td>
                                 <td st>
-                                    @if($d->status == "Pending")
-                                    <div class="alert alert-warning" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    @elseif($d->status == "Disetujui KBG")
-                                    <div class="alert alert-warning" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    @elseif($d->status == "Disetujui Lingkungan")
-                                    <div class="alert alert-warning" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    @elseif($d->status == "Disetujui Paroki")
-                                    <div class="alert alert-success" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    @elseif($d->status == "Selesai")
-                                    <div class="alert alert-success" role="alert">
-                                        {{$d->status}}
-                                    </div>
+                                    @if($d ->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                    
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-warning" onclick="detail({{ $d->id }})">{{$d->status}}</a>
+                                    
+                                    @elseif($d->status == "Disetujui Paroki" || $d->status == "Selesai")
+                                    
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-success" onclick="detail({{ $d->id }})">{{$d->status}}</a>
+                                
                                     @else
                                     <div class="alert alert-danger" role="alert">
                                         {{$d->status}}  
@@ -201,7 +155,7 @@
                                     @endif
                                 </td>
                                 <td st>
-                                    @if($d->status == "Pending" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
                                     <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Pembatalan</a>
                                     @endif
                                 </td>
@@ -242,21 +196,19 @@
 @endsection
 
 @section('javascript')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-    <script>
-        $(document).ready(function(){
-            $("#individuTab").trigger("click");
-        });
-        function tabSelect(value) {
-            if(value === "individu"){
-                document.getElementById("formIndividu").style.display = "block";
-                document.getElementById("formFamily").style.display = "none";
-            }else{
-                document.getElementById("formIndividu").style.display = "none";
-                document.getElementById("formFamily").style.display = "block";
-            }
-        }
-    </script>
+<script>
+function detail(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('pelayananlainnya.detail', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContentt').html(data.msg);
+    }
+  });
+}
+</script>
 @endsection

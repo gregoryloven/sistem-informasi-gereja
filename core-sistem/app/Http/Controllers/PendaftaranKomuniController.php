@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PendaftaranKomuni;
 use App\Models\User;
 use App\Models\KomuniPertama;
+use App\Models\Riwayat;
 use DB;
 use Auth;
 use Illuminate\Http\Request;
@@ -28,7 +29,9 @@ class PendaftaranKomuniController extends Controller
 
     public function OpenForm(Request $request)
     {
+        $this->authorize('lingkungan-permission');
         $id = $request->id;
+        
         $list = DB::table('list_events')->where('id', $id)->get();
         $user = DB::table('users')
             ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
@@ -55,9 +58,35 @@ class PendaftaranKomuniController extends Controller
         $data->lokasi = $request->get("lokasi");
         $data->romo = $request->get("romo");
         $data->status = "Diproses";
+
+        $file=$request->file('surat_baptis');
+        $imgFolder = 'file_sertifikat/surat_baptis';
+        $extension = $request->file('surat_baptis')->extension();
+        $imgFile=time()."_".$request->get('nama').".".$extension;
+        $file->move($imgFolder,$imgFile);
+        $data->surat_baptis=$imgFile;
+        
         $data->save();
 
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->jenis_event =  $request->get("jenis_event");
+        $riwayat->event_id =  $data->id;
+        $riwayat->status =  "Diproses";
+        $riwayat->save();
+
         return redirect()->route('pendaftarankomuni.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Berhasil');
+    }
+
+    public function detail(Request $request)
+    {
+        $id=$request->get("id");
+        $log=Riwayat::where([['event_id', '=', $id], ['jenis_event', '=', 'Komuni Pertama']])
+        ->get();
+        
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('pendaftarankomuni.detail', compact("log"))->render()),200);
     }
 
     /**

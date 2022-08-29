@@ -23,7 +23,8 @@
         {{ session('error') }}
     </div>
 @endif
-<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Akun</a><br><br>
+<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Akun</a>
+<a href="#modalAllKL" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Semua Akun</a><br><br>
 
 <!-- CREATE WITH MODAL -->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
@@ -38,13 +39,18 @@
                 <div class="modal-body">
                     @csrf
                     <div class="form-body">
-                        <div class="form-group">
+                    <div class="form-group">
+                            <label >Username</label>
+                            <input type="text" class="form-control" id='name' name='name' oninput='autogmail()' placeholder="Username" required>
+                        </div>
+                        <div class="form-group" style="width:60%">
                             <label >Email</label>
                             <input type="text" class="form-control" id='email' name='email' placeholder="Email" required>
                         </div>
+                        <div><b>@gmail.com</b></div>
                         <div class="form-group">
                             <label >Password</label>
-                            <input type="text" class="form-control" id='password' name='password' placeholder="Password" required>
+                            <input type="password" class="form-control" id='password' name='password' placeholder="Password" required>
                         </div>
                         <div class="form-group">
                             <label >Lingkungan</label>
@@ -62,6 +68,25 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL SEMUA KL -->
+<div class="modal fade" id="modalAllKL" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Tambah Akun</h4>
+            </div>
+            <div class="modal-body">
+                <h3> APAKAH ANDA YAKIN MEMBUAT SEMUA AKUN KETUA LINGKUNGAN ?</h3>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ url('user/TambahAllKL') }}" type="submit" class="btn btn-info">Submit</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
     </div>
 </div>
@@ -98,4 +123,14 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+@endsection
+
+@section('javascript')
+<script>
+function autogmail()
+{
+    var name =$('#name').val()
+    $('#email').val(name)
+}
+</script>
 @endsection

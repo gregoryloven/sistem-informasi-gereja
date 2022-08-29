@@ -70,10 +70,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     });
 
     //User KL
-    Route::resource('userkl', UserKLController::class);
+    // Route::resource('userkl', UserKLController::class);
 
     //User Kbg
-    Route::resource('usersKbg', UserKbgController::class);
+    // Route::resource('usersKbg', UserKbgController::class);
 
     //Dashboard User
     
@@ -103,8 +103,9 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //Tambah Akun Ketua Lingkungan
     Route::get('userKL', [UserController::class, 'DaftarKL'])->name('user.kl');
     Route::post('/user/TambahKL', [UserController::class, 'TambahKL'])->name('user.TambahKL');
+    Route::post('/user/TambahAllKL', [UserController::class, 'TambahAllKL'])->name('user.TambahAllKL');
 
-    //Tambah Akun Ketua Lingkungan
+    //Tambah Akun Ketua KBG
     Route::get('userKKBG', [UserController::class, 'DaftarKKBG'])->name('user.kkbg');
     Route::post('/user/TambahKKBG', [UserController::class, 'TambahKKBG'])->name('user.TambahKKBG');
 
@@ -146,6 +147,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/pelayananlainnya/InputForm', [PelayananLainnyaController::class, 'InputForm'])->name('pelayananlainnya.InputForm');
     Route::post('/pelayananlainnya/InputFormAll', [PelayananLainnyaController::class, 'InputFormAll'])->name('pelayananlainnya.InputFormAll');
     Route::post('/pelayananlainnya/Pembatalan', [PelayananLainnyaController::class, 'Pembatalan'])->name('pelayananlainnya.Pembatalan');
+    Route::post('/pelayananlainnya/detail', [PelayananLainnyaController::class, 'detail'])->name('pelayananlainnya.detail');
+
 
     //Pendaftaran Petugas Liturgi
     Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);
@@ -155,11 +158,14 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::resource('pendaftaranbaptis', PendaftaranBaptisController::class);
     Route::post('/pendaftaranbaptis/InputForm', [PendaftaranBaptisController::class, 'InputForm'])->name('pendaftaranbaptis.InputForm');
     Route::get('/pendaftaranbaptis/OpenForm/{id}', [PendaftaranBaptisController::class, 'OpenForm'])->name('pendaftaranbaptis.OpenForm');
-    
+    Route::post('/pendaftaranbaptis/Pembatalan', [PendaftaranBaptisController::class, 'Pembatalan'])->name('pendaftaranbaptis.Pembatalan');
+    Route::post('/pendaftaranbaptis/detail', [PendaftaranBaptisController::class, 'detail'])->name('pendaftaranbaptis.detail');
+
     //Pendaftaran Komuni
     Route::resource('pendaftarankomuni', PendaftaranKomuniController::class);
     Route::post('/pendaftarankomuni/InputForm', [PendaftaranKomuniController::class, 'InputForm'])->name('pendaftarankomuni.InputForm');
     Route::get('/pendaftarankomuni/OpenForm/{id}', [PendaftaranKomuniController::class, 'OpenForm'])->name('pendaftarankomuni.OpenForm');
+    Route::post('/pendaftarankomuni/detail', [PendaftaranKomuniController::class, 'detail'])->name('pendaftarankomuni.detail');
 
     //Validasi Admin
     Route::get('validasiAdminPelayanan', [ValidasiAdminController::class, 'pelayanan'])->name('validasiAdmin.pelayanan');

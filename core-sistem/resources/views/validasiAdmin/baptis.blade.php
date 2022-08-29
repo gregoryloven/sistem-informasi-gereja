@@ -34,32 +34,38 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Penerima</th>
+                        <th>Nama Lengkap</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Orang Tua Ayah</th>
+                        <th>Orang Tua Ibu</th>
                         <th>Wali Baptis Ayah</th>
                         <th>Wali Baptis Ibu</th>
+                        <th>Telepon</th>
+                        <th>Jenis</th>
                         <th>Tanggal</th>
                         <th>Waktu</th>
-                        <th>Lokasi</th>
-                        <th>Jenis</th>
-                        <th>Romo</th>
-                        <th>Status</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
                     @foreach($reservasi as $d)
                     @php $i += 1; @endphp
-                    <tr>
+                    <tr style="text-align: center;">
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->User->nama_user}}</td>
-                        <td st>{{$d->Wali_baptis_ayah->nama_user}}</td>
-                        <td st>{{$d->Wali_baptis_ibu->nama_user}}</td>
+                        <td st>{{$d->nama_lengkap}}</td>
+                        <td st>{{$d->tempat_lahir}}</td>
+                        <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
+                        <td st>{{$d->orangtua_ayah}}</td>
+                        <td st>{{$d->orangtua_ibu}}</td>
+                        <td st>{{$d->wali_baptis_ayah}}</td>
+                        <td st>{{$d->wali_baptis_ibu}}</td>
+                        <td st>{{$d->telepon}}</td>
+                        <td st>{{$d->jenis}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
-                        <td st>{{$d->lokasi}}</td>
-                        <td st>{{$d->jenis}}</td>
-                        <td st>{{$d->romo}}</td>
-                        <td st class="d-flex justify-content-center" >
+                        <td >
                             @if($d->status == "Disetujui Lingkungan")
                             <form action="/validasiAdmin/acceptbaptis" method="post">
                                 @csrf
@@ -82,7 +88,7 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Penolakan Validasi</h4>
+                                        <h4 class="modal-title">Pembatalan Reservasi</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
@@ -104,7 +110,6 @@
         </div>
     </div>
 </div>
-
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         Riwayat Validasi
@@ -115,15 +120,17 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Penerima</th>
+                        <th>Nama Lengkap</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Orang Tua Ayah</th>
+                        <th>Orang Tua Ibu</th>
                         <th>Wali Baptis Ayah</th>
                         <th>Wali Baptis Ibu</th>
-                        <th>Tanggal</th>
-                        <th>Waktu</th>
-                        <th>Lokasi</th>
+                        <th>Telepon</th>
                         <th>Jenis</th>
-                        <th>Romo</th>
-                        <th>Lingkungan</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -133,23 +140,30 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$da->User->nama_user}}</td>
-                        <td st>{{$da->Wali_baptis_ayah->nama_user}}</td>
-                        <td st>{{$da->Wali_baptis_ibu->nama_user}}</td>
+                        <td st>{{$da->nama_lengkap}}</td>
+                        <td st>{{$da->tempat_lahir}}</td>
+                        <td st>{{tanggal_indonesia($da->tanggal_lahir)}}</td>
+                        <td st>{{$da->orangtua_ayah}}</td>
+                        <td st>{{$da->orangtua_ibu}}</td>
+                        <td st>{{$da->wali_baptis_ayah}}</td>
+                        <td st>{{$da->wali_baptis_ibu}}</td>
+                        <td st>{{$da->telepon}}</td>
+                        <td st>{{$da->jenis}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}}</td>
-                        <td st>{{$da->lokasi}}</td>
-                        <td st>{{$da->jenis}}</td>
-                        <td st>{{$da->romo}}</td>
-                        <td st>{{$da->nama_lingkungan}}</td>
                         <td st >
-                            @if($da->status == "Disetujui Paroki")
+                            @if($da->statusRiwayat == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
                             </div>
-                            @else
+                            @elseif($da->statusRiwayat == 'Ditolak') 
                             <div class="alert alert-danger" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
+                            </div>
+                            <small><b>Alasan: {{$da->alasan_penolakan}}</b></small>
+                            @else
+                            <div class="alert alert-success" role="alert">
+                                {{$da->statusRiwayat}}
                             </div>
                             @endif
                         </td>

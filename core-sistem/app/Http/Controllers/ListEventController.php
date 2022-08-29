@@ -39,7 +39,9 @@ class ListEventController extends Controller
         $data = new ListEvent();
         $data->nama_event = $request->get('nama_event');
         $data->jenis_event = $request->get('jenis_event');
-        $data->jadwal = $request->get('jadwal');
+        $data->tgl_buka_pendaftaran = $request->get('tgl_buka_pendaftaran');
+        $data->tgl_tutup_pendaftaran = $request->get('tgl_tutup_pendaftaran');
+        $data->jadwal_pelaksanaan = $request->get('jadwal_pelaksanaan');
         $data->lokasi = $request->get('lokasi');
         $data->romo = $request->get('romo');
         

@@ -39,42 +39,58 @@ Pendaftaran Baptis
             <div class="card-body">
             <form id="formIndividu" class="mb-2" method="post" action="/pendaftaranbaptis/InputForm">
             @csrf
+            <div class="form-group">
+                    <label >Nama Lengkap Penerima Baptis</label>
+                    <input type="text" value="{{$user[0]->nama_lengkap}}" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
+                </div>    
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Nama</label>
-                    <select  name="nama_user" class="form-control" placeholder="Pilih Nama Anda">
-                        @foreach($users as $u)
-                        <option value="{{$u->id}}">{{$u->nama_user}}</option>
-                        @endforeach
-                    </select>
-                </div>
+                    <label >Tempat Lahir</label>
+                    <input type="text" value="{{$user[0]->tempat_lahir}}" class="form-control" id='tempat_lahir' name='tempat_lahir' placeholder="Tempat Lahir" required>
+                </div>   
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Wali Baptis Ayah</label>
-                    <select class="form-control" name="wali_baptis_ayah" id="exampleFormControlSelect1">
-                        @foreach($wali_baptis_ayah as $wba)
-                        <option value="{{$wba->id}}">{{$wba->nama_user}}</option>
-                        @endforeach
-                    </select>
-                </div>
+                    <label >Tanggal Lahir</label>
+                    <input type="date" value="{{$user[0]->tanggal_lahir}}" class="form-control" id='tanggal_lahir' name='tanggal_lahir' placeholder="Tanggal Lahir" required>
+                </div>   
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Wali Baptis Ibu</label>
-                    <select class="form-control" name="wali_baptis_ibu" id="exampleFormControlSelect1">
-                        @foreach($wali_baptis_ibu as $wbu)
-                        <option value="{{$wbu->id}}">{{$wbu->nama_user}}</option>
-                        @endforeach
-                    </select>
+                    <label >Orang Tua Ayah</label>
+                    <input type="text"  class="form-control" id='orangtua_ayah' name='orangtua_ayah' placeholder="Nama Lengkap" required>
+                </div>  
+                <div class="form-group">
+                    <label >Orang Tua Ibu</label>
+                    <input type="text"  class="form-control" id='orangtua_ibu' name='orangtua_ibu' placeholder="Nama Lengkap" required>
+                </div> 
+                <div class="form-group">
+                    <label >Wali Baptis Ayah</label>
+                    <input type="text"  class="form-control" id='wali_baptis_ayah' name='wali_baptis_ayah' placeholder="Nama Lengkap" required>
+                </div>  
+                <div class="form-group">
+                    <label >Wali Baptis Ibu</label>
+                    <input type="text"  class="form-control" id='wali_baptis_ibu' name='wali_baptis_ibu' placeholder="Nama Lengkap" required>
+                </div>  
+                <div class="form-group">
+                    <label >Lingkungan</label>
+                    <input type="text" value="{{$user[0]->nama_lingkungan}}" class="form-control" id='lingkungan' name='lingkungan' placeholder="Lingkungan" required readonly>
+                </div>       
+                <div class="form-group">
+                    <label >KBG</label>
+                    <input type="text" value="{{$user[0]->nama_kbg}}" class="form-control" id='kbg' name='kbg' placeholder="KBG" required readonly>
+                </div>           
+                <div class="form-group">
+                    <label >Telepon</label>
+                    <input type="text" value="{{$user[0]->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
                 </div>
                 <div class="form-group">
                     <label >Jenis</label>
                     <input type="text" value="{{$list[0]->jenis_event}}" class="form-control" id='jenis' name='jenis' placeholder="Jenis" required readonly>
                 </div>
                 <div class="form-group">
-                    <label >Tanggal</label>
-                    <input type="text" value="{{tanggal_indonesia($list[0]->jadwal)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
-                    <input type="hidden" value="{{$list[0]->jadwal}}" id='jadwal' name='jadwal'>
+                    <label >Tanggal Pelaksanaan</label>
+                    <input type="text" value="{{tanggal_indonesia($list[0]->jadwal_pelaksanaan)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
+                    <input type="hidden" value="{{$list[0]->jadwal_pelaksanaan}}" id='jadwal' name='jadwal'>
                 </div>
                 <div class="form-group">
-                    <label >Waktu</label>
-                    <input type="text" value="{{waktu_indonesia($list[0]->jadwal)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
+                    <label >Waktu Pelaksanaan</label>
+                    <input type="text" value="{{waktu_indonesia($list[0]->jadwal_pelaksanaan)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
                 </div>
                 <div class="form-group">
                     <label >Lokasi</label>
@@ -87,6 +103,7 @@ Pendaftaran Baptis
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Mading Pendaftaran Baptis"
                 </div>
+                <input type="hidden" value="{{$list[0]->id}}" id='event_id' name='event_id'>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
             </div>

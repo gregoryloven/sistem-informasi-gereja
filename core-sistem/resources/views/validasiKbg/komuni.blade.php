@@ -39,13 +39,9 @@
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
                         <th>Orang Tua Ibu</th>
-                        <th>Lingkungan</th>
-                        <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Tanggal Komuni</th>
-                        <th>Waktu</th>
-                        <th>Lokasi</th>
-                        <th>Romo</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Surat Baptis</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
@@ -61,14 +57,10 @@
                         <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
                         <td st>{{$d->orangtua_ayah}}</td>
                         <td st>{{$d->orangtua_ibu}}</td>
-                        <td st>{{$d->lingkungan}}</td>
-                        <td st>{{$d->kbg}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
-                        <td st>{{$d->lokasi}}</td>
-                        <td st>{{$d->romo}}</td>
-                        <td st>{{$d->surat_baptis}}</td>
+                        <td st><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></td>
                         <td st >
                             @if($d->status == "Diproses")
                             <form action="/validasiKbg/acceptkomuni" method="post">
@@ -129,13 +121,9 @@
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
                         <th>Orang Tua Ibu</th>
-                        <th>Lingkungan</th>
-                        <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Tanggal Komuni</th>
-                        <th>Waktu</th>
-                        <th>Lokasi</th>
-                        <th>Romo</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Surat Baptis</th>
                         <th>Status</th>
                     </tr>
@@ -151,35 +139,25 @@
                         <td st>{{tanggal_indonesia($da->tanggal_lahir)}}</td>
                         <td st>{{$da->orangtua_ayah}}</td>
                         <td st>{{$da->orangtua_ibu}}</td>
-                        <td st>{{$da->lingkungan}}</td>
-                        <td st>{{$da->kbg}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}}</td>
-                        <td st>{{$da->lokasi}}</td>
-                        <td st>{{$da->romo}}</td>
-                        <td st>{{$da->surat_baptis}}</td>
+                        <td st><img src="{{asset('file_sertifikat/surat_baptis/'.$da->surat_baptis)}}" height='80px'/></td>
                         <td st >
-                            @if($da->status == "Disetujui KBG")
-                            <div class="alert alert-warning" role="alert">
-                                {{$da->status}}
-                            </div>
-                            @elseif($da->status == "Disetujui Lingkungan")
+                            @if($da->statusRiwayat == 'Disetujui KBG') 
                             <div class="alert alert-success" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
                             </div>
-                            @elseif($da->status == "Disetujui Paroki")
-                            <div class="alert alert-success" role="alert">
-                                {{$da->status}}
+                            @elseif($da->statusRiwayat == 'Ditolak') 
+                            <div class="alert alert-danger" role="alert">
+                                {{$da->statusRiwayat}}
                             </div>
-                            @elseif($da->status == "Selesai")
-                            <div class="alert alert-success" role="alert">
-                                {{$da->status}}
-                            </div>
+                            <small><b>Alasan: {{$da->alasan_penolakan}}</b></small>
                             @else
                             <div class="alert alert-danger" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
                             </div>
+                            <small><b>Alasan: {{$da->alasan_pembatalan}}</b></small>
                             @endif
                         </td>
                     </tr>

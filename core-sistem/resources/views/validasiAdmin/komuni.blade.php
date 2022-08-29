@@ -30,7 +30,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="text-align: center;">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>    
@@ -64,7 +64,7 @@
                         <td st>{{$d->telepon}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
-                        <td st>{{$d->surat_baptis}}</td>
+                        <td st><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></td>
                         <td st>
                             @if($d->status == "Disetujui Lingkungan")
                             <form action="/validasiAdmin/acceptkomuni" method="post">
@@ -151,15 +151,20 @@
                         <td st>{{$da->telepon}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}}</td>
-                        <td st>{{$da->surat_baptis}}</td>
+                        <td st><img src="{{asset('file_sertifikat/surat_baptis/'.$da->surat_baptis)}}" height='80px'/></td>
                         <td st >
-                            @if($da->status == "Disetujui Paroki")
+                            @if($da->statusRiwayat == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
                             </div>
-                            @else
+                            @elseif($da->statusRiwayat == 'Ditolak') 
                             <div class="alert alert-danger" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
+                            </div>
+                            <small><b>Alasan: {{$da->alasan_penolakan}}</b></small>
+                            @else
+                            <div class="alert alert-success" role="alert">
+                                {{$da->statusRiwayat}}
                             </div>
                             @endif
                         </td>

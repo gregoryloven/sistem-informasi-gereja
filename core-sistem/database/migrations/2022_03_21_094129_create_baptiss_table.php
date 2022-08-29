@@ -16,18 +16,23 @@ class CreateBaptissTable extends Migration
         Schema::create('baptiss', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('wali_baptis_ayah'); 
-            $table->unsignedBigInteger('wali_baptis_ibu');
-            $table->enum('jenis', ['Bayi', 'Dewasa']);
+            $table->string('nama_lengkap');
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir');
+            $table->string('orangtua_ayah');
+            $table->string('orangtua_ibu');
+            $table->string('wali_baptis_ayah');
+            $table->string('wali_baptis_ibu');
+            $table->string('lingkungan');
+            $table->string('kbg');
+            $table->string('telepon');
+            $table->enum('jenis', ['Baptis Bayi', 'Baptis Dewasa']);
             $table->dateTime('jadwal');
             $table->string('lokasi');
             $table->string('romo');
-            $table->enum('status', ['Diproses', 'Selesai']);
-            $table->string('alasan_penolakan')->nullable();
-            $table->string('file_sertifikat');
+            $table->enum('status', ['Diproses','Disetujui KBG','Disetujui Lingkungan','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
+            $table->string('surat_baptis')>nullable();;
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('wali_baptis_ayah')->references('id')->on('users');
-            $table->foreign('wali_baptis_ibu')->references('id')->on('users');
             $table->timestamps();
         });
     }

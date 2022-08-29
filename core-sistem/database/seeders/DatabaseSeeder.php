@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ParokiSeeder::class);
         $this->call(LingkunganSeeder::class);
         $this->call(KbgSeeder::class);
+        $this->call(PelayananLainnya::class);
+        $this->call(PetugasLiturgi::class);
     }
 
     public function runTenantSpecificSeeders()

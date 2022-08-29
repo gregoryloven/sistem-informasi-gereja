@@ -132,13 +132,39 @@ class UserController extends Controller
     public function TambahKL(Request $request)
     {
         $data = new User();
-        $data->email = $request->get('email');
+        $data->name = $request->get('name');
+        $data->email = $request->get('name') .'@gmail.com';
         $data->password = Hash::make($request->password);
         $data->lingkungan_id = $request->get('lingkungan_id');
         $data->role = "ketua lingkungan";
         $data->save();
         
         return redirect()->route('user.kl', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Akun Berhasil');
+    }
+
+    public function TambahAllKL()
+    {
+        $ling = Lingkungan::all();
+        
+        foreach($ling as $l)
+        {
+            $user = User::where('lingkungan_id', '=', $l->id)->get();
+            if(!$user)
+            {
+                $data = new User();
+                $data->name = $l->nama_lingkungan;
+                $data->email = strtolower($l->nama_lingkungan) .'@gmail.com';
+                $data->password = Hash::make('12345');
+                $data->lingkungan_id = $l->id;
+                $data->role = "ketua lingkungan";
+                $data->save();
+            }
+            else
+            {
+                echo "ggl";
+            }
+        }
+        return redirect()->route('user.kl', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Semua Akun Berhasil');
     }
 
     public function DaftarKKBG()
