@@ -75,7 +75,7 @@ class PendaftaranKomuniController extends Controller
         $riwayat->status =  "Diproses";
         $riwayat->save();
 
-        return redirect()->route('pendaftarankomuni.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Berhasil');
+        return redirect()->route('pendaftarankomuni.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Pertama Berhasil');
     }
 
     public function detail(Request $request)
@@ -87,6 +87,23 @@ class PendaftaranKomuniController extends Controller
         return response()->json(array(
             'status'=>'oke',
             'msg'=>view('pendaftarankomuni.detail', compact("log"))->render()),200);
+    }
+
+    public function Pembatalan(Request $request)
+    {
+        $data=KomuniPertama::find($request->id);
+        $data->status = "Dibatalkan";
+        $data->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event =  "Komuni Pertama";
+        $riwayat->status =  "Dibatalkan";
+        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+        $riwayat->save();
+
+        return redirect()->route('pendaftarankomuni.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Pertama Berhasil Dibatalkan');
     }
 
     /**

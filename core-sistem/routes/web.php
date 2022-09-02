@@ -152,7 +152,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //Pendaftaran Petugas Liturgi
     Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);
+    Route::get('/pendaftaranpetugas/OpenForm/{id}', [PendaftaranPetugasController::class, 'OpenForm'])->name('pendaftaranpetugas.OpenForm');
     Route::post('/pendaftaranpetugas/InputForm', [PendaftaranPetugasController::class, 'InputForm'])->name('pendaftaranpetugas.InputForm');
+    Route::post('/pendaftaranpetugas/Pembatalan', [PendaftaranPetugasController::class, 'Pembatalan'])->name('pendaftaranpetugas.Pembatalan');
+    Route::post('/pendaftaranpetugas/detail', [PendaftaranPetugasController::class, 'detail'])->name('pendaftaranpetugas.detail');
 
     //Pendaftaran Baptis
     Route::resource('pendaftaranbaptis', PendaftaranBaptisController::class);

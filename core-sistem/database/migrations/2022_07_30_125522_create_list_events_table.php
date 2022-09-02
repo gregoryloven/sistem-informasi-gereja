@@ -15,6 +15,7 @@ class CreateListEventsTable extends Migration
     {
         Schema::create('list_events', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('petugas_liturgi_id')->nullable();
             $table->string('nama_event');
             $table->enum('jenis_event', ['Baptis Bayi', 'Baptis Dewasa', 'Komuni Pertama', 'Krisma', 'Tobat', 'Misa']);
             $table->date('tgl_buka_pendaftaran');
@@ -23,6 +24,7 @@ class CreateListEventsTable extends Migration
             $table->string('lokasi');
             $table->string('romo');
             $table->string('kuota')->nullable();
+            $table->foreign('petugas_liturgi_id')->references('id')->on('petugas_liturgis');
             $table->timestamps();
         });
     }

@@ -96,18 +96,35 @@ class ValidasiAdminController extends Controller
 
     public function petugas(Request $request)
     {
-        $petugas = PendaftaranPetugas::join('petugas_liturgis', 'pendaftaran_petugas_liturgis.petugas_liturgi_id', '=', 'petugas_liturgis.id')
-        ->join('users', 'pendaftaran_petugas_liturgis.user_id', '=', 'users.id')
-        ->get(['users.nama_user', 'petugas_liturgis.jenis_petugas', 'status', 'pendaftaran_petugas_liturgis.id']);
+        $user = Auth::user()->id;
+        
+        $reservasi = PendaftaranPetugas::where('status', 'Diproses')->get();
+        $reservasiAll = DB::table('pendaftaran_petugas_liturgis')
+        ->join('riwayats', 'pendaftaran_petugas_liturgis.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
+        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Petugas Liturgi']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
+        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
+        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Petugas Liturgi']])
+        ->orderBy('pendaftaran_petugas_liturgis.jadwal', 'DESC')
+        ->get(['pendaftaran_petugas_liturgis.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiAdmin.petugas',compact("petugas"));
+        return view('validasiAdmin.petugas',compact("reservasi", "reservasiAll"));
     }
 
     public function AcceptPetugas(Request $request)
     {
         $petugas=PendaftaranPetugas::find($request->id);
-        $petugas->status = "Diterima";
+        $petugas->status = "Disetujui Paroki";
         $petugas->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $petugas->id;
+        $riwayat->jenis_event =  "Petugas Liturgi";
+        $riwayat->status =  "Disetujui Paroki";
+        $riwayat->save();
 
         return redirect()->route('validasiAdmin.petugas', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Petugas Liturgi Berhasil Disetujui');
     }
@@ -117,6 +134,14 @@ class ValidasiAdminController extends Controller
         $petugas=PendaftaranPetugas::find($request->id);
         $petugas->status = "Ditolak";
         $petugas->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $petugas->id;
+        $riwayat->jenis_event =  "Petugas Liturgi";
+        $riwayat->status =  "Ditolak";
+        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+        $riwayat->save();
 
         return redirect()->route('validasiAdmin.petugas', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Petugas Liturgi Berhasil Ditolak');
     }
@@ -136,11 +161,7 @@ class ValidasiAdminController extends Controller
         ->orderBy('baptiss.jadwal', 'DESC')
         ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> f4852c6556bf41c58f90308b8155d4dc39c1ebcc
         return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
     }
 
@@ -179,10 +200,6 @@ class ValidasiAdminController extends Controller
 
     public function PembatalanBaptis(Request $request)
     {
-<<<<<<< HEAD
-=======
-        
->>>>>>> f4852c6556bf41c58f90308b8155d4dc39c1ebcc
         $data=Baptis::find($request->id);
         $data->status = "Dibatalkan";
 

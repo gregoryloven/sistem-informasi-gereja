@@ -121,8 +121,8 @@
                         <th>KBG</th>
                         <th>Telepon</th>
                         <th>Jenis</th>
-                        <th>Tanggal</th>
-                        <th>Waktu</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
                         <th>Romo</th>
                         <th>Status</th>
@@ -159,11 +159,8 @@
                                 
                                 <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-success" onclick="detail({{ $d->id }})">Lacak</a>
                                 
-                                @elseif($d->status == "Ditolak")
-                                <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
-
                                 @else
-                                <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Dibatalkan</a>
+                                <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
                                 @endif
                             </td>
                             <td st>

@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-Pendaftaran Petugas Liturgi
+    Pendaftaran Petugas Liturgi
 @endsection
 
 @section('content')
@@ -30,83 +30,156 @@ Pendaftaran Petugas Liturgi
     </div>
 @endif
 
-<div class="row mb-4 mt-4">
-    <div class="col-md-12">
-        <div class="card shadow">
-            <div class="card-header py-3">
-                Formulir Pendaftaran Petugas Liturgi
-            </div>
-            <div class="card-body">
-            <form id="formIndividu" class="mb-2" method="post" action="/pendaftaranpetugas/InputForm">
-            @csrf
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Nama</label>
-                    <select  name="nama_user" class="form-control" placeholder="Pilih Nama Anda">
-                        @foreach($users as $u)
-                        <option value="{{$u->id}}">{{$u->nama_user}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Daftar Sebagai</label>
-                    <select class="form-control" name="petugas" id="exampleFormControlSelect1">
-                        @foreach($petugas as $d)
-                        <option value="{{$d->id}}">{{$d->jenis_petugas}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="alert alert-info" role="alert">
-                   Jika sudah mendaftar, silahkan lihat status pada "Mading Petugas Liturgi"
-                </div>
-                <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
-            </form>
+<!-- EDIT WITH MODAL-->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
             </div>
         </div>
     </div>
-    <div class="col-md-12 mt-4">
-        <div class="card shadow">
-            <div class="card-header py-3">
-                Mading Petugas Liturgi
+</div>
+
+<!-- TRACKING WITH MODAL -->
+<div class="modal fade" id="modaltracking" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContentt">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="myTable">
-                        <thead>
-                            <tr style="text-align: center;">
-                                <th width="5%">No</th>
-                                <th>Nama</th>
-                                <th>Sebagai</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php $i = 0; @endphp
-                            @foreach($pendaftaran_petugas as $d)
-                            @php $i += 1; @endphp
-                            <tr>
-                                <td>@php echo $i; @endphp</td>
-                                <td st>{{$d->nama_user}}</td>
-                                <td st>{{$d->jenis_petugas}}</td>
-                                <td st>
-                                    @if($d->status == "Pending")
-                                    <div class="alert alert-warning" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    @elseif($d->status == "Diterima")
-                                    <div class="alert alert-success" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    @else
-                                    <div class="alert alert-danger" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        List Sesi 
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Event</th>
+                        <th>Jenis Event</th>
+                        <th>Jenis Petugas Liturgi</th>
+                        <th>Tanggal Buka Pendaftaran</th>
+                        <th>Tanggal Tutup Pendaftaran</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th>Romo</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $i = 0; @endphp
+                    @foreach($data as $d)
+                    @php $i += 1; @endphp
+                    <tr>
+                        <td>@php echo $i; @endphp</td>
+                        <td st>{{$d->nama_event}}</td>
+                        <td st>{{$d->jenis_event}}</td>
+                        <td st>{{$d->Petugas->jenis_petugas}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{$d->lokasi}}</td>
+                        <td st>{{$d->romo}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href= "{{ url('pendaftaranpetugas/OpenForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Formulir Pendaftaran</a>   
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card shadow">
+        <div class="card-header py-3">
+            Riwayat Pendaftaran Petugas Liturgi
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="myTable">
+                    <thead>
+                        <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Lengkap</th>
+                        <th>Jenis Petugas Liturgi</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th>Telepon</th>
+                        <th>Status</th>
+                        <th>Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $i = 0; @endphp
+                        @foreach($petugas as $d)
+                        @php $i += 1; @endphp
+                        <tr>
+                            <td>@php echo $i; @endphp</td>
+                            <td st>{{$d->nama_lengkap}}</td>
+                            <td st>{{$d->jenis_petugas}}</td>
+                            <td st>{{$d->lingkungan}}</td>
+                            <td st>{{$d->kbg}}</td>
+                            <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
+                            <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                            <td st>{{$d->lokasi}}</td>
+                            <td st>{{$d->telepon}}</td>
+                            <td st>
+                                @if($d->status == "Diproses" || $d->status == "Disetujui Paroki" || $d->status == "Selesai")
+                                
+                                <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-info" onclick="detail({{ $d->id }})">Lacak</a>
+                                
+                                @elseif($d->status == "Ditolak" || $d->status == "Dibatalkan")
+                                <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
+                                @endif
+                            </td>
+                            <td st>
+                                @if($d->status == "Diproses" || $d->status == "Disetujui Paroki")
+                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                                @endif
+                            </td>
+                        </tr>
+                        <!-- EDIT WITH MODAL -->
+                        <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" >
+                                    <form role="form" method="POST" action="{{ url('pendaftaranpetugas/Pembatalan') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                            <h4 class="modal-title">Pembatalan Pendaftaran Petugas Liturgi</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @csrf
+                                            <label>Alasan Pembatalan:</label>
+                                            <input type="hidden" name="id" value="{{$d->id}}">
+                                            <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-info">Submit</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -115,4 +188,19 @@ Pendaftaran Petugas Liturgi
 @endsection
 
 @section('javascript')
+<script>
+function detail(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('pendaftaranpetugas.detail', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContentt').html(data.msg);
+    }
+  });
+}
+</script>
 @endsection

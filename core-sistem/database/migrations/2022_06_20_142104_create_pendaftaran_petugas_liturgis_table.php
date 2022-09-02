@@ -16,13 +16,14 @@ class CreatePendaftaranPetugasLiturgisTable extends Migration
         Schema::create('pendaftaran_petugas_liturgis', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('petugas_liturgi_id');
+            $table->string('jenis_petugas_liturgi');
             $table->string('nama_lengkap');
-            $table->string('jadwal');
+            $table->string('lingkungan');
+            $table->string('kbg');
+            $table->datetime('jadwal');
             $table->string('lokasi');
-            $table->string('status');
+            $table->enum('status', ['Diproses','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('petugas_liturgi_id')->references('id')->on('petugas_liturgis');
             $table->timestamps();
         });
     }

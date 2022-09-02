@@ -104,6 +104,9 @@
                     <label for="exampleFormControlTextarea1">Keterangan</label>
                     <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" placeholder="*Boleh Dikosongi" rows="3"></textarea>
                 </div>
+                <div class="alert alert-info" role="alert">
+                   Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Pelayanan"
+                </div>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
             </div>

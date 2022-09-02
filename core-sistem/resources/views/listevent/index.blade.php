@@ -43,8 +43,8 @@
                             <input type="text" class="form-control" id='nama_event' name='nama_event' placeholder="Nama Event" required>
                         </div>
                         <div class="form-group">
-                            <label >Jenis</label>
-                            <select class="form-control" id='jenis_event' name='jenis_event'>
+                            <label >Jenis Event</label>
+                            <select class="form-control" id='jenis_event' name='jenis_event' required>
                                 <option value="">Choose</option>
                                 <option value="Baptis Bayi">Baptis Bayi</option>
                                 <option value="Baptis Dewasa">Baptis Dewasa</option>
@@ -52,6 +52,15 @@
                                 <option value="Krisma">Krisma</option>
                                 <option value="Tobat">Tobat</option>
                                 <option value="Misa">Misa</option>
+                                <option value="Petugas Liturgi">Petugas Liturgi</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Jenis Petugas Liturgi</label>
+                            <select class="form-control" name="petugas_liturgi_id" id="petugas_liturgi_id" required>
+                                @foreach($petugas as $p)
+                                <option value="{{$p->id}}">{{$p->jenis_petugas}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -64,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label >Jadwal Pelaksanaan</label>
-                            <input type="datetime-local" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksana(this)' placeholder="Jadwal Pelaksanaan" required>
+                            <input type="datetime-local" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksanaan(this)' placeholder="Jadwal Pelaksanaan" required>
                         </div>
                         <div class="form-group">
                             <label >Lokasi</label>
@@ -187,7 +196,7 @@ function CheckEndDate()
     $('#jadwal_pelaksanaan').attr('min', enddate)
 }
 
-function CheckJadwalPelaksana()
+function CheckJadwalPelaksanaan()
 {
     if($('#tgl_buka_pendaftaran').val() == '' || $('#tgl_tutup_pendaftaran').val() == '')
     {   

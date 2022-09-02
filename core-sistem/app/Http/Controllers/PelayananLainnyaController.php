@@ -75,6 +75,7 @@ class PelayananLainnyaController extends Controller
     {
         $data=PendaftaranPelayananLainnya::find($request->id);
         $data->status = "Dibatalkan";
+        $data->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
@@ -83,8 +84,6 @@ class PelayananLainnyaController extends Controller
         $riwayat->status =  "Dibatalkan";
         $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
         $riwayat->save();
-
-        $data->save();
 
         return redirect()->route('pelayananlainnya.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pelayanan Berhasil Dibatalkan');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ListEvent;
+use App\Models\PetugasLiturgi;
 use Illuminate\Http\Request;
 
 class ListEventController extends Controller
@@ -15,7 +16,8 @@ class ListEventController extends Controller
     public function index()
     {
         $data=ListEvent::all();
-        return view('listevent.index',compact("data"));
+        $petugas=PetugasLiturgi::all();
+        return view('listevent.index',compact("data", "petugas"));
     }
 
     /**
@@ -39,6 +41,7 @@ class ListEventController extends Controller
         $data = new ListEvent();
         $data->nama_event = $request->get('nama_event');
         $data->jenis_event = $request->get('jenis_event');
+        $data->petugas_liturgi_id = $request->get('petugas_liturgi_id');
         $data->tgl_buka_pendaftaran = $request->get('tgl_buka_pendaftaran');
         $data->tgl_tutup_pendaftaran = $request->get('tgl_tutup_pendaftaran');
         $data->jadwal_pelaksanaan = $request->get('jadwal_pelaksanaan');
