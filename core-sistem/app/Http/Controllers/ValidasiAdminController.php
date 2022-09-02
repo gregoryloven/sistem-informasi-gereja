@@ -79,7 +79,6 @@ class ValidasiAdminController extends Controller
 
     public function PembatalanPelayanan(Request $request)
     {
-        
         $data=PendaftaranPelayananLainnya::find($request->id);
         $data->status = "Dibatalkan";
 
@@ -137,7 +136,7 @@ class ValidasiAdminController extends Controller
         ->orderBy('baptiss.jadwal', 'DESC')
         ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-        
+
         return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
     }
 
@@ -176,7 +175,6 @@ class ValidasiAdminController extends Controller
 
     public function PembatalanBaptis(Request $request)
     {
-        
         $data=Baptis::find($request->id);
         $data->status = "Dibatalkan";
 
@@ -197,15 +195,14 @@ class ValidasiAdminController extends Controller
         $user = Auth::user()->id;
         
         $reservasi = KomuniPertama::where('status', 'Disetujui Lingkungan')->get();
-        $reservasiAll = KomuniPertama::join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
+        $reservasiAll = DB::table('komuni_pertamas')
+        ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
         ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Komuni Pertama']])
         ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
         ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Komuni Pertama']])
         ->orderBy('komuni_pertamas.jadwal', 'DESC')
-        ->get(['komuni_pertamas.nama_lengkap', 'komuni_pertamas.tempat_lahir', 'komuni_pertamas.tanggal_lahir', 
-        'komuni_pertamas.orangtua_ayah', 'komuni_pertamas.orangtua_ibu', 'komuni_pertamas.lingkungan', 
-        'komuni_pertamas.kbg', 'komuni_pertamas.telepon', 'komuni_pertamas.jadwal', 'komuni_pertamas.surat_baptis', 
-        'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan']);
+        ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
         return view('validasiAdmin.komuni',compact("reservasi", "reservasiAll"));
     }
@@ -223,7 +220,7 @@ class ValidasiAdminController extends Controller
         $riwayat->status =  "Disetujui Paroki";
         $riwayat->save();
 
-        return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Komuni Berhasil Disetujui');
+        return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Komuni Pertama Berhasil Disetujui');
     }
 
     public function DeclineKomuni(Request $request)
@@ -240,6 +237,23 @@ class ValidasiAdminController extends Controller
         $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
         $riwayat->save();
 
-        return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Komuni Berhasil Ditolak');
+        return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Komuni Pertama Berhasil Ditolak');
+    }
+
+    public function PembatalanKomuni(Request $request)
+    {
+        $data=KomuniPertama::find($request->id);
+        $data->status = "Dibatalkan";
+
+        $riwayat = Riwayat::find($request->riwayatID);
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event =  "Komuni Pertama";
+        $riwayat->status =  "Dibatalkan";
+        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+        $riwayat->save();
+        $data->save();
+
+        return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Komuni Pertama Berhasil Dibatalkan');
     }
 }

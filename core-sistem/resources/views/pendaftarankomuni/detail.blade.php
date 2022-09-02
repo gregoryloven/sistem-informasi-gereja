@@ -78,9 +78,9 @@
                         @foreach($log as $l) 
                             @if($l->status=='Dibatalkan') 
                             <div class="alert alert-danger" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
+                                {{tanggal_indonesia($l->updated_at)}}<br>{{waktu_indonesia($l->updated_at)}}
                             </div>
-                            <small><b>Alasan: {{$l->alasan_pembatalan}}</b></small>
+                            <small><b>Alasan: {{$l->alasan_pembatalan}}<br>Oleh: {{$l->user->role}}</b></small>
                             @endif
                         @endforeach
                     </td></tr>

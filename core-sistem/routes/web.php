@@ -185,6 +185,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('validasiAdminKomuni', [ValidasiAdminController::class, 'komuni'])->name('validasiAdmin.komuni');
     Route::post('/validasiAdmin/acceptkomuni', [ValidasiAdminController::class, 'AcceptKomuni'])->name('validasiAdmin.AcceptKomuni');
     Route::post('/validasiAdmin/declinekomuni', [ValidasiAdminController::class, 'DeclineKomuni'])->name('validasiAdmin.DeclineKomuni');
+    Route::post('/validasiAdmin/pembatalankomuni', [ValidasiAdminController::class, 'PembatalanKomuni'])->name('validasiAdmin.PembatalanKomuni');
 
 
     // validasi Kbg
