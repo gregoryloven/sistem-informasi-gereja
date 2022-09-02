@@ -180,6 +180,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('validasiAdminBaptis', [ValidasiAdminController::class, 'baptis'])->name('validasiAdmin.baptis');
     Route::post('/validasiAdmin/acceptbaptis', [ValidasiAdminController::class, 'AcceptBaptis'])->name('validasiAdmin.AcceptBaptis');
     Route::post('/validasiAdmin/declinebaptis', [ValidasiAdminController::class, 'DeclineBaptis'])->name('validasiAdmin.DeclineBaptis');
+    Route::post('/validasiAdmin/pembatalanbaptis', [ValidasiAdminController::class, 'PembatalanBaptis'])->name('validasiAdmin.PembatalanBaptis');
 
     Route::get('validasiAdminKomuni', [ValidasiAdminController::class, 'komuni'])->name('validasiAdmin.komuni');
     Route::post('/validasiAdmin/acceptkomuni', [ValidasiAdminController::class, 'AcceptKomuni'])->name('validasiAdmin.AcceptKomuni');
