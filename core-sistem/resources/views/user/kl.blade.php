@@ -76,20 +76,31 @@
 <div class="modal fade" id="modalAllKL" tabindex="-1" role="basic" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Tambah Akun</h4>
-            </div>
-            <div class="modal-body">
-                <h3> APAKAH ANDA YAKIN MEMBUAT SEMUA AKUN KETUA LINGKUNGAN ?</h3>
-            </div>
-            <div class="modal-footer">
-                <a href="{{ url('user/TambahAllKL') }}" type="submit" class="btn btn-info">Submit</a>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
+        <form role="form" method="POST" action="/user/TambahAllKL" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Tambah Semua Akun</h4>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-body">
+                        <h4> APAKAH ANDA YAKIN MEMBUAT SEMUA AKUN KETUA LINGKUNGAN? <h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<!-- <div class="modal-footer">
+                <a href="{{ url('user/TambahAllKL') }}" type="submit" class="btn btn-info">Submit</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div> -->
 
 <div class="card shadow mb-4">
     <div class="card-header py-3"></div>

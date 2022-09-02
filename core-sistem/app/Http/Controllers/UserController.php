@@ -145,23 +145,19 @@ class UserController extends Controller
     public function TambahAllKL()
     {
         $ling = Lingkungan::all();
-        
+
         foreach($ling as $l)
         {
             $user = User::where('lingkungan_id', '=', $l->id)->get();
-            if(!$user)
+            if(!empty($user))
             {
                 $data = new User();
                 $data->name = $l->nama_lingkungan;
-                $data->email = strtolower($l->nama_lingkungan) .'@gmail.com';
+                $data->email = preg_replace('/\s+/', '', strtolower($l->nama_lingkungan) .'@gmail.com'); 
                 $data->password = Hash::make('12345');
                 $data->lingkungan_id = $l->id;
                 $data->role = "ketua lingkungan";
                 $data->save();
-            }
-            else
-            {
-                echo "ggl";
             }
         }
         return redirect()->route('user.kl', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Semua Akun Berhasil');

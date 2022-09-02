@@ -15,4 +15,10 @@ class PendaftaranPelayananLainnya extends Model
     {
     	return $this->belongsTo(PelayananLainnya::class, 'pelayanan_lainnya_id');
     }
+    
+    public function user()
+    {
+    	return $this->belongsTo(User::class, 'user_id');
+    }
+
 }

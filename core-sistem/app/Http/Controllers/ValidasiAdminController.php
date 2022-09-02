@@ -22,13 +22,24 @@ class ValidasiAdminController extends Controller
      */
      public function pelayanan()
     {
+        $user = Auth::user()->id;
+
         $reservasi = PendaftaranPelayananLainnya::where('status', 'Disetujui Lingkungan')->get();
-        
-        $reservasiAll = DB::table('pendaftaran_pelayanan_lainnyas')
-        ->where('status', 'Disetujui Paroki') 
-        ->orwhere('status', 'Selesai')
-        ->orderBy('jadwal', 'DESC')
-        ->get();
+        $reservasiAll = DB::table('pelayanan_lainnyas')
+        ->join('pendaftaran_pelayanan_lainnyas', 'pelayanan_lainnyas.id', '=', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id')
+        ->join('riwayats', 'pendaftaran_pelayanan_lainnyas.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
+        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Pelayanan']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
+        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
+        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Pelayanan']])
+        ->orderBy('pendaftaran_pelayanan_lainnyas.jadwal', 'DESC')
+        ->get(['pendaftaran_pelayanan_lainnyas.nama_lengkap', 'pendaftaran_pelayanan_lainnyas.lingkungan', 'pendaftaran_pelayanan_lainnyas.kbg',
+        'pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.jadwal', 
+        'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.telepon', 
+        'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan', 'riwayats.id as riwayatID', 'pendaftaran_pelayanan_lainnyas.id',
+        'riwayats.created_at','riwayats.updated_at', 'users.role']);
 
         return view('validasiAdmin.pelayanan',compact("reservasi", "reservasiAll"));
     }
@@ -41,8 +52,8 @@ class ValidasiAdminController extends Controller
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id =  $pelayanan->pelayanan_lainnya_id;
-        $riwayat->jenis_event =  $pelayanan->id;
+        $riwayat->event_id =  $pelayanan->id;
+        $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Disetujui Paroki";
         $riwayat->save();
 
@@ -57,13 +68,32 @@ class ValidasiAdminController extends Controller
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id = $pelayanan->pelayanan_lainnya_id;
-        $riwayat->jenis_event =  $pelayanan->id;
+        $riwayat->event_id = $pelayanan->id;
+        $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Ditolak";
         $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
         $riwayat->save();
 
-        return redirect()->route('validasi.pelayanan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pelayanan Berhasil Ditolak');
+        return redirect()->route('validasiAdmin.pelayanan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pelayanan Berhasil Ditolak');
+    }
+
+    public function PembatalanPelayanan(Request $request)
+    {
+        
+        $data=PendaftaranPelayananLainnya::find($request->id);
+       
+        $data->status = "Dibatalkan";
+
+        $riwayat = Riwayat::find($request->riwayatID);
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event =  "Pelayanan";
+        $riwayat->status =  "Dibatalkan";
+        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+        $riwayat->save();
+        $data->save();
+
+        return redirect()->route('validasiAdmin.pelayanan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Pelayanan Berhasil Dibatalkan');
     }
 
     public function petugas(Request $request)

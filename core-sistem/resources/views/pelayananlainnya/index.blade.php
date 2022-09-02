@@ -97,8 +97,12 @@
                     <textarea class="form-control" name="alamat" id="exampleFormControlTextarea1" rows="3" required></textarea>
                 </div>
                 <div class="form-group">
+                    <label >Telepon</label>
+                    <input type="text" value="{{$user[0]->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
+                </div>  
+                <div class="form-group">
                     <label for="exampleFormControlTextarea1">Keterangan</label>
-                    <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                    <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" placeholder="*Boleh Dikosongi" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
@@ -118,9 +122,12 @@
                                 <th width="5%">No</th>
                                 <th>Nama Lengkap</th>
                                 <th>Jenis Pelayanan</th>
+                                <th>Lingkungan</th>
+                                <th>KBG</th>
                                 <th>Tanggal Pelaksanaan</th>
                                 <th>Waktu Pelaksanaan</th>
                                 <th>Alamat Pelaksanaan</th>
+                                <th>Telepon</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
                                 <th>Tindakan</th>
@@ -134,29 +141,32 @@
                                 <td>@php echo $i; @endphp</td>
                                 <td st>{{$d->nama_lengkap}}</td>
                                 <td st>{{$d->Pelayanan->jenis_pelayanan}}</td>
+                                <td st>{{$d->lingkungan}}</td>
+                                <td st>{{$d->kbg}}</td>
                                 <td st>{{tanggal_indonesia($d->jadwal)}}</td>
                                 <td st>{{waktu_indonesia($d->jadwal)}}</td>
                                 <td st>{{$d->alamat}}</td>
+                                <td st>{{$d->telepon}}</td>
                                 <td st>{{$d->keterangan}}</td>
                                 <td st>
-                                    @if($d ->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
                                     
-                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-warning" onclick="detail({{ $d->id }})">{{$d->status}}</a>
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-info" onclick="detail({{ $d->id }})">Lacak</a>
                                     
                                     @elseif($d->status == "Disetujui Paroki" || $d->status == "Selesai")
                                     
-                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-success" onclick="detail({{ $d->id }})">{{$d->status}}</a>
-                                
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-success" onclick="detail({{ $d->id }})">Lacak</a>
+                                    
+                                    @elseif($d->status == "Ditolak")
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
+
                                     @else
-                                    <div class="alert alert-danger" role="alert">
-                                        {{$d->status}}  
-                                    </div>
-                                    <small><b>Alasan: {{$d->alasan_penolakan}}</b></small>
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
                                     @endif
                                 </td>
                                 <td st>
                                     @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
-                                    <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Pembatalan</a>
+                                    <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
                                     @endif
                                 </td>
                             </tr>
@@ -174,7 +184,7 @@
                                                 @csrf
                                                 <label>Alasan Pembatalan:</label>
                                                 <input type="hidden" name="id" value="{{$d->id}}">
-                                                <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-info">Submit</button>

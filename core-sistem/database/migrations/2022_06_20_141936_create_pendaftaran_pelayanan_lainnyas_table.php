@@ -22,9 +22,9 @@ class CreatePendaftaranPelayananLainnyasTable extends Migration
             $table->string('kbg');
             $table->dateTime('jadwal');
             $table->string('alamat');
+            $table->string('telepon');
             $table->string('keterangan')->nullable();
-            $table->string('alasan_pembatalan')->nullable();
-            $table->string('status');
+            $table->enum('status', ['Diproses','Disetujui KBG','Disetujui Lingkungan','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pelayanan_lainnya_id')->references('id')->on('pelayanan_lainnyas');
             $table->timestamps();

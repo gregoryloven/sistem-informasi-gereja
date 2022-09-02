@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PelayananLainnya;
 use App\Models\PendaftaranPelayananLainnya;
 use App\Models\Baptis;
 use App\Models\KomuniPertama;
@@ -16,13 +15,24 @@ class ValidasiKLController extends Controller
     public function pelayanan()
     {
         $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
+        $user = Auth::user()->id;
+
         $reservasi = PendaftaranPelayananLainnya::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan]])->get();
         
-        $reservasiAll = DB::table('pendaftaran_pelayanan_lainnyas')
-        ->where([['status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan]])
-        ->orwhere([['status', 'Ditolak'], ['lingkungan', $lingkungan]])
-        ->orderBy('jadwal', 'DESC')
-        ->get();
+        $reservasiAll = DB::table('pelayanan_lainnyas')
+        ->join('pendaftaran_pelayanan_lainnyas', 'pelayanan_lainnyas.id', '=', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id')
+        ->join('riwayats', 'pendaftaran_pelayanan_lainnyas.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
+        ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Pelayanan']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
+        ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Pelayanan']])
+        ->orderBy('pendaftaran_pelayanan_lainnyas.jadwal', 'DESC')
+        ->get(['pendaftaran_pelayanan_lainnyas.nama_lengkap', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id',
+        'pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.jadwal', 
+        'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.telepon', 
+        'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan',  'riwayats.created_at', 'users.role']);
+
         return view('validasiKL.pelayanan',compact("reservasi", "reservasiAll"));
     }
 
@@ -34,8 +44,8 @@ class ValidasiKLController extends Controller
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id =  $pelayanan->pelayanan_lainnya_id;
-        $riwayat->jenis_event =  $pelayanan->id;
+        $riwayat->event_id =  $pelayanan->id;
+        $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Disetujui Lingkungan";
         $riwayat->save();
 
@@ -46,13 +56,12 @@ class ValidasiKLController extends Controller
     {
         $pelayanan=PendaftaranPelayananLainnya::find($request->id);
         $pelayanan->status = "Ditolak";
-        $pelayanan->alasan_penolakan = $request->get("alasan_penolakan");
         $pelayanan->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id = $pelayanan->pelayanan_lainnya_id;
-        $riwayat->jenis_event =  $pelayanan->id;
+        $riwayat->event_id = $pelayanan->id;
+        $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Ditolak";
         $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
         $riwayat->save();

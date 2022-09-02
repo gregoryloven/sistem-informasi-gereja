@@ -26,6 +26,11 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $primaryKey = 'id';
 
+    public function pendaftaran_pelayanan()
+    {
+    	return $this->hasMany(PendaftaranPelayananLainnya::class, 'user_id', 'id');
+    }
+    
     public function riwayat()
     {
     	return $this->hasMany(Riwayat::class, 'user_id', 'id');

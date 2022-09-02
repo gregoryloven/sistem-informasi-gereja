@@ -7,12 +7,12 @@
 @endpush
 
 @section('title')
-    Validasi
+    Validasi Pelayanan
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Pelayanan</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -30,30 +30,34 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable">
+            <table class="table table-bordered">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama</th>
+                        <th>Nama Lengkap</th>
                         <th>Jenis Pelayanan</th>
-                        <th>Tanggal Permohonan</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Alamat</th>
+                        <th>Telepon</th>
                         <th>Keterangan</th>
-                        <th>Status</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
                     @foreach($reservasi as $d)
                     @php $i += 1; @endphp
-                    <tr>
+                    <tr style="text-align: center;">
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->nama_pemohon}}</td>
-                        <td st>{{$d->jenisPelayanan}}</td>
-                        <td st>{{$d->jadwal}}</td>
+                        <td st>{{$d->nama_lengkap}}</td>
+                        <td st>{{$d->Pelayanan->jenis_pelayanan}}</td>
+                        <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
                         <td st>{{$d->alamat}}</td>
+                        <td st>{{$d->telepon}}</td>
                         <td st>{{$d->keterangan}}</td>
-                        <td st class="d-flex">
+                        <td st>
                             @if($d->status == "Disetujui KBG")
                             <form action="/validasiKL/acceptpelayanan" method="post">
                                 @csrf
@@ -76,7 +80,7 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Pembatalan Reservasi</h4>
+                                        <h4 class="modal-title">Pembatalan Pelayanan</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
@@ -108,10 +112,12 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama</th>
+                        <th>Nama Lengkap</th>
                         <th>Jenis Pelayanan</th>
-                        <th>Tanggal Permohonan</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Alamat</th>
+                        <th>Telepon</th>
                         <th>Keterangan</th>
                         <th>Status</th>
                     </tr>
@@ -122,28 +128,31 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$da->nama_pemohon}}</td>
+                        <td st>{{$da->nama_lengkap}}</td>
                         <td st>{{$da->jenisPelayanan}}</td>
-                        <td st>{{$da->jadwal}}</td>
+                        <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
                         <td st>{{$da->alamat}}</td>
+                        <td st>{{$da->telepon}}</td>
                         <td st>{{$da->keterangan}}</td>
                         <td st >
-                            @if($da->status == "Disetujui Lingkungan")
+                            @if($da->statusRiwayat == 'Disetujui Lingkungan') 
                             <div class="alert alert-success" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
                             </div>
-                            @elseif($da->status == "Disetujui Paroki")
-                            <div class="alert alert-success" role="alert">
-                                {{$da->status}}
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}</small>
+                            @elseif($da->statusRiwayat == 'Ditolak') 
+                            <div class="alert alert-danger" role="alert">
+                                {{$da->statusRiwayat}}
                             </div>
-                            @elseif($da->status == "Selesai")
-                            <div class="alert alert-success" role="alert">
-                                {{$da->status}}
-                            </div>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}
+                                <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
                             @else
                             <div class="alert alert-danger" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
                             </div>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}
+                                <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
                             @endif
                         </td>
                     </tr>

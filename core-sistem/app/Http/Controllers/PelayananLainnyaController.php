@@ -45,14 +45,15 @@ class PelayananLainnyaController extends Controller
         $data->kbg = $request->get("kbg");
         $data->jadwal = $request->get("jadwal");
         $data->alamat = $request->get("alamat");
+        $data->telepon = $request->get("telepon");
         $data->keterangan = $request->get("keterangan");
         $data->status = "Diproses";
         $data->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
-        $riwayat->jenis_event =  $data->pelayanan_lainnya_id;
         $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Diproses";
         $riwayat->save();
 
@@ -62,8 +63,8 @@ class PelayananLainnyaController extends Controller
     public function detail(Request $request)
     {
         $id=$request->get("id");
-        $log=Riwayat::where('event_id', '=', $id)
-        ->get()->toArray();
+        $log=Riwayat::where([['event_id', '=', $id], ['jenis_event', '=', 'Pelayanan']])
+        ->get();
         
         return response()->json(array(
             'status'=>'oke',
@@ -74,7 +75,14 @@ class PelayananLainnyaController extends Controller
     {
         $data=PendaftaranPelayananLainnya::find($request->id);
         $data->status = "Dibatalkan";
-        $data->alasan_pembatalan = $request->get("alasan_pembatalan");
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event =  "Pelayanan";
+        $riwayat->status =  "Dibatalkan";
+        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+        $riwayat->save();
 
         $data->save();
 

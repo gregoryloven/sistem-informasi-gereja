@@ -18,7 +18,7 @@ class LoginResponse implements LoginResponseContract
         $user = Auth::user()->role;
         if($user == 'admin')
         {
-            return redirect('/sbadmin');
+            return redirect('/sbadmin2');
         }
         elseif($user == 'ketua kbg')
         {

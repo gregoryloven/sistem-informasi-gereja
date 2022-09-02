@@ -169,9 +169,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //Validasi Admin
     Route::get('validasiAdminPelayanan', [ValidasiAdminController::class, 'pelayanan'])->name('validasiAdmin.pelayanan');
-    Route::post('/validasiAdmin/acceptpelayanan', [ValidasiAdminController::class, 'Accept'])->name('validasiAdmin.Accept');
-    Route::post('/validasiAdmin/declinepelayanan', [ValidasiAdminController::class, 'Decline'])->name('validasiAdmin.Decline');
-    
+    Route::post('/validasiAdmin/acceptpelayanan', [ValidasiAdminController::class, 'AcceptPelayanan'])->name('validasiAdmin.AcceptPelayanan');
+    Route::post('/validasiAdmin/declinepelayanan', [ValidasiAdminController::class, 'DeclinePelayanan'])->name('validasiAdmin.DeclinePelayanan');
+    Route::post('/validasiAdmin/pembatalanpelayanan', [ValidasiAdminController::class, 'PembatalanPelayanan'])->name('validasiAdmin.PembatalanPelayanan');
+
     Route::get('validasiAdminPetugas', [ValidasiAdminController::class, 'petugas'])->name('validasiAdmin.petugas');
     Route::post('/validasiAdmin/acceptpetugas', [ValidasiAdminController::class, 'AcceptPetugas'])->name('validasiAdmin.AcceptPetugas');
     Route::post('/validasiAdmin/declinepetugas', [ValidasiAdminController::class, 'DeclinePetugas'])->name('validasiAdmin.DeclinePetugas');

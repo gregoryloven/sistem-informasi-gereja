@@ -79,8 +79,8 @@
                             @if($l->status=='Dibatalkan') 
                             <div class="alert alert-danger" role="alert">
                                 {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
-                                <br><small><b>Alasan: {{$l->alasan_pembatalan}}</b></small>
                             </div>
+                            <small><b>Alasan: {{$l->alasan_pembatalan}}</b></small>
                             @endif
                         @endforeach
                     </td></tr>
