@@ -136,7 +136,11 @@ class ValidasiAdminController extends Controller
         ->orderBy('baptiss.jadwal', 'DESC')
         ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> f4852c6556bf41c58f90308b8155d4dc39c1ebcc
         return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
     }
 
@@ -175,6 +179,10 @@ class ValidasiAdminController extends Controller
 
     public function PembatalanBaptis(Request $request)
     {
+<<<<<<< HEAD
+=======
+        
+>>>>>>> f4852c6556bf41c58f90308b8155d4dc39c1ebcc
         $data=Baptis::find($request->id);
         $data->status = "Dibatalkan";
 
