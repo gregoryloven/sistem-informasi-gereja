@@ -156,18 +156,57 @@
                             <div class="alert alert-success" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}</small>
                             @elseif($da->statusRiwayat == 'Ditolak') 
                             <div class="alert alert-danger" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
-                            <small><b>Alasan: {{$da->alasan_penolakan}}</b></small>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}
+                                <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
+                            @elseif($da->statusRiwayat == 'Dibatalkan') 
+                            <div class="alert alert-danger" role="alert">
+                                {{$da->statusRiwayat}}
+                            </div>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}
+                                <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
                             @else
                             <div class="alert alert-success" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}</small>
+                            @endif
+                        </td>
+                        <td st>
+                            @if($da->statusRiwayat == "Disetujui Paroki")
+                            <a href="#modal{{$da->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
                             @endif
                         </td>
                     </tr>
+                    <!-- EDIT WITH MODAL -->
+                    <div class="modal fade" id="modal{{$da->riwayatID}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form role="form" method="POST" action="{{ url('validasiAdmin/pembatalanbaptis') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                        <h4 class="modal-title">Pembatalan Reservasi</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @csrf
+                                        <label>Alasan Pembatalan:</label>
+                                        <input type="hidden" name="id" value="{{$da->id}}">
+                                        <input type="hidden" name="riwayatID" value="{{$da->riwayatID}}">
+                                        <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-info">Submit</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>

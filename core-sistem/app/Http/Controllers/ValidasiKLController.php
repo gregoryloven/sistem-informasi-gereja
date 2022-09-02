@@ -31,7 +31,7 @@ class ValidasiKLController extends Controller
         'pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.jadwal', 
         'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.telepon', 
         'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan',  'riwayats.created_at', 'users.role']);
+        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
         return view('validasiKL.pelayanan',compact("reservasi", "reservasiAll"));
     }
@@ -75,15 +75,15 @@ class ValidasiKLController extends Controller
         $user = Auth::user()->id;
         $reservasi = Baptis::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan]])->get();
         
-        $reservasiAll = Baptis::join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+        $reservasiAll = DB::table('baptiss')
+        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
         ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Bayi']])
         ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
         ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Bayi']])
         ->orderBy('baptiss.jadwal', 'DESC')
-        ->get(['baptiss.nama_lengkap', 'baptiss.tempat_lahir', 'baptiss.tanggal_lahir', 'baptiss.orangtua_ayah', 
-        'baptiss.orangtua_ibu', 'baptiss.wali_baptis_ayah', 'baptiss.wali_baptis_ibu', 'baptiss.telepon', 
-        'baptiss.jenis', 'baptiss.jadwal', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan']);
+        ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
         return view('validasiKL.baptis',compact("reservasi", "reservasiAll"));
     }
