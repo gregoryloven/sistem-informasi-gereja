@@ -134,6 +134,11 @@
             $('#myTable').DataTable();
         });
     </script>
+    <script>
+        jQuery(document).ready(function() {    
+            $('#myTable2').DataTable();
+        });
+    </script>
 
 </body>
 

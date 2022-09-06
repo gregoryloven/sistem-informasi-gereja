@@ -26,8 +26,8 @@
 
             <div class="mt-4">
                 <x-jet-label for="agama" value="{{ __('Agama') }}" /> 
-                <select name="agama" class="block mt-1 w-full" id="agama">
-                    <option value=""></option>
+                <select name="agama" class="block mt-1 w-full" id="agama" required>
+                    <option value="" disabled selected></option>
                     <option value="Katolik" @if (old('agama') == "Katolik") {{ 'selected' }} @endif>Katolik</option>
                     <option value="Kristen" @if (old('agama') == "Kristen") {{ 'selected' }} @endif>Kristen</option>
                     <option value="Islam" @if (old('agama') == "Islam") {{ 'selected' }} @endif>Islam</option>
@@ -39,8 +39,8 @@
 
             <div class="mt-4">
                 <x-jet-label for="jenis_kelamin" value="{{ __('Jenis Kelamin') }}" /> 
-                <select name="jenis_kelamin" class="block mt-1 w-full" id="jenis_kelamin">
-                    <option value=""></option>
+                <select name="jenis_kelamin" class="block mt-1 w-full" id="jenis_kelamin" required>
+                    <option value="" disabled selected></option>
                     <option value="Laki-Laki" @if (old('jenis_kelamin') == "Laki-Laki") {{ 'selected' }} @endif>Laki-Laki</option>
                     <option value="Perempuan" @if (old('jenis_kelamin') == "Perempuan") {{ 'selected' }} @endif>Perempuan</option>
                 </select>

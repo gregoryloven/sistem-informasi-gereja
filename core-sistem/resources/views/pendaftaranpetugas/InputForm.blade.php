@@ -44,8 +44,8 @@
                     <input type="text" class="form-control" value="{{$user[0]->nama_lengkap}}" name="nama_lengkap" id="nama_lengkap" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label >Jenis</label>
-                    <input type="text" value="{{$list[0]->jenis_petugas}}" class="form-control" id='jenis_petugas' name='jenis_petugas' placeholder="Jenis" required readonly>
+                    <label >Jenis Petugas Liturgi</label>
+                    <input type="text" value="{{$list[0]->jenisPetugas}}" class="form-control" id='jenis_petugas' name='jenis_petugas' placeholder="Jenis" required readonly>
                 </div>
                 <div class="form-group">
                     <label >Lingkungan</label>
@@ -75,7 +75,6 @@
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Petugas Liturgi"
                 </div>
-                <input type="hidden" value="{{$list[0]->id}}" id='event_id' name='event_id'>
                 <input type="hidden" value="{{$list[0]->jenis_event}}" id='jenis_event' name='jenis_event'>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>

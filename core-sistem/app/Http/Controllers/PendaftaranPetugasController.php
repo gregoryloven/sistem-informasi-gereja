@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PendaftaranPelayananLainnya;
 use App\Models\PendaftaranPetugas;
-use App\Models\PetugasLiturgi;
 use App\Models\User;
+use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -18,10 +17,14 @@ class PendaftaranPetugasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {        
         $data = DB::table('list_events')
-                ->where('jenis_event', 'like', 'Petugas%')
-                ->get();
+        ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
+        ->where('list_events.jenis_event', 'Petugas Liturgi')
+        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas',
+        ]);
+
         $petugas = PendaftaranPetugas::where('user_id', Auth::user()->id)->get();
         $user = User::all();
 
@@ -35,7 +38,14 @@ class PendaftaranPetugasController extends Controller
     public function OpenForm(Request $request)
     {
         $id = $request->id;
-        $list = DB::table('list_events')->where('id', $id)->get();
+
+        $list = DB::table('list_events')
+        ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
+        ->where([['list_events.jenis_event', 'Petugas Liturgi'], ['list_events.id', $id]])
+        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas'
+        ]);
+
         $user = DB::table('users')
             ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
             ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
@@ -50,11 +60,11 @@ class PendaftaranPetugasController extends Controller
         $data = new PendaftaranPetugas;
         $data->user_id =  Auth::user()->id;
         $data->nama_lengkap = $request->get("nama_lengkap");
-        $data->petugas_liturgi_id = $request->get("petugas_liturgi_id");
+        $data->jenis_petugas_liturgi = $request->get("jenis_petugas");
         $data->lingkungan = $request->get("lingkungan");
         $data->kbg = $request->get("kbg");
-        $data->jenis_petugas = $request->get("jenis_petugas");
         $data->jadwal = $request->get("jadwal");
+        $data->lokasi = $request->get("lokasi");
         $data->telepon = $request->get("telepon");
         $data->status = "Diproses";
         $data->save();

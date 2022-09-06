@@ -11,4 +11,9 @@ class ListEvent extends Model
     protected $table = 'list_events';
     protected $primaryKey = 'id';
 
+    public function petugas()
+    {
+    	return $this->belongsTo(PetugasLiturgi::class, 'petugas_liturgi_id');
+    }
+
 }

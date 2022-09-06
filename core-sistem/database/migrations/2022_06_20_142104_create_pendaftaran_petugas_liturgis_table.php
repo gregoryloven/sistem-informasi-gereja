@@ -22,6 +22,7 @@ class CreatePendaftaranPetugasLiturgisTable extends Migration
             $table->string('kbg');
             $table->datetime('jadwal');
             $table->string('lokasi');
+            $table->string('telepon');
             $table->enum('status', ['Diproses','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

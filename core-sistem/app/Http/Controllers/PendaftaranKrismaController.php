@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Krisma;
 use App\Models\User;
-use App\Models\KomuniPertama;
 use App\Models\Riwayat;
+use Illuminate\Http\Request;
 use DB;
 use Auth;
-use Illuminate\Http\Request;
 
-class PendaftaranKomuniController extends Controller
+class PendaftaranKrismaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +19,11 @@ class PendaftaranKomuniController extends Controller
     public function index()
     {
         $data = DB::table('list_events')
-                ->where('jenis_event', 'like', 'Ko%')
+                ->where('jenis_event', 'like', 'Kr%')
                 ->get();
-        $komuni = KomuniPertama::where('user_id', Auth::user()->id)->get();
+        $krisma = Krisma::where('user_id', Auth::user()->id)->get();
         $user = User::all();
-        return view('pendaftarankomuni.index',compact("data", "komuni", "user"));
+        return view('pendaftarankrisma.index',compact("data", "krisma", "user"));
     }
 
     public function OpenForm(Request $request)
@@ -38,12 +38,12 @@ class PendaftaranKomuniController extends Controller
             ->where('users.id', Auth::user()->id)
             ->get();
 
-        return view('pendaftarankomuni.InputForm',compact("list", "user"));
+        return view('pendaftarankrisma.InputForm',compact("list", "user"));
     }
 
-    public function InputForm(Request $request)
+    public function InputFormSetempat(Request $request)
     {
-        $data = new KomuniPertama();
+        $data = new Krisma();
         $data->user_id = Auth::user()->id;
         $data->nama_lengkap = $request->get("nama_lengkap");
         $data->tempat_lahir = $request->get("tempat_lahir");
@@ -64,45 +64,24 @@ class PendaftaranKomuniController extends Controller
         $imgFile=time()."_".$request->get('nama').".".$extension;
         $file->move($imgFolder,$imgFile);
         $data->surat_baptis=$imgFile;
+
+        $file2=$request->file('sertifikat_komuni');
+        $imgFolder2 = 'file_sertifikat/sertifikat_komuni';
+        $extension2 = $request->file('sertifikat_komuni')->extension();
+        $imgFile2=time()."_".$request->get('nama').".".$extension;
+        $file2->move($imgFolder2,$imgFile2);
+        $data->sertifikat_komuni=$imgFile2;
         
         $data->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
-        $riwayat->jenis_event =  $request->get("jenis_event");
+        $riwayat->jenis_event =  "Krisma";
         $riwayat->event_id =  $data->id;
         $riwayat->status =  "Diproses";
         $riwayat->save();
 
-        return redirect()->route('pendaftarankomuni.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Pertama Berhasil');
-    }
-
-    public function detail(Request $request)
-    {
-        $id=$request->get("id");
-        $log=Riwayat::where([['event_id', '=', $id], ['jenis_event', '=', 'Komuni Pertama']])
-        ->get();
-        
-        return response()->json(array(
-            'status'=>'oke',
-            'msg'=>view('pendaftarankomuni.detail', compact("log"))->render()),200);
-    }
-
-    public function Pembatalan(Request $request)
-    {
-        $data=KomuniPertama::find($request->id);
-        $data->status = "Dibatalkan";
-        $data->save();
-
-        $riwayat = new Riwayat();
-        $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id =  $data->id;
-        $riwayat->jenis_event =  "Komuni Pertama";
-        $riwayat->status =  "Dibatalkan";
-        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
-        $riwayat->save();
-
-        return redirect()->route('pendaftarankomuni.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Pertama Berhasil Dibatalkan');
+        return redirect()->route('pendaftarankrisma.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Krisma Berhasil');
     }
 
     /**
@@ -110,7 +89,6 @@ class PendaftaranKomuniController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function create()
     {
         //
@@ -130,10 +108,10 @@ class PendaftaranKomuniController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PendaftaranKomuni  $pendaftaranKomuni
+     * @param  \App\Models\PendaftaranKrisma  $pendaftaranKrisma
      * @return \Illuminate\Http\Response
      */
-    public function show(PendaftaranKomuni $pendaftaranKomuni)
+    public function show(PendaftaranKrisma $pendaftaranKrisma)
     {
         //
     }
@@ -141,10 +119,10 @@ class PendaftaranKomuniController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PendaftaranKomuni  $pendaftaranKomuni
+     * @param  \App\Models\PendaftaranKrisma  $pendaftaranKrisma
      * @return \Illuminate\Http\Response
      */
-    public function edit(PendaftaranKomuni $pendaftaranKomuni)
+    public function edit(PendaftaranKrisma $pendaftaranKrisma)
     {
         //
     }
@@ -153,10 +131,10 @@ class PendaftaranKomuniController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PendaftaranKomuni  $pendaftaranKomuni
+     * @param  \App\Models\PendaftaranKrisma  $pendaftaranKrisma
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PendaftaranKomuni $pendaftaranKomuni)
+    public function update(Request $request, PendaftaranKrisma $pendaftaranKrisma)
     {
         //
     }
@@ -164,10 +142,10 @@ class PendaftaranKomuniController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PendaftaranKomuni  $pendaftaranKomuni
+     * @param  \App\Models\PendaftaranKrisma  $pendaftaranKrisma
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PendaftaranKomuni $pendaftaranKomuni)
+    public function destroy(PendaftaranKrisma $pendaftaranKrisma)
     {
         //
     }

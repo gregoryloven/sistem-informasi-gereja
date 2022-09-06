@@ -16,6 +16,7 @@ use App\Http\Controllers\PelayananLainnyaController;
 use App\Http\Controllers\PendaftaranPetugasController;
 use App\Http\Controllers\PendaftaranBaptisController;
 use App\Http\Controllers\PendaftaranKomuniController;
+use App\Http\Controllers\PendaftaranKrismaController;
 use App\Http\Controllers\PemindahanKbgController;
 use App\Http\Controllers\ValidasiAdminController;
 use App\Http\Controllers\ValidasiKbgController;
@@ -169,6 +170,12 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/pendaftarankomuni/InputForm', [PendaftaranKomuniController::class, 'InputForm'])->name('pendaftarankomuni.InputForm');
     Route::get('/pendaftarankomuni/OpenForm/{id}', [PendaftaranKomuniController::class, 'OpenForm'])->name('pendaftarankomuni.OpenForm');
     Route::post('/pendaftarankomuni/detail', [PendaftaranKomuniController::class, 'detail'])->name('pendaftarankomuni.detail');
+
+    //Pendaftaran Krisma
+    Route::resource('pendaftarankrisma', PendaftaranKrismaController::class);
+    Route::post('/pendaftarankrisma/InputFormSetempat', [PendaftaranKrismaController::class, 'InputFormSetempat'])->name('pendaftarankrisma.InputFormSetempat');
+    Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
+    Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
 
     //Validasi Admin
     Route::get('validasiAdminPelayanan', [ValidasiAdminController::class, 'pelayanan'])->name('validasiAdmin.pelayanan');

@@ -107,7 +107,7 @@ class ValidasiAdminController extends Controller
         ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
         ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Petugas Liturgi']])
         ->orderBy('pendaftaran_petugas_liturgis.jadwal', 'DESC')
-        ->get(['pendaftaran_petugas_liturgis.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        ->get(['pendaftaran_petugas_liturgis.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
         return view('validasiAdmin.petugas',compact("reservasi", "reservasiAll"));

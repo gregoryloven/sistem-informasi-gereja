@@ -43,8 +43,8 @@
                         <th>Wali Baptis Ibu</th>
                         <th>Telepon</th>
                         <th>Jenis</th>
-                        <th>Tanggal</th>
-                        <th>Waktu</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -190,11 +190,7 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-<<<<<<< HEAD
                                         <h4 class="modal-title">Pembatalan Baptis</h4>
-=======
-                                        <h4 class="modal-title">Pembatalan Reservasi</h4>
->>>>>>> f4852c6556bf41c58f90308b8155d4dc39c1ebcc
                                     </div>
                                     <div class="modal-body">
                                         @csrf

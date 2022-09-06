@@ -17,12 +17,12 @@ class CreateListEventsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('petugas_liturgi_id')->nullable();
             $table->string('nama_event');
-            $table->enum('jenis_event', ['Baptis Bayi', 'Baptis Dewasa', 'Komuni Pertama', 'Krisma', 'Tobat', 'Misa']);
+            $table->enum('jenis_event', ['Baptis Bayi', 'Baptis Dewasa', 'Komuni Pertama', 'Krisma', 'Tobat', 'Misa', 'Petugas Liturgi']);
             $table->date('tgl_buka_pendaftaran');
             $table->date('tgl_tutup_pendaftaran');
             $table->datetime('jadwal_pelaksanaan');
             $table->string('lokasi');
-            $table->string('romo');
+            $table->string('romo')->nullable();
             $table->string('kuota')->nullable();
             $table->foreign('petugas_liturgi_id')->references('id')->on('petugas_liturgis');
             $table->timestamps();

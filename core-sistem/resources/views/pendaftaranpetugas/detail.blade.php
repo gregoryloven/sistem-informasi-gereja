@@ -22,26 +22,6 @@
                             @endif
                         @endforeach
                     </td></tr>
-                    <tr><td>Disetujui KBG</td>
-                    <td>
-                        @foreach($log as $l) 
-                            @if($l->status=='Disetujui KBG') 
-                            <div class="alert alert-success" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
-                            </div>
-                            @endif
-                        @endforeach
-                    </td></tr>
-                    <tr><td>Disetujui Lingkungan</td>
-                    <td>
-                        @foreach($log as $l) 
-                            @if($l->status=='Disetujui Lingkungan') 
-                            <div class="alert alert-success" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
-                            </div>
-                            @endif
-                        @endforeach
-                    </td></tr>
                     <tr><td>Disetujui Paroki</td>
                     <td>
                         @foreach($log as $l) 

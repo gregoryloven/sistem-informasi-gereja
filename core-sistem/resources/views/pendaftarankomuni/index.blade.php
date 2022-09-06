@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-    Komuni Pertama
+    Sakramen Komuni Pertama
 @endsection
 
 @section('content')
@@ -58,6 +58,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
+            @if(count($data)!=0)
             <table class="table table-bordered">
                 <thead>
                     <tr style="text-align: center;">
@@ -96,13 +97,14 @@
                     @endforeach
                 </tbody>
             </table>
+            @endif
         </div>
     </div>
 </div>
 <div class="card shadow mb-4">
     <div class="card shadow">
         <div class="card-header py-3">
-            Riwayat Pendaftaran Komuni
+            Riwayat Pendaftaran Sakramen Komuni Pertama
         </div>
         <div class="card-body">
             <div class="table-responsive">

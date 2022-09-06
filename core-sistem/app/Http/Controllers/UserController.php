@@ -148,8 +148,8 @@ class UserController extends Controller
 
         foreach($ling as $l)
         {
-            $user = User::where('lingkungan_id', '=', $l->id)->get();
-            if(!empty($user))
+            $user = User::where([['lingkungan_id', '=', $l->id], ['role', 'ketua lingkungan']])->get();
+            if(count($user)==0)
             {
                 $data = new User();
                 $data->name = $l->nama_lingkungan;
