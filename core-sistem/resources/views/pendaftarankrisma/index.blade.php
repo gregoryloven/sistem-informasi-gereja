@@ -3,6 +3,7 @@
 @push('css')
 <style>
     #myTable td {text-align: center; vertical-align: middle;}
+    #myTable2 td {text-align: center; vertical-align: middle;}
 </style>
 @endpush
 
@@ -59,7 +60,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -103,11 +104,11 @@
 <div class="card shadow mb-4">
     <div class="card shadow">
         <div class="card-header py-3">
-            Riwayat Pendaftaran Sakramen Krisma
+            Riwayat Pendaftaran Sakramen Krisma Paroki Setempat
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="myTable">
+                <table class="table table-bordered" id="myTable2">
                     <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -124,6 +125,7 @@
                         <th>Lokasi</th>
                         <th>Romo</th>
                         <th>Surat Baptis</th>
+                        <th>Sertifikat Komuni</th>
                         <th>Status</th>
                         <th>Tindakan</th>
                     </tr>
@@ -147,6 +149,7 @@
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->romo}}</td>
                             <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></a></td>
+                            <td st><a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}" height='80px'/></a></td>
                             <td st>
                                 @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
                                 
@@ -162,6 +165,123 @@
                             </td>
                             <td st>
                                 @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                                @endif
+                            </td>
+                        </tr>
+                        <!-- EDIT WITH MODAL -->
+                        <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" >
+                                    <form role="form" method="POST" action="{{ url('pendaftarankrisma/Pembatalan') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                            <h4 class="modal-title">Pembatalan Pendaftaran Sakramen Krisma</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @csrf
+                                            <label>Alasan Pembatalan:</label>
+                                            <input type="hidden" name="id" value="{{$d->id}}">
+                                            <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-info">Submit</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp2{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}">
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card shadow">
+        <div class="card-header py-3">
+            Riwayat Pendaftaran Sakramen Krisma Lintas Paroki
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="myTable3">
+                    <thead>
+                    <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Penerima</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Orang Tua Ayah</th>
+                        <th>Orang Tua Ibu</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
+                        <th>Telepon</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th>Romo</th>
+                        <th>Surat Baptis</th>
+                        <th>Sertifikat Komuni</th>
+                        <th>Surat Pengantar Paroki</th>
+                        <th>Status</th>
+                        <th>Tindakan</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @php $i = 0; @endphp
+                        @foreach($krisma2 as $d)
+                        @php $i += 1; @endphp
+                        <tr style="text-align: center;">
+                            <td>@php echo $i; @endphp</td>
+                            <td st>{{$d->nama_lengkap}}</td>
+                            <td st>{{$d->tempat_lahir}}</td>
+                            <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
+                            <td st>{{$d->orangtua_ayah}}</td>
+                            <td st>{{$d->orangtua_ibu}}</td>
+                            <td st>{{$d->lingkungan}}</td>
+                            <td st>{{$d->kbg}}</td>
+                            <td st>{{$d->telepon}}</td>
+                            <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
+                            <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                            <td st>{{$d->lokasi}}</td>
+                            <td st>{{$d->romo}}</td>
+                            <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></a></td>
+                            <td st><a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}" height='80px'/></a></td>
+                            <td st><a href="#modalPopUp3{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pengantar/'.$d->surat_pengantar)}}" height='80px'/></a></td>
+                            <td st>
+                                @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                
+                                <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-info" onclick="detail({{ $d->id }})">Lacak</a>
+                                
+                                @elseif($d->status == "Disetujui Paroki" || $d->status == "Selesai")
+                                
+                                <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-success" onclick="detail({{ $d->id }})">Lacak</a>
+                                
+                                @else
+                                <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
+                                @endif
+                            </td>
+                            <td st>
+                                @if($d->status == "Diproses")
                                 <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
                                 @endif
                             </td>
@@ -196,6 +316,22 @@
                             <div class="modal-dialog" style="width:400px; height=400px;">
                                 <div class="modal-content" >
                                     <img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp2{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp3{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/surat_pengantar/'.$d->surat_pengantar)}}">
                                 </div>
                             </div>
                         </div>

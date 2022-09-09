@@ -1,4 +1,4 @@
-@extends('layouts.sbadmin2')
+@extends('layouts.sbkbg')
 
 @push('css')
 <style>
@@ -8,12 +8,12 @@
 @endpush
 
 @section('title')
-    Validasi Baptis
+    Validasi Krisma
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Krisma</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -40,12 +40,11 @@
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
                         <th>Orang Tua Ibu</th>
-                        <th>Wali Baptis Ayah</th>
-                        <th>Wali Baptis Ibu</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
+                        <th>Surat Baptis</th>
+                        <th>Sertifikat Komuni</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -60,20 +59,19 @@
                         <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
                         <td st>{{$d->orangtua_ayah}}</td>
                         <td st>{{$d->orangtua_ibu}}</td>
-                        <td st>{{$d->wali_baptis_ayah}}</td>
-                        <td st>{{$d->wali_baptis_ibu}}</td>
                         <td st>{{$d->telepon}}</td>
-                        <td st>{{$d->jenis}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></a></td>
+                        <td st><a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}" height='80px'/></a></td>
                         <td >
-                            @if($d->status == "Disetujui Lingkungan")
-                            <form action="/validasiAdmin/acceptbaptis" method="post">
+                            @if($d->status == "Diproses")
+                            <form action="/validasiKbg/acceptkrisma" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validasiAdmin/declinebaptis" class="ml-2" method="post">
+                            <form action="/validasiKbg/declinekrisma" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a>
@@ -85,7 +83,7 @@
                     <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" >
-                                <form role="form" method="POST" action="{{ url('validasiAdmin/declinebaptis') }}" enctype="multipart/form-data">
+                                <form role="form" method="POST" action="{{ url('validasiKbg/declinekrisma') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -105,6 +103,22 @@
                             </div>
                         </div>
                     </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp2{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}">
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>
@@ -126,12 +140,11 @@
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
                         <th>Orang Tua Ibu</th>
-                        <th>Wali Baptis Ayah</th>
-                        <th>Wali Baptis Ibu</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
+                        <th>Surat Baptis</th>
+                        <th>Sertifikat Komuni</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -146,14 +159,13 @@
                         <td st>{{tanggal_indonesia($da->tanggal_lahir)}}</td>
                         <td st>{{$da->orangtua_ayah}}</td>
                         <td st>{{$da->orangtua_ibu}}</td>
-                        <td st>{{$da->wali_baptis_ayah}}</td>
-                        <td st>{{$da->wali_baptis_ibu}}</td>
                         <td st>{{$da->telepon}}</td>
-                        <td st>{{$da->jenis}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}}</td>
-                        <td st >
-                            @if($da->statusRiwayat == 'Disetujui Paroki') 
+                        <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$da->surat_baptis)}}" height='80px'/></a></td>
+                        <td st><a href="#modalPopUp2{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$da->sertifikat_komuni)}}" height='80px'/></a></td>
+                        <td st>
+                            @if($da->statusRiwayat == 'Disetujui KBG') 
                             <div class="alert alert-success" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
@@ -164,50 +176,31 @@
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}
                                 <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
-                            @elseif($da->statusRiwayat == 'Dibatalkan') 
+                            @else
                             <div class="alert alert-danger" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}
                                 <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
-                            @else
-                            <div class="alert alert-success" role="alert">
-                                {{$da->statusRiwayat}}
-                            </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}</small>
-                            @endif
-                        </td>
-                        <td st>
-                            @if($da->statusRiwayat == "Disetujui Paroki")
-                            <a href="#modal{{$da->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
                             @endif
                         </td>
                     </tr>
-                    <!-- EDIT WITH MODAL -->
-                    <div class="modal fade" id="modal{{$da->riwayatID}}" tabindex="-1" role="basic" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form role="form" method="POST" action="{{ url('validasiAdmin/pembatalanbaptis') }}" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Pembatalan Baptis</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        @csrf
-                                        <label>Alasan Pembatalan:</label>
-                                        <input type="hidden" name="id" value="{{$da->id}}">
-                                        <input type="hidden" name="riwayatID" value="{{$da->riwayatID}}">
-                                        <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-info">Submit</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    </div>
-                                </form>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$da->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/surat_baptis/'.$da->surat_baptis)}}">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp2{{$da->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/sertifikat_komuni/'.$da->sertifikat_komuni)}}">
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>

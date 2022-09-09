@@ -174,6 +174,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //Pendaftaran Krisma
     Route::resource('pendaftarankrisma', PendaftaranKrismaController::class);
     Route::post('/pendaftarankrisma/InputFormSetempat', [PendaftaranKrismaController::class, 'InputFormSetempat'])->name('pendaftarankrisma.InputFormSetempat');
+    Route::post('/pendaftarankrisma/InputFormLintas', [PendaftaranKrismaController::class, 'InputFormLintas'])->name('pendaftarankrisma.InputFormLintas');
     Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
     Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
 
@@ -197,6 +198,13 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiAdmin/declinekomuni', [ValidasiAdminController::class, 'DeclineKomuni'])->name('validasiAdmin.DeclineKomuni');
     Route::post('/validasiAdmin/pembatalankomuni', [ValidasiAdminController::class, 'PembatalanKomuni'])->name('validasiAdmin.PembatalanKomuni');
 
+    Route::get('validasiAdminKrisma', [ValidasiAdminController::class, 'krisma'])->name('validasiAdmin.krisma');
+    Route::post('/validasiAdmin/acceptkrismasetempat', [ValidasiAdminController::class, 'AcceptKrismaSetempat'])->name('validasiAdmin.AcceptKrismaSetempat');
+    Route::post('/validasiAdmin/declinekrismasetempat', [ValidasiAdminController::class, 'DeclineKrismaSetempat'])->name('validasiAdmin.DeclineKrismaSetempat');
+    Route::post('/validasiAdmin/pembatalankrismasetempat', [ValidasiAdminController::class, 'PembatalanKrismaSetempat'])->name('validasiAdmin.PembatalanKrismaSetempat');
+    Route::post('/validasiAdmin/acceptkrismalintas', [ValidasiAdminController::class, 'AcceptKrismaLintas'])->name('validasiAdmin.AcceptKrismaLintas');
+    Route::post('/validasiAdmin/declinekrismalintas', [ValidasiAdminController::class, 'DeclineKrismaLintas'])->name('validasiAdmin.DeclineKrismaLintas');
+    Route::post('/validasiAdmin/pembatalankrismalintas', [ValidasiAdminController::class, 'PembatalanKrismaLintas'])->name('validasiAdmin.PembatalanKrismaLintas');
 
     // validasi Kbg
     Route::get('validasiKbgPelayanan', [ValidasiKbgController::class, 'pelayanan'])->name('validasiKbg.pelayanan');
@@ -210,6 +218,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('validasiKbgKomuni', [ValidasiKbgController::class, 'komuni'])->name('validasiKbg.komuni');
     Route::post('/validasiKbg/acceptkomuni', [ValidasiKbgController::class, 'AcceptKomuni'])->name('validasiKbg.AcceptKomuni');
     Route::post('/validasiKbg/declinekomuni', [ValidasiKbgController::class, 'DeclineKomuni'])->name('validasiKbg.DeclineKomuni');
+
+    Route::get('validasiKbgKrisma', [ValidasiKbgController::class, 'krisma'])->name('validasiKbg.krisma');
+    Route::post('/validasiKbg/acceptkrisma', [ValidasiKbgController::class, 'AcceptKrisma'])->name('validasiKbg.AcceptKrisma');
+    Route::post('/validasiKbg/declinekrisma', [ValidasiKbgController::class, 'DeclineKrisma'])->name('validasiKbg.DeclineKrisma');
 
 
     // validasi KL
@@ -225,6 +237,9 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiKL/acceptkomuni', [ValidasiKLController::class, 'AcceptKomuni'])->name('validasiKL.AcceptKomuni');
     Route::post('/validasiKL/declinekomuni', [ValidasiKLController::class, 'DeclineKomuni'])->name('validasiKL.DeclineKomuni');
 
+    Route::get('validasiKLKrisma', [ValidasiKLController::class, 'krisma'])->name('validasiKL.krisma');
+    Route::post('/validasiKL/acceptkrisma', [ValidasiKLController::class, 'AcceptKrisma'])->name('validasiKL.AcceptKrisma');
+    Route::post('/validasiKL/declinekrisma', [ValidasiKLController::class, 'DeclineKrisma'])->name('validasiKL.DeclineKrisma');
 
     //Pemindahan Kbg
     Route::resource('pemindahankbg', PemindahanKbgController::class);

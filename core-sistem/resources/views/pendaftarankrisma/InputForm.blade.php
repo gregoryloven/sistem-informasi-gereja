@@ -41,13 +41,13 @@
                 <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
                 <div class="d-flex justify-content-between">
                     <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="exampleRadios" id="parokiSetempatTab" value="parokiSetempat" checked>
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis1" id="parokiSetempatTab" value="parokiSetempat" checked>
                         <label class="form-check-label" for="parokiSetempat">
                             Paroki Setempat
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="exampleRadios" id="lintasParokiTab" value="lintasParoki">
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis2" id="lintasParokiTab" value="lintasParoki">
                         <label class="form-check-label" for="lintasParoki">
                             Lintas Paroki
                         </label>
@@ -175,17 +175,19 @@
                 </div>
                 <div class="form-group">
                     <label>Surat Pengantar Paroki Asal</label>
-                    <input type="file" value="" name="surat_pengantar" class="form-control" id="surat_pengantar" placeholder="Surat Pengantar" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                    <input type="file" value="" name="surat_pengantar" class="form-control" id="surat_pengantar" placeholder="Surat Pengantar" onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
+                <img id="output3" src="" width="200px" height="200px">
                 <div class="form-group">
                     <label>Surat Baptis</label>
-                    <input type="file" value="" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                    <input type="file" value="" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
+                <img id="output4" src="" width="200px" height="200px">
                 <div class="form-group">
                     <label>Sertifikat Komuni</label>
-                    <input type="file" value="" name="sertifikat_komuni" class="form-control" id="sertifikat_komuni" placeholder="Sertifikat Komuni" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                    <input type="file" value="" name="sertifikat_komuni" class="form-control" id="sertifikat_komuni" placeholder="Sertifikat Komuni" onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
-                <img id="output" src="" width="200px" height="200px">
+                <img id="output5" src="" width="200px" height="200px">
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Krisma"
                 </div>

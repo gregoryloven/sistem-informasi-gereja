@@ -24,11 +24,13 @@ class CreateKrismasTable extends Migration
             $table->string('lingkungan');
             $table->string('kbg');
             $table->string('telepon');
+            $table->enum('jenis', ['Paroki Setempat', 'Lintas Paroki']);
             $table->dateTime('jadwal');
             $table->string('lokasi');
             $table->string('romo');
             $table->string('surat_baptis');
             $table->string('sertifikat_komuni');
+            $table->string('surat_pengantar');
             $table->enum('status', ['Diproses','Disetujui KBG','Disetujui Lingkungan','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
             $table->string('sertifikat_krisma')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

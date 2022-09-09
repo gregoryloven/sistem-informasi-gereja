@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label >KBG</label>
                             <select class="form-control" id='kbg_id' name='kbg_id'>
-                                <option value="">Choose</option>
+                                <option value="" disabled selected>Choose</option>
                                 @foreach($kbg as $k)
                                 <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option>
                                 @endforeach

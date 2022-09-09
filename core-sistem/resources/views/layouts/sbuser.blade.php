@@ -80,6 +80,13 @@
                             </li> 
                         </ul>
                     </span>
+                    <!-- <span class="navbar-text">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">Log in</a>
+                            </li> 
+                        </ul>
+                    </span> -->
                 </div>
             </nav>
             <!-- End of Navbar -->
@@ -139,7 +146,11 @@
             $('#myTable2').DataTable();
         });
     </script>
-
+    <script>
+        jQuery(document).ready(function() {    
+            $('#myTable3').DataTable();
+        });
+    </script>
 </body>
 
 </html>

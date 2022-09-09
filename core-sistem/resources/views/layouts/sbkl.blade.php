@@ -98,10 +98,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('validasiKL.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis</a>
                         <a class="collapse-item" href="{{ route('validasiKL.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
-                        <a class="collapse-item" href="#">Krisma</a>
+                        <a class="collapse-item" href="{{ route('validasiKL.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Krisma</a>
                         <a class="collapse-item" href="#">Perkawinan</a>
                         <a class="collapse-item" href="{{ route('validasiKL.pelayanan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Pelayanan Lainnya</a>
-                        <a class="collapse-item" href="#">Petugas Liturgi</a>
                     </div>
                 </div>
             </li>
@@ -284,6 +283,11 @@
     <script>
         jQuery(document).ready(function() {    
             $('#myTable').DataTable();
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function() {    
+            $('#myTable2').DataTable();
         });
     </script>
     

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Baptis;
 use App\Models\KomuniPertama;
+use App\Models\Krisma;
 use App\Models\PelayananLainnya;
 use App\Models\PendaftaranPelayananLainnya;
 use App\Models\PendaftaranPetugas;
@@ -280,5 +281,137 @@ class ValidasiAdminController extends Controller
         $data->save();
 
         return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Komuni Pertama Berhasil Dibatalkan');
+    }
+
+    public function krisma()
+    {
+        $user = Auth::user()->id;
+        
+        $reservasi = Krisma::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Paroki Setempat']])->get();
+        $reservasi2 = Krisma::where([['status', 'Diproses'], ['jenis', 'Lintas Paroki']])->get();
+
+        $reservasiAll = DB::table('krismas')
+        ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
+        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Setempat']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
+        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
+        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Krisma Setempat']])
+        ->orderBy('krismas.jadwal', 'DESC')
+        ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+        $reservasiAll2 = DB::table('krismas')
+        ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
+        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Lintas']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Lintas']])
+        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Lintas']])
+        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Krisma Lintas']])
+        ->orderBy('krismas.jadwal', 'DESC')
+        ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+        return view('validasiAdmin.krisma',compact("reservasi", "reservasi2", "reservasiAll", "reservasiAll2"));
+    }
+
+    public function AcceptKrismaSetempat(Request $request)
+    {
+        $krisma=Krisma::find($request->id);
+        $krisma->status = "Disetujui Paroki";
+        $krisma->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $krisma->id;
+        $riwayat->jenis_event =  "Krisma Setempat";
+        $riwayat->status =  "Disetujui Paroki";
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Krisma Berhasil Disetujui');
+    }
+
+    public function AcceptKrismaLintas(Request $request)
+    {
+        $krisma=Krisma::find($request->id);
+        $krisma->status = "Disetujui Paroki";
+        $krisma->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $krisma->id;
+        $riwayat->jenis_event =  "Krisma Lintas";
+        $riwayat->status =  "Disetujui Paroki";
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Krisma Lintas Paroki Berhasil Disetujui');
+    }
+
+    public function DeclineKrismaSetempat(Request $request)
+    {
+        $krisma=Krisma::find($request->id);
+        $krisma->status = "Ditolak";
+        $krisma->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $krisma->id;
+        $riwayat->jenis_event =  "Krisma Setempat";
+        $riwayat->status =  "Ditolak";
+        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Krisma Berhasil Ditolak');
+    }
+
+    public function DeclineKrismaLintas(Request $request)
+    {
+        $krisma=Krisma::find($request->id);
+        $krisma->status = "Ditolak";
+        $krisma->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $krisma->id;
+        $riwayat->jenis_event =  "Krisma Lintas";
+        $riwayat->status =  "Ditolak";
+        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Krisma Lintas Paroki Berhasil Ditolak');
+    }
+
+    public function PembatalanKrismaSetempat(Request $request)
+    {
+        $data=Krisma::find($request->id);
+        $data->status = "Dibatalkan";
+
+        $riwayat = Riwayat::find($request->riwayatID);
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event =  "Krisma Setempat";
+        $riwayat->status =  "Dibatalkan";
+        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+        $riwayat->save();
+        $data->save();
+
+        return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Krisma Berhasil Dibatalkan');
+    }
+
+    public function PembatalanKrismaLintas(Request $request)
+    {
+        $data=Krisma::find($request->id);
+        $data->status = "Dibatalkan";
+
+        $riwayat = Riwayat::find($request->riwayatID);
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event =  "Krisma Lintas";
+        $riwayat->status =  "Dibatalkan";
+        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+        $riwayat->save();
+        $data->save();
+
+        return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Krisma Lintas Paroki Berhasil Dibatalkan');
     }
 }
