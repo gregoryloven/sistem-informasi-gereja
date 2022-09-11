@@ -115,8 +115,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::resource('keluargas', KeluargaController::class);
 
     //Baptis
-    Route::resource('baptiss', BaptisController::class);
-    Route::post('/baptiss/EditForm', [BaptisController::class, 'EditForm'])->name('baptiss.EditForm');
+    Route::resource('baptis', BaptisController::class);
+    Route::post('/baptis/EditForm', [BaptisController::class, 'EditForm'])->name('baptis.EditForm');
+    Route::get('/baptis/OpenForm/{id}', [BaptisController::class, 'OpenForm'])->name('baptis.OpenForm');
+    Route::post('/baptis/Pembatalan', [BaptisController::class, 'Pembatalan'])->name('baptis.Pembatalan');
 
 
     //Komuni Pertama

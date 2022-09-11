@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Baptis;
-use App\Models\User;
+use App\Models\Riwayat;
+use Auth;
 
 class BaptisController extends Controller
 {
@@ -16,11 +17,109 @@ class BaptisController extends Controller
      */
     public function index()
     {
-        $data = Baptis::all();
-        $users = User::all();
-        $wali_baptis_ayah = User::where([['jenis_kelamin', 'Pria']])->get();
-        $wali_baptis_ibu = User::where([['jenis_kelamin', 'Wanita']])->get();
-        return view('baptis.index',compact("data","users","wali_baptis_ayah","wali_baptis_ibu"));
+        $data = DB::table('list_events')
+        ->where('jenis_event', 'like', 'B%')
+        ->get();
+
+        $user = Auth::user()->id;
+        $baptis = DB::table('baptiss')
+        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'B%']])
+        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'B%']])
+        ->orderBy('baptiss.jadwal', 'DESC')
+        ->get(['baptiss.*', 'riwayats.*']);
+
+        return view('baptis.index',compact("data", "baptis"));
+    }
+
+    public function OpenForm(Request $request)
+    {
+        $id = $request->id;
+        $list = DB::table('list_events')->where('id', $id)->get();
+        $user = DB::table('users')
+            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
+            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
+            ->where('users.id', Auth::user()->id)
+            ->get();
+
+        return view('baptis.InputForm',compact("list", "user"));
+    }
+
+    public function store(Request $request)
+    {
+        $data = new Baptis();
+        $data->user_id = Auth::user()->id;
+        $data->nama_lengkap = $request->get("nama_lengkap");
+        $data->tempat_lahir = $request->get("tempat_lahir");
+        $data->tanggal_lahir = $request->get("tanggal_lahir");
+        $data->orangtua_ayah = $request->get("orangtua_ayah");
+        $data->orangtua_ibu = $request->get("orangtua_ibu");
+        $data->wali_baptis_ayah = $request->get("wali_baptis_ayah");
+        $data->wali_baptis_ibu = $request->get("wali_baptis_ibu");
+        $data->lingkungan = $request->get("lingkungan");
+        $data->kbg = $request->get("kbg");
+        $data->telepon = $request->get("telepon");
+        $data->jenis = $request->get("jenis");
+        $data->jadwal = $request->get("jadwal");
+        $data->lokasi = $request->get("lokasi");
+        $data->romo = $request->get("romo");
+        $data->status = "Disetujui Paroki";
+        $data->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->jenis_event =  $data->jenis;
+        $riwayat->event_id =  $data->id;
+        $riwayat->status =  "Disetujui Paroki";
+        $riwayat->save();
+
+        return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Berhasil Ditambahkan');
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Baptis::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('baptis.EditForm',compact("data"))->render()),200);
+    }
+
+    public function update(Request $request)
+    {
+        $baptis=Baptis::find($request->id);
+        $baptis->user_id = Auth::user()->id;
+        $baptis->nama_lengkap = $request->get("nama_lengkap");
+        $baptis->tempat_lahir = $request->get("tempat_lahir");
+        $baptis->tanggal_lahir = $request->get("tanggal_lahir");
+        $baptis->orangtua_ayah = $request->get("orangtua_ayah");
+        $baptis->orangtua_ibu = $request->get("orangtua_ibu");
+        $baptis->wali_baptis_ayah = $request->get("wali_baptis_ayah");
+        $baptis->wali_baptis_ibu = $request->get("wali_baptis_ibu");
+        $baptis->lingkungan = $request->get("lingkungan");
+        $baptis->kbg = $request->get("kbg");
+        $baptis->telepon = $request->get("telepon");
+        $baptis->save();
+        
+
+        return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Baptis Berhasil Diubah');
+    }
+
+    public function Pembatalan(Request $request)
+    {
+        $data=Baptis::find($request->id);
+        $data->status = "Dibatalkan";
+        $data->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event =  "Baptis Bayi";
+        $riwayat->status =  "Dibatalkan";
+        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+        $riwayat->save();
+
+        return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Berhasil Dibatalkan');
     }
 
     /**
@@ -31,38 +130,6 @@ class BaptisController extends Controller
     public function create()
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $data = new Baptis();
-        $data->user_id = $request->get('user_id');
-        $data->wali_baptis_ayah = $request->get('wali_baptis_ayah');
-        $data->wali_baptis_ibu = $request->get('wali_baptis_ibu');
-        $data->jenis = $request->get('jenis');
-        $data->jadwal = date('Y-m-d', strtotime(str_replace('/', '-',$request->input('jadwal'))));
-        $data->lokasi = $request->get('lokasi');
-        $data->romo = $request->get('romo');
-        $data->status = $request->get('status');
-
-        //File Sertifikat
-        $file=$request->file('file_sertifikat');
-        $imgFolder = 'file_sertifikat/baptis';
-        $extension = $request->file('file_sertifikat')->extension();
-        $imgFile=time()."_".$request->get('nama').".".$extension;
-        $file->move($imgFolder,$imgFile);
-        $data->file_sertifikat=$imgFile;
-        
-        $data->save();
-
-        return redirect()->route('baptiss.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Baptis Berhasil ditambahkan');
-
     }
 
     /**
@@ -88,39 +155,6 @@ class BaptisController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Baptis  $baptis
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
-        $baptis=Baptis::find($request->id);
-        $baptis->user_id = $request->get('user_id');
-        $baptis->wali_baptis_ayah = $request->get('wali_baptis_ayah');
-        $baptis->wali_baptis_ibu = $request->get('wali_baptis_ibu');
-        $baptis->jenis = $request->get('jenis');
-        $baptis->jadwal = $request->get('jadwal');
-        $baptis->lokasi = $request->get('lokasi');
-        $baptis->romo = $request->get('romo');
-        $baptis->status = $request->get('status');
-
-        //File Sertifikat
-        $file=$request->file('file_sertifikat');
-        $imgFolder = 'file_sertifikat/baptis';
-        $extension = $request->file('file_sertifikat')->extension();
-        $imgFile=time()."_".$request->get('nama').".".$extension;
-        $file->move($imgFolder,$imgFile);
-        $baptis->file_sertifikat=$imgFile;
-        
-        $baptis->save();
-
-        return redirect()->route('baptiss.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Baptis Berhasil ditambahkan');
-
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Baptis  $baptis
@@ -142,16 +176,6 @@ class BaptisController extends Controller
         }
     }
 
-    public function EditForm(Request $request)
-    {
-        $id=$request->get("id");
-        $data=Baptis::find($id);
-        $users=User::all();
-        $wali_baptis_ayah = User::where([['jenis_kelamin', 'Pria']])->get;
-        $wali_baptis_ibu = User::where([['jenis_kelamin', 'Wanita']])->get;
-        return response()->json(array(
-            'status'=>'oke',
-            'msg'=>view('baptis.EditForm',compact("data","users","wali_baptis_ayah","wali_baptis_ibu"))->render()),200);
-    }
+
 
 }

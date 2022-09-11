@@ -3,6 +3,7 @@
 @push('css')
 <style>
     #myTable td {text-align: center; vertical-align: middle;}
+    #myTable2 td {text-align: center; vertical-align: middle;}
 </style>
 @endpush
 
@@ -23,89 +24,6 @@
         {{ session('error') }}
     </div>
 @endif
-<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Baptis</a><br><br>
-
-<!-- CREATE WITH MODAL -->
-<div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" >
-            <form role="form" method="POST" action="{{ url('baptiss') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Tambah Baptis</h4>
-                </div>
-                <div class="modal-body">
-                    @csrf
-                    <div class="form-group">
-                        <label >User</label>
-                        <select class="form-control" id='user_id' name='user_id'>
-                        <option value="">Choose</option>
-                        @foreach($users as $u)
-                        <option value="{{ $u->id }}">{{ $u->nama_user }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >Wali Baptis Ayah</label>
-                        <select class="form-control" id='wali_baptis_ayah' name='wali_baptis_ayah'>
-                        <option value="">Choose</option>
-                        @foreach($wali_baptis_ayah as $wba)
-                        <option value="{{ $wba->id }}">{{ $wba->nama_user }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >Wali Baptis Ibu</label>
-                        <select class="form-control" id='wali_baptis_ibu' name='wali_baptis_ibu'>
-                        <option value="">Choose</option>
-                        @foreach($wali_baptis_ibu as $wbu)
-                        <option value="{{ $wbu->id }}">{{ $wbu->nama_user }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >Jenis</label>
-                        <select class="form-control" id='jenis' name='jenis'>
-                        <option value="">Choose</option>
-                        <option value="Bayi">Bayi</option>
-                        <option value="Dewasa">Dewasa</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >Tanggal Pembaptisan</label>
-                        <input type="date" class="form-control" id='jadwal' name='jadwal' placeholder="Tanggal Pembaptisan" required>
-                    </div>
-                    <div class="form-group">
-                        <label >Lokasi</label>
-                        <input type="text" class="form-control" id='lokasi' name='lokasi' placeholder="Lokasi" required>
-                    </div>
-                    <div class="form-group">
-                        <label >Romo</label>
-                        <input type="text" class="form-control" id='romo' name='romo' placeholder="Romo" required>
-                    </div>
-                    <div class="form-group">
-                        <label >Status</label>
-                        <select class="form-control" id='status' name='status'>
-                        <option value="">Choose</option>
-                        <option value="Diproses">Diproses</option>
-                        <option value="Selesai">Selesai</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>File Sertifikat</label>
-                        <input type="file" value="" name="file_sertifikat" class="form-control" id="file_sertifikat" placeholder="File Sertifikat" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
-                    </div>
-                    <img id="output" src="" width="200px" height="200px"> 
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-info">Submit</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- EDIT WITH MODAL-->
 <div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
@@ -119,22 +37,23 @@
 </div>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3"></div>
+    <div class="card-header py-3">
+        List Sesi 
+    </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Penerima</th>
-                        <th>Wali Baptis Ayah</th>
-                        <th>Wali Baptis Ibu</th>
-                        <th>Jenis</th>
-                        <th>Tanggal Baptis</th>
+                        <th>Nama Event</th>
+                        <th>Jenis Event</th>
+                        <th>Tanggal Buka Pendaftaran</th>
+                        <th>Tanggal Tutup Pendaftaran</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
                         <th>Romo</th>
-                        <th>Status</th>
-                        <th>File Sertifikat</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -144,31 +63,128 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        
-                        <td st>{{$d->User->nama_user}}</td>
-                        <td st>{{$d->Wali_baptis_ayah->nama_user}}</td>
-                        <td st>{{$d->Wali_baptis_ibu->nama_user}}</td>
-                        <td st>{{$d->jenis}}</td>
-                        <td st>{{$d->jadwal}}</td>
+                        <td st>{{$d->nama_event}}</td>
+                        <td st>{{$d->jenis_event}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->romo}}</td>
-                        <td st>{{$d->status}}</td>
-                        <td><img src="{{asset('file_sertifikat/baptis/'.$d->file_sertifikat)}}" height='40px'/></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
-                                <form role="form" method="POST" action="{{ url('baptiss/'.$d->id) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
-                                </form>
+                                <a href= "{{ url('baptis/OpenForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Formulir Pendaftaran</a>   
                             </div>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card shadow">
+        <div class="card-header py-3">
+            Riwayat Pendaftaran Sakramen Baptis
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="myTable2">
+                    <thead>
+                        <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Lengkap</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Orang Tua Ayah</th>
+                        <th>Orang Tua Ibu</th>
+                        <th>Wali Baptis Ayah</th>
+                        <th>Wali Baptis Ibu</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
+                        <th>Telepon</th>
+                        <th>Jenis</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th>Romo</th>
+                        <th>Status</th>
+                        <th>Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $i = 0; @endphp
+                        @foreach($baptis as $d)
+                        @php $i += 1; @endphp
+                        <tr>
+                            <td>@php echo $i; @endphp</td>
+                            <td st>{{$d->nama_lengkap}}</td>
+                            <td st>{{$d->tempat_lahir}}</td>
+                            <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
+                            <td st>{{$d->orangtua_ayah}}</td>
+                            <td st>{{$d->orangtua_ibu}}</td>
+                            <td st>{{$d->wali_baptis_ayah}}</td>
+                            <td st>{{$d->wali_baptis_ibu}}</td>
+                            <td st>{{$d->lingkungan}}</td>
+                            <td st>{{$d->kbg}}</td>
+                            <td st>{{$d->telepon}}</td>
+                            <td st>{{$d->jenis}}</td>
+                            <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
+                            <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                            <td st>{{$d->lokasi}}</td>
+                            <td st>{{$d->romo}}</td>
+                            <td st>
+                                @if($d->status == "Disetujui Paroki" || $d->status == "Selesai")
+                                    <div class="alert alert-success" role="alert">
+                                        {{$d->status}}
+                                    </div>
+                                    <small><b>Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
+                                @else
+                                <div class="alert alert-danger" role="alert">
+                                        {{$d->status}}
+                                    </div>
+                                    <small><b>Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}
+                                    <br><b>Alasan:</b> {{$d->alasan_pembatalan}}</small>
+                                @endif
+                            </td>
+                            <td st>
+                                @if($d->status == "Disetujui Paroki")
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-warning" onclick="EditForm({{ $d->id }})">Edit</a>
+                                    <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-danger">Batal</a>
+                                </div>
+                                @endif
+                            </td>
+                        </tr>
+                        <!-- EDIT WITH MODAL -->
+                        <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" >
+                                    <form role="form" method="POST" action="{{ url('baptis/Pembatalan') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                            <h4 class="modal-title">Pembatalan Pendaftaran Baptis</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @csrf
+                                            <label>Alasan Pembatalan:</label>
+                                            <input type="hidden" name="id" value="{{$d->id}}">
+                                            <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-info">Submit</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -181,7 +197,7 @@ function EditForm(id)
 {
   $.ajax({
     type:'POST',
-    url:'{{ route('baptiss.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    url:'{{ route('baptis.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
     data:{'_token':'<?php echo csrf_token() ?>',
           'id':id
          },
