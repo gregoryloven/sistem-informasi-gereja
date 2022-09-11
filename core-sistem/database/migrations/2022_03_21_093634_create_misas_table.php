@@ -15,10 +15,10 @@ class CreateMisasTable extends Migration
     {
         Schema::create('misas', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis');
             $table->dateTime('jadwal');
             $table->string('lokasi');
             $table->integer('kuota');
+            $table->string('romo');
             $table->timestamps();
         });
     }
