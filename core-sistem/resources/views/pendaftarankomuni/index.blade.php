@@ -147,7 +147,7 @@
                             <td st>{{waktu_indonesia( $d->jadwal)}}</td>
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->romo}}</td>
-                            <td st><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></td>
+                            <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></td>
                             <td st>
                                 @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
                                 
@@ -167,7 +167,6 @@
                                 @endif
                             </td>
                         </tr>
-                        
                         <!-- EDIT WITH MODAL -->
                         <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                             <div class="modal-dialog">
@@ -189,6 +188,14 @@
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}">
                                 </div>
                             </div>
                         </div>

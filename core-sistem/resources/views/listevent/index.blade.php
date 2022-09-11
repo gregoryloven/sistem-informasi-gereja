@@ -30,7 +30,7 @@
 <div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" >
-            <form role="form" method="POST" action="{{ url('listevents') }}" enctype="multipart/form-data">
+            <form role="form" method="POST" action="{{ url('listevent') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -149,7 +149,7 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
-                                <form role="form" method="POST" action="{{ url('listevents/'.$d->id) }}">
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
@@ -202,7 +202,7 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
-                                <form role="form" method="POST" action="{{ url('listevents/'.$d->id) }}">
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
@@ -238,7 +238,7 @@ function EditForm(id)
 {
   $.ajax({
     type:'POST',
-    url:'{{ route('listevents.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    url:'{{ route('listevent.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
     data:{'_token':'<?php echo csrf_token() ?>',
           'id':id
          },

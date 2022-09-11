@@ -27,7 +27,8 @@ class BaptisController extends Controller
         ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'B%']])
         ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'B%']])
         ->orderBy('baptiss.jadwal', 'DESC')
-        ->get(['baptiss.*', 'riwayats.*']);
+        ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+        'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
 
         return view('baptis.index',compact("data", "baptis"));
     }

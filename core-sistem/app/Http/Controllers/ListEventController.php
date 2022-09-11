@@ -34,22 +34,6 @@ class ListEventController extends Controller
         return view('listevent.index',compact("data", "petugas", "data2"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = new ListEvent();
@@ -62,11 +46,60 @@ class ListEventController extends Controller
         $data->lokasi = $request->get('lokasi');
         $data->romo = $request->get('romo');
         $data->kuota = $request->get('kuota');
-        
         $data->save();
 
-        return redirect()->route('listevents.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil ditambahkan');
+        return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil ditambahkan');
 
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=ListEvent::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('listevent.EditForm',compact("data"))->render()),200);
+    }
+
+    public function update(Request $request, ListEvent $listEvent)
+    {
+        $data=ListEvent::find($request->id);
+        $data->nama_event = $request->get('nama_event');
+        $data->jenis_event = $request->get('jenis_event');
+        $data->petugas_liturgi_id = $request->get('petugas_liturgi_id');
+        $data->tgl_buka_pendaftaran = $request->get('tgl_buka_pendaftaran');
+        $data->tgl_tutup_pendaftaran = $request->get('tgl_tutup_pendaftaran');
+        $data->jadwal_pelaksanaan = $request->get('jadwal_pelaksanaan');
+        $data->lokasi = $request->get('lokasi');
+        $data->romo = $request->get('romo');
+        $data->kuota = $request->get('kuota');
+        $data->save();
+    }
+
+    public function destroy(Request $request)
+    {
+        $data=ListEvent::find($request->id);
+        try
+        {
+            $data->delete();
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data List Event Berhasil Dihapus');
+        
+        }
+        catch(\Exception $e)
+        {
+            $data = "Gagal Menghapus Data List Event";
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+        }
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -87,29 +120,6 @@ class ListEventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(ListEvent $listEvent)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ListEvent  $listEvent
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ListEvent $listEvent)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ListEvent  $listEvent
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ListEvent $listEvent)
     {
         //
     }

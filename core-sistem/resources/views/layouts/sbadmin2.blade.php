@@ -91,7 +91,7 @@
                 <div id="collapseSakramen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis</a>
-                        <a class="collapse-item" href="#">Komuni Pertama</a>
+                        <a class="collapse-item" href="{{ route('komunipertama.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
                         <a class="collapse-item" href="#">Krisma</a>
                         <a class="collapse-item" href="#">Perkawinan</a>
                     </div>
@@ -99,7 +99,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('listevents.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                <a class="nav-link" href="{{ route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-pray"></i>
                     <span>Buat Jadwal</span></a>
             </li>
@@ -148,11 +148,6 @@
                     <span>KBG</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-circle"></i>
-                    <span>Komuni Pertama</span></a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">

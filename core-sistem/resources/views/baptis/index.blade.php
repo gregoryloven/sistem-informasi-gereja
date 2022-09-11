@@ -152,13 +152,13 @@
                                 @if($d->status == "Disetujui Paroki")
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-warning" onclick="EditForm({{ $d->id }})">Edit</a>
-                                    <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-danger">Batal</a>
+                                    <a href="#modal{{$d->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-danger">Batal</a>
                                 </div>
                                 @endif
                             </td>
                         </tr>
                         <!-- EDIT WITH MODAL -->
-                        <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal fade" id="modal{{$d->riwayatID}}" tabindex="-1" role="basic" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" >
                                     <form role="form" method="POST" action="{{ url('baptis/Pembatalan') }}" enctype="multipart/form-data">
@@ -171,6 +171,7 @@
                                             @csrf
                                             <label>Alasan Pembatalan:</label>
                                             <input type="hidden" name="id" value="{{$d->id}}">
+                                            <input type="hidden" name="riwayatID" value="{{$d->riwayatID}}">
                                             <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                         </div>
                                         <div class="modal-footer">
