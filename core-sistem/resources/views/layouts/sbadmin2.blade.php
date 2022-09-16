@@ -92,7 +92,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis</a>
                         <a class="collapse-item" href="{{ route('komunipertama.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
-                        <a class="collapse-item" href="#">Krisma</a>
+                        <a class="collapse-item" href="{{ route('krisma.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Krisma</a>
                         <a class="collapse-item" href="#">Perkawinan</a>
                     </div>
                 </div>
@@ -146,19 +146,6 @@
                 <a class="nav-link" href="{{ route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-users"></i>
                     <span>KBG</span></a>
-            </li>
-
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-cross"></i>
-                    <span>Krisma</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('krismas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-ring"></i>
-                    <span>Perkawinan</span></a>
             </li>
             
             <li class="nav-item">

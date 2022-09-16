@@ -41,7 +41,7 @@
                 <input type="text" value="{{$data->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
             </div>
             <div class="form-group">
-                <label >Jadwal Pelaksanaan</label>
+                <label >Tanggal Pelaksanaan</label>
                 <input type="text" value="{{tanggal_indonesia($data->jadwal)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
                 <input type="hidden" value="{{$data->jadwal}}" id='jadwal' name='jadwal'>
             </div>
@@ -59,7 +59,7 @@
             </div>
             <div class="form-group">
                 <label>Surat Baptis</label>
-                <input type="file" value="{{$data->surat_baptis}}" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                <input type="file" value="{{$data->surat_baptis}}" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
             </div>
             <img id="output" src="{{asset('file_sertifikat/surat_baptis/'.$data->surat_baptis)}}" width="200px" height="200px">
         </div>

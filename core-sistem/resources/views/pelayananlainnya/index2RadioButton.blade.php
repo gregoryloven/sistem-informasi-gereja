@@ -69,18 +69,18 @@
             <div class="form-group">
                 <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
                 <div class="d-flex justify-content-between">
-                    <!-- <div class="form-check">
+                    <div class="form-check">
                         <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="exampleRadios" id="individuTab" value="individu" checked>
                         <label class="form-check-label" for="individuTab">
                             Individu
                         </label>
-                    </div> -->
-                    <!-- <div class="form-check">
+                    </div>
+                    <div class="form-check">
                         <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="exampleRadios" id="familyTab" value="family">
                         <label class="form-check-label" for="familyTab">
                             Keluarga
                         </label>
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <form id="formIndividu" class="mb-2" method="post" action="/pelayananlainnya/InputForm">

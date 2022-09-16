@@ -107,16 +107,20 @@ class KomuniPertamaController extends Controller
         $komuni->lokasi = $request->get("lokasi");
         $komuni->romo = $request->get("romo");
         $komuni->status = "Disetujui Paroki";
-        $file=$request->file('surat_baptis');
 
-        $imgFolder = 'file_sertifikat/surat_baptis';
-        $extension = $request->file('surat_baptis')->extension();
-        $imgFile=time()."_".$request->get('nama').".".$extension;
-        $file->move($imgFolder,$imgFile);
-        $komuni->surat_baptis=$imgFile;
+        $file=$request->file('surat_baptis');
+        if(isset($file))
+        {
+            $imgFolder = 'file_sertifikat/surat_baptis';
+            $extension = $request->file('surat_baptis')->extension();
+            $imgFile=time()."_".$request->get('nama').".".$extension;
+            $file->move($imgFolder,$imgFile);
+            $komuni->surat_baptis=$imgFile;
+            
+        }
+
         $komuni->save();
         
-
         return redirect()->route('komunipertama.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Komuni Pertama Berhasil Diubah');
     }
 

@@ -128,8 +128,14 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/komunipertama/Pembatalan', [KomuniPertamaController::class, 'Pembatalan'])->name('komunipertama.Pembatalan');
 
     //Krisma
-    Route::resource('krismas', KrismaController::class);
-    Route::post('/krismas/EditForm', [KrismaController::class, 'EditForm'])->name('krismas.EditForm');
+    Route::resource('krisma', KrismaController::class);
+    Route::post('/krisma/EditForm', [KrismaController::class, 'EditForm'])->name('krisma.EditForm');
+    Route::post('/krisma/EditForm2', [KrismaController::class, 'EditForm2'])->name('krisma.EditForm2');
+    Route::get('/krisma/OpenForm/{id}', [KrismaController::class, 'OpenForm'])->name('krisma.OpenForm');
+    Route::post('/krisma/InputFormSetempat', [KrismaController::class, 'InputFormSetempat'])->name('krisma.InputFormSetempat');
+    Route::post('/krisma/PembatalanSetempat', [KrismaController::class, 'PembatalanSetempat'])->name('krisma.PembatalanSetempat');
+    Route::post('/krisma/InputFormLintas', [KrismaController::class, 'InputFormLintas'])->name('krisma.InputFormLintas');
+    Route::post('/krisma/PembatalanLintas', [KrismaController::class, 'PembatalanLintas'])->name('krisma.PembatalanLintas');
 
     //Misa
     Route::resource('misas', MisaController::class);
