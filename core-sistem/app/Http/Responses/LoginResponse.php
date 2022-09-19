@@ -4,6 +4,7 @@ namespace App\Http\Responses;
 
 use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+use Spatie\Multitenancy\Models\Tenant;
 
 class LoginResponse implements LoginResponseContract
 {
@@ -15,22 +16,32 @@ class LoginResponse implements LoginResponseContract
         // replace this with your own code
         // the user can be located with Auth facade
 
-        $user = Auth::user()->role;
-        if($user == 'admin')
-        {
-            return redirect('/sbadmin2');
+        if (Tenant::checkCurrent() == false) {
+            if(Auth::user()->role == 'superadmin') {
+                return redirect('/');
+            } else if (Auth::user()->role == 'pihak-gereja') {
+                return redirect('/');
+            }
+        } else if (Tenant::checkCurrent() == 'true') {
+            $user = Auth::user()->role;
+            if($user == 'admin')
+            {
+                return redirect('/sbadmin2');
+            }
+            elseif($user == 'ketua kbg')
+            {
+                return redirect('/sbkbg');
+            }
+            elseif($user == 'ketua lingkungan')
+            {
+                return redirect('/sbkl');
+            }
+            elseif($user == 'umat')
+            {
+                return redirect('/dashboarduser');
+            }
         }
-        elseif($user == 'ketua kbg')
-        {
-            return redirect('/sbkbg');
-        }
-        elseif($user == 'ketua lingkungan')
-        {
-            return redirect('/sbkl');
-        }
-        elseif($user == 'umat')
-        {
-            return redirect('/dashboarduser');
-        }
+
+        
     }
 }

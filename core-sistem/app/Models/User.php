@@ -76,6 +76,12 @@ class User extends Authenticatable
         return $this->belongsToMany(PengurapanOrangSakit::class);
     }
 
+    // RELASI DI LANDLORD (TENANT SAMA USER)
+    public function tenant()
+    {
+    	return $this->hasOne(Tenant::class);
+    }
+
     protected $fillable = [
         'name',
         'email',

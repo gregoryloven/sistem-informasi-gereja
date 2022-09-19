@@ -25,6 +25,8 @@ use App\Http\Controllers\ValidasiKLController;
 use App\Http\Controllers\ListEventController;
 use App\Http\Controllers\DashboardUserController;
 
+use App\Http\Controllers\LandlordController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,9 +39,33 @@ use App\Http\Controllers\DashboardUserController;
 */
 
 Route::domain('localhost')->group(function(){
-    Route::get('/', function () {
-        return view('welcome');
+    // Route::get('/', function () {
+    //     return view('welcome');
+    // });
+
+    //TEMPLATE LAYOUTS 
+    Route::get('/onepage', function () {
+        return view('layouts.onepage');
     });
+
+    Route::get('/sbsuperadmin2', function () {
+        return view('layouts.sbsuperadmin2');
+    });
+
+    //SEMUA CONTROLLER 
+    Route::get('/', [LandlordController::class, 'index']);
+    Route::get('/daftargereja', [LandlordController::class, 'daftargereja']);
+    Route::post('/simpandaftargereja', [LandlordController::class, 'simpandaftargereja']);
+    Route::get('/dashboards', [LandlordController::class, 'dashboards']);
+    Route::get('/dashboards/tenant', [LandlordController::class, 'tenant']);
+    Route::get('/dashboards/user', [LandlordController::class, 'user']);
+    Route::delete('/dashboards/deletetenant', [LandlordController::class, 'deletetenant'])->name('dashboards.deletetenant');
+    Route::delete('/dashboards/deleteuser', [LandlordController::class, 'deleteuser'])->name('dashboards.deleteuser');
+
+    
+
+    // Route::get('/auth/redirect-landlord', [LandlordController::class, 'redirect_landlord'])->name('auth.redirect.landlord');
+    // Route::post('/auth/complete-register-landlord', [LandlordController::class, 'complete_register_landlord'])->name('auth.complete-register.landlord');
 });
 
 Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
