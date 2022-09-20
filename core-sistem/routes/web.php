@@ -139,6 +139,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/user/TambahKKBG', [UserController::class, 'TambahKKBG'])->name('user.TambahKKBG');
     Route::post('/user/TambahAllKKBG', [UserController::class, 'TambahAllKKBG'])->name('user.TambahAllKKBG');
     Route::post('/user/EditFormKKBG', [UserController::class, 'EditFormKKBG'])->name('user.EditFormKKBG');
+    Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
 
     //Keluarga
     Route::resource('keluargas', KeluargaController::class);

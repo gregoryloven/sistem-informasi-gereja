@@ -104,7 +104,7 @@
                         <span class="wow fadeInDown" data-wow-delay=".2s"></span>
                         <h2 class="mb-15 wow fadeInUp" data-wow-delay=".4s">Anda Telah Mendaftar Untuk Pembuatan Sistem</h2>
                         Anda Dapat Login Menggunakan Akun Anda Saat ini
-                        <div class="text-center m-3 ow fadeInUp"><a class="btn btn-primary btn btn-flat btn-sm" href="http://{{$cekTenant->domain}}:8000/">Kunjung Website Anda</a></div>
+                        <div class="text-center m-3 ow fadeInUp"><a class="btn btn-primary btn btn-flat btn-sm" href="http://{{$cekTenant->domain}}:8000/dashboarduser">Kunjung Website Anda</a></div>
                     </div>
                 </div>
             </div>

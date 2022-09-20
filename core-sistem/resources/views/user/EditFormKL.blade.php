@@ -1,11 +1,11 @@
-<form role="form" method='POST' action="{{ url('userKL/'.$data->id )}}" enctype="multipart/form-data">
+<form role="form" method='POST' action="{{ url('user/update/'.$data->id )}}" enctype="multipart/form-data">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
         <h4 class="modal-title">Edit Akun Ketua Lingkungan</h4>
     </div>
     <div class="modal-body">
         @csrf
-        @method('PUT')
+
         <div class="form-body">
             <div class="form-group">
                 <label >Email</label>
@@ -15,7 +15,7 @@
             <div class="form-group">
                 <label >KBG</label>
                 <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
-                    <option value="{{$data->Lingkungan->id}}" disabled selected>{{ $data->Lingkungan->nama_lingkungan }}</option>
+                    <option value="{{$data->Lingkungan->id}}">{{ $data->Lingkungan->nama_lingkungan }}</option>
                     @foreach($ling as $l)
                     <option value="{{$l->id}}">{{ $l->nama_lingkungan }}</option>
                     @endforeach

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>OnePage Bootstrap Template - Index</title>
+  <title>Sistem Informasi Gereja Katolik</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -42,7 +42,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">OnePage</a></h1>
+      <h1 class="logo"><a href="index.html">Sistem Informasi Gereja Katolik</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="{{ asset('layout_landlord/assets/img/logo.png')}}" alt="" class="img-fluid"></a>-->
 
@@ -87,7 +87,7 @@
       <div class="container">
         <div class="row">
 
-          <div class="col-lg-3 col-md-6 footer-contact">
+          <!-- <div class="col-lg-3 col-md-6 footer-contact">
             <h3>OnePage</h3>
             <p>
               A108 Adam Street <br>
@@ -125,7 +125,7 @@
             <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
             <form action="" method="post">
               <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
+            </form> -->
           </div>
 
         </div>

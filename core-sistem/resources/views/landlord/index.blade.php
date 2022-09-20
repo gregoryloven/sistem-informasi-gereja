@@ -5,20 +5,20 @@
 <section id="hero" class="d-flex align-items-center">
 <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
     <div class="row justify-content-center">
-    <div class="col-xl-7 col-lg-9 text-center">
-        <h1>One Page Bootstrap Website Template</h1>
-        <h2>We are team of talented designers</h2>
+    <div class="col-xl-12 col-lg-9 text-center">
+        <h1>SISTEM INFORMASI GEREJA KATOLIK</h1>
+        <h2>Arsitektur Multitenancy</h2>
     </div>
     </div>
     <div class="text-center">
-    <a href="#about" class="btn-get-started scrollto">Get Started</a>
+    <a href="/daftargereja" class="btn-get-started scrollto">Daftar Sekarang</a>
     </div>
 
-    <div class="row icon-boxes">
+    <!-- <div class="row icon-boxes">
     <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
         <div class="icon-box">
         <div class="icon"><i class="ri-stack-line"></i></div>
-        <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+        <h4 class="title"><a href="">Pendaftaran Umat</a></h4>
         <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
         </div>
     </div>
@@ -26,7 +26,7 @@
     <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="300">
         <div class="icon-box">
         <div class="icon"><i class="ri-palette-line"></i></div>
-        <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
+        <h4 class="title"><a href="">Pendaftaran Sakramen</a></h4>
         <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
         </div>
     </div>
@@ -34,7 +34,7 @@
     <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
         <div class="icon-box">
         <div class="icon"><i class="ri-command-line"></i></div>
-        <h4 class="title"><a href="">Magni Dolores</a></h4>
+        <h4 class="title"><a href="">Reservasi Misa</a></h4>
         <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
         </div>
     </div>
@@ -46,7 +46,7 @@
         <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
         </div>
     </div>
-    </div>
+    </div> -->
     
 </div>
 </section><!-- End Hero -->
@@ -91,33 +91,33 @@
 
     <div class="row justify-content-end">
 
-    <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+    <div class="col-lg-4 col-md-5 col-6 d-md-flex align-items-md-stretch">
         <div class="count-box">
         <span data-purecounter-start="0" data-purecounter-end="65" data-purecounter-duration="2" class="purecounter"></span>
-        <p>Happy Clients</p>
+        <p>Tenant</p>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+    <div class="col-lg-4 col-md-5 col-6 d-md-flex align-items-md-stretch">
         <div class="count-box">
         <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="2" class="purecounter"></span>
-        <p>Projects</p>
+        <p>Download</p>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+    <div class="col-lg-4 col-md-5 col-6 d-md-flex align-items-md-stretch">
         <div class="count-box">
         <span data-purecounter-start="0" data-purecounter-end="30" data-purecounter-duration="2" class="purecounter"></span>
-        <p>Years of experience</p>
+        <p>User</p>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+    <!-- <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
         <div class="count-box">
         <span data-purecounter-start="0" data-purecounter-end="20" data-purecounter-duration="2" class="purecounter"></span>
         <p>Awards</p>
         </div>
-    </div>
+    </div> -->
 
     </div>
 
@@ -283,7 +283,7 @@
 <div class="container" data-aos="fade-up">
 
     <div class="section-title">
-    <h2>Sevices</h2>
+    <h2>Fitur</h2>
     <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
     </div>
 
@@ -296,7 +296,7 @@
             </svg>
             <i class="bx bxl-dribbble"></i>
         </div>
-        <h4><a href="">Lorem Ipsum</a></h4>
+        <h4><a href="">Pendaftaran Umat</a></h4>
         <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
         </div>
     </div>
@@ -309,7 +309,7 @@
             </svg>
             <i class="bx bx-file"></i>
         </div>
-        <h4><a href="">Sed Perspiciatis</a></h4>
+        <h4><a href="">Pendaftaran Sakramen</a></h4>
         <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
         </div>
     </div>
@@ -322,12 +322,12 @@
             </svg>
             <i class="bx bx-tachometer"></i>
         </div>
-        <h4><a href="">Magni Dolores</a></h4>
+        <h4><a href="">Reservasi Misa</a></h4>
         <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
+    <!-- <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
         <div class="icon-box iconbox-yellow">
         <div class="icon">
             <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -364,7 +364,7 @@
         <h4><a href="">Divera Don</a></h4>
         <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
         </div>
-    </div>
+    </div> -->
 
     </div>
 

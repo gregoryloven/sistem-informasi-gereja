@@ -126,6 +126,7 @@
                         <th>Lingkungan</th>
                         <th>Nama Lengkap</th>
                         <th>Telepon</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -137,16 +138,18 @@
                         <td st>{{$u->email}}</td>
                         <td st>{{$u->Lingkungan->nama_lingkungan}}</td>
                         <td st>@if(isset($u->nama_lengkap)) {{$u->nama_lengkap}} @endif</td>
-                       <td st> @if(isset($u->telepon)) {{$u->telepon}} @endif</td>
-                       <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditFormKL({{ $u->id }})"><i class="fa fa-pen"></i></a>
-                            <form role="form" method="POST" action="{{ url('userKL/'.$u->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$u->id}}">
-                                <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </div>
+                        <td st> @if(isset($u->telepon)) {{$u->telepon}} @endif</td>
+                        <td st>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditFormKL({{ $u->id }})"><i class="fa fa-pen"></i></a>
+                                <form role="form" method="POST" action="{{ url('userKL/'.$u->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$u->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

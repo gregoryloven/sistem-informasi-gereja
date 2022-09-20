@@ -210,7 +210,7 @@ class UserController extends Controller
         $ling=Lingkungan::all();
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('user.EditFormKL',compact('data','kbg'))->render()),200);
+            'msg'=>view('user.EditFormKL',compact('data','ling'))->render()),200);
     }
 
     public function update(Request $request)
@@ -224,7 +224,7 @@ class UserController extends Controller
 
             return redirect()->route('user.kkbg', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Ubah Akun Berhasil');   
         }
-        else
+        elseif($data->role == "ketua lingkungan")
         {
             $data->email = $request->get('email');
             $data->lingkungan_id = $request->get('lingkungan_id');
