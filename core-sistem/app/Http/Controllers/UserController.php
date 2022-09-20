@@ -78,18 +78,6 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\User  $user
@@ -174,7 +162,8 @@ class UserController extends Controller
     public function TambahKKBG(Request $request)
     {
         $data = new User();
-        $data->email = $request->get('email');
+        $data->name = $request->get('name');
+        $data->email = $request->get('name') .'@gmail.com';
         $data->password = Hash::make($request->password);
         $data->kbg_id = $request->get('kbg_id');
         $data->role = "ketua kbg";
@@ -182,4 +171,67 @@ class UserController extends Controller
         
         return redirect()->route('user.kkbg', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Akun Berhasil');
     }
+
+    public function TambahAllKKBG()
+    {
+        $kbg = Kbg::all();
+
+        foreach($kbg as $k)
+        {
+            $user = User::where([['kbg_id', '=', $k->id], ['role', 'ketua kbg']])->get();
+            if(count($user)==0)
+            {
+                $data = new User();
+                $data->name = $k->nama_kbg;
+                $data->email = preg_replace('/\s+/', '', strtolower($k->nama_kbg) .'@gmail.com'); 
+                $data->password = Hash::make('12345');
+                $data->kbg_id = $k->id;
+                $data->role = "ketua kbg";
+                $data->save();
+            }
+        }
+        return redirect()->route('user.kkbg', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Semua Akun Berhasil');
+    }
+
+    public function EditFormKKBG(Request $request)
+    {
+        $id=$request->get("id");
+        $data=User::find($id);
+        $kbg=Kbg::all();
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('user.EditFormKKBG',compact('data','kbg'))->render()),200);
+    }
+
+    public function EditFormKL(Request $request)
+    {
+        $id=$request->get("id");
+        $data=User::find($id);
+        $ling=Lingkungan::all();
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('user.EditFormKL',compact('data','kbg'))->render()),200);
+    }
+
+    public function update(Request $request)
+    {
+        $data=User::find($request->id);
+        if($data->role == "ketua kbg")
+        {
+            $data->email = $request->get('email');
+            $data->kbg_id = $request->get('kbg_id');
+            $data->save();
+
+            return redirect()->route('user.kkbg', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Ubah Akun Berhasil');   
+        }
+        else
+        {
+            $data->email = $request->get('email');
+            $data->lingkungan_id = $request->get('lingkungan_id');
+            $data->save();
+
+            return redirect()->route('user.kl', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Ubah Akun Berhasil');  
+        }
+    }
+
 }

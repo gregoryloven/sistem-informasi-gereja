@@ -23,7 +23,20 @@
         {{ session('error') }}
     </div>
 @endif
-<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Akun</a><br><br>
+
+<!-- EDIT WITH MODAL-->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Akun</a>
+<a href="#modalAllKKBG" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Semua Akun</a><br><br>
 
 <!-- CREATE WITH MODAL -->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
@@ -38,13 +51,18 @@
                 <div class="modal-body">
                     @csrf
                     <div class="form-body">
-                        <div class="form-group">
+                    <div class="form-group">
+                            <label >Username</label>
+                            <input type="text" class="form-control" id='name' name='name' oninput='autogmail()' placeholder="Username" required>
+                        </div>
+                        <div class="form-group" style="width:60%">
                             <label >Email</label>
                             <input type="text" class="form-control" id='email' name='email' placeholder="Email" required>
                         </div>
+                        <div><b>@gmail.com</b></div>
                         <div class="form-group">
                             <label >Password</label>
-                            <input type="text" class="form-control" id='password' name='password' placeholder="Password" required>
+                            <input type="password" class="form-control" id='password' name='password' placeholder="Password" required>
                         </div>
                         <div class="form-group">
                             <label >KBG</label>
@@ -55,6 +73,31 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL SEMUA KKBG -->
+<div class="modal fade" id="modalAllKKBG" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form role="form" method="POST" action="/user/TambahAllKKBG" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Tambah Semua Akun</h4>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-body">
+                        <h4> APAKAH ANDA YAKIN MEMBUAT SEMUA AKUN KETUA KBG? <h4>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -78,6 +121,7 @@
                         <th>KBG</th>
                         <th>Nama Lengkap</th>
                         <th>Telepon</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,6 +134,17 @@
                         <td st>{{$u->Kbg->nama_kbg}}</td>
                         <td st>@if(isset($u->nama_lengkap)) {{$u->nama_lengkap}} @endif</td>
                        <td st> @if(isset($u->telepon)) {{$u->telepon}} @endif</td>
+                       <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditFormKKBG({{ $u->id }})"><i class="fa fa-pen"></i></a>
+                                <form role="form" method="POST" action="{{ url('userKKBG/'.$u->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$u->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -98,4 +153,28 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+@endsection
+
+@section('javascript')
+<script>
+function EditFormKKBG(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('user.EditFormKKBG', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+
+function autogmail()
+{
+    var name =$('#name').val()
+    $('#email').val(name)
+}
+</script>
 @endsection

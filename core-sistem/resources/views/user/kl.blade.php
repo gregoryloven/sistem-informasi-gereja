@@ -23,6 +23,18 @@
         {{ session('error') }}
     </div>
 @endif
+
+<!-- EDIT WITH MODAL-->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Akun</a>
 <a href="#modalAllKL" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Semua Akun</a><br><br>
 
@@ -39,7 +51,7 @@
                 <div class="modal-body">
                     @csrf
                     <div class="form-body">
-                    <div class="form-group">
+                        <div class="form-group">
                             <label >Username</label>
                             <input type="text" class="form-control" id='name' name='name' oninput='autogmail()' placeholder="Username" required>
                         </div>
@@ -126,6 +138,15 @@
                         <td st>{{$u->Lingkungan->nama_lingkungan}}</td>
                         <td st>@if(isset($u->nama_lengkap)) {{$u->nama_lengkap}} @endif</td>
                        <td st> @if(isset($u->telepon)) {{$u->telepon}} @endif</td>
+                       <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditFormKL({{ $u->id }})"><i class="fa fa-pen"></i></a>
+                            <form role="form" method="POST" action="{{ url('userKL/'.$u->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$u->id}}">
+                                <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </div>
                     </tr>
                     @endforeach
                 </tbody>
@@ -138,6 +159,20 @@
 
 @section('javascript')
 <script>
+function EditFormKL(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('user.EditFormKL', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+
 function autogmail()
 {
     var name =$('#name').val()

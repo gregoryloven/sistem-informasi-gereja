@@ -106,10 +106,13 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('userKL', [UserController::class, 'DaftarKL'])->name('user.kl');
     Route::post('/user/TambahKL', [UserController::class, 'TambahKL'])->name('user.TambahKL');
     Route::post('/user/TambahAllKL', [UserController::class, 'TambahAllKL'])->name('user.TambahAllKL');
+    Route::post('/user/EditFormKL', [UserController::class, 'EditFormKL'])->name('user.EditFormKL');
 
     //Tambah Akun Ketua KBG
     Route::get('userKKBG', [UserController::class, 'DaftarKKBG'])->name('user.kkbg');
     Route::post('/user/TambahKKBG', [UserController::class, 'TambahKKBG'])->name('user.TambahKKBG');
+    Route::post('/user/TambahAllKKBG', [UserController::class, 'TambahAllKKBG'])->name('user.TambahAllKKBG');
+    Route::post('/user/EditFormKKBG', [UserController::class, 'EditFormKKBG'])->name('user.EditFormKKBG');
 
     //Keluarga
     Route::resource('keluargas', KeluargaController::class);
