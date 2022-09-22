@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\ListEvent;
 use App\Models\PetugasLiturgi;
+use App\Models\Baptis;
+use App\Models\KomuniPertama;
+use App\Models\Krisma;
+use App\Models\Misa;
+use App\Models\PendaftaranPetugas;
 use Illuminate\Http\Request;
 use DB;
 
@@ -48,7 +53,7 @@ class ListEventController extends Controller
         $data->kuota = $request->get('kuota');
         $data->save();
 
-        return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil ditambahkan');
+        return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Ditambahkan');
 
     }
 
@@ -61,12 +66,33 @@ class ListEventController extends Controller
             'msg'=>view('listevent.EditForm',compact("data"))->render()),200);
     }
 
-    public function update(Request $request, ListEvent $listEvent)
+    public function update(Request $request)
     {
         $data=ListEvent::find($request->id);
+
+        $baptis=Baptis::where([['jenis', '=', $data->jenis_event], ['jadwal', '=', $data->jadwal_pelaksanaan]])
+        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo')]);
+        
+        $komuni=KomuniPertama::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo')]);
+
+        $krisma=Krisma::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo')]);
+
+        $misa=Misa::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
+
+        $petugas=PendaftaranPetugas::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        'lokasi' => $request->get('lokasi')]);
+
         $data->nama_event = $request->get('nama_event');
-        $data->jenis_event = $request->get('jenis_event');
-        $data->petugas_liturgi_id = $request->get('petugas_liturgi_id');
+        // $data->jenis_event = $request->get('jenis_event');
+        // $data->petugas_liturgi_id = $request->get('petugas_liturgi_id');
         $data->tgl_buka_pendaftaran = $request->get('tgl_buka_pendaftaran');
         $data->tgl_tutup_pendaftaran = $request->get('tgl_tutup_pendaftaran');
         $data->jadwal_pelaksanaan = $request->get('jadwal_pelaksanaan');
@@ -74,6 +100,10 @@ class ListEventController extends Controller
         $data->romo = $request->get('romo');
         $data->kuota = $request->get('kuota');
         $data->save();
+        
+
+        return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diubah');
+
     }
 
     public function destroy(Request $request)

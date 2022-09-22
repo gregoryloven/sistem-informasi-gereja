@@ -325,5 +325,37 @@ function checkJenisEvent(jenis)
     }
 }
 
+//Untuk EditForm
+function MinStartDatee()
+{
+    $('#tgl_tutup_pendaftarann').attr('min', $('#tgl_buka_pendaftarann').val())
+}
+
+function CheckEndDatee()
+{
+    if($('#tgl_buka_pendaftarann').val() == '')
+    {   
+        alert('Pilih Tanggal Buka Pendaftaran Terlebih Dahulu')
+        $('#tgl_tutup_pendaftarann').val('')
+        
+    }
+    var h1 = new Date($('#tgl_tutup_pendaftarann').val())
+    h1.setDate(h1.getDate() + 1)
+    // alert(h1.toISOString().substring(0,10))
+    var enddate = h1.toISOString().substring(0,10) + ' 00:00:00' 
+    $('#jadwal_pelaksanaann').attr('min', enddate)
+}
+
+function CheckJadwalPelaksanaann()
+{
+    if($('#tgl_buka_pendaftarann').val() == '' || $('#tgl_tutup_pendaftarann').val() == '')
+    {   
+        alert('Pilih Tanggal Buka dan Tutup Pendaftaran Terlebih Dahulu')
+        $('#jadwal_pelaksanaann').val('')
+        
+    }
+}
+
+
 </script>
 @endsection
