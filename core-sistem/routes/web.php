@@ -13,6 +13,7 @@ use App\Http\Controllers\MisaController;
 use App\Http\Controllers\TobatController;
 use App\Http\Controllers\PengurapanOrangSakitController;
 use App\Http\Controllers\PelayananLainnyaController;
+use App\Http\Controllers\PendaftaranUmatController;
 use App\Http\Controllers\PendaftaranPetugasController;
 use App\Http\Controllers\PendaftaranBaptisController;
 use App\Http\Controllers\PendaftaranKomuniController;
@@ -191,6 +192,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/pelayananlainnya/Pembatalan', [PelayananLainnyaController::class, 'Pembatalan'])->name('pelayananlainnya.Pembatalan');
     Route::post('/pelayananlainnya/detail', [PelayananLainnyaController::class, 'detail'])->name('pelayananlainnya.detail');
 
+    //Pendaftaran Umat
+    Route::resource('pendaftaranumat', PendaftaranUmatController::class);
 
     //Pendaftaran Petugas Liturgi
     Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);

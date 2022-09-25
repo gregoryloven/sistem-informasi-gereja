@@ -26,7 +26,7 @@
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Pendaftaran Umat</h5>
                             <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
-                            <a href="/pendaftaranakun" class="btn btn-primary">Gunakan Fitur</a>
+                            <a href="/pendaftaranumat" class="btn btn-primary">Gunakan Fitur</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Tiket Reservasi</h5>
                             <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
-                            <a href="#" class="btn btn-primary">Gunakan Fitur</a>
+                            <a href="/reservasimisa" class="btn btn-primary">Gunakan Fitur</a>
                         </div>
                     </div>
                 </div>
