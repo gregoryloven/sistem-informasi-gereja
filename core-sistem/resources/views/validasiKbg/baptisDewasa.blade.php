@@ -1,19 +1,18 @@
-@extends('layouts.sbadmin2')
+@extends('layouts.sbkbg')
 
 @push('css')
 <style>
     #myTable td {text-align: center; vertical-align: middle;}
-    #myTable2 td {text-align: center; vertical-align: middle;}
 </style>
 @endpush
 
 @section('title')
-    Validasi Baptis Bayi
+    Validasi Baptis Dewasa
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Bayi</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Dewasa</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -31,7 +30,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable">
+            <table class="table table-bordered">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -46,6 +45,7 @@
                         <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
+                        <th>Surat Pernyataan</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -66,14 +66,15 @@
                         <td st>{{$d->jenis}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}" height='80px'/></td>
                         <td >
-                            @if($d->status == "Disetujui Lingkungan")
-                            <form action="/validasiAdmin/acceptbaptis" method="post">
+                            @if($d->status == "Diproses")
+                            <form action="/validasiKbg/acceptbaptis" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validasiAdmin/declinebaptis" class="ml-2" method="post">
+                            <form action="/validasiKbg/declinebaptis" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a>
@@ -85,7 +86,7 @@
                     <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" >
-                                <form role="form" method="POST" action="{{ url('validasiAdmin/declinebaptis') }}" enctype="multipart/form-data">
+                                <form role="form" method="POST" action="{{ url('validasiKbg/declinebaptis') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -105,6 +106,14 @@
                             </div>
                         </div>
                     </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}">
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>
@@ -117,7 +126,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable2">
+            <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -132,6 +141,7 @@
                         <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
+                        <th>Surat Pernyataan</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -152,8 +162,9 @@
                         <td st>{{$da->jenis}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}" height='80px'/></td>
                         <td st >
-                            @if($da->statusRiwayat == 'Disetujui Paroki') 
+                            @if($da->statusRiwayat == 'Disetujui KBG') 
                             <div class="alert alert-success" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
@@ -164,47 +175,20 @@
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}
                                 <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
-                            @elseif($da->statusRiwayat == 'Dibatalkan') 
+                            @else
                             <div class="alert alert-danger" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}
                                 <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
-                            @else
-                            <div class="alert alert-success" role="alert">
-                                {{$da->statusRiwayat}}
-                            </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}</small>
-                            @endif
-                        </td>
-                        <td st>
-                            @if($da->statusRiwayat == "Disetujui Paroki")
-                            <a href="#modal{{$da->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
                             @endif
                         </td>
                     </tr>
-                    <!-- EDIT WITH MODAL -->
-                    <div class="modal fade" id="modal{{$da->riwayatID}}" tabindex="-1" role="basic" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form role="form" method="POST" action="{{ url('validasiAdmin/pembatalanbaptis') }}" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Pembatalan Baptis</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        @csrf
-                                        <label>Alasan Pembatalan:</label>
-                                        <input type="hidden" name="id" value="{{$da->id}}">
-                                        <input type="hidden" name="riwayatID" value="{{$da->riwayatID}}">
-                                        <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-info">Submit</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    </div>
-                                </form>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$da->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}">
                             </div>
                         </div>
                     </div>

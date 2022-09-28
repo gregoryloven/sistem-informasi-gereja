@@ -151,7 +151,7 @@ class ValidasiAdminController extends Controller
     {
         $user = Auth::user()->id;
         
-        $reservasi = Baptis::where('status', 'Disetujui Lingkungan')->get();
+        $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Bayi']])->get();
         $reservasiAll = DB::table('baptiss')
         ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
         ->join('users', 'riwayats.user_id', '=', 'users.id')
@@ -166,54 +166,130 @@ class ValidasiAdminController extends Controller
         return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
     }
 
+    public function baptisDewasa()
+    {
+        $user = Auth::user()->id;
+        
+        $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Dewasa']])->get();
+        $reservasiAll = DB::table('baptiss')
+        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
+        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Baptis Dewasa']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
+        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
+        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Dewasa']])
+        ->orderBy('baptiss.jadwal', 'DESC')
+        ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+        return view('validasiAdmin.baptisDewasa',compact("reservasi", "reservasiAll"));
+    }
+
     public function AcceptBaptis(Request $request)
     {
         $baptis=Baptis::find($request->id);
-        $baptis->status = "Disetujui Paroki";
-        $baptis->save();
 
-        $riwayat = new Riwayat();
-        $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id =  $baptis->id;
-        $riwayat->jenis_event =  "Baptis Bayi";
-        $riwayat->status =  "Disetujui Paroki";
-        $riwayat->save();
-
-        return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Disetujui');
+        if($baptis->jenis == "Baptis Bayi")
+        {
+            $baptis->status = "Disetujui Paroki";
+            $baptis->save();
+    
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $baptis->id;
+            $riwayat->jenis_event =  "Baptis Bayi";
+            $riwayat->status =  "Disetujui Paroki";
+            $riwayat->save();
+    
+            return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Bayi Telah Disetujui');
+        }
+        else
+        {
+            $baptis->status = "Disetujui Paroki";
+            $baptis->save();
+    
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $baptis->id;
+            $riwayat->jenis_event =  "Baptis Dewasa";
+            $riwayat->status =  "Disetujui Paroki";
+            $riwayat->save();
+    
+            return redirect()->route('validasiAdmin.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Dewasa Telah Disetujui');
+        }
     }
 
     public function DeclineBaptis(Request $request)
     {
         $baptis=Baptis::find($request->id);
-        $baptis->status = "Ditolak";
-        $baptis->save();
 
-        $riwayat = new Riwayat();
-        $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id =  $baptis->id;
-        $riwayat->jenis_event =  "Baptis Bayi";
-        $riwayat->status =  "Ditolak";
-        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
-        $riwayat->save();
-
-        return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Ditolak');
+        if($baptis->jenis == "Baptis Bayi")
+        {
+            $baptis->status = "Ditolak";
+            $baptis->save();
+    
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $baptis->id;
+            $riwayat->jenis_event =  "Baptis Bayi";
+            $riwayat->status =  "Ditolak";
+            $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+            $riwayat->save();
+    
+            return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Bayi Telah Ditolak');
+        }
+        else
+        {
+            $baptis->status = "Ditolak";
+            $baptis->save();
+    
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $baptis->id;
+            $riwayat->jenis_event =  "Baptis Dewasa";
+            $riwayat->status =  "Ditolak";
+            $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+            $riwayat->save();
+    
+            return redirect()->route('validasiAdmin.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Dewasa Telah Ditolak');
+        }
     }
 
     public function PembatalanBaptis(Request $request)
     {
         $data=Baptis::find($request->id);
-        $data->status = "Dibatalkan";
+        
+        if($data->jenis == "Baptis Bayi")
+        {
+            $data->status = "Dibatalkan";
 
-        $riwayat = Riwayat::find($request->riwayatID);
-        $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id =  $data->id;
-        $riwayat->jenis_event =  "Baptis Bayi";
-        $riwayat->status =  "Dibatalkan";
-        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
-        $riwayat->save();
-        $data->save();
+            $riwayat = Riwayat::find($request->riwayatID);
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $data->id;
+            $riwayat->jenis_event =  "Baptis Bayi";
+            $riwayat->status =  "Dibatalkan";
+            $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+            $riwayat->save();
+            $data->save();
+    
+            return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Baptis Bayi Telah Dibatalkan');
+        }
+        else
+        {
+            $data->status = "Dibatalkan";
 
-        return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Baptis Berhasil Dibatalkan');
+            $riwayat = Riwayat::find($request->riwayatID);
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $data->id;
+            $riwayat->jenis_event =  "Baptis Dewasa";
+            $riwayat->status =  "Dibatalkan";
+            $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+            $riwayat->save();
+            $data->save();
+    
+            return redirect()->route('validasiAdmin.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Baptis Dewasa Telah Dibatalkan');
+        }
+        
     }
 
     public function komuni(Request $request)

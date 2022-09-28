@@ -7,12 +7,12 @@
 @endpush
 
 @section('title')
-    Validasi Baptis
+    Validasi Baptis Bayi
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Bayi</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -156,16 +156,19 @@
                             <div class="alert alert-success" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}</small>
                             @elseif($da->statusRiwayat == 'Ditolak') 
                             <div class="alert alert-danger" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
-                            <small><b>Alasan: {{$da->alasan_penolakan}}</b></small>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}
+                                <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
                             @else
                             <div class="alert alert-danger" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
-                            <small><b>Alasan: {{$da->alasan_pembatalan}}</b></small>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}
+                                <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
                             @endif
                         </td>
                     </tr>

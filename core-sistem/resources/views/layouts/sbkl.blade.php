@@ -96,7 +96,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('validasiKL.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis</a>
+                        <a class="collapse-item" href="{{ route('validasiKL.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Bayi</a>
+                        <a class="collapse-item" href="{{ route('validasiKL.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Dewasa</a>
                         <a class="collapse-item" href="{{ route('validasiKL.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
                         <a class="collapse-item" href="{{ route('validasiKL.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Krisma</a>
                         <a class="collapse-item" href="#">Perkawinan</a>

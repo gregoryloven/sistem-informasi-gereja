@@ -7,7 +7,7 @@
 @endpush
 
 @section('title')
-    Validasi Baptis
+    Validasi Baptis Bayi
 @endsection
 
 @section('content')

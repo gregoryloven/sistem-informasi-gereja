@@ -37,7 +37,7 @@
                 Formulir Pendaftaran Sakramen Baptis
             </div>
             <div class="card-body">
-            <form id="formIndividu" class="mb-2" method="post" action="/pendaftaranbaptis/InputForm">
+            <form id="formIndividu" class="mb-2" method="post" action="/pendaftaranbaptis/InputForm" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                     <label >Nama Lengkap Penerima Baptis</label>
@@ -100,6 +100,13 @@
                     <label >Romo</label>
                     <input type="text" value="{{$list[0]->romo}}" class="form-control" id='romo' name='romo' placeholder="Romo" required readonly>
                 </div>
+                @if($list[0]->jenis_event == 'Baptis Dewasa')
+                <div class="form-group">
+                    <label >Surat Pernyataan</label>
+                    <input type="file" value="" class="form-control" id='surat_pernyataan' name='surat_pernyataan' placeholder="Surat Pernyataan" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                </div>
+                <img id="output" src="" width="200px" height="200px">
+                @endif
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Baptis"
                 </div>
