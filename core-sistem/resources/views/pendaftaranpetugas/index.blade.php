@@ -88,7 +88,7 @@
                         <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{$d->lokasi}}</td>
                         <td>
-                            @if($d->tgl_tutup_pendaftaran >= date('Y-m-d'))
+                            @if($d->tgl_buka_pendaftaran <= date('Y-m-d') && $d->tgl_tutup_pendaftaran >= date('Y-m-d'))
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href= "{{ url('pendaftaranpetugas/OpenForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Formulir Pendaftaran</a>   
                             </div>
