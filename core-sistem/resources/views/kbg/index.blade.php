@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label >Lingkungan</label>
                         <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
-                        <option value="">Choose</option>
+                        <option value="" disabled selected>Choose</option>
                         @foreach($ling as $l)
                         <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
                         @endforeach

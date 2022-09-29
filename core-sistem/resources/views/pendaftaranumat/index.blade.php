@@ -84,9 +84,61 @@
                 <div class="form-group">
                     <label >Nama Lengkap</label>
                     <input type="text" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
-                </div>    
+                </div> 
+                <div class="form-group">
+                <label >Hubungan Darah</label>
+                    <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
+                        <option value="" disabled selected>Choose</option>
+                        <option value="Kepala Keluarga">Kepala Keluarga</option>
+                        <option value="Istri">Istri</option>
+                        <option value="Anak">Anak</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >Jenis Kelamin</label>
+                    <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
+                        <option value="" disabled selected>Choose</option>
+                        <option value="Laki-Laki">Laki-Laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >Lingkungan</label>
+                    <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
+                    <option value="" disabled selected>Choose</option>
+                    @foreach($ling as $l)
+                    <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >KBG</label>
+                    <select class="form-control" id='kbg_id' name='kbg_id'>
+                    <option value="" disabled selected>Choose</option>
+                    @foreach($kbg as $k)
+                    <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >Alamat</label>
+                    <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
+                </div>
+                <div class="form-group">
+                    <label >Telepon</label>
+                    <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
+                </div>
+                <div class="form-group">
+                    <label >Status</label>
+                    <input type="text" class="form-control" id='status' name='status' placeholder="Status" required>
+                </div>
+                <div class="form-group">
+                    <label>Foto KTP</label>
+                    <input type="file" class="form-control" name="foto_ktp"  id="foto_ktp" placeholder="Foto KTP" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                </div>
+                <img id="output" src="" width="200px" height="200px">
                 <div class="alert alert-info" role="alert">
-                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Lama"
+                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Baru"
                 </div>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
                 </form>
