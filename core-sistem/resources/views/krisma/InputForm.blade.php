@@ -41,13 +41,13 @@
                 <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
                 <div class="d-flex justify-content-between">
                     <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis1" id="parokiSetempatTab" value="parokiSetempat" checked>
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="parokiSetempatTab" value="parokiSetempat" checked>
                         <label class="form-check-label" for="parokiSetempatTab">
                             Paroki Setempat
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis2" id="lintasParokiTab" value="lintasParoki">
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="lintasParokiTab" value="lintasParoki">
                         <label class="form-check-label" for="lintasParokiTab">
                             Lintas Paroki
                         </label>

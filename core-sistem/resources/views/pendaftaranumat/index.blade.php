@@ -41,13 +41,13 @@
                 <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
                 <div class="d-flex justify-content-between">
                     <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis1" id="umatLamaTab" value="umatLama" checked>
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatLamaTab" value="umatLama" checked>
                         <label class="form-check-label" for="umatLamaTab">
                             Umat Lama
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis2" id="umatBaruTab" value="umatBaru">
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatBaruTab" value="umatBaru">
                         <label class="form-check-label" for="umatBaruTab">
                             Umat Baru
                         </label>
@@ -104,6 +104,7 @@
     <script>
         $(document).ready(function(){
             $("#umatLamaTab").trigger("click");
+            
         });
         function tabSelect(value) {
             if(value === "umatLama"){
