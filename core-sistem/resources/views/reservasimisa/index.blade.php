@@ -74,9 +74,16 @@
                         <td st>{{$d->romo}}</td>
                         <td st>{{$d->kuota}}</td>
                         <td>
+                            <?php
+                            $datetime = $d->jadwal_pelaksanaan;
+                            $timestamp = strtotime($datetime);
+                            $time = $timestamp - (2 * 60 * 60);
+                            ?>
+                            @if($d->jadwal_pelaksanaan >= $time)
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalPesan" data-toggle="modal" class="btn btn-xs btn-info" onclick="PesanTiket({{ $d->id }})">Pesan</a>
                             </div>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

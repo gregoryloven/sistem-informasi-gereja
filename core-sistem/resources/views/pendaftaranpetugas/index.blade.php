@@ -54,7 +54,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        List Sesi 
+        Sesi yang tersedia 
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -88,9 +88,11 @@
                         <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{$d->lokasi}}</td>
                         <td>
+                            @if($d->tgl_tutup_pendaftaran >= date('Y-m-d'))
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href= "{{ url('pendaftaranpetugas/OpenForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Formulir Pendaftaran</a>   
                             </div>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
