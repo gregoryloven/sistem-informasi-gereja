@@ -35,9 +35,20 @@
                     <div class="card" style="width: 18rem;">
                         <img src="https://t-2.tstatic.net/medan/foto/bank/images/PEMBAPTISAN-KRISTEN.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold">Baptis</h5>
+                            <h5 class="card-title font-weight-bold">Baptis Bayi</h5>
                             <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
                             <a href="/pendaftaranbaptis" class="btn btn-primary">Gunakan Fitur</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://t-2.tstatic.net/medan/foto/bank/images/PEMBAPTISAN-KRISTEN.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold">Baptis Dewasa</h5>
+                            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
+                            <a href="/pendaftaranbaptisdewasa" class="btn btn-primary">Gunakan Fitur</a>
                         </div>
                     </div>
                 </div>

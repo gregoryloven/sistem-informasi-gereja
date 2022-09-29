@@ -8,12 +8,12 @@
 @endpush
 
 @section('title')
-    Validasi Baptis Bayi
+    Validasi Baptis
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Bayi</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Baptis</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -46,6 +46,7 @@
                         <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
+                        <th>Surat Pernyataan</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -66,6 +67,7 @@
                         <td st>{{$d->jenis}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}" height='80px'/></td>
                         <td >
                             @if($d->status == "Disetujui Lingkungan")
                             <form action="/validasiAdmin/acceptbaptis" method="post">
@@ -105,6 +107,14 @@
                             </div>
                         </div>
                     </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}">
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>
@@ -132,7 +142,9 @@
                         <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
+                        <th>Surat Pernyataan</th>
                         <th>Status</th>
+                        <th>Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -152,6 +164,7 @@
                         <td st>{{$da->jenis}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}" height='80px'/></td>
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
@@ -205,6 +218,14 @@
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$da->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}">
                             </div>
                         </div>
                     </div>

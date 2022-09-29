@@ -76,7 +76,7 @@ class ValidasiKbgController extends Controller
         $kbg = Auth::user()->kbg->nama_kbg;
         $user = Auth::user()->id;
         
-        $reservasi = Baptis::where([["status", "Diproses"], ['kbg', $kbg]])->get();
+        $reservasi = Baptis::where([["status", "Diproses"], ['kbg', $kbg], ['jenis', 'Baptis Bayi']])->get();
         $reservasiAll = DB::table('baptiss')
         ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
         ->join('users', 'riwayats.user_id', '=', 'users.id')
@@ -90,37 +90,94 @@ class ValidasiKbgController extends Controller
         return view('validasiKbg.baptis',compact("reservasi", "reservasiAll"));
     }
 
+    public function baptisDewasa()
+    {
+        $kbg = Auth::user()->kbg->nama_kbg;
+        $user = Auth::user()->id;
+        
+        $reservasi = Baptis::where([["status", "Diproses"], ['kbg', $kbg], ['jenis', 'Baptis Dewasa']])->get();
+        $reservasiAll = DB::table('baptiss')
+        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
+        ->where([['riwayats.status', 'Disetujui KBG'], ['kbg', $kbg], ['riwayats.jenis_event', 'Baptis Dewasa']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['kbg', $kbg], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
+        ->orwhere([['riwayats.status', 'Dibatalkan'], ['kbg', $kbg], ['riwayats.jenis_event', 'Baptis Dewasa']])
+        ->orderBy('baptiss.jadwal', 'DESC')
+        ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+        return view('validasiKbg.baptisDewasa',compact("reservasi", "reservasiAll"));
+    }
+
     public function AcceptBaptis(Request $request)
     {
         $baptis=Baptis::find($request->id);
-        $baptis->status = "Disetujui KBG";
-        $baptis->save();
 
-        $riwayat = new Riwayat();
-        $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id =  $baptis->id;
-        $riwayat->jenis_event =  "Baptis Bayi";
-        $riwayat->status =  "Disetujui KBG";
-        $riwayat->save();
+        if($baptis->jenis == "Baptis Bayi")
+        {
+            $baptis->status = "Disetujui KBG";
+            $baptis->save();
+    
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $baptis->id;
+            $riwayat->jenis_event =  "Baptis Bayi";
+            $riwayat->status =  "Disetujui KBG";
+            $riwayat->save();
 
-        return redirect()->route('validasiKbg.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Disetujui');
+            return redirect()->route('validasiKbg.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Bayi Telah Disetujui');
+        }
+        else
+        {
+            $baptis->status = "Disetujui KBG";
+            $baptis->save();
+    
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $baptis->id;
+            $riwayat->jenis_event =  "Baptis Dewasa";
+            $riwayat->status =  "Disetujui KBG";
+            $riwayat->save();
+
+            return redirect()->route('validasiKbg.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Dewasa Telah Disetujui');
+        }
     }
 
     public function DeclineBaptis(Request $request)
     {
         $baptis=Baptis::find($request->id);
-        $baptis->status = "Ditolak";
-        $baptis->save();
 
-        $riwayat = new Riwayat();
-        $riwayat->user_id = Auth::user()->id;
-        $riwayat->event_id =  $baptis->id;
-        $riwayat->jenis_event =  "Baptis Bayi";
-        $riwayat->status =  "Ditolak";
-        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
-        $riwayat->save();
+        if($baptis->jenis == "Baptis Bayi")
+        {
+            $baptis->status = "Ditolak";
+            $baptis->save();
 
-        return redirect()->route('validasiKbg.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Berhasil Ditolak');
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $baptis->id;
+            $riwayat->jenis_event =  "Baptis Bayi";
+            $riwayat->status =  "Ditolak";
+            $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+            $riwayat->save();
+
+            return redirect()->route('validasiKbg.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Bayi Telah Ditolak');
+        }
+        else 
+        {
+            $baptis->status = "Ditolak";
+            $baptis->save();
+    
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $baptis->id;
+            $riwayat->jenis_event =  "Baptis Dewasa";
+            $riwayat->status =  "Ditolak";
+            $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+            $riwayat->save();
+    
+            return redirect()->route('validasiKbg.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Dewasa Telah Ditolak');
+        }
+        
     }
 
     public function komuni()

@@ -31,6 +31,7 @@ class CreateBaptissTable extends Migration
             $table->string('lokasi');
             $table->string('romo');
             $table->enum('status', ['Diproses','Disetujui KBG','Disetujui Lingkungan','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
+            $table->string('surat_pernyataan')->nullable();
             $table->string('surat_baptis')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

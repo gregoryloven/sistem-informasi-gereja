@@ -101,18 +101,19 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-pray"></i>
-                    <span>Buat Jadwal</span></a>
+                    <span>Buat Sesi</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseValidasi"
                     aria-expanded="true" aria-controls="collapseValidasi">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Validasi</span>
+                    <span>Validasi Pendaftaran Online</span>
                 </a>
                 <div id="collapseValidasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis</a>
+                        <a class="collapse-item" href="{{ route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Bayi</a>
+                        <a class="collapse-item" href="{{ route('validasiAdmin.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Dewasa</a>
                         <a class="collapse-item" href="{{ route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
                         <a class="collapse-item" href="{{ route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Krisma</a>
                         <a class="collapse-item" href="#">Perkawinan</a>

@@ -202,12 +202,18 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/pendaftaranpetugas/Pembatalan', [PendaftaranPetugasController::class, 'Pembatalan'])->name('pendaftaranpetugas.Pembatalan');
     Route::post('/pendaftaranpetugas/detail', [PendaftaranPetugasController::class, 'detail'])->name('pendaftaranpetugas.detail');
 
-    //Pendaftaran Baptis
+    //Pendaftaran Baptis Bayi
     Route::resource('pendaftaranbaptis', PendaftaranBaptisController::class);
     Route::post('/pendaftaranbaptis/InputForm', [PendaftaranBaptisController::class, 'InputForm'])->name('pendaftaranbaptis.InputForm');
     Route::get('/pendaftaranbaptis/OpenForm/{id}', [PendaftaranBaptisController::class, 'OpenForm'])->name('pendaftaranbaptis.OpenForm');
     Route::post('/pendaftaranbaptis/Pembatalan', [PendaftaranBaptisController::class, 'Pembatalan'])->name('pendaftaranbaptis.Pembatalan');
     Route::post('/pendaftaranbaptis/detail', [PendaftaranBaptisController::class, 'detail'])->name('pendaftaranbaptis.detail');
+
+    //Pendaftaran Baptis Dewasa
+    Route::get('pendaftaranbaptisdewasa', [PendaftaranBaptisController::class, 'indexDewasa'])->name('pendaftaranbaptis.indexDewasa');
+    Route::post('/pendaftaranbaptis/InputFormDewasa', [PendaftaranBaptisController::class, 'InputFormDewasa'])->name('pendaftaranbaptis.InputFormDewasa');
+    Route::get('/pendaftaranbaptis/OpenFormDewasa/{id}', [PendaftaranBaptisController::class, 'OpenFormDewasa'])->name('pendaftaranbaptis.OpenFormDewasa');
+    Route::post('/pendaftaranbaptis/detailDewasa', [PendaftaranBaptisController::class, 'detailDewasa'])->name('pendaftaranbaptis.detailDewasa');
 
     //Pendaftaran Komuni
     Route::resource('pendaftarankomuni', PendaftaranKomuniController::class);
@@ -238,6 +244,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiAdmin/declinepetugas', [ValidasiAdminController::class, 'DeclinePetugas'])->name('validasiAdmin.DeclinePetugas');
 
     Route::get('validasiAdminBaptis', [ValidasiAdminController::class, 'baptis'])->name('validasiAdmin.baptis');
+    Route::get('validasiAdminBaptisDewasa', [ValidasiAdminController::class, 'baptisDewasa'])->name('validasiAdmin.baptisDewasa');
     Route::post('/validasiAdmin/acceptbaptis', [ValidasiAdminController::class, 'AcceptBaptis'])->name('validasiAdmin.AcceptBaptis');
     Route::post('/validasiAdmin/declinebaptis', [ValidasiAdminController::class, 'DeclineBaptis'])->name('validasiAdmin.DeclineBaptis');
     Route::post('/validasiAdmin/pembatalanbaptis', [ValidasiAdminController::class, 'PembatalanBaptis'])->name('validasiAdmin.PembatalanBaptis');
@@ -261,6 +268,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiKbg/declinepelayanan', [ValidasiKbgController::class, 'DeclinePelayanan'])->name('validasiAdmin.DeclinePelayanan');
 
     Route::get('validasiKbgBaptis', [ValidasiKbgController::class, 'baptis'])->name('validasiKbg.baptis');
+    Route::get('validasiKbgBaptisDewasa', [ValidasiKbgController::class, 'baptisDewasa'])->name('validasiKbg.baptisDewasa');
     Route::post('/validasiKbg/acceptbaptis', [ValidasiKbgController::class, 'AcceptBaptis'])->name('validasiKbg.AcceptBaptis');
     Route::post('/validasiKbg/declinebaptis', [ValidasiKbgController::class, 'DeclineBaptis'])->name('validasiKbg.DeclineBaptis');
 
@@ -279,6 +287,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiKL/declinepelayanan', [ValidasiKLController::class, 'DeclinePelayanan'])->name('validasiKL.DeclinePelayanan');
 
     Route::get('validasiKLBaptis', [ValidasiKLController::class, 'baptis'])->name('validasiKL.baptis');
+    Route::get('validasiKLBaptisDewasa', [ValidasiKLController::class, 'baptisDewasa'])->name('validasiKL.baptisDewasa');
     Route::post('/validasiKL/acceptbaptis', [ValidasiKLController::class, 'AcceptBaptis'])->name('validasiKL.AcceptBaptis');
     Route::post('/validasiKL/declinebaptis', [ValidasiKLController::class, 'DeclineBaptis'])->name('validasiKL.DeclineBaptis');
     

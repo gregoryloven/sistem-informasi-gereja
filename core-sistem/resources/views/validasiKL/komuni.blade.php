@@ -60,7 +60,7 @@
                         <td st>{{$d->telepon}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
-                        <td st><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></td>
+                        <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></td>
                         <td st >
                         @if($d->status == "Disetujui KBG")
                             <form action="/validasiKL/acceptkomuni" method="post">
@@ -97,6 +97,14 @@
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}">
                             </div>
                         </div>
                     </div>
@@ -142,7 +150,7 @@
                         <td st>{{$da->telepon}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}}</td>
-                        <td st><img src="{{asset('file_sertifikat/surat_baptis/'.$da->surat_baptis)}}" height='80px'/></td>
+                        <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$da->surat_baptis)}}" height='80px'/></td>
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui Lingkungan') 
                             <div class="alert alert-success" role="alert">
@@ -164,6 +172,14 @@
                             @endif
                         </td>
                     </tr>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$da->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/surat_baptis/'.$da->surat_baptis)}}">
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>
