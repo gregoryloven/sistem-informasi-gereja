@@ -19,6 +19,7 @@ use App\Http\Controllers\PendaftaranBaptisController;
 use App\Http\Controllers\PendaftaranKomuniController;
 use App\Http\Controllers\PendaftaranKrismaController;
 use App\Http\Controllers\ReservasiMisaController;
+use App\Http\Controllers\ReservasiTobatController;
 use App\Http\Controllers\PemindahanKbgController;
 use App\Http\Controllers\ValidasiAdminController;
 use App\Http\Controllers\ValidasiKbgController;
@@ -228,10 +229,14 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
     Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
 
-    //Pendaftaran Krisma
+    //Reservasi Misa
     Route::resource('reservasimisa', ReservasiMisaController::class);
     Route::post('/reservasimisa/PesanTiket', [ReservasiMisaController::class, 'PesanTiket'])->name('reservasimisa.PesanTiket');
 
+    //Reservasi Tobat
+    Route::resource('reservasitobat', ReservasiTobatController::class);
+    Route::post('/reservasitobat/PesanTiket', [ReservasiTobatController::class, 'PesanTiket'])->name('reservasitobat.PesanTiket');
+    Route::post('/reservasitobat/Pembatalan', [ReservasiTobatController::class, 'Pembatalan'])->name('reservasitobat.Pembatalan');
 
     //Validasi Admin
     Route::get('validasiAdminPelayanan', [ValidasiAdminController::class, 'pelayanan'])->name('validasiAdmin.pelayanan');

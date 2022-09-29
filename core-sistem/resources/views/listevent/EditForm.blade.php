@@ -50,7 +50,7 @@
             @if($data->jenis_event == 'Misa' || $data->jenis_event == 'Tobat')
             <div class="form-group">
                 <label >Kuota</label>
-                <input type="text" value="{{$data->kuota}}" class="form-control" id='kuotaa' name='kuotaa' placeholder="Kuota" required>
+                <input type="text" value="{{$data->kuota}}" class="form-control" id='kuotaa' name='kuota' placeholder="Kuota" required>
             </div>
             @endif
       </div>

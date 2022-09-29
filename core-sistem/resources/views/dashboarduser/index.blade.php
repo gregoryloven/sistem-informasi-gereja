@@ -101,9 +101,19 @@
                     <div class="card" style="width: 18rem;">
                         <img src="https://mmc.tirto.id/image/2021/12/25/misa-natal-gereja-katedral-jakarta-antarafoto-1_ratio-16x9.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold">Tiket Reservasi</h5>
+                            <h5 class="card-title font-weight-bold">Reservasi Misa</h5>
                             <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
                             <a href="/reservasimisa" class="btn btn-primary">Gunakan Fitur</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://mmc.tirto.id/image/2021/12/25/misa-natal-gereja-katedral-jakarta-antarafoto-1_ratio-16x9.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold">Reservasi Tobat</h5>
+                            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
+                            <a href="/reservasitobat" class="btn btn-primary">Gunakan Fitur</a>
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ class CreateTobatsTable extends Migration
             $table->id();
             $table->dateTime('jadwal');
             $table->string('lokasi');
+            $table->string('romo');
             $table->integer('kuota');
             $table->timestamps();
         });

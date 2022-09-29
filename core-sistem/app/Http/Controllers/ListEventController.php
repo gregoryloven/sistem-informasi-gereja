@@ -8,6 +8,7 @@ use App\Models\Baptis;
 use App\Models\KomuniPertama;
 use App\Models\Krisma;
 use App\Models\Misa;
+use App\Models\Tobat;
 use App\Models\PendaftaranPetugas;
 use Illuminate\Http\Request;
 use DB;
@@ -23,20 +24,27 @@ class ListEventController extends Controller
     {
         $petugas=PetugasLiturgi::all();
         $data = DB::table('list_events')
-        ->where('list_events.jenis_event', '!=', 'Petugas Liturgi')
+        ->where([['list_events.jenis_event', '!=', 'Petugas Liturgi'],['list_events.jenis_event', '!=', 'Misa'],['list_events.jenis_event', '!=', 'Tobat']])
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','list_events.kuota',
-        'list_events.romo',
+        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.romo'
         ]);
 
         $data2 = DB::table('list_events')
+        ->where('list_events.jenis_event', '=', 'Misa')
+        ->orwhere('list_events.jenis_event', '=', 'Tobat')
+        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','list_events.kuota',
+        'list_events.romo'
+        ]);
+
+        $data3 = DB::table('list_events')
         ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
         ->where('list_events.jenis_event', 'Petugas Liturgi')
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
         'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas'
         ]);
 
-        return view('listevent.index',compact("data", "petugas", "data2"));
+        return view('listevent.index',compact("data", "petugas", "data2", "data3"));
     }
 
     public function store(Request $request)
@@ -83,6 +91,10 @@ class ListEventController extends Controller
         'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo')]);
 
         $misa=Misa::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
+
+        $tobat=Tobat::where('jadwal', '=', $data->jadwal_pelaksanaan)
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
         'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
 

@@ -17,6 +17,7 @@ class CreateMisaUsersTable extends Migration
             $table->unsignedBigInteger('users_id');
             $table->unsignedBigInteger('misas_id');
             $table->string('kode_booking');
+            $table->integer('jumlah_tiket');
             $table->string('status');
             $table->foreign('users_id')->references('id')->on('users');
             $table->foreign('misas_id')->references('id')->on('misas');

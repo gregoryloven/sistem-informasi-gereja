@@ -4,6 +4,7 @@
 <style>
     #myTable td {text-align: center; vertical-align: middle;}
     #myTable2 td {text-align: center; vertical-align: middle;}
+    #myTable3 td {text-align: center; vertical-align: middle;}
 </style>
 @endpush
 
@@ -113,7 +114,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        List Event Sakramen
+        Sesi Sakramen Baptis, Komuni Pertama, Krisma
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -166,11 +167,66 @@
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        List Event Petugas Liturgi
+        Sesi Misa & Tobat
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable2">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Event</th>
+                        <th>Jenis Event</th>
+                        <th>Tanggal Buka Pendaftaran</th>
+                        <th>Tanggal Tutup Pendaftaran</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th>Romo</th>
+                        <th>Kuota</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $i = 0; @endphp
+                    @foreach($data2 as $d)
+                    @php $i += 1; @endphp
+                    <tr>
+                        <td>@php echo $i; @endphp</td>
+                        <td st>{{$d->nama_event}}</td>
+                        <td st>{{$d->jenis_event}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{$d->lokasi}}</td>
+                        <td st>{{$d->romo}}</td>
+                        <td st>{{$d->kuota}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        Sesi Petugas Liturgi
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="myTable3">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -187,7 +243,7 @@
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
-                    @foreach($data2 as $d)
+                    @foreach($data3 as $d)
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
