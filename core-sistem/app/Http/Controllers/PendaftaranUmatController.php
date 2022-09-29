@@ -17,9 +17,14 @@ class PendaftaranUmatController extends Controller
     public function index()
     {
         $ling = Lingkungan::all();
-        $kbg = Kbg::where('lingkungan_id', 1)->get();
+        $kbg = Kbg::all();
 
         return view('pendaftaranumat.index',compact("ling","kbg"));
+    }
+
+    public function showKbg($id)
+    {
+        $kbg = Kbg::where('lingkungan_id', $id)->get();
     }
 
     /**

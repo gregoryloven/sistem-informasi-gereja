@@ -90,7 +90,7 @@
                 </div>  
                 <div class="form-group">
                     <label>Tanggal Pelaksanaan Pelayanan</label>
-                    <input type="datetime-local" class="form-control" name="jadwal"  id="jadwal" required>
+                    <input type="datetime-local" class="form-control" name="jadwal" id="jadwal" min="<?= date('Y-m-d\TH:i'); ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Alamat Pelaksanaan Pelayanan</label>
