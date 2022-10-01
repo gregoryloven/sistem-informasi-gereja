@@ -14,13 +14,9 @@ class CreateTobatUsersTable extends Migration
     public function up()
     {
         Schema::create('tobat_users', function (Blueprint $table) {
-            $table->unsignedBigInteger('users_id');
-            $table->unsignedBigInteger('list_events_id');
             $table->integer('jumlah_tiket');
             $table->string('kode_booking');
             $table->string('status');
-            $table->foreign('users_id')->references('id')->on('users');
-            $table->foreign('list_events_id')->references('id')->on('list_events');
             $table->timestamps();
         });
     }
