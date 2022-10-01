@@ -14,7 +14,7 @@ class AddTobatusersidColumn extends Migration
     public function up()
     {
         Schema::table('tobat_users', function (Blueprint $table) {
-            $table->unsignedBigInteger('users_id')->before('jumlah_tiket');
+            $table->unsignedBigInteger('users_id')->first();
             $table->unsignedBigInteger('list_events_id')->after('users_id');
             $table->foreign('users_id')->references('id')->on('users');
             $table->foreign('list_events_id')->references('id')->on('list_events');

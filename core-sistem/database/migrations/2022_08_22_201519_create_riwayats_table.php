@@ -16,12 +16,14 @@ class CreateRiwayatsTable extends Migration
         Schema::create('riwayats', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('list_event_id');
             $table->integer('event_id');
             $table->string('jenis_event');
             $table->string('status');
             $table->string('alasan_pembatalan')->nullable();
             $table->string('alasan_penolakan')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('list_event_id')->references('id')->on('list_events');
             $table->timestamps();
         });
     }

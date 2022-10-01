@@ -24,6 +24,7 @@ class CreateListEventsTable extends Migration
             $table->string('lokasi');
             $table->string('romo')->nullable();
             $table->string('kuota')->nullable();
+            $table->string('status');
             $table->foreign('petugas_liturgi_id')->references('id')->on('petugas_liturgis');
             $table->timestamps();
         });
