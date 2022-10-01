@@ -75,9 +75,35 @@
                     </ul>
                     <span class="navbar-text">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/dashboarduser">Home</a>
-                            </li> 
+                            @if (Route::has('login'))
+                                @auth
+                                    <li class="nav-item">
+                                        <div class="dropdown dropleft">
+                                            <a class="nav-link"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{ucwords(Auth::user()->name)}}
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
+                                                <a class="dropdown-item" href="{{ url('/user/profile')}}">Profile</a>
+                                                <hr>
+                                                <form method="POST" action="{{ route('logout') }}" x-data>
+                                                    @csrf
+                                                    <x-jet-responsive-nav-link class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"><i class="fa-solid fa-arrow-right-from-bracket"></i> {{ __(' Log Out') }}</x-jet-responsive-nav-link>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </li> 
+                                @else
+                                    <li class="nav-item">
+                                        <a href="{{ route('login') }}" class="nav-link">Log in</a>
+                                    </li> 
+                                @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('register') }}" class="nav-link">Register</a>
+                                    </li> 
+                                @endif
+                                @endauth
+                            @endif
                         </ul>
                     </span>
                     <!-- <span class="navbar-text">
