@@ -71,9 +71,10 @@ Route::domain('localhost')->group(function(){
 });
 
 Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
-    Route::get('/', function ($tenant) {
-        return view('welcome');
-    });
+    // Route::get('/', function ($tenant) {
+    //     return view('welcome');
+    // });
+    Route::get('/', [DashboardUserController::class, 'index']);
 
     Route::get('/sbadmin2', function () {
         return view('layouts.sbadmin2');
@@ -232,6 +233,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //Reservasi Misa
     Route::resource('reservasimisa', ReservasiMisaController::class);
     Route::post('/reservasimisa/PesanTiket', [ReservasiMisaController::class, 'PesanTiket'])->name('reservasimisa.PesanTiket');
+    Route::post('/reservasimisa/Pembatalan', [ReservasiMisaController::class, 'Pembatalan'])->name('reservasimisa.Pembatalan');
 
     //Reservasi Tobat
     Route::resource('reservasitobat', ReservasiTobatController::class);

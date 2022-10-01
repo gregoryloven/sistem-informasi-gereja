@@ -74,12 +74,11 @@
                         <td st>{{$d->romo}}</td>
                         <td st>{{$d->kuota}}</td>
                         <td>
-                            <?php
-                            $datetime = $d->jadwal_pelaksanaan;
-                            $timestamp = strtotime($datetime);
-                            $time = $timestamp - (2 * 60 * 60);
-                            ?>
-                            @if($d->jadwal_pelaksanaan >= $time)
+                            @php
+                            $datetime = strtotime('-2 hours', strtotime($d->jadwal_pelaksanaan));
+                            $cekjam = date('Y-m-d H:i:s', $datetime);
+                            @endphp
+                            @if (date('Y-m-d H:i:s') <= $cekjam)
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalPesan" data-toggle="modal" class="btn btn-xs btn-info" onclick="PesanTiket({{ $d->id }})">Pesan</a>
                             </div>
@@ -120,15 +119,47 @@
                         @php $i += 1; @endphp
                         <tr>
                             <td>@php echo $i; @endphp</td>
-                            <td st>tes</td>
-                            <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                            <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                            <td st>{{$d->nama_event}}</td>
+                            <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                            <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->romo}}</td>
                             <td st>{{$d->jumlah_tiket}}</td>
                             <td st>{{$d->kode_booking}}</td>
                             <td st>{{$d->status}}</td>
-                            <td st>-</td>
+                            <td st>
+                                @if($d->status == "Aktif")
+                                <a href="#modal{{$d->kode_booking}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                                @endif
+                            </td>
+                            <!-- EDIT WITH MODAL -->
+                            <div class="modal fade" id="modal{{$d->kode_booking}}" tabindex="-1" role="basic" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" >
+                                        <form role="form" method="POST" action="{{ url('reservasimisa/Pembatalan') }}" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title">Pembatalan Reservasi Misa</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                @csrf
+                                                <div class="form-body">
+                                                <input type="hidden" name="usersID" value="{{$d->usersID}}">
+                                                <input type="hidden" name="listeventsID" value="{{$d->listeventsID}}">
+                                                <input type="hidden" name="jumlah_tiket" value="{{$d->jumlah_tiket}}">
+                                                <input type="hidden" name="kode_booking" value="{{$d->kode_booking}}">
+                                                <h5> Apakah Anda Yakin Ingin Membatalkan Tiket? <h5>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-info">Submit</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
                 </table>

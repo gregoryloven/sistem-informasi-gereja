@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label >Jumlah Tiket</label>
-                <input type="number" class="form-control" id='jumlah_tiket' name='jumlah_tiket' min="1" value="1" required>
+                <input type="number" class="form-control" id='jumlah_tiket' name='jumlah_tiket' min="1" max="5" value="1" required>
             </div>
         </div>
         <div class="modal-footer">
