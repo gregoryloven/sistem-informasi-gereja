@@ -13,14 +13,14 @@ class CreateTobatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tobats', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('jadwal');
-            $table->string('lokasi');
-            $table->string('romo');
-            $table->integer('kuota');
-            $table->timestamps();
-        });
+        // Schema::create('tobats', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->dateTime('jadwal');
+        //     $table->string('lokasi');
+        //     $table->string('romo');
+        //     $table->integer('kuota');
+        //     $table->timestamps();
+        // });
     }
 
     /**

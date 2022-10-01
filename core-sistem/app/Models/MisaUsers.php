@@ -13,11 +13,11 @@ class MisaUsers extends Model
 
     public function users()
     {
-        return $this->belongsToOne(User::class, 'user_id', 'id');
+        return $this->belongsToOne(User::class, 'users_id', 'id');
     }
 
-    public function misas()
+    public function list_events()
     {
-        return $this->belongsToOne(Misa::class, 'misa_id', 'id');
+        return $this->belongsToOne(ListEvent::class, 'list_events_id', 'id');
     }
 }

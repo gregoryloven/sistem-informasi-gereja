@@ -13,14 +13,14 @@ class CreateMisasTable extends Migration
      */
     public function up()
     {
-        Schema::create('misas', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('jadwal');
-            $table->string('lokasi');
-            $table->integer('kuota');
-            $table->string('romo');
-            $table->timestamps();
-        });
+        // Schema::create('misas', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->dateTime('jadwal');
+        //     $table->string('lokasi');
+        //     $table->integer('kuota');
+        //     $table->string('romo');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -30,6 +30,6 @@ class CreateMisasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('misas');
+        // Schema::dropIfExists('misas');
     }
 }

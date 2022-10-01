@@ -15,12 +15,12 @@ class CreateMisaUsersTable extends Migration
     {
         Schema::create('misa_users', function (Blueprint $table) {
             $table->unsignedBigInteger('users_id');
-            $table->unsignedBigInteger('misas_id');
-            $table->string('kode_booking');
+            $table->unsignedBigInteger('list_events_id');
             $table->integer('jumlah_tiket');
+            $table->string('kode_booking');
             $table->string('status');
             $table->foreign('users_id')->references('id')->on('users');
-            $table->foreign('misas_id')->references('id')->on('misas');
+            $table->foreign('list_events_id')->references('id')->on('list_events');
             $table->timestamps();
         });
     }

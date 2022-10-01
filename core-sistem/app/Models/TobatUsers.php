@@ -16,8 +16,8 @@ class TobatUsers extends Model
         return $this->belongsToOne(User::class, 'user_id', 'id');
     }
 
-    public function tobats()
+    public function list_events()
     {
-        return $this->belongsToOne(Tobat::class, 'tobat_id', 'id');
+        return $this->belongsToOne(ListEvent::class, 'list_events_id', 'id');
     }
 }

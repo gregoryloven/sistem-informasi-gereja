@@ -61,15 +61,15 @@ class User extends Authenticatable
     	return $this->hasMany(KomuniPertama::class, 'user_id', 'id');
     }
 
-    public function misas()
+    public function list_events()
     {
-        return $this->belongsToMany(Misa::class);
+        return $this->belongsToMany(ListEvent::class);
     }
 
-    public function tobats()
-    {
-        return $this->belongsToMany(Tobat::class);
-    }
+    // public function tobats()
+    // {
+    //     return $this->belongsToMany(Tobat::class);
+    // }
 
     public function pengurapanorangsakits()
     {
