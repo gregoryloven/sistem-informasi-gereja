@@ -15,6 +15,7 @@ class CreateUmatsTable extends Migration
     {
         Schema::create('umats', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('nama_lengkap');
             $table->string('hubungan');
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
@@ -24,6 +25,7 @@ class CreateUmatsTable extends Migration
             $table->string('telepon');
             $table->string('status');
             $table->string('foto_ktp');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('lingkungan_id')->references('id')->on('lingkungans');
             $table->foreign('kbg_id')->references('id')->on('kbgs');
             $table->timestamps();

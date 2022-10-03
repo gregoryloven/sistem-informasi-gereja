@@ -66,15 +66,20 @@ class User extends Authenticatable
         return $this->belongsToMany(ListEvent::class);
     }
 
+    public function pengurapan_orang_sakit()
+    {
+        return $this->hasMany(PengurapanOrangSakit::class, 'user_id', 'id');
+    }
+
     // public function tobats()
     // {
     //     return $this->belongsToMany(Tobat::class);
     // }
 
-    public function pengurapanorangsakits()
-    {
-        return $this->belongsToMany(PengurapanOrangSakit::class);
-    }
+    // public function pengurapanorangsakits()
+    // {
+    //     return $this->belongsToMany(PengurapanOrangSakit::class);
+    // }
 
     // RELASI DI LANDLORD (TENANT SAMA USER)
     public function tenant()

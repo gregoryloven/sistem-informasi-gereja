@@ -6,6 +6,7 @@ use App\Models\Umat;
 use App\Models\Lingkungan;
 use App\Models\Kbg;
 use App\Models\User;
+use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -42,12 +43,40 @@ class PendaftaranUmatController extends Controller
         $user->status = "Belum Tervalidasi";
         $user->save();
 
-        return redirect('/pendaftaranumat');
+        return redirect('/pendaftaranumat')->with('status', 'Pendaftaran Umat Lama Berhasil');
     }
 
     public function InputFormBaru(Request $request)
     {
-        return $request->all();
+        $user = new Umat();
+        $user->user_id = Auth::user()->id;
+        $user->nama_lengkap = $request->get("nama_lengkap");
+        $user->hubungan_darah = $request->get("hubungan_darah");
+        $user->jenis_kelamin = $request->get("jenis_kelamin");
+        $user->lingkungan = $request->get("lingkungan");
+        $user->kbg = $request->get("kbg");
+        $user->alamat = $request->get("alamat");
+        $user->telepon = $request->get("telepon");
+        $user->status = "Diproses";
+
+        $file=$request->file('foto_ktp');
+        $imgFolder = 'tanda_pengenal/';
+        $extension = $request->file('foto_ktp')->extension();
+        $imgFile=time()."_".$request->get('nama').".".$extension;
+        $file->move($imgFolder,$imgFile);
+        $user->foto_ktp=$imgFile;
+
+        $user->save();
+
+        // $riwayat = new Riwayat();
+        // $riwayat->user_id = Auth::user()->id;
+        // $riwayat->list_event_id = $request->event_id;
+        // $riwayat->jenis_event =  "Umat Baru";
+        // $riwayat->event_id =  $user->id;
+        // $riwayat->status =  "Diproses";
+        // $riwayat->save();
+
+        return redirect('/pendaftaranumat')->with('status', 'Pendaftaran Umat Baru Berhasil');
     }
 
     public function fetchkbg(Request $request)

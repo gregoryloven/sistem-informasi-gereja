@@ -136,7 +136,7 @@
                 </div> 
                 <div class="form-group">
                 <label >Hubungan Darah</label>
-                    <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
+                    <select class="form-control" id='hubungan_darah' name='hubungan_darah' required>
                         <option value="" disabled selected>Choose</option>
                         <option value="Kepala Keluarga">Kepala Keluarga</option>
                         <option value="Istri">Istri</option>
@@ -178,12 +178,8 @@
                     <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
                 </div>
                 <div class="form-group">
-                    <label >Status</label>
-                    <input type="text" class="form-control" id='status' name='status' placeholder="Status" required>
-                </div>
-                <div class="form-group">
-                    <label>Foto KTP</label>
-                    <input type="file" class="form-control" name="foto_ktp"  id="foto_ktp" placeholder="Foto KTP" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                    <label>Foto KTP / Tanda Pengenal Yang Berisi Informasi Agama</label>
+                    <input type="file" class="form-control" name="foto_ktp"  id="foto_ktp" placeholder="Foto Tanda Pengenal" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
                 <img id="output" src="" width="200px" height="200px">
                 <div class="alert alert-info" role="alert">
