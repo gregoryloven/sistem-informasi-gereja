@@ -42,6 +42,7 @@
             color: #FFF;
         }
     </style>
+    @laravelPWA
 </head>
 
 <body id="page-top">

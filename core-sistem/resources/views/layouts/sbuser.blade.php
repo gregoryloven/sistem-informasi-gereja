@@ -52,7 +52,7 @@
         }
     </style>
     @stack('css2')
-    
+    @laravelPWA
 </head>
 
 <body id="page-top">

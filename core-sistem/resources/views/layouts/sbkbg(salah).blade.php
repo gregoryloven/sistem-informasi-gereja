@@ -24,6 +24,7 @@
     @yield('javascript')
     @yield('customstyle')
     @stack('css')
+    @laravelPWA
 </head>
 
 <body id="page-top">
