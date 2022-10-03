@@ -59,6 +59,7 @@ class ListEventController extends Controller
         $data->lokasi = $request->get('lokasi');
         $data->romo = $request->get('romo');
         $data->kuota = $request->get('kuota');
+        $data->status = "Aktif";
         $data->save();
 
         return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Ditambahkan');
