@@ -41,7 +41,6 @@
             <div class="card-body">
                 <div class="alert alert-success" role="alert">
                     Anda Telah Terdaftar Sebagai Umat Pada Lingkungan & Kbg Berikut!<br>
-    
                 </div>
                 <div class="form-group">
                     <label >Lingkungan</label>
@@ -54,17 +53,13 @@
                 @foreach($umatlama as $d)
                 @if($d->status == 'Tervalidasi') 
                 <div class="alert alert-success" role="alert">
-                    {{$d->status}}<small><b> -- Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}</small>
+                    <b>{{$d->status}}</b><small><b> -- Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}</small>
                 </div>
                 @endif
                 @endforeach
             </div>
             @elseif(Auth::User()->status == 'Belum Tervalidasi')
             <div class="card-body">
-                <div class="alert alert-info" role="alert">
-                    Proses Pendaftaran Umat Pada Lingkungan & Kbg Berikut Sedang DiProses!<br>
-    
-                </div>
                 <div class="form-group">
                     <label >Lingkungan</label>
                     <input type="text" class="form-control" value="{{ Auth::user()->lingkungan->nama_lingkungan }}" disabled>
@@ -76,7 +71,7 @@
                 @foreach($umatlama as $d)
                 @if($d->status == 'Belum Tervalidasi') 
                 <div class="alert alert-info" role="alert">
-                    {{$d->status}}<small><b> -- Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
+                    <b>{{$d->status}}</b><small><b> -- Pendaftaran Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
                 </div>
                 @endif
                 @endforeach
@@ -87,10 +82,9 @@
                 @foreach($umatlama as $d)
                 @if($d->status == 'Ditolak') 
                 <div class="alert alert-danger" role="alert">
-                    {{$d->status}}<br><small><b>Lingkungan:</b> {{$d->lingkungan->nama_lingkungan}}<br> <b>KBG:</b> {{$d->kbg->nama_kbg}}<b><br>
-                        Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}} </small>
+                    <b>DITOLAK</b><br><br><small><b>Lingkungan:</b> {{$d->lingkungan->nama_lingkungan}}<br> <b>KBG:</b> {{$d->kbg->nama_kbg}}<b><br>
+                        Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}<br><br><b>Silahkan Mendaftar Kembali!</b></small>  
                 </div>
-                Silahkan Mendaftar Kembali
                 @endif
                 @endforeach
             @endif
@@ -131,9 +125,6 @@
                     {{-- <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option> --}}
                     {{-- @endforeach --}}
                     </select>
-                </div>   
-                <div class="alert alert-info" role="alert">
-                Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Lama"
                 </div>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
@@ -200,7 +191,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
-            </div>
             @endif
         </div>
     </div>

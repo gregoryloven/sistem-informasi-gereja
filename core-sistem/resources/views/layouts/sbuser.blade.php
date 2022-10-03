@@ -68,7 +68,7 @@
                     <img src="https://i.ibb.co/BC1YQDt/cropped-katedral-logo.png" alt="cropped-katedral-logo" width="100" border="0">
                 </a>     -->
                 @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
-                <h3>{{app('currentTenant')->name}}</h3>
+                <h5>Sistem Informasi Gereja Katolik Paroki {{app('currentTenant')->name}}</h5>
                 @endif
             
                 <div class="collapse navbar-collapse" id="navbarText">
@@ -78,6 +78,9 @@
                         <ul class="navbar-nav mr-auto">
                             @if (Route::has('login'))
                                 @auth
+                                <li class="nav-item">
+                                        <a href="{{ url('/dashboarduser') }}" class="nav-link">Home</a>
+                                    </li> 
                                     <li class="nav-item">
                                         <div class="dropdown dropleft">
                                             <a class="nav-link"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
