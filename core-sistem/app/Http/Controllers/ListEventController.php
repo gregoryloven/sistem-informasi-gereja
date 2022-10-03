@@ -34,9 +34,8 @@ class ListEventController extends Controller
         $data2 = DB::table('list_events')
         ->where('list_events.jenis_event', '=', 'Misa')
         ->orwhere('list_events.jenis_event', '=', 'Tobat')
-        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','list_events.kuota',
-        'list_events.romo', 'list_events.status'
+        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.jadwal_pelaksanaan',
+        'list_events.lokasi','list_events.kuota','list_events.romo', 'list_events.status'
         ]);
 
         $data3 = DB::table('list_events')
@@ -96,13 +95,13 @@ class ListEventController extends Controller
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
         'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo')]);
 
-        // $misa=MisaUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
-        // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
-        // 'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
+        $misa=MisaUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
 
-        // $tobat=TobatUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
-        // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
-        // 'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
+        $tobat=TobatUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
 
         $petugas=PendaftaranPetugas::where('jadwal', '=', $data->jadwal_pelaksanaan)
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 

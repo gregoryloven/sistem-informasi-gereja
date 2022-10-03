@@ -180,8 +180,6 @@
                         <th width="5%">No</th>
                         <th>Nama Event</th>
                         <th>Jenis Event</th>
-                        <th>Tanggal Buka Pendaftaran</th>
-                        <th>Tanggal Tutup Pendaftaran</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
@@ -199,8 +197,6 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_event}}</td>
                         <td st>{{$d->jenis_event}}</td>
-                        <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
-                        <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{$d->lokasi}}</td>
@@ -335,9 +331,11 @@ function CheckJadwalPelaksanaan()
 {
     if($('#tgl_buka_pendaftaran').val() == '' || $('#tgl_tutup_pendaftaran').val() == '')
     {   
-        alert('Pilih Tanggal Buka dan Tutup Pendaftaran Terlebih Dahulu')
-        $('#jadwal_pelaksanaan').val('')
-        
+        if($('#jenis_event').val() != 'Misa' && $('#jenis_event').val() != 'Tobat')
+        {
+            alert('Pilih Tanggal Buka dan Tutup Pendaftaran Terlebih Dahulu')
+            $('#jadwal_pelaksanaan').val('')
+        }
     }
 }
 
@@ -362,15 +360,17 @@ function checkJenisEvent(jenis)
     else if($(jenis).val() == 'Tobat' || $(jenis).val() == 'Misa')
     {
         $('#label_nama_event').show()
-        $('#label_tanggal_buka').show()
-        $('#label_tanggal_tutup').show()
         $('#label_jadwal_pelaksanaan').show()
         $('#label_lokasi').show()
         $('#label_romo').show()
         $('#label_kuota').show()
         $('#label_jenis_petugas').hide()
+        $('#label_tanggal_buka').hide()
+        $('#label_tanggal_tutup').hide()
 
         $('#petugas_liturgi_id').prop('required',false)
+        $('#tgl_buka_pendaftaran').prop('required',false)
+        $('#tgl_tutup_pendaftaran').prop('required',false)
     }
     else
     {
@@ -413,8 +413,11 @@ function CheckJadwalPelaksanaann()
 {
     if($('#tgl_buka_pendaftarann').val() == '' || $('#tgl_tutup_pendaftarann').val() == '')
     {   
-        alert('Pilih Tanggal Buka dan Tutup Pendaftaran Terlebih Dahulu')
-        $('#jadwal_pelaksanaann').val('')
+        if($('#jenis_eventt').val() != 'Misa' && $('#jenis_eventt').val() != 'Tobat')
+        {
+            alert('Pilih Tanggal Buka dan Tutup Pendaftaran Terlebih Dahulu')
+            $('#jadwal_pelaksanaann').val('')
+        }
         
     }
 }

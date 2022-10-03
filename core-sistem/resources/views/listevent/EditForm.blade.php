@@ -25,6 +25,7 @@
                     <option value="Petugas Liturgi">Petugas Liturgi</option>
                 </select>
             </div>
+            @if($data->jenis_event != 'Misa' && $data->jenis_event != 'Tobat')
             <div class="form-group">
                 <label >Tanggal Buka Pendaftaran</label>
                 <input type="date" value="{{$data->tgl_buka_pendaftaran}}" class="form-control" id='tgl_buka_pendaftarann' name='tgl_buka_pendaftaran'  onchange='MinStartDatee(this)' min="<?= date('Y-m-d'); ?>" placeholder="Tanggal Buka Pendaftaran" required>
@@ -33,6 +34,7 @@
                 <label >Tanggal Tutup Pendaftaran</label>
                 <input type="date" value="{{$data->tgl_tutup_pendaftaran}}" class="form-control" id='tgl_tutup_pendaftarann' name='tgl_tutup_pendaftaran'  onchange='CheckEndDatee(this)' placeholder="Tanggal Tutup Pendaftaran" required>
             </div>
+            @endif
             <div class="form-group">
                 <label >Jadwal Pelaksanaan</label>
                 <input type="datetime-local" value="{{$data->jadwal_pelaksanaan}}" class="form-control" id='jadwal_pelaksanaann' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksanaann(this)' placeholder="Jadwal Pelaksanaan" required>
