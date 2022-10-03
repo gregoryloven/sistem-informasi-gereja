@@ -39,28 +39,36 @@ class PendaftaranBaptisController extends Controller
 
     public function OpenForm(Request $request)
     {
-        $id = $request->id;
-        $list = DB::table('list_events')->where('id', $id)->get();
-        $user = DB::table('users')
-            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-            ->where('users.id', Auth::user()->id)
-            ->get();
+        if(Auth::user()->lingkungan_id == null && Auth::user()->kbg_id == null){
+            return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
+        } else {
+            $id = $request->id;
+            $list = DB::table('list_events')->where('id', $id)->get();
+            $user = DB::table('users')
+                ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
+                ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
+                ->where('users.id', Auth::user()->id)
+                ->get();
 
-        return view('pendaftaranbaptis.InputForm',compact("list", "user"));
+            return view('pendaftaranbaptis.InputForm',compact("list", "user"));
+        }
     }
 
     public function OpenFormDewasa(Request $request)
     {
-        $id = $request->id;
-        $list = DB::table('list_events')->where('id', $id)->get();
-        $user = DB::table('users')
-            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-            ->where('users.id', Auth::user()->id)
-            ->get();
+        if(Auth::user()->lingkungan_id == null && Auth::user()->kbg_id == null){
+            return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
+        } else {
+            $id = $request->id;
+            $list = DB::table('list_events')->where('id', $id)->get();
+            $user = DB::table('users')
+                ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
+                ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
+                ->where('users.id', Auth::user()->id)
+                ->get();
 
-        return view('pendaftaranbaptis.InputForm',compact("list", "user"));
+            return view('pendaftaranbaptis.InputForm',compact("list", "user"));
+        }
     }
 
     public function InputForm(Request $request)
