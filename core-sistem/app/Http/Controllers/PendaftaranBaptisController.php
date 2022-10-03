@@ -39,7 +39,7 @@ class PendaftaranBaptisController extends Controller
 
     public function OpenForm(Request $request)
     {
-        if(Auth::user()->lingkungan_id == null && Auth::user()->kbg_id == null){
+        if(Auth::user()->status !== "Tervalidasi"){
             return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
         } else {
             $id = $request->id;
@@ -56,7 +56,7 @@ class PendaftaranBaptisController extends Controller
 
     public function OpenFormDewasa(Request $request)
     {
-        if(Auth::user()->lingkungan_id == null && Auth::user()->kbg_id == null){
+        if(Auth::user()->status !== "Tervalidasi"){
             return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
         } else {
             $id = $request->id;
