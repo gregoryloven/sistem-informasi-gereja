@@ -102,7 +102,7 @@ class PendaftaranKomuniController extends Controller
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
         $riwayat->event_id =  $data->id;
-        $riwayat->jenis_event =  "Komuni Pertama";
+        $riwayat->jenis_event =  $request->get("jenis_event");
         $riwayat->status =  "Dibatalkan";
         $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
         $riwayat->save();

@@ -34,7 +34,7 @@
 
                 <div class="col-md-4 mt-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="https://t-2.tstatic.net/medan/foto/bank/images/PEMBAPTISAN-KRISTEN.jpg" class="card-img-top" alt="...">
+                        <img src="https://i0.wp.com/rubrikkristen.com/wp-content/uploads/2019/10/images-7.jpeg?fit=678%2C452&ssl=1" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Baptis Bayi</h5>
                             <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
@@ -45,7 +45,7 @@
 
                 <div class="col-md-4 mt-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="https://t-2.tstatic.net/medan/foto/bank/images/PEMBAPTISAN-KRISTEN.jpg" class="card-img-top" alt="...">
+                        <img src="https://1.bp.blogspot.com/-dICsh7l5GtE/XNU3rKPRg4I/AAAAAAAABSM/nbBsm-Go42wiI_hTJ14JrnE81p42RohCgCLcBGAs/s1600/baptism.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Baptis Dewasa</h5>
                             <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
@@ -113,7 +113,7 @@
 
                 <div class="col-md-4 mt-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="https://t-2.tstatic.net/medan/foto/bank/images/PEMBAPTISAN-KRISTEN.jpg" class="card-img-top" alt="...">
+                        <img src="https://i0.wp.com/rubrikkristen.com/wp-content/uploads/2019/10/images-7.jpeg?fit=678%2C452&ssl=1" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Baptis Bayi</h5>
                             <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
@@ -124,7 +124,7 @@
 
                 <div class="col-md-4 mt-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="https://t-2.tstatic.net/medan/foto/bank/images/PEMBAPTISAN-KRISTEN.jpg" class="card-img-top" alt="...">
+                        <img src="https://1.bp.blogspot.com/-dICsh7l5GtE/XNU3rKPRg4I/AAAAAAAABSM/nbBsm-Go42wiI_hTJ14JrnE81p42RohCgCLcBGAs/s1600/baptism.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Baptis Dewasa</h5>
                             <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>

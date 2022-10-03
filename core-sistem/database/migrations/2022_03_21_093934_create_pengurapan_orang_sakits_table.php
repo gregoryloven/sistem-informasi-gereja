@@ -15,9 +15,13 @@ class CreatePengurapanOrangSakitsTable extends Migration
     {
         Schema::create('pengurapan_orang_sakits', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('nama_lengkap');
             $table->dateTime('jadwal');
-            $table->string('lokasi');
+            $table->string('alamat');
+            $table->string('telepon');
             $table->string('keterangan');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

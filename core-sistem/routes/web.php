@@ -199,10 +199,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
         //Pendaftaran Umat
         Route::resource('pendaftaranumat', PendaftaranUmatController::class);
-        Route::POST('pendaftaranumat/InputFormLama', [PendaftaranUmatController::class, 'InputFormLama']);
-        Route::POST('pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
-        Route::POST('pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
-        Route::POST('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
+        Route::post('/pendaftaranumat/InputFormLama', [PendaftaranUmatController::class, 'InputFormLama']);
+        Route::post('/pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
+        Route::post('/pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
+        Route::post('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
 
         //Pendaftaran Petugas Liturgi
         Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);

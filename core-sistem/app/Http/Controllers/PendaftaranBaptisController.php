@@ -180,7 +180,7 @@ class PendaftaranBaptisController extends Controller
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
             $riwayat->event_id =  $data->id;
-            $riwayat->jenis_event =  "Baptis Bayi";
+            $riwayat->jenis_event =  $data->jenis;
             $riwayat->status =  "Dibatalkan";
             $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
             $riwayat->save();
@@ -195,7 +195,7 @@ class PendaftaranBaptisController extends Controller
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
             $riwayat->event_id =  $data->id;
-            $riwayat->jenis_event =  "Baptis Dewasa";
+            $riwayat->jenis_event =  $data->jenis;
             $riwayat->status =  "Dibatalkan";
             $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
             $riwayat->save();

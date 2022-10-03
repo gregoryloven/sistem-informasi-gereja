@@ -11,8 +11,13 @@ class PengurapanOrangSakit extends Model
     protected $table = 'pengurapan_orang_sakits';
     protected $primaryKey = 'id';
 
-    public function users()
+    // public function users()
+    // {
+    //     return $this->belongsToMany(User::class);
+    // }
+    
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+    	return $this->belongsTo(User::class, 'user_id');
     }
 }
