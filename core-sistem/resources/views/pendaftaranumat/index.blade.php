@@ -37,10 +37,32 @@
                 Formulir Pendaftaran Umat
             </div>
             
-            @if (Auth::user()->lingkungan_id !==null  && Auth::User()->kbg_id !== null)
+            @if (Auth::User()->status == 'Tervalidasi')
+            <div class="card-body">
+                <div class="alert alert-success" role="alert">
+                    Anda Telah Terdaftar Sebagai Umat Pada Lingkungan & Kbg Berikut!<br>
+    
+                </div>
+                <div class="form-group">
+                    <label >Lingkungan</label>
+                    <input type="text" class="form-control" value="{{ Auth::user()->lingkungan->nama_lingkungan }}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>KBG</label>
+                    <input type="text" class="form-control" value="{{ Auth::user()->kbg->nama_kbg }}" disabled>
+                </div>
+                @foreach($umatlama as $d)
+                @if($d->status == 'Tervalidasi') 
+                <div class="alert alert-success" role="alert">
+                    {{$d->status}}<small><b> -- Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}</small>
+                </div>
+                @endif
+                @endforeach
+            </div>
+            @elseif(Auth::User()->status == 'Belum Tervalidasi')
             <div class="card-body">
                 <div class="alert alert-info" role="alert">
-                    Anda Telah Terdaftar Sebagai Umat Pada Lingkungan & Kbg Berikut!<br>
+                    Proses Pendaftaran Umat Pada Lingkungan & Kbg Berikut Sedang DiProses!<br>
     
                 </div>
                 <div class="form-group">
@@ -56,125 +78,128 @@
                 <div class="alert alert-info" role="alert">
                     {{$d->status}}<small><b> -- Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
                 </div>
-                @elseif($d->status == 'Tervalidasi') 
-                <div class="alert alert-success" role="alert">
-                    {{$d->status}}<small><b> -- Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}</small>
-                </div>
-                @else
-                <div class="alert alert-danger" role="alert">
-                    {{$d->status}}
-                </div>
-                <small><b>Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}
                 @endif
                 @endforeach
             </div>
             @else
             <div class="card-body">
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
-                    <div class="d-flex justify-content-between">
-                        <div class="form-check">
-                            <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatLamaTab" value="umatLama" checked>
-                            <label class="form-check-label" for="umatLamaTab">
-                                Umat Lama
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatBaruTab" value="umatBaru">
-                            <label class="form-check-label" for="umatBaruTab">
-                                Umat Baru
-                            </label>
-                        </div>
+            @if(Auth::User()->lingkungan_id !== null && Auth::User()->kbg_id !== null)
+                @foreach($umatlama as $d)
+                @if($d->status == 'Ditolak') 
+                <div class="alert alert-danger" role="alert">
+                    {{$d->status}}<br><small><b>Lingkungan:</b> {{$d->lingkungan->nama_lingkungan}}<br> <b>KBG:</b> {{$d->kbg->nama_kbg}}<b><br>
+                        Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}} </small>
+                </div>
+                Silahkan Mendaftar Kembali
+                @endif
+                @endforeach
+            @endif
+
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
+                <div class="d-flex justify-content-between">
+                    <div class="form-check">
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatLamaTab" value="umatLama" checked>
+                        <label class="form-check-label" for="umatLamaTab">
+                            Umat Lama
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatBaruTab" value="umatBaru">
+                        <label class="form-check-label" for="umatBaruTab">
+                            Umat Baru
+                        </label>
                     </div>
                 </div>
-                <form id="formLama" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormLama') }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label >Lingkungan</label>
-                        <select class="form-control" id='lingkungan_id_lama' name='lingkungan_id_lama' required>
-                        <option value="" selected>Choose</option>
-                        @foreach($ling as $l)
-                        <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >KBG</label>
-                        <select class="form-control" id='kbg_id_lama' name='kbg_id_lama' required>
+            </div>
+            <form id="formLama" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormLama') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label >Lingkungan</label>
+                    <select class="form-control" id='lingkungan_id_lama' name='lingkungan_id_lama' required>
+                    <option value="" selected>Choose</option>
+                    @foreach($ling as $l)
+                    <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >KBG</label>
+                    <select class="form-control" id='kbg_id_lama' name='kbg_id_lama' required>
+                    <option value="" disabled selected>Choose</option>
+                    {{-- @foreach($kbg as $k) --}}
+                    {{-- <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option> --}}
+                    {{-- @endforeach --}}
+                    </select>
+                </div>   
+                <div class="alert alert-info" role="alert">
+                Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Lama"
+                </div>
+                <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+            </form>
+            <form id="formBaru" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormBaru') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label >Nama Lengkap</label>
+                    <input type="text" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
+                </div> 
+                <div class="form-group">
+                <label >Hubungan Darah</label>
+                    <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
                         <option value="" disabled selected>Choose</option>
-                        {{-- @foreach($kbg as $k) --}}
-                        {{-- <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option> --}}
-                        {{-- @endforeach --}}
-                        </select>
-                    </div>   
-                    <div class="alert alert-info" role="alert">
-                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Lama"
-                    </div>
-                    <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
-                </form>
-                <form id="formBaru" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormBaru') }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label >Nama Lengkap</label>
-                        <input type="text" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
-                    </div> 
-                    <div class="form-group">
-                    <label >Hubungan Darah</label>
-                        <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
-                            <option value="" disabled selected>Choose</option>
-                            <option value="Kepala Keluarga">Kepala Keluarga</option>
-                            <option value="Istri">Istri</option>
-                            <option value="Anak">Anak</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >Jenis Kelamin</label>
-                        <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
-                            <option value="" disabled selected>Choose</option>
-                            <option value="Laki-Laki">Laki-Laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >Lingkungan</label>
-                        <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
+                        <option value="Kepala Keluarga">Kepala Keluarga</option>
+                        <option value="Istri">Istri</option>
+                        <option value="Anak">Anak</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >Jenis Kelamin</label>
+                    <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
                         <option value="" disabled selected>Choose</option>
-                        @foreach($ling as $l)
-                        <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >KBG</label>
-                        <select class="form-control" id='kbg_id' name='kbg_id'>
-                        <option value="" disabled selected>Choose</option>
-                        @foreach($kbg as $k)
-                        <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label >Alamat</label>
-                        <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
-                    </div>
-                    <div class="form-group">
-                        <label >Telepon</label>
-                        <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
-                    </div>
-                    <div class="form-group">
-                        <label >Status</label>
-                        <input type="text" class="form-control" id='status' name='status' placeholder="Status" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Foto KTP</label>
-                        <input type="file" class="form-control" name="foto_ktp"  id="foto_ktp" placeholder="Foto KTP" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
-                    </div>
-                    <img id="output" src="" width="200px" height="200px">
-                    <div class="alert alert-info" role="alert">
-                        Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Baru"
-                    </div>
-                    <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
-                </form>
+                        <option value="Laki-Laki">Laki-Laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >Lingkungan</label>
+                    <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
+                    <option value="" disabled selected>Choose</option>
+                    @foreach($ling as $l)
+                    <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >KBG</label>
+                    <select class="form-control" id='kbg_id' name='kbg_id'>
+                    <option value="" disabled selected>Choose</option>
+                    @foreach($kbg as $k)
+                    <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >Alamat</label>
+                    <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
+                </div>
+                <div class="form-group">
+                    <label >Telepon</label>
+                    <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
+                </div>
+                <div class="form-group">
+                    <label >Status</label>
+                    <input type="text" class="form-control" id='status' name='status' placeholder="Status" required>
+                </div>
+                <div class="form-group">
+                    <label>Foto KTP</label>
+                    <input type="file" class="form-control" name="foto_ktp"  id="foto_ktp" placeholder="Foto KTP" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                </div>
+                <img id="output" src="" width="200px" height="200px">
+                <div class="alert alert-info" role="alert">
+                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Baru"
+                </div>
+                <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+            </form>
             </div>
             @endif
         </div>
