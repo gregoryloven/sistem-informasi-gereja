@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Umat;
 use App\Models\Lingkungan;
 use App\Models\Kbg;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class PendaftaranUmatController extends Controller
 {
@@ -27,6 +29,34 @@ class PendaftaranUmatController extends Controller
         $kbg = Kbg::where('lingkungan_id', $id)->get();
     }
 
+    public function InputFormLama(Request $request)
+    {
+        // return $request->all();
+        $user = User::find( Auth()->user()->id);
+        $user->lingkungan_id = $request->lingkungan_id;
+        $user->kbg_id = $request->kbg_id;
+        $user->save();
+
+        return redirect('/pendaftaranumat');
+    }
+
+    public function InputFormBaru(Request $request)
+    {
+        return $request->all();
+    }
+
+    public function fetchkbg(Request $request)
+    {
+        $kbg = Kbg::where('lingkungan_id', $request->id)->get();
+
+        // $output = '<option value="">Choose</option>';
+        $output = "";
+        foreach($kbg as $o) {
+            $output .= '<option value="'.$o->id.'">'.$o->nama_kbg.'</option>';
+        }
+        echo $output;
+
+    }
     /**
      * Show the form for creating a new resource.
      *
