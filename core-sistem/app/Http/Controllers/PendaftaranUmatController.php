@@ -33,8 +33,8 @@ class PendaftaranUmatController extends Controller
     {
         // return $request->all();
         $user = User::find( Auth()->user()->id);
-        $user->lingkungan_id = $request->lingkungan_id;
-        $user->kbg_id = $request->kbg_id;
+        $user->lingkungan_id = $request->lingkungan_id_lama;
+        $user->kbg_id = $request->kbg_id_lama;
         $user->save();
 
         return redirect('/pendaftaranumat');
