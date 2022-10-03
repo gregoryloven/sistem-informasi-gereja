@@ -203,6 +203,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
         Route::post('/pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
         Route::post('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
+        Route::post('/pendaftaranumat/Pembatalan', [PendaftaranUmatController::class, 'Pembatalan']);
 
         //Pendaftaran Petugas Liturgi
         Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);

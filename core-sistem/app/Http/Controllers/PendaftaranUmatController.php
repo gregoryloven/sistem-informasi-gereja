@@ -26,7 +26,9 @@ class PendaftaranUmatController extends Controller
         ->orwhere([['status', 'Ditolak'], ['id', Auth::user()->id]])
         ->get();
 
-        return view('pendaftaranumat.index',compact("ling","kbg","umatlama"));
+        $umatbaru = Umat::all();
+
+        return view('pendaftaranumat.index',compact("ling","kbg","umatlama","umatbaru"));
     }
 
     public function showKbg($id)
@@ -51,10 +53,10 @@ class PendaftaranUmatController extends Controller
         $user = new Umat();
         $user->user_id = Auth::user()->id;
         $user->nama_lengkap = $request->get("nama_lengkap");
-        $user->hubungan_darah = $request->get("hubungan_darah");
+        $user->hubungan = $request->get("hubungan_darah");
         $user->jenis_kelamin = $request->get("jenis_kelamin");
-        $user->lingkungan = $request->get("lingkungan");
-        $user->kbg = $request->get("kbg");
+        $user->lingkungan_id = $request->get("lingkungan_id_baru");
+        $user->kbg_id = $request->get("kbg_id_baru");
         $user->alamat = $request->get("alamat");
         $user->telepon = $request->get("telepon");
         $user->status = "Diproses";
@@ -91,6 +93,16 @@ class PendaftaranUmatController extends Controller
         echo $output;
 
     }
+
+    public function Pembatalan(Request $request)
+    {
+        $data=User::find($request->id);
+        $data->status = "Dibatalkan";
+        $data->save();
+
+        return redirect()->route('pendaftaranumat.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Umat Lama Telah Dibatalkan');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

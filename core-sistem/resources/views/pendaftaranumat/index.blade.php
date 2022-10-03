@@ -73,6 +73,32 @@
                 <div class="alert alert-info" role="alert">
                     <b>{{$d->status}}</b><small><b> -- Pendaftaran Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
                 </div>
+                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                <!-- EDIT WITH MODAL -->
+                <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" >
+                            <form role="form" method="POST" action="{{ url('pendaftaranumat/Pembatalan') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                    <h4 class="modal-title">Pembatalan Pendaftaran Umat Lama</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @csrf
+                                    <div class="form-body">
+                                    <input type="hidden" name="id" value="{{$d->id}}">
+                                    <h6> Apakah Anda Yakin Ingin Membatalkan Pendaftaran? </h6>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-info">Submit</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 @endif
                 @endforeach
             </div>
@@ -88,6 +114,7 @@
                 @endif
                 @endforeach
             @endif
+            
 
             <div class="form-group">
                 <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
@@ -153,7 +180,7 @@
                 </div>
                 <div class="form-group">
                     <label >Lingkungan</label>
-                    <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
+                    <select class="form-control" id='lingkungan_id_baru' name='lingkungan_id_baru'>
                     <option value="" disabled selected>Choose</option>
                     @foreach($ling as $l)
                     <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
@@ -162,7 +189,7 @@
                 </div>
                 <div class="form-group">
                     <label >KBG</label>
-                    <select class="form-control" id='kbg_id' name='kbg_id'>
+                    <select class="form-control" id='kbg_id_baru' name='kbg_id_baru'>
                     <option value="" disabled selected>Choose</option>
                     @foreach($kbg as $k)
                     <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option>
@@ -185,12 +212,97 @@
                 <div class="alert alert-info" role="alert">
                     Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Baru"
                 </div>
+                <input type="hidden" value="" id='event_id' name='event_id'>
+                <input type="hidden" value="" id='jenis_event' name='jenis_event'>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
             @endif
         </div>
     </div>
 </div>
+<div class="row mb-4 mt-4">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                Riwayat Pendaftaran Umat Baru
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="myTable">
+                        <thead>
+                            <tr style="text-align: center;">
+                            <th width="5%">No</th>
+                            <th>Nama Lengkap</th>
+                            <th>Hubungan Darah</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Lingkungan</th>
+                            <th>KBG</th>
+                            <th>Alamat</th>
+                            <th>Telepon</th>
+                            <th>Status</th>
+                            <th>Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $i = 0; @endphp
+                            @foreach($umatbaru as $d)
+                            @php $i += 1; @endphp
+                            <tr>
+                                <td>@php echo $i; @endphp</td>
+                                <td st>{{$d->nama_lengkap}}</td>
+                                <td st>{{$d->hubungan}}</td>
+                                <td st>{{$d->jenis_kelamin}}</td>
+                                <td st>{{$d->lingkungan_id}}</td>
+                                <td st>{{$d->kbg_id}}</td>
+                                <td st>{{$d->alamat}}</td>
+                                <td st>{{$d->telepon}}</td>
+                                <td st>
+                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                    
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-info" onclick="detail({{ $d->id }})">Lacak</a>
+                                    
+                                    @else
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
+                                    @endif
+                                </td>
+                                <td st>
+                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG")
+                                    <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                                    @endif
+                                </td>
+                            </tr>
+                            <!-- EDIT WITH MODAL
+                            <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" >
+                                        <form role="form" method="POST" action="{{ url('pendaftaranbaptis/Pembatalan') }}" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title">Pembatalan Baptis Bayi</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                @csrf
+                                                <label>Alasan Pembatalan:</label>
+                                                <input type="hidden" name="id" value="{{$d->id}}">
+                                                <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-info">Submit</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> -->
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<div>
 <!-- /.container-fluid -->
 @endsection
 
