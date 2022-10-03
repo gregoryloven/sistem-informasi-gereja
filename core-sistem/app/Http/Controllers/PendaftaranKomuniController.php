@@ -29,7 +29,7 @@ class PendaftaranKomuniController extends Controller
     public function OpenForm(Request $request)
     {
         // $this->authorize('lingkungan-permission');
-        if(Auth::user()->lingkungan_id == null && Auth::user()->kbg_id == null){
+        if(Auth::user()->status !== "Tervalidasi"){
             return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
         } else {
             $id = $request->id;
@@ -73,6 +73,7 @@ class PendaftaranKomuniController extends Controller
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id = $request->event_id;
         $riwayat->jenis_event =  $request->get("jenis_event");
         $riwayat->event_id =  $data->id;
         $riwayat->status =  "Diproses";

@@ -50,15 +50,13 @@ class ReservasiTobatController extends Controller
         $listevent = ListEvent::where('id', $request->get('id'))->first();
         if($listevent->kuota > $request->get('jumlah_tiket')){
             $cek_maks_pesan = TobatUsers::where('users_id', Auth::user()->id)->where('status', 'Aktif')->get();
-            $maks_pesan = 0;
+            $maks_pesan = $request->get('jumlah_tiket');
             foreach($cek_maks_pesan as $cek){
                 $maks_pesan += $cek->jumlah_tiket;
             }
             // return $maks_pesan;
 
-            if($maks_pesan >= 5){
-                return redirect()->back()->with('error', 'Maaf, Anda sudah melebihi batas maksimal pesan tiket. Maksimal 5 Tiket');
-            } else {
+            if($maks_pesan <= 5){
                 $listevent->kuota -= $request->get('jumlah_tiket');
                 $listevent->save();
     
@@ -69,6 +67,8 @@ class ReservasiTobatController extends Controller
                 $tobats->jumlah_tiket = $request->get('jumlah_tiket');
                 $tobats->status = "Aktif";
                 $tobats->save();
+            } else {
+                return redirect()->back()->with('error', 'Maaf, Anda sudah melebihi batas maksimal pesan tiket. Maksimal 5 Tiket');
             }
 
         } else {

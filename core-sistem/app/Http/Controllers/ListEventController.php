@@ -148,18 +148,63 @@ class ListEventController extends Controller
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
             }
         }else if($data->jenis_event == "Baptis Dewasa"){
-            
+            $baptis=Baptis::where([['jenis', '=', $data->jenis_event], ['jadwal', '=', $data->jadwal_pelaksanaan]])->get();
+            if($baptis->count() > 0){
+                $data->status = "Dibatalkan";
+                $data->save();
+                foreach($baptis as $b){
+                    $b->status = "Dibatalkan";
+                    $b->save();
+                }
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->first();
+                $riwayat->status = "Dibatalkan";
+                $riwayat->save();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
+            } else {
+                $data->delete();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
+            }
         }else if($data->jenis_event == "Komuni Pertama"){
-
+            $komunipertama=KomuniPertama::where('jadwal', '=', $data->jadwal_pelaksanaan)->get();
+            if($komunipertama->count() > 0){
+                $data->status = "Dibatalkan";
+                $data->save();
+                foreach($komunipertama as $k){
+                    $k->status = "Dibatalkan";
+                    $k->save();
+                }
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->first();
+                $riwayat->status = "Dibatalkan";
+                $riwayat->save();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
+            } else {
+                $data->delete();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
+            }
         }else if($data->jenis_event == "Krisma"){
-
+            $krisma=Krisma::where('jadwal', '=', $data->jadwal_pelaksanaan)->get();
+            if($krisma->count() > 0){
+                $data->status = "Dibatalkan";
+                $data->save();
+                foreach($krisma as $k){
+                    $k->status = "Dibatalkan";
+                    $k->save();
+                }
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->first();
+                $riwayat->status = "Dibatalkan";
+                $riwayat->save();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
+            } else {
+                $data->delete();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
+            }
         }else if($data->jenis_event == "Misa"){
             $misa=MisaUsers::where('list_events_id', $data->id)->get();
             if($misa->count() > 0){
                 $data->status = "Dibatalkan";
                 $data->save();
                 foreach($misa as $b){
-                    $tobats = DB::table('tobat_users')->where('list_events_id', $b->list_events_id)->update(['status' => 'Dibatalkan']);
+                    $misas = DB::table('misa_users')->where('list_events_id', $b->list_events_id)->update(['status' => 'Dibatalkan']);
                 }
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
             } else {

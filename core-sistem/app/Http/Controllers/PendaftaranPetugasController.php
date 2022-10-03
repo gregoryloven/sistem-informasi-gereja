@@ -37,7 +37,7 @@ class PendaftaranPetugasController extends Controller
 
     public function OpenForm(Request $request)
     {
-        if(Auth::user()->lingkungan_id == null && Auth::user()->kbg_id == null){
+        if(Auth::user()->status !== "Tervalidasi"){
             return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
         } else {
             $id = $request->id;
@@ -75,6 +75,7 @@ class PendaftaranPetugasController extends Controller
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id = $request->event_id;
         $riwayat->event_id =  $data->id;
         $riwayat->jenis_event =  $request->get("jenis_event");
         $riwayat->status =  "Diproses";
