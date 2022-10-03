@@ -187,62 +187,66 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/pengurapansakits/EditForm', [PengurapanOrangSakitController::class, 'EditForm'])->name('pengurapansakits.EditForm');
     Route::get('/pengurapansakits/DetailPengurapan/{id}', [PengurapanOrangSakitController::class, 'show'])->name('pengurapansakits.DetailTobat');
 
-    //Permohonan Pelayanan
-    Route::resource('pelayananlainnya', PelayananLainnyaController::class);
-    Route::post('/pelayananlainnya/InputForm', [PelayananLainnyaController::class, 'InputForm'])->name('pelayananlainnya.InputForm');
-    Route::post('/pelayananlainnya/InputFormAll', [PelayananLainnyaController::class, 'InputFormAll'])->name('pelayananlainnya.InputFormAll');
-    Route::post('/pelayananlainnya/Pembatalan', [PelayananLainnyaController::class, 'Pembatalan'])->name('pelayananlainnya.Pembatalan');
-    Route::post('/pelayananlainnya/detail', [PelayananLainnyaController::class, 'detail'])->name('pelayananlainnya.detail');
+    
+    // MIDDLEWARE AUTH LOGIN
+    Route::middleware(['auth'])->group(function(){
+        //Permohonan Pelayanan
+        Route::resource('pelayananlainnya', PelayananLainnyaController::class);
+        Route::post('/pelayananlainnya/InputForm', [PelayananLainnyaController::class, 'InputForm'])->name('pelayananlainnya.InputForm');
+        Route::post('/pelayananlainnya/InputFormAll', [PelayananLainnyaController::class, 'InputFormAll'])->name('pelayananlainnya.InputFormAll');
+        Route::post('/pelayananlainnya/Pembatalan', [PelayananLainnyaController::class, 'Pembatalan'])->name('pelayananlainnya.Pembatalan');
+        Route::post('/pelayananlainnya/detail', [PelayananLainnyaController::class, 'detail'])->name('pelayananlainnya.detail');
 
-    //Pendaftaran Umat
-    Route::resource('pendaftaranumat', PendaftaranUmatController::class);
-    Route::POST('pendaftaranumat/InputFormLama', [PendaftaranUmatController::class, 'InputFormLama']);
-    Route::POST('pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
-    Route::POST('pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
-    Route::POST('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
+        //Pendaftaran Umat
+        Route::resource('pendaftaranumat', PendaftaranUmatController::class);
+        Route::POST('pendaftaranumat/InputFormLama', [PendaftaranUmatController::class, 'InputFormLama']);
+        Route::POST('pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
+        Route::POST('pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
+        Route::POST('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
 
-    //Pendaftaran Petugas Liturgi
-    Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);
-    Route::get('/pendaftaranpetugas/OpenForm/{id}', [PendaftaranPetugasController::class, 'OpenForm'])->name('pendaftaranpetugas.OpenForm');
-    Route::post('/pendaftaranpetugas/InputForm', [PendaftaranPetugasController::class, 'InputForm'])->name('pendaftaranpetugas.InputForm');
-    Route::post('/pendaftaranpetugas/Pembatalan', [PendaftaranPetugasController::class, 'Pembatalan'])->name('pendaftaranpetugas.Pembatalan');
-    Route::post('/pendaftaranpetugas/detail', [PendaftaranPetugasController::class, 'detail'])->name('pendaftaranpetugas.detail');
+        //Pendaftaran Petugas Liturgi
+        Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);
+        Route::get('/pendaftaranpetugas/OpenForm/{id}', [PendaftaranPetugasController::class, 'OpenForm'])->name('pendaftaranpetugas.OpenForm');
+        Route::post('/pendaftaranpetugas/InputForm', [PendaftaranPetugasController::class, 'InputForm'])->name('pendaftaranpetugas.InputForm');
+        Route::post('/pendaftaranpetugas/Pembatalan', [PendaftaranPetugasController::class, 'Pembatalan'])->name('pendaftaranpetugas.Pembatalan');
+        Route::post('/pendaftaranpetugas/detail', [PendaftaranPetugasController::class, 'detail'])->name('pendaftaranpetugas.detail');
 
-    //Pendaftaran Baptis Bayi
-    Route::resource('pendaftaranbaptis', PendaftaranBaptisController::class);
-    Route::post('/pendaftaranbaptis/InputForm', [PendaftaranBaptisController::class, 'InputForm'])->name('pendaftaranbaptis.InputForm');
-    Route::get('/pendaftaranbaptis/OpenForm/{id}', [PendaftaranBaptisController::class, 'OpenForm'])->name('pendaftaranbaptis.OpenForm');
-    Route::post('/pendaftaranbaptis/Pembatalan', [PendaftaranBaptisController::class, 'Pembatalan'])->name('pendaftaranbaptis.Pembatalan');
-    Route::post('/pendaftaranbaptis/detail', [PendaftaranBaptisController::class, 'detail'])->name('pendaftaranbaptis.detail');
+        //Pendaftaran Baptis Bayi
+        Route::resource('pendaftaranbaptis', PendaftaranBaptisController::class);
+        Route::post('/pendaftaranbaptis/InputForm', [PendaftaranBaptisController::class, 'InputForm'])->name('pendaftaranbaptis.InputForm');
+        Route::get('/pendaftaranbaptis/OpenForm/{id}', [PendaftaranBaptisController::class, 'OpenForm'])->name('pendaftaranbaptis.OpenForm');
+        Route::post('/pendaftaranbaptis/Pembatalan', [PendaftaranBaptisController::class, 'Pembatalan'])->name('pendaftaranbaptis.Pembatalan');
+        Route::post('/pendaftaranbaptis/detail', [PendaftaranBaptisController::class, 'detail'])->name('pendaftaranbaptis.detail');
 
-    //Pendaftaran Baptis Dewasa
-    Route::get('pendaftaranbaptisdewasa', [PendaftaranBaptisController::class, 'indexDewasa'])->name('pendaftaranbaptis.indexDewasa');
-    Route::post('/pendaftaranbaptis/InputFormDewasa', [PendaftaranBaptisController::class, 'InputFormDewasa'])->name('pendaftaranbaptis.InputFormDewasa');
-    Route::get('/pendaftaranbaptis/OpenFormDewasa/{id}', [PendaftaranBaptisController::class, 'OpenFormDewasa'])->name('pendaftaranbaptis.OpenFormDewasa');
-    Route::post('/pendaftaranbaptis/detailDewasa', [PendaftaranBaptisController::class, 'detailDewasa'])->name('pendaftaranbaptis.detailDewasa');
+        //Pendaftaran Baptis Dewasa
+        Route::get('pendaftaranbaptisdewasa', [PendaftaranBaptisController::class, 'indexDewasa'])->name('pendaftaranbaptis.indexDewasa');
+        Route::post('/pendaftaranbaptis/InputFormDewasa', [PendaftaranBaptisController::class, 'InputFormDewasa'])->name('pendaftaranbaptis.InputFormDewasa');
+        Route::get('/pendaftaranbaptis/OpenFormDewasa/{id}', [PendaftaranBaptisController::class, 'OpenFormDewasa'])->name('pendaftaranbaptis.OpenFormDewasa');
+        Route::post('/pendaftaranbaptis/detailDewasa', [PendaftaranBaptisController::class, 'detailDewasa'])->name('pendaftaranbaptis.detailDewasa');
 
-    //Pendaftaran Komuni
-    Route::resource('pendaftarankomuni', PendaftaranKomuniController::class);
-    Route::post('/pendaftarankomuni/InputForm', [PendaftaranKomuniController::class, 'InputForm'])->name('pendaftarankomuni.InputForm');
-    Route::get('/pendaftarankomuni/OpenForm/{id}', [PendaftaranKomuniController::class, 'OpenForm'])->name('pendaftarankomuni.OpenForm');
-    Route::post('/pendaftarankomuni/detail', [PendaftaranKomuniController::class, 'detail'])->name('pendaftarankomuni.detail');
+        //Pendaftaran Komuni
+        Route::resource('pendaftarankomuni', PendaftaranKomuniController::class);
+        Route::post('/pendaftarankomuni/InputForm', [PendaftaranKomuniController::class, 'InputForm'])->name('pendaftarankomuni.InputForm');
+        Route::get('/pendaftarankomuni/OpenForm/{id}', [PendaftaranKomuniController::class, 'OpenForm'])->name('pendaftarankomuni.OpenForm');
+        Route::post('/pendaftarankomuni/detail', [PendaftaranKomuniController::class, 'detail'])->name('pendaftarankomuni.detail');
 
-    //Pendaftaran Krisma
-    Route::resource('pendaftarankrisma', PendaftaranKrismaController::class);
-    Route::post('/pendaftarankrisma/InputFormSetempat', [PendaftaranKrismaController::class, 'InputFormSetempat'])->name('pendaftarankrisma.InputFormSetempat');
-    Route::post('/pendaftarankrisma/InputFormLintas', [PendaftaranKrismaController::class, 'InputFormLintas'])->name('pendaftarankrisma.InputFormLintas');
-    Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
-    Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
+        //Pendaftaran Krisma
+        Route::resource('pendaftarankrisma', PendaftaranKrismaController::class);
+        Route::post('/pendaftarankrisma/InputFormSetempat', [PendaftaranKrismaController::class, 'InputFormSetempat'])->name('pendaftarankrisma.InputFormSetempat');
+        Route::post('/pendaftarankrisma/InputFormLintas', [PendaftaranKrismaController::class, 'InputFormLintas'])->name('pendaftarankrisma.InputFormLintas');
+        Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
+        Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
 
-    //Reservasi Misa
-    Route::resource('reservasimisa', ReservasiMisaController::class);
-    Route::post('/reservasimisa/PesanTiket', [ReservasiMisaController::class, 'PesanTiket'])->name('reservasimisa.PesanTiket');
-    Route::post('/reservasimisa/Pembatalan', [ReservasiMisaController::class, 'Pembatalan'])->name('reservasimisa.Pembatalan');
+        //Reservasi Misa
+        Route::resource('reservasimisa', ReservasiMisaController::class);
+        Route::post('/reservasimisa/PesanTiket', [ReservasiMisaController::class, 'PesanTiket'])->name('reservasimisa.PesanTiket');
+        Route::post('/reservasimisa/Pembatalan', [ReservasiMisaController::class, 'Pembatalan'])->name('reservasimisa.Pembatalan');
 
-    //Reservasi Tobat
-    Route::resource('reservasitobat', ReservasiTobatController::class);
-    Route::post('/reservasitobat/PesanTiket', [ReservasiTobatController::class, 'PesanTiket'])->name('reservasitobat.PesanTiket');
-    Route::post('/reservasitobat/Pembatalan', [ReservasiTobatController::class, 'Pembatalan'])->name('reservasitobat.Pembatalan');
+        //Reservasi Tobat
+        Route::resource('reservasitobat', ReservasiTobatController::class);
+        Route::post('/reservasitobat/PesanTiket', [ReservasiTobatController::class, 'PesanTiket'])->name('reservasitobat.PesanTiket');
+        Route::post('/reservasitobat/Pembatalan', [ReservasiTobatController::class, 'Pembatalan'])->name('reservasitobat.Pembatalan');
+    });
 
     //Validasi Admin
     Route::get('validasiAdminPelayanan', [ValidasiAdminController::class, 'pelayanan'])->name('validasiAdmin.pelayanan');

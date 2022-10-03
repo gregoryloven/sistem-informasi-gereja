@@ -37,22 +37,26 @@ class PendaftaranPetugasController extends Controller
 
     public function OpenForm(Request $request)
     {
-        $id = $request->id;
+        if(Auth::user()->lingkungan_id == null && Auth::user()->kbg_id == null){
+            return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
+        } else {
+            $id = $request->id;
 
-        $list = DB::table('list_events')
-        ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
-        ->where([['list_events.jenis_event', 'Petugas Liturgi'], ['list_events.id', $id]])
-        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas'
-        ]);
+            $list = DB::table('list_events')
+            ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
+            ->where([['list_events.jenis_event', 'Petugas Liturgi'], ['list_events.id', $id]])
+            ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+            'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas'
+            ]);
 
-        $user = DB::table('users')
-            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-            ->where('users.id', Auth::user()->id)
-            ->get();
+            $user = DB::table('users')
+                ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
+                ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
+                ->where('users.id', Auth::user()->id)
+                ->get();
 
-        return view('pendaftaranpetugas.InputForm',compact("list", "user"));
+            return view('pendaftaranpetugas.InputForm',compact("list", "user"));
+        }
     }
 
     public function InputForm(Request $request)

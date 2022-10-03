@@ -28,17 +28,21 @@ class PendaftaranKomuniController extends Controller
 
     public function OpenForm(Request $request)
     {
-        $this->authorize('lingkungan-permission');
-        $id = $request->id;
+        // $this->authorize('lingkungan-permission');
+        if(Auth::user()->lingkungan_id == null && Auth::user()->kbg_id == null){
+            return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
+        } else {
+            $id = $request->id;
         
-        $list = DB::table('list_events')->where('id', $id)->get();
-        $user = DB::table('users')
-            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-            ->where('users.id', Auth::user()->id)
-            ->get();
-
-        return view('pendaftarankomuni.InputForm',compact("list", "user"));
+            $list = DB::table('list_events')->where('id', $id)->get();
+            $user = DB::table('users')
+                ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
+                ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
+                ->where('users.id', Auth::user()->id)
+                ->get();
+    
+            return view('pendaftarankomuni.InputForm',compact("list", "user"));
+        }
     }
 
     public function InputForm(Request $request)
