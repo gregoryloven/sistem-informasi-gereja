@@ -21,11 +21,15 @@ class PelayananLainnyaController extends Controller
     {
         $pelayanan = PelayananLainnya::all();
         $data = PendaftaranPelayananLainnya::where('user_id', Auth::user()->id)->get();
-        $user = DB::table('users')
+        if (Auth::user()->status !== "Tervalidasi") {
+            $user = [];
+        } else {
+            $user = DB::table('users')
             ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
             ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
             ->where('users.id', Auth::user()->id)
             ->get();
+        }
         $riwayat = Riwayat::all();
 
         if(optional(Auth::user())->id){
@@ -37,6 +41,7 @@ class PelayananLainnyaController extends Controller
 
     public function InputForm(Request $request)
     {
+        // return $request->all();
         $data = new PendaftaranPelayananLainnya;
         $data->user_id =  Auth::user()->id;
         $data->nama_lengkap = $request->get("nama_lengkap");
@@ -52,12 +57,14 @@ class PelayananLainnyaController extends Controller
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id = $request->event_id;
         $riwayat->event_id =  $data->id;
         $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Diproses";
         $riwayat->save();
 
         return redirect()->route('pelayananlainnya.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Pelayanan Berhasil');
+        
     }
 
     public function detail(Request $request)

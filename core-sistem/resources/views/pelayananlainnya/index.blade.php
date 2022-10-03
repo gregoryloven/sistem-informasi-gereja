@@ -68,6 +68,11 @@
             <div class="card-body">
             <form id="formIndividu" class="mb-2" method="post" action="/pelayananlainnya/InputForm">
             @csrf
+            @if (empty($user))
+            <div class="alert alert-info" role="alert">
+                Anda Belum Melakukan Pendaftaran Umat atau Proses Pendaftaran Umat Pada Lingkungan & Kbg Sedang Diproses!
+            </div>
+            @else
                 <div class="form-group">
                     <label>Nama Lengkap</label>
                     <input type="text" class="form-control" value="{{$user[0]->nama_lengkap}}" name="nama_lengkap" id="nama_lengkap" required></textarea>
@@ -108,6 +113,7 @@
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Pelayanan"
                 </div>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+                @endif
             </form>
             </div>
         </div>
