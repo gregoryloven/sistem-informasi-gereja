@@ -65,10 +65,11 @@ class PendaftaranBaptisController extends Controller
 
     public function InputForm(Request $request)
     {
-        $data = new Baptis();
-
-        if($data->jenis == "Baptis Bayi")
+        
+        // return $request->all();
+        if($request->jenis == "Baptis Bayi")
         {
+            $data = new Baptis();
             $data->user_id = Auth::user()->id;
             $data->nama_lengkap = $request->get("nama_lengkap");
             $data->tempat_lahir = $request->get("tempat_lahir");
@@ -89,6 +90,7 @@ class PendaftaranBaptisController extends Controller
 
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id = $request->event_id;
             $riwayat->jenis_event =  $data->jenis;
             $riwayat->event_id =  $data->id;
             $riwayat->status =  "Diproses";
@@ -98,6 +100,7 @@ class PendaftaranBaptisController extends Controller
         }
         else
         {
+            $data = new Baptis();
             $data->user_id = Auth::user()->id;
             $data->nama_lengkap = $request->get("nama_lengkap");
             $data->tempat_lahir = $request->get("tempat_lahir");

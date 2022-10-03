@@ -7,9 +7,10 @@ use App\Models\PetugasLiturgi;
 use App\Models\Baptis;
 use App\Models\KomuniPertama;
 use App\Models\Krisma;
-use App\Models\Misa;
-use App\Models\Tobat;
+use App\Models\MisaUsers;
+use App\Models\TobatUsers;
 use App\Models\PendaftaranPetugas;
+use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use DB;
 
@@ -26,7 +27,8 @@ class ListEventController extends Controller
         $data = DB::table('list_events')
         ->where([['list_events.jenis_event', '!=', 'Petugas Liturgi'],['list_events.jenis_event', '!=', 'Misa'],['list_events.jenis_event', '!=', 'Tobat']])
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.romo'
+        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.romo',
+        'list_events.status'
         ]);
 
         $data2 = DB::table('list_events')
@@ -34,15 +36,18 @@ class ListEventController extends Controller
         ->orwhere('list_events.jenis_event', '=', 'Tobat')
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
         'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','list_events.kuota',
-        'list_events.romo'
+        'list_events.romo', 'list_events.status'
         ]);
 
         $data3 = DB::table('list_events')
         ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
         ->where('list_events.jenis_event', 'Petugas Liturgi')
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas'
+        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas',
+        'list_events.status'
         ]);
+
+        // dd($data);
 
         return view('listevent.index',compact("data", "petugas", "data2", "data3"));
     }
@@ -59,6 +64,7 @@ class ListEventController extends Controller
         $data->lokasi = $request->get('lokasi');
         $data->romo = $request->get('romo');
         $data->kuota = $request->get('kuota');
+        $data->status = "Aktif";
         $data->save();
 
         return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Ditambahkan');
@@ -90,13 +96,13 @@ class ListEventController extends Controller
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
         'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo')]);
 
-        $misa=Misa::where('jadwal', '=', $data->jadwal_pelaksanaan)
-        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
-        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
+        // $misa=MisaUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        // 'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
 
-        $tobat=Tobat::where('jadwal', '=', $data->jadwal_pelaksanaan)
-        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
-        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
+        // $tobat=TobatUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        // 'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
 
         $petugas=PendaftaranPetugas::where('jadwal', '=', $data->jadwal_pelaksanaan)
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
@@ -120,17 +126,59 @@ class ListEventController extends Controller
 
     public function destroy(Request $request)
     {
+        // return $request->all();
         $data=ListEvent::find($request->id);
-        try
-        {
-            $data->delete();
-            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data List Event Berhasil Dihapus');
-        
-        }
-        catch(\Exception $e)
-        {
-            $data = "Gagal Menghapus Data List Event";
-            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+        // return $data;
+
+        if($data->jenis_event == "Baptis Bayi"){
+            $baptis=Baptis::where([['jenis', '=', $data->jenis_event], ['jadwal', '=', $data->jadwal_pelaksanaan]])->get();
+            if($baptis->count() > 0){
+                $data->status = "Dibatalkan";
+                $data->save();
+                foreach($baptis as $b){
+                    $b->status = "Dibatalkan";
+                    $b->save();
+                }
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->first();
+                $riwayat->status = "Dibatalkan";
+                $riwayat->save();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
+            } else {
+                $data->delete();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
+            }
+        }else if($data->jenis_event == "Baptis Dewasa"){
+            
+        }else if($data->jenis_event == "Komuni Pertama"){
+
+        }else if($data->jenis_event == "Krisma"){
+
+        }else if($data->jenis_event == "Misa"){
+            $misa=MisaUsers::where('list_events_id', $data->id)->get();
+            if($misa->count() > 0){
+                $data->status = "Dibatalkan";
+                $data->save();
+                foreach($misa as $b){
+                    $tobats = DB::table('tobat_users')->where('list_events_id', $b->list_events_id)->update(['status' => 'Dibatalkan']);
+                }
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
+            } else {
+                $data->delete();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
+            }
+        }else if($data->jenis_event == "Tobat"){
+            $tobat=TobatUsers::where('list_events_id', $data->id)->get();
+            if($tobat->count() > 0){
+                $data->status = "Dibatalkan";
+                $data->save();
+                foreach($tobat as $b){
+                    $tobats = DB::table('tobat_users')->where('list_events_id', $b->list_events_id)->update(['status' => 'Dibatalkan']);
+                }
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
+            } else {
+                $data->delete();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
+            }
         }
     }
 

@@ -130,6 +130,7 @@
                         <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
                         <th>Romo</th>
+                        <th>Status</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -147,12 +148,14 @@
                         <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->romo}}</td>
+                        <td st><div class="alert alert-success">{{$d->status}}</div></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
                                 <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')
+                                    <input type="hidden" class="form-control" id='idbaptis' name='idbaptis' placeholder="Type your name" value="{{$d->id}}">
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                     <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
                                 </form>
@@ -184,6 +187,7 @@
                         <th>Lokasi</th>
                         <th>Romo</th>
                         <th>Kuota</th>
+                        <th>Status</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -202,6 +206,7 @@
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->romo}}</td>
                         <td st>{{$d->kuota}}</td>
+                        <td st><div class="alert alert-success">{{$d->status}}</div></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
@@ -238,6 +243,7 @@
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
+                        <th>Status</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -255,6 +261,7 @@
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{$d->lokasi}}</td>
+                        <td st><div class=" alert alert-success">{{$d->status}}</div></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
