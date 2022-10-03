@@ -196,6 +196,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //Pendaftaran Umat
     Route::resource('pendaftaranumat', PendaftaranUmatController::class);
+    Route::POST('pendaftaranumat/InputFormLama', [PendaftaranUmatController::class, 'InputFormLama']);
+    Route::POST('pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
+    Route::POST('pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
+    Route::POST('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
 
     //Pendaftaran Petugas Liturgi
     Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);
@@ -272,7 +276,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     // validasi Kbg
     Route::get('validasiKbgPelayanan', [ValidasiKbgController::class, 'pelayanan'])->name('validasiKbg.pelayanan');
     Route::post('/validasiKbg/acceptpelayanan', [ValidasiKbgController::class, 'AcceptPelayanan'])->name('validasiKbg.AcceptPelayanan');
-    Route::post('/validasiKbg/declinepelayanan', [ValidasiKbgController::class, 'DeclinePelayanan'])->name('validasiAdmin.DeclinePelayanan');
+    Route::post('/validasiKbg/declinepelayanan', [ValidasiKbgController::class, 'DeclinePelayanan'])->name('validasiKbg.DeclinePelayanan');
 
     Route::get('validasiKbgBaptis', [ValidasiKbgController::class, 'baptis'])->name('validasiKbg.baptis');
     Route::get('validasiKbgBaptisDewasa', [ValidasiKbgController::class, 'baptisDewasa'])->name('validasiKbg.baptisDewasa');

@@ -106,7 +106,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('/sbadmin2')->with('status', 'Daftar User Berhasil');
+        return redirect('/')->with('status', 'Daftar User Berhasil');
     }
 
     public function DaftarKL()
