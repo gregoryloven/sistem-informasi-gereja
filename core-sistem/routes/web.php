@@ -293,6 +293,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
 
     // validasi KL
+    Route::get('validasiKLUmat', [ValidasiKLController::class, 'umatLama'])->name('validasiKL.umatLama');
+    Route::post('/validasiKL/acceptumat', [ValidasiKLController::class, 'AcceptUmat'])->name('validasiKL.AcceptUmat');
+    Route::post('/validasiKL/declineumat', [ValidasiKLController::class, 'DeclineUmat'])->name('validasiKL.DeclineUmat');
+
     Route::get('validasiKLPelayanan', [ValidasiKLController::class, 'pelayanan'])->name('validasiKL.pelayanan');
     Route::post('/validasiKL/acceptpelayanan', [ValidasiKLController::class, 'AcceptPelayanan'])->name('validasiKL.AcceptPelayanan');
     Route::post('/validasiKL/declinepelayanan', [ValidasiKLController::class, 'DeclinePelayanan'])->name('validasiKL.DeclinePelayanan');

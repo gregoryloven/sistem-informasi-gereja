@@ -41,7 +41,7 @@
             <div class="card-body">
                 <div class="alert alert-info" role="alert">
                     Anda Telah Terdaftar Sebagai Umat Pada Lingkungan & Kbg Berikut!<br>
-                    
+    
                 </div>
                 <div class="form-group">
                     <label >Lingkungan</label>
@@ -50,7 +50,23 @@
                 <div class="form-group">
                     <label>KBG</label>
                     <input type="text" class="form-control" value="{{ Auth::user()->kbg->nama_kbg }}" disabled>
-                </div> 
+                </div>
+                @foreach($umatlama as $d)
+                @if($d->status == 'Belum Tervalidasi') 
+                <div class="alert alert-info" role="alert">
+                    {{$d->status}}<small><b> -- Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
+                </div>
+                @elseif($d->status == 'Tervalidasi') 
+                <div class="alert alert-success" role="alert">
+                    {{$d->status}}<small><b> -- Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}</small>
+                </div>
+                @else
+                <div class="alert alert-danger" role="alert">
+                    {{$d->status}}
+                </div>
+                <small><b>Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}
+                @endif
+                @endforeach
             </div>
             @else
             <div class="card-body">

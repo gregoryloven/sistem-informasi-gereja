@@ -20,8 +20,12 @@ class PendaftaranUmatController extends Controller
     {
         $ling = Lingkungan::all();
         $kbg = Kbg::all();
+        $umatlama = User::where([['status', 'Belum Tervalidasi'], ['id', Auth::user()->id]])
+        ->orwhere([['status', 'Tervalidasi'], ['id', Auth::user()->id]])
+        ->orwhere([['status', 'Ditolak'], ['id', Auth::user()->id]])
+        ->get();
 
-        return view('pendaftaranumat.index',compact("ling","kbg"));
+        return view('pendaftaranumat.index',compact("ling","kbg","umatlama"));
     }
 
     public function showKbg($id)
@@ -32,9 +36,10 @@ class PendaftaranUmatController extends Controller
     public function InputFormLama(Request $request)
     {
         // return $request->all();
-        $user = User::find( Auth()->user()->id);
+        $user = User::find(Auth()->user()->id);
         $user->lingkungan_id = $request->lingkungan_id_lama;
         $user->kbg_id = $request->kbg_id_lama;
+        $user->status = "Belum Tervalidasi";
         $user->save();
 
         return redirect('/pendaftaranumat');

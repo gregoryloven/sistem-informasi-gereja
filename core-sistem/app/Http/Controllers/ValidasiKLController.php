@@ -7,12 +7,47 @@ use App\Models\Baptis;
 use App\Models\KomuniPertama;
 use App\Models\Krisma;
 use App\Models\Riwayat;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
 
 class ValidasiKLController extends Controller
 {
+    public function umatLama()
+    {
+        $lingkungan = Auth::user()->lingkungan_id;
+        $user = Auth::user()->id;
+
+        $umatlama = User::where([["status", "Belum Tervalidasi"], ['lingkungan_id', $lingkungan]])->get();
+        $umatlama2 = User::where([["status", "Tervalidasi"], ['lingkungan_id', $lingkungan]])
+        ->orwhere([['status', 'Ditolak'], ['lingkungan_id', $lingkungan]])
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+
+        return view('validasiKL.umat',compact("umatlama", "umatlama2"));
+    }
+
+    public function AcceptUmat(Request $request)
+    {
+        $umat=User::find($request->id);
+
+        $umat->status = "Tervalidasi";
+        $umat->save();
+
+        return redirect()->route('validasiKL.umat', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Lama Telah Disetujui');
+    }
+
+    public function DeclineUmat(Request $request)
+    {
+        $umat=User::find($request->id);
+
+        $umat->status = "Ditolak";
+        $umat->save();
+
+        return redirect()->route('validasiKL.umat', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Lama Tidak Disetujui');
+    }
+    
     public function pelayanan()
     {
         $lingkungan = Auth::user()->lingkungan->nama_lingkungan;

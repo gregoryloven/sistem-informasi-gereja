@@ -8,12 +8,12 @@
 @endpush
 
 @section('title')
-    Validasi Baptis Bayi
+    Validasi Pendaftaran Umat Lama
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Bayi</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Pendaftaran Umat Lama</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -27,7 +27,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Daftar Permohonan
+        Daftar Validasi Umat Lama
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -38,58 +38,49 @@
                         <th>Nama Lengkap</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
-                        <th>Orang Tua Ayah</th>
-                        <th>Orang Tua Ibu</th>
-                        <th>Wali Baptis Ayah</th>
-                        <th>Wali Baptis Ibu</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
-                        <th>Tanggal Pelaksanaan</th>
-                        <th>Waktu Pelaksanaan</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
-                    @foreach($reservasi as $d)
+                    @foreach($umatlama as $d)
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_lengkap}}</td>
                         <td st>{{$d->tempat_lahir}}</td>
                         <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
-                        <td st>{{$d->orangtua_ayah}}</td>
-                        <td st>{{$d->orangtua_ibu}}</td>
-                        <td st>{{$d->wali_baptis_ayah}}</td>
-                        <td st>{{$d->wali_baptis_ibu}}</td>
+                        <td st>{{$d->lingkungan->nama_lingkungan}}</td>
+                        <td st>{{$d->kbg->nama_kbg}}</td>
                         <td st>{{$d->telepon}}</td>
-                        <td st>{{$d->jenis}}</td>
-                        <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
                         <td st>
-                            @if($d->status == "Disetujui KBG")
-                            <form action="/validasiKL/acceptbaptis" method="post">
+                            @if($d->status == "Belum Tervalidasi")
+                            <form action="/validasiKL/acceptumat" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validasiKL/declinebaptis" class="ml-2" method="post">
+                            <form action="/validasiKL/declineumat" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a>
+                                <button class="btn btn-danger" type="submit">Tolak</button>
+                                <!-- <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a> -->
                             </form>
                             @endif
                         </td>
                     </tr>
-                    <!-- EDIT WITH MODAL -->
+                    <!-- EDIT WITH MODAL
                     <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" >
-                                <form role="form" method="POST" action="{{ url('validasiKL/declinebaptis') }}" enctype="multipart/form-data">
+                                <form role="form" method="POST" action="{{ url('validasiKL/declineumat') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Penolakan Pendaftaran</h4>
+                                        <h4 class="modal-title">Penolakan Validasi</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
@@ -104,7 +95,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     @endforeach
                 </tbody>
             </table>
@@ -113,7 +104,7 @@
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Riwayat Validasi
+        Riwayat Validasi Umat Lama
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -124,52 +115,36 @@
                         <th>Nama Lengkap</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
-                        <th>Orang Tua Ayah</th>
-                        <th>Orang Tua Ibu</th>
-                        <th>Wali Baptis Ayah</th>
-                        <th>Wali Baptis Ibu</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
-                        <th>Tanggal Pelaksanaan</th>
-                        <th>Waktu Pelaksanaan</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
-                    @foreach($reservasiAll as $da)
+                    @foreach($umatlama2 as $da)
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$da->nama_lengkap}}</td>
                         <td st>{{$da->tempat_lahir}}</td>
                         <td st>{{tanggal_indonesia($da->tanggal_lahir)}}</td>
-                        <td st>{{$da->orangtua_ayah}}</td>
-                        <td st>{{$da->orangtua_ibu}}</td>
-                        <td st>{{$da->wali_baptis_ayah}}</td>
-                        <td st>{{$da->wali_baptis_ibu}}</td>
+                        <td st>{{$da->lingkungan->nama_lingkungan}}</td>
+                        <td st>{{$da->kbg->nama_kbg}}</td>
                         <td st>{{$da->telepon}}</td>
-                        <td st>{{$da->jenis}}</td>
-                        <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td> 
                         <td st >
-                            @if($da->statusRiwayat == 'Disetujui Lingkungan') 
+                            @if($da->status == 'Tervalidasi') 
                             <div class="alert alert-success" role="alert">
-                                {{$da->statusRiwayat}}
+                                {{$da->status}}
                             </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}</small>
-                            @elseif($da->statusRiwayat == 'Ditolak') 
-                            <div class="alert alert-danger" role="alert">
-                                {{$da->statusRiwayat}}
-                            </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}}
-                                <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}</small>
                             @else
                             <div class="alert alert-danger" role="alert">
-                                {{$da->statusRiwayat}}
+                                {{$da->status}}
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}
-                                <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
+                                <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
                             @endif
                         </td>
                     </tr>
