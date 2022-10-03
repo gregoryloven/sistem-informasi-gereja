@@ -14,7 +14,7 @@
 @section('content')
 <!-- Page Heading -->
 <div class="p-3">
-    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Fitur yang terdapat Pada Webiste:</h1>
+    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Fitur Yang Tersedia:</h1>
 
     <div class="row">
         <div class="col-md-12">
@@ -189,10 +189,10 @@
                 </div>
                 <div class="col-md-4 mt-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="https://mmc.tirto.id/image/2021/12/25/misa-natal-gereja-katedral-jakarta-antarafoto-1_ratio-16x9.jpg" class="card-img-top" alt="...">
+                        <img src="https://paroki-sragen.or.id/wp-content/uploads/2019/03/sakramen-tobat.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold">Reservasi Tobat</h5>
-                            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry. Lorem Ipsum has been the.</p>
+                            <h5 class="card-title font-weight-bold">Reservasi Pengakuan Dosa</h5>
+                            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and industry.</p>
                             <a href="/reservasitobat" class="btn btn-primary">Gunakan Fitur</a>
                         </div>
                     </div>
