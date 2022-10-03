@@ -137,6 +137,7 @@ class PendaftaranBaptisController extends Controller
 
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id = $request->event_id;
             $riwayat->jenis_event =  $data->jenis;
             $riwayat->event_id =  $data->id;
             $riwayat->status =  "Diproses";
