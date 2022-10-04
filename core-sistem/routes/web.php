@@ -330,6 +330,14 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('/auth/redirect', [UserController::class, 'redirect'])->name('auth.redirect');
     Route::post('/auth/complete-register', [UserController::class, 'complete_register'])->name('auth.complete-register');
 
+
+    // CETAK SERTIFIKAT
+    Route::get('sertifikat/baptisbayi', [PendaftaranBaptisController::class, 'sertifikat_baptisbayi'])->name('listevent.sertifikat_baptisbayi');
+    Route::get('sertifikat/baptisdewasa', [PendaftaranBaptisController::class, 'sertifikat_baptisdewasa'])->name('listevent.sertifikat_baptisdewasa');
+    Route::get('sertifikat/komunipertama', [PendaftaranKomuniController::class, 'sertifikat_komunipertama'])->name('listevent.sertifikat_komunipertama');
+    Route::get('sertifikat/krisma', [ListEventController::class, 'sertifikat_krisma'])->name('listevent.sertifikat_krisma');
+    Route::get('sertifikat/perkawinan', [ListEventController::class, 'sertifikat_perkawinan'])->name('listevent.sertifikat_perkawinan');
+
 });
 
 

@@ -151,7 +151,7 @@
                         <td st><div class="alert alert-success">{{$d->status}}</div></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a> <br>
                                 <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')

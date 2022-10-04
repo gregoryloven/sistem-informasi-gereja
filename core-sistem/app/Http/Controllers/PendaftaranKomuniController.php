@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\KomuniPertama;
+use App\Models\ListEvent;
 use App\Models\Riwayat;
 use DB;
 use Auth;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class PendaftaranKomuniController extends Controller
@@ -108,6 +111,19 @@ class PendaftaranKomuniController extends Controller
         $riwayat->save();
 
         return redirect()->route('pendaftarankomuni.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Pertama Berhasil Dibatalkan');
+    }
+
+    public function sertifikat_komunipertama(Request $request)
+    {
+        // return $request->all();
+        $komunipertama = KomuniPertama::where('user_id', $request->id)->first();
+        // return $komunipertama;
+
+        $pdf = PDF::loadView('pendaftarankomuni.sertifikat', compact('komunipertama'));
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream('Sertifikat_KomuniPertama.pdf');
+        
+        
     }
 
     /**

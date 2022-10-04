@@ -12,8 +12,11 @@ use App\Models\TobatUsers;
 use App\Models\PendaftaranPetugas;
 use App\Models\Riwayat;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use DB;
 use Auth;
+use PDF;
+
 
 class ListEventController extends Controller
 {
@@ -279,7 +282,7 @@ class ListEventController extends Controller
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
             }
         }
-    }
+    }  
 
     /**
      * Show the form for creating a new resource.

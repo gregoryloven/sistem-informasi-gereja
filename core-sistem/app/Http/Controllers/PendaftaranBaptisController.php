@@ -9,6 +9,8 @@ use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PendaftaranBaptisController extends Controller
 {
@@ -202,5 +204,27 @@ class PendaftaranBaptisController extends Controller
 
             return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Dewasa Telah Dibatalkan');
         }
+    }
+
+    public function sertifikat_baptisbayi(Request $request)
+    {
+        // return $request->all();
+        $baptis = Baptis::where('user_id', $request->id)->where('jenis', $request->jenis)->first();
+        // return $baptis;
+
+        $pdf = PDF::loadView('pendaftaranbaptis.sertifikatbayi', compact('baptis'));
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream('Sertifikat_baptis.pdf');
+    }
+
+    public function sertifikat_baptisdewasa(Request $request)
+    {
+        // return $request->all();
+        $baptis = Baptis::where('user_id', $request->id)->where('jenis', $request->jenis)->first();
+        // return $baptis;
+
+        $pdf = PDF::loadView('pendaftaranbaptis.sertifikatdewasa', compact('baptis'));
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream('Sertifikat_baptis.pdf');
     }
 }

@@ -72,8 +72,7 @@
                 @endif
             
                 <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav mr-auto">
-                    </ul>
+                    <ul class="navbar-nav mr-auto"></ul>
                     <span class="navbar-text">
                         <ul class="navbar-nav mr-auto">
                             @if (Route::has('login'))
