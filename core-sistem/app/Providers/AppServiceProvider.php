@@ -28,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
         Carbon::setLocale('id');
         date_default_timezone_set('Asia/Jakarta');
 
-        config()->set('laravelpwa.manifest.name', "Sistem Informasi Gereja");
+        config()->set('laravelpwa.manifest.name', "SI Gereja Katolik");
     }
 }
