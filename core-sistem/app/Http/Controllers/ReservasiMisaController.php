@@ -89,7 +89,7 @@ class ReservasiMisaController extends Controller
     public function Pembatalan(Request $request)
     {
         // return $request->all();
-        $tobats = MisaUsers::where('kode_booking', $request->kode_booking)->update([
+        $misas = MisaUsers::where('kode_booking', $request->kode_booking)->update([
             'status' => 'Dibatalkan',
         ]);
 
