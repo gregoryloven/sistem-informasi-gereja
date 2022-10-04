@@ -52,9 +52,18 @@
           <li><a class="nav-link scrollto" href="{{ url('daftargereja') }}">Pendaftaran Gereja</a></li>
           @if (Route::has('login'))
               @auth
+                @if (Auth::user()->role == 'tenant')
                   <li class="">
-                      <a href="{{ url('/dashboards') }}" class="getstarted scrollto"><b>Dashboard</b></a>
+                    <form method="POST" action="{{ route('logout') }}">
+                      @csrf
+                      <x-jet-responsive-nav-link class="dropdown-item dropdown-header" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"><i class="fa-solid fa-arrow-right-from-bracket"></i>({{ucwords(Auth::user()->name)}}) {{ __(' Log Out') }}</x-jet-responsive-nav-link>
+                    </form>
                   </li>
+                @else
+                  <li class="">
+                    <a href="{{ url('/dashboards') }}" class="getstarted scrollto"><b>Dashboard</b></a>
+                  </li>
+                @endif
               @else
                   <li class="">
                       <a href="{{ route('login') }}" class="nav-link scrollto"><b>Login</b></a>

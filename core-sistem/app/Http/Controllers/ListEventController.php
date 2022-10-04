@@ -13,6 +13,7 @@ use App\Models\PendaftaranPetugas;
 use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class ListEventController extends Controller
 {
@@ -138,9 +139,17 @@ class ListEventController extends Controller
                     $b->status = "Dibatalkan";
                     $b->save();
                 }
-                $riwayat =  Riwayat::where('list_event_id', $request->id)->first();
-                $riwayat->status = "Dibatalkan";
-                $riwayat->save();
+
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+                foreach($riwayat as $r){
+                    $riwayats= new Riwayat();
+                    $riwayats->user_id = Auth::user()->id;
+                    $riwayats->list_event_id = $r->list_event_id;
+                    $riwayats->event_id = $r->event_id;
+                    $riwayats->jenis_event = $r->jenis_event;
+                    $riwayats->status = "Dibatalkan";
+                    $riwayats->save();
+                }
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
             } else {
                 $data->delete();
@@ -155,9 +164,16 @@ class ListEventController extends Controller
                     $b->status = "Dibatalkan";
                     $b->save();
                 }
-                $riwayat =  Riwayat::where('list_event_id', $request->id)->first();
-                $riwayat->status = "Dibatalkan";
-                $riwayat->save();
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+                foreach($riwayat as $r){
+                    $riwayats= new Riwayat();
+                    $riwayats->user_id = Auth::user()->id;
+                    $riwayats->list_event_id = $r->list_event_id;
+                    $riwayats->event_id = $r->event_id;
+                    $riwayats->jenis_event = $r->jenis_event;
+                    $riwayats->status = "Dibatalkan";
+                    $riwayats->save();
+                }
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
             } else {
                 $data->delete();
@@ -172,9 +188,16 @@ class ListEventController extends Controller
                     $k->status = "Dibatalkan";
                     $k->save();
                 }
-                $riwayat =  Riwayat::where('list_event_id', $request->id)->first();
-                $riwayat->status = "Dibatalkan";
-                $riwayat->save();
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+                foreach($riwayat as $r){
+                    $riwayats= new Riwayat();
+                    $riwayats->user_id = Auth::user()->id;
+                    $riwayats->list_event_id = $r->list_event_id;
+                    $riwayats->event_id = $r->event_id;
+                    $riwayats->jenis_event = $r->jenis_event;
+                    $riwayats->status = "Dibatalkan";
+                    $riwayats->save();
+                }
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
             } else {
                 $data->delete();
@@ -189,15 +212,47 @@ class ListEventController extends Controller
                     $k->status = "Dibatalkan";
                     $k->save();
                 }
-                $riwayat =  Riwayat::where('list_event_id', $request->id)->first();
-                $riwayat->status = "Dibatalkan";
-                $riwayat->save();
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+                foreach($riwayat as $r){
+                    $riwayats= new Riwayat();
+                    $riwayats->user_id = Auth::user()->id;
+                    $riwayats->list_event_id = $r->list_event_id;
+                    $riwayats->event_id = $r->event_id;
+                    $riwayats->jenis_event = $r->jenis_event;
+                    $riwayats->status = "Dibatalkan";
+                    $riwayats->save();
+                }
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
             } else {
                 $data->delete();
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
             }
-        }else if($data->jenis_event == "Misa"){
+        } else if($data->jenis_event == "Petugas Liturgi") {
+            $petugas=PendaftaranPetugas::where('jadwal', '=', $data->jadwal_pelaksanaan)->get();
+            if($petugas->count() > 0){
+                $data->status = "Dibatalkan";
+                $data->save();
+                foreach($petugas as $k){
+                    $k->status = "Dibatalkan";
+                    $k->save();
+                }
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+                foreach($riwayat as $r){
+                    $riwayats= new Riwayat();
+                    $riwayats->user_id = Auth::user()->id;
+                    $riwayats->list_event_id = $r->list_event_id;
+                    $riwayats->event_id = $r->event_id;
+                    $riwayats->jenis_event = $r->jenis_event;
+                    $riwayats->status = "Dibatalkan";
+                    $riwayats->save();
+                }
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
+            } else {
+                $data->delete();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
+            }
+        }
+        else if($data->jenis_event == "Misa"){
             $misa=MisaUsers::where('list_events_id', $data->id)->get();
             if($misa->count() > 0){
                 $data->status = "Dibatalkan";

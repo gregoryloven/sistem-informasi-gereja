@@ -19,7 +19,7 @@ class LoginResponse implements LoginResponseContract
         if (Tenant::checkCurrent() == false) {
             if(Auth::user()->role == 'superadmin') {
                 return redirect('/');
-            } else if (Auth::user()->role == 'pihak-gereja') {
+            } else if (Auth::user()->role == 'tenant') {
                 return redirect('/');
             }
         } else if (Tenant::checkCurrent() == 'true') {
