@@ -56,16 +56,15 @@ Route::domain('localhost')->group(function(){
 
     //SEMUA CONTROLLER 
     Route::get('/', [LandlordController::class, 'index']);
-    Route::get('/daftargereja', [LandlordController::class, 'daftargereja']);
-    Route::post('/simpandaftargereja', [LandlordController::class, 'simpandaftargereja']);
-    Route::get('/dashboards', [LandlordController::class, 'dashboards']);
-    Route::get('/dashboards/tenant', [LandlordController::class, 'tenant']);
-    Route::get('/dashboards/user', [LandlordController::class, 'user']);
-    Route::delete('/dashboards/deletetenant', [LandlordController::class, 'deletetenant'])->name('dashboards.deletetenant');
-    Route::delete('/dashboards/deleteuser', [LandlordController::class, 'deleteuser'])->name('dashboards.deleteuser');
-
-    
-
+    Route::middleware(['auth'])->group(function(){
+        Route::get('/daftargereja', [LandlordController::class, 'daftargereja']);
+        Route::post('/simpandaftargereja', [LandlordController::class, 'simpandaftargereja']);
+        Route::get('/dashboards', [LandlordController::class, 'dashboards']);
+        Route::get('/dashboards/tenant', [LandlordController::class, 'tenant']);
+        Route::get('/dashboards/user', [LandlordController::class, 'user']);
+        Route::delete('/dashboards/deletetenant', [LandlordController::class, 'deletetenant'])->name('dashboards.deletetenant');
+        Route::delete('/dashboards/deleteuser', [LandlordController::class, 'deleteuser'])->name('dashboards.deleteuser');
+    });
     // Route::get('/auth/redirect-landlord', [LandlordController::class, 'redirect_landlord'])->name('auth.redirect.landlord');
     // Route::post('/auth/complete-register-landlord', [LandlordController::class, 'complete_register_landlord'])->name('auth.complete-register.landlord');
 });
