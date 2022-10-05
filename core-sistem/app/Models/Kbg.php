@@ -21,6 +21,11 @@ class Kbg extends Model
     	return $this->hasMany(User::class, 'kbg_id', 'id');
     }
 
+    public function umat()
+    {
+    	return $this->hasMany(Umat::class, 'kbg_id', 'id');
+    }
+
     public function keluarga()
     {
     	return $this->hasMany(Keluarga::class, 'kbg_id', 'id');

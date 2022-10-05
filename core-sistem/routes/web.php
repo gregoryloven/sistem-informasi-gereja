@@ -26,6 +26,7 @@ use App\Http\Controllers\ValidasiKbgController;
 use App\Http\Controllers\ValidasiKLController;
 use App\Http\Controllers\ListEventController;
 use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\UmatController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -115,6 +116,19 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::resource('listevent', ListEventController::class);
     Route::post('/listevent/EditForm', [ListEventController::class, 'EditForm'])->name('listevent.EditForm');
     Route::post('/listevent/selesai', [ListEventController::class, 'selesai'])->name('listevent.selesai');
+
+    //Daftar Umat KBG
+    Route::get('umatKbg', [UmatController::class, 'umatKbg'])->name('umat.umatKbg');
+    Route::post('/fetchkbg', [UmatController::class, 'fetchkbg'])->name('fetchkbg');
+    Route::post('/umat/TambahUmatKBG', [UmatController::class, 'TambahUmatKBG'])->name('umat.TambahUmatKBG');
+    Route::post('/umat/EditFormUmatKBG', [UmatController::class, 'EditFormUmatKBG'])->name('umat.EditFormUmatKBG');
+    Route::post('/umat/UbahUmatKBG/{id}', [UmatController::class, 'UbahUmatKBG'])->name('umat.UbahUmatKBG');
+
+    //Daftar Umat Lingkungan
+    Route::get('umatLingkungan', [UmatController::class, 'umatLingkungan'])->name('umat.umatLingkungan');
+    Route::post('/fetchkbg', [UmatController::class, 'fetchkbg'])->name('fetchkbg');
+    Route::post('/umat/EditFormUmatLingkungan', [UmatController::class, 'EditFormUmatLingkungan'])->name('umat.EditFormUmatLingkungan');
+    Route::post('/umat/UbahUmatLingkungan/{id}', [UmatController::class, 'UbahUmatLingkungan'])->name('umat.UbahUmatLingkungan');
 
     //Paroki
     Route::resource('parokis', ParokiController::class);
@@ -298,9 +312,13 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
 
     // validasi KL
-    Route::get('validasiKLUmat', [ValidasiKLController::class, 'umatLama'])->name('validasiKL.umatLama');
-    Route::post('/validasiKL/acceptumat', [ValidasiKLController::class, 'AcceptUmat'])->name('validasiKL.AcceptUmat');
-    Route::post('/validasiKL/declineumat', [ValidasiKLController::class, 'DeclineUmat'])->name('validasiKL.DeclineUmat');
+    Route::get('validasiKLUmatLama', [ValidasiKLController::class, 'umatLama'])->name('validasiKL.umatLama');
+    Route::post('/validasiKL/acceptumatlama', [ValidasiKLController::class, 'AcceptUmatLama'])->name('validasiKL.AcceptUmatLama');
+    Route::post('/validasiKL/declineumatlama', [ValidasiKLController::class, 'DeclineUmatLama'])->name('validasiKL.DeclineUmatLama');
+
+    Route::get('validasiKLUmatBaru', [ValidasiKLController::class, 'umatBaru'])->name('validasiKL.umatBaru');
+    Route::post('/validasiKL/acceptumatbaru', [ValidasiKLController::class, 'AcceptUmatBaru'])->name('validasiKL.AcceptUmatBaru');
+    Route::post('/validasiKL/declineumatbaru', [ValidasiKLController::class, 'DeclineUmatBaru'])->name('validasiKL.DeclineUmatBaru');
 
     Route::get('validasiKLPelayanan', [ValidasiKLController::class, 'pelayanan'])->name('validasiKL.pelayanan');
     Route::post('/validasiKL/acceptpelayanan', [ValidasiKLController::class, 'AcceptPelayanan'])->name('validasiKL.AcceptPelayanan');

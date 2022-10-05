@@ -16,4 +16,14 @@ class Umat extends Model
     	return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function lingkungan()
+    {
+    	return $this->belongsTo(Lingkungan::class, 'lingkungan_id');
+    }
+
+    public function kbg()
+    {
+    	return $this->belongsTo(Kbg::class, 'kbg_id');
+    }
+
 }

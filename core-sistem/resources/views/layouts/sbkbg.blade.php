@@ -84,7 +84,7 @@
                     <span>Baptis</span></a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('umat.umatKbg', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Daftar Umat</span></a>
             </li>

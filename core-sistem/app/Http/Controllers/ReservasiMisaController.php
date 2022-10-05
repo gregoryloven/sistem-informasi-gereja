@@ -20,7 +20,7 @@ class ReservasiMisaController extends Controller
     public function index()
     {
         $data = DB::table('list_events')
-                ->where('jenis_event', 'like', 'Mi%')
+                ->where([['jenis_event', 'like', 'Mi%'], ['status', 'Aktif']])
                 ->get();
                 
         $misa = DB::table('list_events')

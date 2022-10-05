@@ -225,7 +225,21 @@
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->romo}}</td>
                         <td st>{{$d->kuota}}</td>
-                        <td st><div class="alert alert-success">{{$d->status}}</div></td>
+                        <td st>
+                            @if($d->status == "Aktif")
+                            <div class="alert alert-info" role="alert">
+                                {{$d->status}}
+                            </div>
+                            @elseif($d->status == "Selesai")
+                            <div class="alert alert-success" role="alert">
+                                {{$d->status}}
+                            </div>
+                            @else
+                            <div class="alert alert-danger" role="alert">
+                                {{$d->status}}
+                            </div>
+                            @endif
+                        </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>

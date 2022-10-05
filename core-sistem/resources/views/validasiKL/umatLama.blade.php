@@ -36,8 +36,7 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama Lengkap</th>
-                        <th>Tempat Lahir</th>
-                        <th>Tanggal Lahir</th>
+                        <th>Jenis Kelamin</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Telepon</th>
@@ -51,19 +50,18 @@
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_lengkap}}</td>
-                        <td st>{{$d->tempat_lahir}}</td>
-                        <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
+                        <td st>{{$d->jenis_kelamin}}</td>
                         <td st>{{$d->lingkungan->nama_lingkungan}}</td>
                         <td st>{{$d->kbg->nama_kbg}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>
                             @if($d->status == "Belum Tervalidasi")
-                            <form action="/validasiKL/acceptumat" method="post">
+                            <form action="/validasiKL/acceptumatlama" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validasiKL/declineumat" class="ml-2" method="post">
+                            <form action="/validasiKL/declineumatlama" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <button class="btn btn-danger" type="submit">Tolak</button>

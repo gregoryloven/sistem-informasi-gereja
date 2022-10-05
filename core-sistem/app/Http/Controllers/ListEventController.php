@@ -99,13 +99,13 @@ class ListEventController extends Controller
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
         'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo')]);
 
-        $misa=MisaUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
-        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
-        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
+        // $misa=MisaUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        // 'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
 
-        $tobat=TobatUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
-        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
-        'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
+        // $tobat=TobatUsers::where('list_event_id', '=', $data->id)
+        // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        // 'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
 
         $petugas=PendaftaranPetugas::where('jadwal', '=', $data->jadwal_pelaksanaan)
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 

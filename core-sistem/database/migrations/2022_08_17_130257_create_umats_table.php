@@ -24,7 +24,7 @@ class CreateUmatsTable extends Migration
             $table->string('alamat');
             $table->string('telepon');
             $table->string('status');
-            $table->string('foto_ktp');
+            $table->string('foto_ktp')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('lingkungan_id')->references('id')->on('lingkungans');
             $table->foreign('kbg_id')->references('id')->on('kbgs');

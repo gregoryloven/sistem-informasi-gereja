@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Umat;
+use App\Models\Lingkungan;
+use App\Models\Kbg;
+use Illuminate\Http\Request;
+use Auth;
+
+class UmatController extends Controller
+{
+    public function umatKbg()
+    {
+        $kbg = Auth::user()->kbg->id;
+
+        $ling = Lingkungan::all();
+        $data = Umat::where([['kbg_id', $kbg], ['status', 'Disetujui Lingkungan']])
+        ->get();
+
+        return view('umat.umatkbg',compact('data','ling'));
+    }
+
+    public function fetchkbg(Request $request)
+    {
+        $kbg = Kbg::where('lingkungan_id', $request->id)->get();
+
+        // $output = '<option value="">Choose</option>';
+        $output = "";
+        foreach($kbg as $o) {
+            $output .= '<option value="'.$o->id.'">'.$o->nama_kbg.'</option>';
+        }
+        echo $output;
+
+    }
+
+    public function TambahUmatKBG(Request $request)
+    {
+        $data = new Umat();
+        $data->user_id = Auth::user()->id;
+        $data->nama_lengkap = $request->get("nama_lengkap");
+        $data->hubungan = $request->get("hubungan_darah");
+        $data->jenis_kelamin = $request->get("jenis_kelamin");
+        $data->lingkungan_id = $request->get("lingkungan_id");
+        $data->kbg_id = $request->get("kbg_id");
+        $data->alamat = $request->get("alamat");
+        $data->telepon = $request->get("telepon");
+        $data->status = "Disetujui KBG";
+        $data->save();
+
+        return redirect('/umatKbg')->with('status', 'Pendaftaran Umat Berhasil');
+    }
+
+    public function EditFormUmatKBG(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Umat::find($id);
+        $kbg=Kbg::all();
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('umat.EditFormUmatKBG',compact('data','kbg'))->render()),200);
+    }
+
+    public function UbahUmatKBG(Request $request)
+    {
+        $data=Umat::find($request->id);
+        $data->nama_lengkap = $request->get("nama_lengkap");
+        $data->hubungan = $request->get("hubungan_darah");
+        $data->jenis_kelamin = $request->get("jenis_kelamin");
+        $data->kbg_id = $request->get("kbg_id");
+        $data->alamat = $request->get("alamat");
+        $data->telepon = $request->get("telepon");
+        $data->save();
+
+        return redirect('/umatKbg')->with('status', 'Ubah Data Umat Berhasil');
+    }
+
+    public function umatLingkungan()
+    {
+        $lingkungan = Auth::user()->lingkungan->id;
+
+        $ling = Lingkungan::all();
+        $kbg = Kbg::all();
+        $data = Umat::where([['lingkungan_id', $lingkungan], ['status', 'Disetujui Lingkungan']])
+        ->get();
+
+        return view('umat.umatlingkungan',compact('data','ling','kbg'));
+    }
+}

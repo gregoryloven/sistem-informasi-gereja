@@ -74,6 +74,7 @@
                         <td st>{{$d->romo}}</td>
                         <td st>{{$d->kuota}}</td>
                         <td>
+                            @if($d->status == 'Aktif')
                             @php
                             $datetime = strtotime('-2 hours', strtotime($d->jadwal_pelaksanaan));
                             $cekjam = date('Y-m-d H:i:s', $datetime);
@@ -82,6 +83,7 @@
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalPesan" data-toggle="modal" class="btn btn-xs btn-info" onclick="PesanTiket({{ $d->id }})">Pesan</a>
                             </div>
+                            @endif
                             @endif
                         </td>
                     </tr>
@@ -126,7 +128,21 @@
                             <td st>{{$d->romo}}</td>
                             <td st>{{$d->jumlah_tiket}}</td>
                             <td st>{{$d->kode_booking}}</td>
-                            <td st>{{$d->status}}</td>
+                            <td st>
+                                @if($d->status == "Aktif")
+                                <div class="alert alert-info" role="alert">
+                                    {{$d->status}}
+                                </div>
+                                @elseif($d->status == "Selesai")
+                                <div class="alert alert-success" role="alert">
+                                    {{$d->status}}
+                                </div>
+                                @else
+                                <div class="alert alert-danger" role="alert">
+                                    {{$d->status}}
+                                </div>
+                                @endif
+                            </td>
                             <td st>
                                 @if($d->status == "Aktif")
                                 <a href="#modal{{$d->kode_booking}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
