@@ -114,6 +114,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //List Event Admin
     Route::resource('listevent', ListEventController::class);
     Route::post('/listevent/EditForm', [ListEventController::class, 'EditForm'])->name('listevent.EditForm');
+    Route::post('/listevent/selesai', [ListEventController::class, 'selesai'])->name('listevent.selesai');
 
     //Paroki
     Route::resource('parokis', ParokiController::class);
