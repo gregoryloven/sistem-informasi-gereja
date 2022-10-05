@@ -335,7 +335,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('sertifikat/baptisbayi', [PendaftaranBaptisController::class, 'sertifikat_baptisbayi'])->name('listevent.sertifikat_baptisbayi');
     Route::get('sertifikat/baptisdewasa', [PendaftaranBaptisController::class, 'sertifikat_baptisdewasa'])->name('listevent.sertifikat_baptisdewasa');
     Route::get('sertifikat/komunipertama', [PendaftaranKomuniController::class, 'sertifikat_komunipertama'])->name('listevent.sertifikat_komunipertama');
-    Route::get('sertifikat/krisma', [ListEventController::class, 'sertifikat_krisma'])->name('listevent.sertifikat_krisma');
+    Route::get('sertifikat/krisma', [PendaftaranKrismaController::class, 'sertifikat_krisma'])->name('listevent.sertifikat_krisma');
     Route::get('sertifikat/perkawinan', [ListEventController::class, 'sertifikat_perkawinan'])->name('listevent.sertifikat_perkawinan');
 
 });

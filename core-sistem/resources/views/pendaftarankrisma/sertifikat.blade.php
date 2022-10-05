@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sertifikat Komuni Pertama</title>
+    <title>Sertifikat Krisma</title>
 
     <style>
         table td {
@@ -31,7 +31,7 @@
     <table class="data" width="100%">
         <thead class="text-center">
             <tr>
-                <th class="" colspan="4"><h1>Kenangan Komuni Pertama<h1></th>
+                <th class="" colspan="4"><h1>Sertifikat Krisma<h1></th>
               </tr>
         </thead>
         <tbody>

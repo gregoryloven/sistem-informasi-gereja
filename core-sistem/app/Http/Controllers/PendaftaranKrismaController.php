@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Krisma;
+use App\Models\ListEvent;
 use App\Models\User;
 use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PendaftaranKrismaController extends Controller
 {
@@ -169,6 +172,17 @@ class PendaftaranKrismaController extends Controller
         $riwayat->save();
 
         return redirect()->route('pendaftarankrisma.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Pertama Berhasil Dibatalkan');
+    }
+
+    public function sertifikat_krisma(Request $request)
+    {
+        // return $request->all();
+        $krisma = Krisma::where('user_id', $request->id)->first();
+        // return $krisma;
+
+        $pdf = PDF::loadView('pendaftarankrisma.sertifikatdewasa', compact('krisma'));
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream('Sertifikat_krisma.pdf');
     }
 
     /**
