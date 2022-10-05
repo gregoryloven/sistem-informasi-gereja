@@ -170,14 +170,13 @@
                                 @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
                                 <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
                                 @endif
-                                {{-- @if ($d->status == 'Selesai') --}}
+                                @if ($d->status == 'Selesai')
                                 <form role="form" method="GET" action="{{ url('/sertifikat/krisma') }}">
-                                    {{-- @csrf --}}
                                     <input type="hidden" class="form-control" id='id' name='id' value="{{$d->user_id}}">
                                     {{-- <input type="hidden" class="form-control" id='jadwal' name='jadwal' value="{{$d->jadwal}}"> --}}
                                     <button type="submit" class="btn btn-xs btn-flat btn-info">Cetak Sertifikat</button>
                                 </form>
-                            {{-- @endif --}}
+                                @endif
                             </td>
                         </tr>
                         <!-- EDIT WITH MODAL -->

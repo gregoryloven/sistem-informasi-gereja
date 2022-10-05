@@ -282,7 +282,119 @@ class ListEventController extends Controller
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
             }
         }
-    }  
+    }
+    
+    public function selesai(Request $request)
+    {
+        // return $request->all();
+
+        $listevent = ListEvent::find($request->id);
+        $listevent->status = "Selesai";
+        $listevent->save();
+        if($listevent->jenis_event == "Baptis Bayi"){
+            $baptis = Baptis::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            foreach($baptis as $b){
+                $b->status = "Selesai";
+                $b->save();
+            }
+
+            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            foreach($riwayat as $r){
+                $riwayats= new Riwayat();
+                $riwayats->user_id = Auth::user()->id;
+                $riwayats->list_event_id = $r->list_event_id;
+                $riwayats->event_id = $r->event_id;
+                $riwayats->jenis_event = $r->jenis_event;
+                $riwayats->status = "Selesai";
+                $riwayats->save();
+            }
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
+        } else if($listevent->jenis_event == "Baptis Dewasa") {
+            $baptis = Baptis::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            foreach($baptis as $b){
+                $b->status = "Selesai";
+                $b->save();
+            }
+
+            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            foreach($riwayat as $r){
+                $riwayats= new Riwayat();
+                $riwayats->user_id = Auth::user()->id;
+                $riwayats->list_event_id = $r->list_event_id;
+                $riwayats->event_id = $r->event_id;
+                $riwayats->jenis_event = $r->jenis_event;
+                $riwayats->status = "Selesai";
+                $riwayats->save();
+            }
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
+        } else if($listevent->jenis_event == "Komuni Pertama") {
+            $komunipertama = KomuniPertama::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            foreach($komunipertama as $k){
+                $k->status = "Selesai";
+                $k->save();
+            }
+
+            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            foreach($riwayat as $r){
+                $riwayats= new Riwayat();
+                $riwayats->user_id = Auth::user()->id;
+                $riwayats->list_event_id = $r->list_event_id;
+                $riwayats->event_id = $r->event_id;
+                $riwayats->jenis_event = $r->jenis_event;
+                $riwayats->status = "Selesai";
+                $riwayats->save();
+            }
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
+        } else if($listevent->jenis_event == "Krisma") {
+            $krisma = Krisma::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            foreach($krisma as $k){
+                $k->status = "Selesai";
+                $k->save();
+            }
+
+            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            foreach($riwayat as $r){
+                $riwayats= new Riwayat();
+                $riwayats->user_id = Auth::user()->id;
+                $riwayats->list_event_id = $r->list_event_id;
+                $riwayats->event_id = $r->event_id;
+                $riwayats->jenis_event = $r->jenis_event;
+                $riwayats->status = "Selesai";
+                $riwayats->save();
+            }
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
+        } else if($listevent->jenis_event == "Petugas Liturgi") {
+            $petugas = PendaftaranPetugas::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            foreach($petugas as $p){
+                $p->status = "Selesai";
+                $p->save();
+            }
+
+            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            foreach($riwayat as $r){
+                $riwayats= new Riwayat();
+                $riwayats->user_id = Auth::user()->id;
+                $riwayats->list_event_id = $r->list_event_id;
+                $riwayats->event_id = $r->event_id;
+                $riwayats->jenis_event = $r->jenis_event;
+                $riwayats->status = "Selesai";
+                $riwayats->save();
+            }
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
+        } else if($listevent->jenis_event == "Misa") {
+            $misa = MisaUsers::where('list_events_id', '=', $request->id)->get();
+            foreach($misa as $m){
+                $misas = DB::table('misa_users')->where('list_events_id', $m->list_events_id)->update(['status' => 'Selesai']);
+            }
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
+        } else if($listevent->jenis_event == "Tobat") {
+            $tobat = TobatUsers::where('list_events_id', '=', $request->id)->get();
+            foreach($tobat as $t){
+                $tobats = DB::table('tobat_users')->where('list_events_id', $t->list_events_id)->update(['status' => 'Selesai']);
+            }
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
+        }
+    }
 
     /**
      * Show the form for creating a new resource.

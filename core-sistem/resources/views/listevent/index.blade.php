@@ -152,6 +152,7 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a> <br>
+                                @if ($d->status == 'Dibatalkan')
                                 <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')
@@ -159,6 +160,28 @@
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                     <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
                                 </form>
+                                @elseif ($d->status == 'Selesai')
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                                @else
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='idbaptis' name='idbaptis' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                                @endif
                             </div>
                         </td>
                     </tr>
@@ -206,12 +229,34 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                @if ($d->status == 'Dibatalkan')
                                 <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                     <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
                                 </form>
+                                @elseif ($d->status == 'Selesai')
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                                @else
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                                @endif
                             </div>
                         </td>
                     </tr>
@@ -261,12 +306,34 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                @if ($d->status == 'Dibatalkan')
                                 <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                     <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
                                 </form>
+                                @elseif ($d->status == 'Selesai')
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                                @else
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                                @endif
                             </div>
                         </td>
                     </tr>
