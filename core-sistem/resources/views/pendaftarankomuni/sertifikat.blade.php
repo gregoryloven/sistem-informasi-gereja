@@ -25,9 +25,18 @@
         .text-right {
             text-align: right;
         }
+        body {
+          /* background-image: url('https://static.vecteezy.com/system/resources/previews/003/423/898/original/gray-background-with-texture-white-abstract-modern-background-free-vector.jpg'); */
+          /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf_kAvGUQbzbmLgclnmBGpJ_fbBKFkhCvQrw&usqp=CAU'); */
+          background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5RS7qtSGW3uKECu_msxtFbC_h_vupXSxuWg&usqp=CAU');
+          /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6xi3uZQ7KvclzRKs6xIJaeCfADe_jh8QPpA&usqp=CAU'); */
+          background-repeat: no-repeat;
+          background-size: cover;
+          
+        }
     </style>
 </head>
-<body style="background-color: yellow;">
+<body>
     <table class="data" width="100%">
         <thead class="text-center">
             <tr>
