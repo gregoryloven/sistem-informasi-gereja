@@ -71,6 +71,7 @@
                             <form action="/validasiKL/acceptbaptis" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
+                                <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
                             <form action="/validasiKL/declinebaptis" class="ml-2" method="post">
@@ -89,12 +90,13 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Penolakan Pendaftaran</h4>
+                                        <h4 class="modal-title">Penolakan Pendaftaran Baptis Bayi</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
                                         <label>Alasan Penolakan:</label>
                                         <input type="hidden" name="id" value="{{$d->id}}">
+                                        <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                         <textarea name="alasan_penolakan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                     </div>
                                     <div class="modal-footer">

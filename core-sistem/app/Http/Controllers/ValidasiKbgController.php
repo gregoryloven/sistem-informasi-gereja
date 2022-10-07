@@ -112,13 +112,11 @@ class ValidasiKbgController extends Controller
 
     public function AcceptBaptis(Request $request)
     {
-        // return $request->all();
         $baptis=Baptis::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
 
         if($baptis->jenis == "Baptis Bayi")
         {
-            $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
-
             $baptis->status = "Disetujui KBG";
             $baptis->save();
     
@@ -139,6 +137,7 @@ class ValidasiKbgController extends Controller
     
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $baptis->id;
             $riwayat->jenis_event =  "Baptis Dewasa";
             $riwayat->status =  "Disetujui KBG";
@@ -151,6 +150,7 @@ class ValidasiKbgController extends Controller
     public function DeclineBaptis(Request $request)
     {
         $baptis=Baptis::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
 
         if($baptis->jenis == "Baptis Bayi")
         {
@@ -159,6 +159,7 @@ class ValidasiKbgController extends Controller
 
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $baptis->id;
             $riwayat->jenis_event =  "Baptis Bayi";
             $riwayat->status =  "Ditolak";
@@ -174,6 +175,7 @@ class ValidasiKbgController extends Controller
     
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $baptis->id;
             $riwayat->jenis_event =  "Baptis Dewasa";
             $riwayat->status =  "Ditolak";
@@ -210,8 +212,11 @@ class ValidasiKbgController extends Controller
         $komuni->status = "Disetujui KBG";
         $komuni->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $komuni->id;
         $riwayat->jenis_event =  "Komuni Pertama";
         $riwayat->status =  "Disetujui KBG";
@@ -226,8 +231,11 @@ class ValidasiKbgController extends Controller
         $komuni->status = "Ditolak";
         $komuni->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $komuni->id;
         $riwayat->jenis_event =  "Komuni Pertama";
         $riwayat->status =  "Ditolak";
@@ -262,8 +270,11 @@ class ValidasiKbgController extends Controller
         $krisma->status = "Disetujui KBG";
         $krisma->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $krisma->id;
         $riwayat->jenis_event =  "Krisma Setempat";
         $riwayat->status =  "Disetujui KBG";
@@ -278,8 +289,11 @@ class ValidasiKbgController extends Controller
         $krisma->status = "Ditolak";
         $krisma->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $krisma->id;
         $riwayat->jenis_event =  "Krisma Setempat";
         $riwayat->status =  "Ditolak";
