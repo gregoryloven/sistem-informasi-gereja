@@ -120,8 +120,11 @@ class ValidasiAdminController extends Controller
         $petugas->status = "Disetujui Paroki";
         $petugas->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $petugas->id;
         $riwayat->jenis_event =  "Petugas Liturgi";
         $riwayat->status =  "Disetujui Paroki";
@@ -136,8 +139,11 @@ class ValidasiAdminController extends Controller
         $petugas->status = "Ditolak";
         $petugas->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $petugas->id;
         $riwayat->jenis_event =  "Petugas Liturgi";
         $riwayat->status =  "Ditolak";
@@ -188,6 +194,7 @@ class ValidasiAdminController extends Controller
     public function AcceptBaptis(Request $request)
     {
         $baptis=Baptis::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
 
         if($baptis->jenis == "Baptis Bayi")
         {
@@ -196,6 +203,7 @@ class ValidasiAdminController extends Controller
     
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $baptis->id;
             $riwayat->jenis_event =  "Baptis Bayi";
             $riwayat->status =  "Disetujui Paroki";
@@ -210,6 +218,7 @@ class ValidasiAdminController extends Controller
     
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $baptis->id;
             $riwayat->jenis_event =  "Baptis Dewasa";
             $riwayat->status =  "Disetujui Paroki";
@@ -222,6 +231,7 @@ class ValidasiAdminController extends Controller
     public function DeclineBaptis(Request $request)
     {
         $baptis=Baptis::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
 
         if($baptis->jenis == "Baptis Bayi")
         {
@@ -230,6 +240,7 @@ class ValidasiAdminController extends Controller
     
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $baptis->id;
             $riwayat->jenis_event =  "Baptis Bayi";
             $riwayat->status =  "Ditolak";
@@ -245,6 +256,7 @@ class ValidasiAdminController extends Controller
     
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $baptis->id;
             $riwayat->jenis_event =  "Baptis Dewasa";
             $riwayat->status =  "Ditolak";
@@ -258,6 +270,7 @@ class ValidasiAdminController extends Controller
     public function PembatalanBaptis(Request $request)
     {
         $data=Baptis::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
         
         if($data->jenis == "Baptis Bayi")
         {
@@ -265,6 +278,7 @@ class ValidasiAdminController extends Controller
 
             $riwayat = Riwayat::find($request->riwayatID);
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $data->id;
             $riwayat->jenis_event =  "Baptis Bayi";
             $riwayat->status =  "Dibatalkan";
@@ -280,6 +294,7 @@ class ValidasiAdminController extends Controller
 
             $riwayat = Riwayat::find($request->riwayatID);
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $data->id;
             $riwayat->jenis_event =  "Baptis Dewasa";
             $riwayat->status =  "Dibatalkan";
@@ -315,8 +330,11 @@ class ValidasiAdminController extends Controller
         $komuni->status = "Disetujui Paroki";
         $komuni->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $komuni->id;
         $riwayat->jenis_event =  "Komuni Pertama";
         $riwayat->status =  "Disetujui Paroki";
@@ -331,8 +349,11 @@ class ValidasiAdminController extends Controller
         $komuni->status = "Ditolak";
         $komuni->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $komuni->id;
         $riwayat->jenis_event =  "Komuni Pertama";
         $riwayat->status =  "Ditolak";
@@ -347,8 +368,11 @@ class ValidasiAdminController extends Controller
         $data=KomuniPertama::find($request->id);
         $data->status = "Dibatalkan";
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = Riwayat::find($request->riwayatID);
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $data->id;
         $riwayat->jenis_event =  "Komuni Pertama";
         $riwayat->status =  "Dibatalkan";
@@ -397,8 +421,11 @@ class ValidasiAdminController extends Controller
         $krisma->status = "Disetujui Paroki";
         $krisma->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $krisma->id;
         $riwayat->jenis_event =  "Krisma Setempat";
         $riwayat->status =  "Disetujui Paroki";
@@ -413,8 +440,11 @@ class ValidasiAdminController extends Controller
         $krisma->status = "Disetujui Paroki";
         $krisma->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $krisma->id;
         $riwayat->jenis_event =  "Krisma Lintas";
         $riwayat->status =  "Disetujui Paroki";
@@ -429,8 +459,11 @@ class ValidasiAdminController extends Controller
         $krisma->status = "Ditolak";
         $krisma->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $krisma->id;
         $riwayat->jenis_event =  "Krisma Setempat";
         $riwayat->status =  "Ditolak";
@@ -446,8 +479,11 @@ class ValidasiAdminController extends Controller
         $krisma->status = "Ditolak";
         $krisma->save();
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $krisma->id;
         $riwayat->jenis_event =  "Krisma Lintas";
         $riwayat->status =  "Ditolak";
@@ -462,8 +498,11 @@ class ValidasiAdminController extends Controller
         $data=Krisma::find($request->id);
         $data->status = "Dibatalkan";
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = Riwayat::find($request->riwayatID);
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $data->id;
         $riwayat->jenis_event =  "Krisma Setempat";
         $riwayat->status =  "Dibatalkan";
@@ -479,8 +518,11 @@ class ValidasiAdminController extends Controller
         $data=Krisma::find($request->id);
         $data->status = "Dibatalkan";
 
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $riwayat = Riwayat::find($request->riwayatID);
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $data->id;
         $riwayat->jenis_event =  "Krisma Lintas";
         $riwayat->status =  "Dibatalkan";

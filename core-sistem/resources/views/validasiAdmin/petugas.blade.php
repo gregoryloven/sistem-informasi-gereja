@@ -65,6 +65,7 @@
                             <form action="/validasiAdmin/acceptpetugas" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
+                                <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
                             <form action="/validasiAdmin/declinepetugas" class="ml-2" method="post">
@@ -83,7 +84,7 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Penolakan Petugas Liturgi</h4>
+                                        <h4 class="modal-title">Penolakan Pendaftaran Petugas Liturgi</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf

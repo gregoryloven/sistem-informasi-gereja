@@ -29,7 +29,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Daftar Permohonan Paroki Setempat
+        Daftar Permohonan Krisma Paroki Setempat
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -79,6 +79,7 @@
                             <form action="/validasiAdmin/acceptkrismasetempat" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
+                                <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
                             <form action="/validasiAdmin/declinekrismasetempat" class="ml-2" method="post">
@@ -97,12 +98,13 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Pembatalan Reservasi</h4>
+                                        <h5 class="modal-title">Penolakan Pendaftaran Krisma Paroki Setempat</h5>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
                                         <label>Alasan Penolakan:</label>
                                         <input type="hidden" name="id" value="{{$d->id}}">
+                                        <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                         <textarea name="alasan_penolakan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                     </div>
                                     <div class="modal-footer">
@@ -137,7 +139,7 @@
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Daftar Permohonan Lintas Paroki
+        Daftar Permohonan Krisma Lintas Paroki
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -189,6 +191,7 @@
                             <form action="/validasiAdmin/acceptkrismalintas" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
+                                <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
                             <form action="/validasiAdmin/declinekrismalintas" class="ml-2" method="post">
@@ -207,12 +210,13 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Pembatalan Reservasi</h4>
+                                        <h5 class="modal-title">Penolakan Pendaftaran Krisma Lintas Paroki</h5>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
                                         <label>Alasan Penolakan:</label>
                                         <input type="hidden" name="id" value="{{$d->id}}">
+                                        <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                         <textarea name="alasan_penolakan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                     </div>
                                     <div class="modal-footer">
