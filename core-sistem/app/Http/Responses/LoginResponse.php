@@ -26,15 +26,15 @@ class LoginResponse implements LoginResponseContract
             $user = Auth::user()->role;
             if($user == 'admin')
             {
-                return redirect('/sbadmin2');
+                return redirect('/dashboard/admin');
             }
             elseif($user == 'ketua kbg')
             {
-                return redirect('/sbkbg');
+                return redirect('/dashboard/adminkbg');
             }
             elseif($user == 'ketua lingkungan')
             {
-                return redirect('/sbkl');
+                return redirect('/dashboard/adminlingkungan');
             }
             elseif($user == 'umat')
             {
