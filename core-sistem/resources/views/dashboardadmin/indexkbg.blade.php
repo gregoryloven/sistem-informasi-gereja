@@ -90,46 +90,13 @@
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('validasiKbgBaptis') }}">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Jumlah KBG</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlah_kbg }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-church fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Jumlah Lingkungan</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlah_lingkungan }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-church fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Baptis</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlah_baptis}}</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Baptis Bayi</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlah_baptis_bayi}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-check fa-2x text-gray-300"></i>
@@ -137,10 +104,31 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('validasiKbgBaptisDewasa') }}">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Baptis Dewasa</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlah_baptis_dewasa}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('validasiKbgKrisma') }}">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -154,10 +142,12 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('validasiKbgKomuni') }}">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -171,10 +161,12 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('validasiKbgPelayanan') }}">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -188,10 +180,12 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('validasiKbgPelayanan') }}">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -205,6 +199,7 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
 </div>
