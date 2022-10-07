@@ -3,6 +3,7 @@
 @push('css')
 <style>
     #myTable td {text-align: center; vertical-align: middle;}
+    #myTable2 td {text-align: center; vertical-align: middle;}
 </style>
 @endpush
 
@@ -12,7 +13,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Bayi</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -30,7 +31,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -118,7 +119,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable">
+            <table class="table table-bordered" id="myTable2">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>

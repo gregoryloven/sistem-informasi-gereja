@@ -22,7 +22,8 @@ class PendaftaranBaptisController extends Controller
     public function index()
     {
         $data = DB::table('list_events')
-                ->where('jenis_event', 'like', 'Baptis B%')
+                ->where([['jenis_event', 'like', 'Baptis B%'], ['status', 'Aktif']])
+                ->orderBy('jadwal_pelaksanaan', 'ASC')
                 ->get();
         $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis B%']])->get();
         $user = User::all();
