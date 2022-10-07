@@ -23,7 +23,11 @@
         {{ session('error') }}
     </div>
 @endif
-<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Umat</a><br><br>
+<div class="row">
+    <div class="col-auto"><a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Umat</a></div>
+    <div class="col-auto"><a href="#modalImportKbg" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-print"></i> Import Data</a><br><br>
+    </div>
+</div>
 
 <!-- CREATE WITH MODAL -->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
@@ -71,9 +75,6 @@
                     <label >KBG</label>
                     <select class="form-control" id='kbg_id' name='kbg_id' required>
                     <option value="" disabled selected>Choose</option>
-                    @foreach($tes as $k)
-                    <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option>
-                    @endforeach
                     </select>
                 </div>
                 <div class="form-group">
@@ -147,6 +148,8 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+
+@includeIf('umat.importexcelkbg')
 @endsection
 
 @section('javascript')
@@ -164,5 +167,23 @@ function EditFormUmatKBG(id)
     }
   });
 }
+
+$('#lingkungan_id').change(function(){
+    if($(this).val() != '') {
+        var value = $(this).val();
+        $.ajax({
+            url:`{{ url('fetchkbgumat') }}`,
+            method:"POST",
+            data:{
+                id:value, 
+                _token: $('[name=csrf-token]').attr('content'), 
+            },
+            success:function(result) {
+                // console.log(result);
+                $('#kbg_id').html(result);
+            }
+        })
+    }
+});
 </script>
 @endsection

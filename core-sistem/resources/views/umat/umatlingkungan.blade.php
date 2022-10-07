@@ -23,7 +23,13 @@
         {{ session('error') }}
     </div>
 @endif
-<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Umat</a><br><br>
+
+<div class="row">
+    <div class="col-auto"><a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Umat</a></div>
+    <div class="col-auto"><a href="#modalImportLingkungan" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-print"></i> Import Data</a><br><br>
+    </div>
+</div>
+
 
 
 <!-- EDIT WITH MODAL-->
@@ -88,6 +94,8 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+
+@includeIf('umat.importexcellingkungan')
 @endsection
 
 @section('javascript')

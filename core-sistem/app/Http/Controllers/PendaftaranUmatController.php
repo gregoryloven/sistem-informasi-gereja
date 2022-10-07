@@ -94,6 +94,18 @@ class PendaftaranUmatController extends Controller
 
     }
 
+    public function fetchkbgbaru(Request $request)
+    {
+        $kbg = Kbg::where('lingkungan_id', $request->id)->get();
+
+        // $output = '<option value="">Choose</option>';
+        $output = "";
+        foreach($kbg as $o) {
+            $output .= '<option value="'.$o->id.'">'.$o->nama_kbg.'</option>';
+        }
+        echo $output;
+    }
+
     public function Pembatalan(Request $request)
     {
         $data=User::find($request->id);

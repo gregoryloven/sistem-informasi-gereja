@@ -7,6 +7,9 @@ use App\Models\Lingkungan;
 use App\Models\Kbg;
 use Illuminate\Http\Request;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UmatLingkunganImport;
+use App\Imports\UmatKbgImport;
 
 class UmatController extends Controller
 {
@@ -21,7 +24,7 @@ class UmatController extends Controller
         return view('umat.umatkbg',compact('data','ling'));
     }
 
-    public function fetchkbg(Request $request)
+    public function fetchkbgumat(Request $request)
     {
         $kbg = Kbg::where('lingkungan_id', $request->id)->get();
 
@@ -31,7 +34,6 @@ class UmatController extends Controller
             $output .= '<option value="'.$o->id.'">'.$o->nama_kbg.'</option>';
         }
         echo $output;
-
     }
 
     public function TambahUmatKBG(Request $request)
@@ -85,5 +87,38 @@ class UmatController extends Controller
         ->get();
 
         return view('umat.umatlingkungan',compact('data','ling','kbg'));
+    }
+
+    public function DownloadExcelLingkungan(Request $request)
+    {
+        return response()->download(public_path('template/lingkungan.xlsx'));
+    }
+
+    public function DownloadExcelKbg(Request $request)
+    {
+        return response()->download(public_path('template/kbg.xlsx'));
+    }
+
+    public function ImportUmatLingkungan(Request $request)
+    {
+        // return $request->excellingkungan;
+        try {
+            Excel::import(new UmatLingkunganImport, $request->file('excellingkungan'), \Maatwebsite\Excel\Excel::XLSX);
+            return back()->with('status', 'Berhasil ditambah.');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.');
+        }
+        
+    }
+
+    public function ImportUmatKbg(Request $request)
+    {
+        try {
+            Excel::import(new UmatKbgImport, $request->file('excelkbg'), \Maatwebsite\Excel\Excel::XLSX);
+        return back()->with('status', 'Berhasil ditambah.');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.');
+        }
+        
     }
 }

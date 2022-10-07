@@ -190,12 +190,10 @@
                 <div class="form-group">
                     <label >KBG</label>
                     <select class="form-control" id='kbg_id_baru' name='kbg_id_baru'>
-                    <option value="" disabled selected>Choose</option>
-                    @foreach($kbg as $k)
-                    <option value="{{ $k->id }}">{{ $k->nama_kbg }}</option>
-                    @endforeach
+                        <option value="" disabled selected>Choose</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label >Alamat</label>
                     <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
@@ -338,6 +336,24 @@
                     success:function(result) {
                         // console.log(result);
                         $('#kbg_id_lama').html(result);
+                    }
+                })
+            }
+        });
+
+        $('#lingkungan_id_baru').change(function(){
+            if($(this).val() != '') {
+                var value = $(this).val();
+                $.ajax({
+                    url:`{{ url('fetchkbgbaru') }}`,
+                    method:"POST",
+                    data:{
+                        id:value, 
+                        _token: $('[name=csrf-token]').attr('content'), 
+                    },
+                    success:function(result) {
+                        // console.log(result);
+                        $('#kbg_id_baru').html(result);
                     }
                 })
             }
