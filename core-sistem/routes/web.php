@@ -26,6 +26,7 @@ use App\Http\Controllers\ValidasiKbgController;
 use App\Http\Controllers\ValidasiKLController;
 use App\Http\Controllers\ListEventController;
 use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\UmatController;
 
 use App\Http\Controllers\LandlordController;
@@ -75,6 +76,9 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //     return view('welcome');
     // });
     Route::get('/', [DashboardUserController::class, 'index']);
+    Route::get('/dashboard/admin', [DashboardAdminController::class, 'index']);
+    Route::get('/dashboard/adminkbg', [DashboardAdminController::class, 'indexkbg']);
+    Route::get('/dashboard/adminlingkungan', [DashboardAdminController::class, 'indexlingkungan']);
 
     Route::get('/sbadmin2', function () {
         return view('layouts.sbadmin2');
