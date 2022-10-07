@@ -8,6 +8,7 @@ use App\Models\KomuniPertama;
 use App\Models\Krisma;
 use App\Models\Kbg;
 use App\Models\Riwayat;
+use App\Models\ListEvent;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -111,15 +112,19 @@ class ValidasiKbgController extends Controller
 
     public function AcceptBaptis(Request $request)
     {
+        // return $request->all();
         $baptis=Baptis::find($request->id);
 
         if($baptis->jenis == "Baptis Bayi")
         {
+            $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
             $baptis->status = "Disetujui KBG";
             $baptis->save();
     
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $baptis->id;
             $riwayat->jenis_event =  "Baptis Bayi";
             $riwayat->status =  "Disetujui KBG";

@@ -70,6 +70,8 @@
                             <form action="/validasiKbg/acceptbaptis" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
+                                <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
+                                {{-- <input type="text" name="jenis" class="d-none" value="{{$d->jenis}}"> --}}
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
                             <form action="/validasiKbg/declinebaptis" class="ml-2" method="post">
