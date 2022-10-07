@@ -126,9 +126,13 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //Daftar Umat Lingkungan
     Route::get('umatLingkungan', [UmatController::class, 'umatLingkungan'])->name('umat.umatLingkungan');
-    Route::post('/fetchkbg', [UmatController::class, 'fetchkbg'])->name('fetchkbg');
+    Route::post('/fetchkbgumat', [UmatController::class, 'fetchkbgumat'])->name('fetchkbgumat');
     Route::post('/umat/EditFormUmatLingkungan', [UmatController::class, 'EditFormUmatLingkungan'])->name('umat.EditFormUmatLingkungan');
     Route::post('/umat/UbahUmatLingkungan/{id}', [UmatController::class, 'UbahUmatLingkungan'])->name('umat.UbahUmatLingkungan');
+    Route::get('/umat/DownloadExcelLingkungan', [UmatController::class, 'DownloadExcelLingkungan'])->name('umat.DownloadExcelLingkungan');
+    Route::get('/umat/DownloadExcelKbg', [UmatController::class, 'DownloadExcelKbg'])->name('umat.DownloadExcelKbg');
+    Route::post('/umat/ImportUmatLingkungan', [UmatController::class, 'ImportUmatLingkungan'])->name('umat.ImportUmatLingkungan');
+    Route::post('/umat/ImportUmatKbg', [UmatController::class, 'ImportUmatKbg'])->name('umat.ImportUmatKbg');
 
     //Paroki
     Route::resource('parokis', ParokiController::class);
@@ -217,6 +221,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
         Route::post('/pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
         Route::post('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
+        Route::post('/fetchkbgbaru', [PendaftaranUmatController::class, 'fetchkbgbaru'])->name('fetchkbgbaru');
         Route::post('/pendaftaranumat/Pembatalan', [PendaftaranUmatController::class, 'Pembatalan']);
 
         //Pendaftaran Petugas Liturgi
