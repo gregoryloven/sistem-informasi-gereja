@@ -37,6 +37,7 @@
                         <th width="5%">No</th>
                         <th>Nama Lengkap</th>
                         <th>Jenis Kelamin</th>
+                        <th>Alamat</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Telepon</th>
@@ -51,6 +52,7 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_lengkap}}</td>
                         <td st>{{$d->jenis_kelamin}}</td>
+                        <td st>{{$d->alamat}}</td>
                         <td st>{{$d->lingkungan->nama_lingkungan}}</td>
                         <td st>{{$d->kbg->nama_kbg}}</td>
                         <td st>{{$d->telepon}}</td>
@@ -111,8 +113,7 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama Lengkap</th>
-                        <th>Tempat Lahir</th>
-                        <th>Tanggal Lahir</th>
+                        <th>Jenis Kelamin</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Telepon</th>
@@ -126,8 +127,7 @@
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$da->nama_lengkap}}</td>
-                        <td st>{{$da->tempat_lahir}}</td>
-                        <td st>{{tanggal_indonesia($da->tanggal_lahir)}}</td>
+                        <td st>{{$da->jenis_kelamin}}</td>
                         <td st>{{$da->lingkungan->nama_lingkungan}}</td>
                         <td st>{{$da->kbg->nama_kbg}}</td>
                         <td st>{{$da->telepon}}</td>

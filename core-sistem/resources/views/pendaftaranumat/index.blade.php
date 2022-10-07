@@ -252,8 +252,8 @@
                                 <td st>{{$d->nama_lengkap}}</td>
                                 <td st>{{$d->hubungan}}</td>
                                 <td st>{{$d->jenis_kelamin}}</td>
-                                <td st>{{$d->lingkungan_id}}</td>
-                                <td st>{{$d->kbg_id}}</td>
+                                <td st>{{$d->lingkungan->nama_lingkungan}}</td>
+                                <td st>{{$d->kbg->nama_kbg}}</td>
                                 <td st>{{$d->alamat}}</td>
                                 <td st>{{$d->telepon}}</td>
                                 <td st>
