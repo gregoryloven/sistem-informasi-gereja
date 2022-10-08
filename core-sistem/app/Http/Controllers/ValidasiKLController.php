@@ -18,6 +18,7 @@ class ValidasiKLController extends Controller
     public function umatLama()
     {
         $lingkungan = Auth::user()->lingkungan_id;
+        $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
 
         $umatlama = User::where([["status", "Belum Tervalidasi"], ['lingkungan_id', $lingkungan]])->get();
         $umatlama2 = User::where([["status", "Tervalidasi"], ['lingkungan_id', $lingkungan]])
@@ -25,7 +26,7 @@ class ValidasiKLController extends Controller
         ->orderBy('updated_at', 'DESC')
         ->get();
 
-        return view('validasiKL.umatLama',compact("umatlama", "umatlama2"));
+        return view('validasiKL.umatLama',compact("umatlama", "umatlama2", "lingkungan2"));
     }
 
     public function AcceptUmatLama(Request $request)
@@ -51,6 +52,7 @@ class ValidasiKLController extends Controller
     public function umatBaru()
     {
         $lingkungan = Auth::user()->lingkungan_id;
+        $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
 
         $umatbaru = Umat::where([["status", "Disetujui KBG"], ['lingkungan_id', $lingkungan]])->get();
         $umatbaru2 = Umat::where([["status", "Disetujui Lingkungan"], ['lingkungan_id', $lingkungan]])
@@ -58,7 +60,7 @@ class ValidasiKLController extends Controller
         ->orderBy('updated_at', 'DESC')
         ->get();
 
-        return view('validasiKL.umatBaru',compact("umatbaru", "umatbaru2"));
+        return view('validasiKL.umatBaru',compact("umatbaru", "umatbaru2", "lingkungan2"));
     }
 
     public function AcceptUmatBaru(Request $request)
@@ -95,7 +97,7 @@ class ValidasiKLController extends Controller
         'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiKL.pelayanan',compact("reservasi", "reservasiAll"));
+        return view('validasiKL.pelayanan',compact("reservasi", "reservasiAll", "lingkungan"));
     }
 
     public function AcceptPelayanan(Request $request)
@@ -147,7 +149,7 @@ class ValidasiKLController extends Controller
         ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiKL.baptis',compact("reservasi", "reservasiAll"));
+        return view('validasiKL.baptis',compact("reservasi", "reservasiAll", "lingkungan"));
     }
 
     public function baptisDewasa()
@@ -166,7 +168,7 @@ class ValidasiKLController extends Controller
         ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiKL.baptisDewasa',compact("reservasi", "reservasiAll"));
+        return view('validasiKL.baptisDewasa',compact("reservasi", "reservasiAll", "lingkungan"));
     }
 
     public function AcceptBaptis(Request $request)
@@ -263,7 +265,7 @@ class ValidasiKLController extends Controller
         >get(['komuni_pertamas.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
         
-        return view('validasiKL.komuni',compact("reservasi", "reservasiAll"));
+        return view('validasiKL.komuni',compact("reservasi", "reservasiAll", "lingkungan"));
     }
 
     public function AcceptKomuni(Request $request)
@@ -310,8 +312,8 @@ class ValidasiKLController extends Controller
     {
         $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
         $user = Auth::user()->id;
+
         $reservasi = krisma::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan], ['jenis', 'Paroki Setempat']])->get();
-        
         $reservasiAll = DB::table('krismas')
         ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
         ->join('users', 'riwayats.user_id', '=', 'users.id')
@@ -322,7 +324,7 @@ class ValidasiKLController extends Controller
         ->get(['krismas.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiKL.krisma',compact("reservasi", "reservasiAll"));
+        return view('validasiKL.krisma',compact("reservasi", "reservasiAll", "lingkungan"));
     }
 
     public function AcceptKrisma(Request $request)

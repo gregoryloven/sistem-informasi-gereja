@@ -13,7 +13,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Krisma</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Krisma - KBG {{$kbg}}</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -61,7 +61,7 @@
                         <td st>{{$d->orangtua_ibu}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></a></td>
                         <td st><a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}" height='80px'/></a></td>
                         <td >
@@ -163,7 +163,7 @@
                         <td st>{{$da->orangtua_ibu}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$da->surat_baptis)}}" height='80px'/></a></td>
                         <td st><a href="#modalPopUp2{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$da->sertifikat_komuni)}}" height='80px'/></a></td>
                         <td st>

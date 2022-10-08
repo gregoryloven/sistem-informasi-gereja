@@ -69,7 +69,7 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_event}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->romo}}</td>
                         <td st>{{$d->kuota}}</td>
@@ -123,7 +123,7 @@
                             <td>@php echo $i; @endphp</td>
                             <td st>{{$d->nama_event}}</td>
                             <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                            <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                            <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->romo}}</td>
                             <td st>{{$d->jumlah_tiket}}</td>

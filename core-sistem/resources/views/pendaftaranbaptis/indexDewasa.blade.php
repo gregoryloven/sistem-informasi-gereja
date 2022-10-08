@@ -53,6 +53,12 @@
     </div>
 </div>
 
+@if($user[0]->status != 'Tervalidasi')
+<div class="alert alert-danger">
+        Akun Anda Belum Terdaftar Pada Lingkungan atau KBG. Silahkan Daftar Terlebih Dahulu Pada Halaman Pendaftaran Umat Atau <a href="/pendaftaranumat">Klik Disini</a>
+</div>
+@endif
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         Sesi yang tersedia
@@ -63,8 +69,8 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Event</th>
-                        <th>Jenis Event</th>
+                        <!-- <th>Nama Event</th> -->
+                        <th>Jenis Sakramen</th>
                         <th>Tanggal Buka Pendaftaran</th>
                         <th>Tanggal Tutup Pendaftaran</th>
                         <th>Tanggal Pelaksanaan</th>
@@ -80,12 +86,12 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->nama_event}}</td>
+                        <!-- <td st>{{$d->nama_event}}</td> -->
                         <td st>{{$d->jenis_event}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->romo}}</td>
                         <td>
@@ -111,7 +117,7 @@
                     <thead>
                         <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Lengkap Penerima Baptis</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
@@ -126,8 +132,8 @@
                         <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
                         <th>Romo</th>
-                        <th>Status</th>
                         <th>Surat Pernyataan</th>
+                        <th>Status</th>
                         <th>Tindakan</th>
                         </tr>
                     </thead>
@@ -149,7 +155,7 @@
                             <td st>{{$d->telepon}}</td>
                             <td st>{{$d->jenis}}</td>
                             <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                            <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                            <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->romo}}</td>
                             <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}" height='80px'/></td>

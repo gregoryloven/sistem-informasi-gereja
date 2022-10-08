@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label >Waktu Tobat</label>
-                <input type="text" class="form-control" value="{{waktu_indonesia( $list->jadwal_pelaksanaan)}}" readonly>
+                <input type="text" class="form-control" value="{{waktu_indonesia( $list->jadwal_pelaksanaan)}} WITA" readonly>
             </div>
             <div class="form-group">
                 <label >Lokasi</label>

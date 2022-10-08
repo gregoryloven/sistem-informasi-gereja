@@ -36,7 +36,7 @@ class ValidasiKbgController extends Controller
         'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
         
-        return view('validasiKbg.pelayanan',compact("reservasi", "reservasiAll"));
+        return view('validasiKbg.pelayanan',compact("reservasi", "reservasiAll", "kbg"));
     }
 
     public function AcceptPelayanan(Request $request)
@@ -88,7 +88,7 @@ class ValidasiKbgController extends Controller
         ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiKbg.baptis',compact("reservasi", "reservasiAll"));
+        return view('validasiKbg.baptis',compact("reservasi", "reservasiAll", "kbg"));
     }
 
     public function baptisDewasa()
@@ -107,7 +107,7 @@ class ValidasiKbgController extends Controller
         ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiKbg.baptisDewasa',compact("reservasi", "reservasiAll"));
+        return view('validasiKbg.baptisDewasa',compact("reservasi", "reservasiAll", "kbg"));
     }
 
     public function AcceptBaptis(Request $request)
@@ -203,7 +203,7 @@ class ValidasiKbgController extends Controller
         ->get(['komuni_pertamas.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiKbg.komuni',compact("reservasi", "reservasiAll"));
+        return view('validasiKbg.komuni',compact("reservasi", "reservasiAll", "kbg"));
     }
 
     public function AcceptKomuni(Request $request)
@@ -261,7 +261,7 @@ class ValidasiKbgController extends Controller
         ->get(['krismas.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiKbg.krisma',compact("reservasi", "reservasiAll"));
+        return view('validasiKbg.krisma',compact("reservasi", "reservasiAll", "kbg"));
     }
 
     public function AcceptKrisma(Request $request)

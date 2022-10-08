@@ -12,7 +12,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Dewasa</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Dewasa - KBG {{$kbg}}</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -65,7 +65,7 @@
                         <td st>{{$d->telepon}}</td>
                         <td st>{{$d->jenis}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}" height='80px'/></td>
                         <td >
                             @if($d->status == "Diproses")
@@ -163,7 +163,7 @@
                         <td st>{{$da->telepon}}</td>
                         <td st>{{$da->jenis}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}" height='80px'/></td>
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui KBG') 

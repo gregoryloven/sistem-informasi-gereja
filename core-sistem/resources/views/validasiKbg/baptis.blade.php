@@ -13,7 +13,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Bayi</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Bayi - KBG {{$kbg}}</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -65,7 +65,7 @@
                         <td st>{{$d->telepon}}</td>
                         <td st>{{$d->jenis}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td >
                             @if($d->status == "Diproses")
                             <form action="/validasiKbg/acceptbaptis" method="post">
@@ -153,7 +153,7 @@
                         <td st>{{$da->telepon}}</td>
                         <td st>{{$da->jenis}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui KBG') 
                             <div class="alert alert-success" role="alert">

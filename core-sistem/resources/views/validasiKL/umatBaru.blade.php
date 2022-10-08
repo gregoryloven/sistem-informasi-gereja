@@ -13,7 +13,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Pendaftaran Umat Baru</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Pendaftaran Umat Baru - Lingkungan {{$lingkungan2}}</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}

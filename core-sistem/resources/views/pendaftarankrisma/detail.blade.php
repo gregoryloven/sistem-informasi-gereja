@@ -17,7 +17,7 @@
                         @foreach($log as $l) 
                             @if($l->status=='Diproses') 
                             <div class="alert alert-success" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
+                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
                             </div>
                             @endif
                         @endforeach
@@ -28,7 +28,7 @@
                             @foreach($log as $l) 
                                 @if($l->status=='Disetujui KBG') 
                                 <div class="alert alert-success" role="alert">
-                                    {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
+                                    {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
                                 </div>
                                 @endif
                             @endforeach
@@ -38,7 +38,7 @@
                             @foreach($log as $l) 
                                 @if($l->status=='Disetujui Lingkungan') 
                                 <div class="alert alert-success" role="alert">
-                                    {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
+                                    {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
                                 </div>
                                 @endif
                             @endforeach
@@ -49,7 +49,7 @@
                         @foreach($log as $l) 
                             @if($l->status=='Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
+                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
                             </div>
                             @endif
                         @endforeach
@@ -59,7 +59,7 @@
                         @foreach($log as $l) 
                             @if($l->status=='Selesai') 
                             <div class="alert alert-success" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
+                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
                             </div>
                             @endif
                         @endforeach
@@ -69,7 +69,7 @@
                         @foreach($log as $l) 
                             @if($l->status=='Ditolak')  
                             <div class="alert alert-danger" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}}
+                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
                             </div>
                             <small><b>Alasan: {{$l->alasan_penolakan}}<br>Oleh: {{$l->user->role}}</b></small>
                             @endif
@@ -80,7 +80,7 @@
                         @foreach($log as $l) 
                             @if($l->status=='Dibatalkan') 
                             <div class="alert alert-danger" role="alert">
-                                {{tanggal_indonesia($l->updated_at)}}<br>{{waktu_indonesia($l->updated_at)}}
+                                {{tanggal_indonesia($l->updated_at)}}<br>{{waktu_indonesia($l->updated_at)}} WITA
                             </div>
                             <small><b>Alasan: {{$l->alasan_pembatalan}}<br>Oleh: {{$l->user->role}}</b></small>
                             @endif

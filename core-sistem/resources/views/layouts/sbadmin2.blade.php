@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('dashboardadmin.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -84,10 +84,16 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-pray"></i>
+                    <span>Buat Sesi</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSakramen"
                     aria-expanded="true" aria-controls="collapseSakramen">
                     <i class="fas fa-fw fa-cross"></i>
-                    <span>Sakramen</span>
+                    <span>Pendaftaran Sakramen Tatap Muka</span>
                 </a>
                 <div id="collapseSakramen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -97,12 +103,6 @@
                         <a class="collapse-item" href="#">Perkawinan</a>
                     </div>
                 </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
-                    <i class="fas fa-fw fa-pray"></i>
-                    <span>Buat Sesi</span></a>
             </li>
 
             <li class="nav-item">
@@ -125,9 +125,23 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporan"
+                    aria-expanded="true" aria-controls="collapseLaporan">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Laporan</span>
+                </a>
+                <div id="collapseLaporan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">Baptis Bayi</a>
+                        <a class="collapse-item" href="#">Baptis Dewasa</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAkun"
                     aria-expanded="true" aria-controls="collapseAkun">
-                    <i class="fas fa-fw fa-users"></i>
+                    <i class="fas fa-fw fa-user"></i>
                     <span>Akun</span>
                 </a>
                 <div id="collapseAkun" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">

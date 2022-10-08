@@ -90,7 +90,7 @@
                 </div>
                 <div class="form-group">
                     <label >Waktu Pelaksanaan</label>
-                    <input type="text" value="{{waktu_indonesia($list[0]->jadwal_pelaksanaan)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
+                    <input type="text" value="{{waktu_indonesia($list[0]->jadwal_pelaksanaan)}} WITA" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
                 </div>
                 <div class="form-group">
                     <label >Lokasi</label>
@@ -110,7 +110,11 @@
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Baptis"
                 </div>
-                <input type="hidden" value="{{$list[0]->id}}" id='event_id' name='event_id'>
+                <form action="/checkbox-example" method="POST">
+                    <input type="checkbox" name="terms">
+                    <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
+                </form>
+                <input type="hidden" value="{{$list[0]->id}}" id='list_event_id' name='list_event_id'>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
             </div>

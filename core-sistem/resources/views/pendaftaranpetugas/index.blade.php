@@ -85,7 +85,7 @@
                         <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
                         <td st>{{$d->lokasi}}</td>
                         <td>
                             @if($d->tgl_buka_pendaftaran <= date('Y-m-d') && $d->tgl_tutup_pendaftaran >= date('Y-m-d'))
@@ -135,7 +135,7 @@
                             <td st>{{$d->lingkungan}}</td>
                             <td st>{{$d->kbg}}</td>
                             <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                            <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                            <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->telepon}}</td>
                             <td st>

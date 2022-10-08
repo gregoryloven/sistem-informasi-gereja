@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label >Waktu Pelaksanaan</label>
-                    <input type="text" value="{{waktu_indonesia($list[0]->jadwal_pelaksanaan)}}" class="form-control" placeholder="Waktu Pelaksanaan" required readonly>
+                    <input type="text" value="{{waktu_indonesia($list[0]->jadwal_pelaksanaan)}} WITA" class="form-control" placeholder="Waktu Pelaksanaan" required readonly>
                 </div>
                 <div class="form-group">
                     <label >Lokasi</label>

@@ -101,7 +101,7 @@ class PendaftaranBaptisController extends Controller
 
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
-            $riwayat->list_event_id = $request->event_id;
+            $riwayat->list_event_id = $request->list_event_id;
             $riwayat->jenis_event =  $data->jenis;
             $riwayat->event_id =  $data->id;
             $riwayat->status =  "Diproses";
@@ -140,7 +140,7 @@ class PendaftaranBaptisController extends Controller
 
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
-            $riwayat->list_event_id = $request->event_id;
+            $riwayat->list_event_id = $request->list_event_id;
             $riwayat->jenis_event =  $data->jenis;
             $riwayat->event_id =  $data->id;
             $riwayat->status =  "Diproses";
@@ -175,6 +175,8 @@ class PendaftaranBaptisController extends Controller
     public function Pembatalan(Request $request)
     {
         $data=Baptis::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+        
         if($data->jenis == "Baptis Bayi")
         {
             $data->status = "Dibatalkan";
@@ -182,6 +184,7 @@ class PendaftaranBaptisController extends Controller
 
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $data->id;
             $riwayat->jenis_event =  $data->jenis;
             $riwayat->status =  "Dibatalkan";
@@ -197,6 +200,7 @@ class PendaftaranBaptisController extends Controller
 
             $riwayat = new Riwayat();
             $riwayat->user_id = Auth::user()->id;
+            $riwayat->list_event_id =  $list_event->id;
             $riwayat->event_id =  $data->id;
             $riwayat->jenis_event =  $data->jenis;
             $riwayat->status =  "Dibatalkan";

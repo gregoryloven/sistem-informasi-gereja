@@ -76,9 +76,9 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //     return view('welcome');
     // });
     Route::get('/', [DashboardUserController::class, 'index']);
-    Route::get('/dashboard/admin', [DashboardAdminController::class, 'index']);
-    Route::get('/dashboard/adminkbg', [DashboardAdminController::class, 'indexkbg']);
-    Route::get('/dashboard/adminlingkungan', [DashboardAdminController::class, 'indexlingkungan']);
+    Route::get('/dashboard/admin', [DashboardAdminController::class, 'index'])->name('dashboardadmin.index');
+    Route::get('/dashboard/adminkbg', [DashboardAdminController::class, 'indexkbg'])->name('dashboardadmin.indexkbg');
+    Route::get('/dashboard/adminlingkungan', [DashboardAdminController::class, 'indexlingkungan'])->name('dashboardadmin.indexlingkungan');;
 
     Route::get('/sbadmin2', function () {
         return view('layouts.sbadmin2');

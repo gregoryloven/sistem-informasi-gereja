@@ -12,7 +12,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Pelayanan</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Pelayanan - KBG {{$kbg}}</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -53,7 +53,7 @@
                         <td st>{{$d->nama_lengkap}}</td>
                         <td st>{{$d->pelayanan->jenis_pelayanan}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{$d->keterangan}}</td>
@@ -131,7 +131,7 @@
                         <td st>{{$da->nama_lengkap}}</td>
                         <td st>{{$da->jenisPelayanan}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st>{{$da->alamat}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st>{{$da->keterangan}}</td>
