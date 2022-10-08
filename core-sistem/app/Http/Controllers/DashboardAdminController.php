@@ -27,13 +27,14 @@ class DashboardAdminController extends Controller
         $jumlah_kbg = Kbg::count();
         $jumlah_lingkungan = Lingkungan::count();
 
-        $jumlah_baptis = Baptis::where('status', 'Disetujui Lingkungan')->count();
+        $jumlah_baptis_bayi = Baptis::where([['jenis', 'Baptis Bayi'], ['status', 'Disetujui Lingkungan']])->count();
+        $jumlah_baptis_dewasa = Baptis::where([['jenis', 'Baptis Dewasa'], ['status', 'Disetujui Lingkungan']])->count();
         $jumlah_krisma = Krisma::where('status', 'Disetujui Lingkungan')->count();
         $jumlah_komuni_pertama = KomuniPertama::where('status', 'Disetujui Lingkungan')->count();
         $jumlah_pelayanan_lainnya = PendaftaranPelayananLainnya::where('status', 'Disetujui Lingkungan')->count();
         $jumlah_petugas = PendaftaranPetugas::where('status', 'Diproses')->count();
         
-        return view('dashboardadmin.index', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_kbg', 'jumlah_lingkungan', 'jumlah_baptis', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'jumlah_petugas'));
+        return view('dashboardadmin.index', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_kbg', 'jumlah_lingkungan', 'jumlah_baptis_bayi', 'jumlah_baptis_dewasa', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'jumlah_petugas'));
     }
 
     public function indexkbg()
@@ -45,14 +46,15 @@ class DashboardAdminController extends Controller
         $jumlah_kbg = Kbg::count();
         $jumlah_lingkungan = Lingkungan::count();
 
-        $jumlah_baptis = Baptis::where('status', 'Diproses')->count();
+        $jumlah_baptis_bayi = Baptis::where([['jenis', 'Baptis Bayi'], ['status', 'Disetujui Lingkungan']])->count();
+        $jumlah_baptis_dewasa = Baptis::where([['jenis', 'Baptis Dewasa'], ['status', 'Disetujui Lingkungan']])->count();
         $jumlah_krisma = Krisma::where('status', 'Diproses')->count();
         $jumlah_komuni_pertama = KomuniPertama::where('status', 'Diproses')->count();
         $jumlah_pelayanan_lainnya = PendaftaranPelayananLainnya::where('status', 'Diproses')->count();
 
         $pendaftaran_umat_baru = Umat::where('status', 'Diproses')->count();
         
-        return view('dashboardadmin.indexkbg', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_kbg', 'jumlah_lingkungan', 'jumlah_baptis', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'pendaftaran_umat_baru'));
+        return view('dashboardadmin.indexkbg', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_kbg', 'jumlah_lingkungan', 'jumlah_baptis_bayi', 'jumlah_baptis_dewasa', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'pendaftaran_umat_baru'));
     }
 
     public function indexlingkungan()
@@ -65,7 +67,8 @@ class DashboardAdminController extends Controller
         $jumlah_kbg = Kbg::count();
         $jumlah_lingkungan = Lingkungan::count();
 
-        $jumlah_baptis = Baptis::where('status', 'Disetujui KBG')->count();
+        $jumlah_baptis_bayi = Baptis::where([['jenis', 'Baptis Bayi'], ['status', 'Disetujui Lingkungan']])->count();
+        $jumlah_baptis_dewasa = Baptis::where([['jenis', 'Baptis Dewasa'], ['status', 'Disetujui Lingkungan']])->count();
         $jumlah_krisma = Krisma::where('status', 'Disetujui KBG')->count();
         $jumlah_komuni_pertama = KomuniPertama::where('status', 'Disetujui KBG')->count();
         $jumlah_pelayanan_lainnya = PendaftaranPelayananLainnya::where('status', 'Disetujui KBG')->count();
@@ -75,6 +78,6 @@ class DashboardAdminController extends Controller
 
 
         
-        return view('dashboardadmin.indexlingkungan', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_kbg', 'jumlah_lingkungan', 'jumlah_baptis', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'pendaftaran_umat_lama', 'pendaftaran_umat_baru'));
+        return view('dashboardadmin.indexlingkungan', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_kbg', 'jumlah_lingkungan', 'jumlah_baptis_bayi', 'jumlah_baptis_dewasa', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'pendaftaran_umat_lama', 'pendaftaran_umat_baru'));
     }
 }
