@@ -32,6 +32,7 @@ class CreateKrismasTable extends Migration
             $table->string('sertifikat_komuni');
             $table->string('surat_pengantar');
             $table->enum('status', ['Diproses','Disetujui KBG','Disetujui Lingkungan','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
+            $table->enum('kursus', ['Lulus','Tidak Lulus'])->nullable();
             $table->string('sertifikat_krisma')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

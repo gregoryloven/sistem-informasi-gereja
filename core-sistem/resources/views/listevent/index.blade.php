@@ -82,6 +82,10 @@
                             <label >Lokasi</label>
                             <input type="text" class="form-control" id='lokasi' name='lokasi' placeholder="Lokasi" required>
                         </div>
+                        <div style='display:none' id='label_kursus' class="form-group">
+                            <label >Keterangan Kursus (Tempat, Tanggal, Waktu)</label>
+                            <input type="text" class="form-control" id='keterangan_kursus' name='keterangan_kursus' placeholder="Keterangan Kursus" required>
+                        </div>
                         <div style='display:none' id='label_romo' class="form-group">
                             <label >Romo</label>
                             <input type="text" class="form-control" id='romo' name='romo' placeholder="Romo" required>
@@ -129,6 +133,7 @@
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
+                        <th>Keterangan Kursus</th>
                         <th>Romo</th>
                         <th>Status</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
@@ -147,6 +152,7 @@
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
                         <td st>{{$d->lokasi}}</td>
+                        <td st>{{$d->keterangan_kursus}}</td>
                         <td st>{{$d->romo}}</td>
                         <td st><div class="alert alert-success">{{$d->status}}</div></td>
                         <td>
@@ -423,14 +429,28 @@ function CheckJadwalPelaksanaan()
 function checkJenisEvent(jenis)
 {
 
-    if($(jenis).val() == 'Baptis Bayi' || $(jenis).val() == 'Baptis Dewasa' || $(jenis).val() == 'Komuni Pertama' 
-    || $(jenis).val() == 'Krisma')
+    if($(jenis).val() == 'Baptis Bayi' || $(jenis).val() == 'Baptis Dewasa')
     {
         $('#label_nama_event').show()
         $('#label_tanggal_buka').show()
         $('#label_tanggal_tutup').show()
         $('#label_jadwal_pelaksanaan').show()
         $('#label_lokasi').show()
+        $('#label_romo').show()
+        $('#label_jenis_petugas').hide()
+        $('#label_kuota').hide()
+
+        $('#petugas_liturgi_id').prop('required',false)
+        $('#kuota').prop('required',false)
+    }
+    else if($(jenis).val() == 'Komuni Pertama' || $(jenis).val() == 'Krisma')
+    {
+        $('#label_nama_event').show()
+        $('#label_tanggal_buka').show()
+        $('#label_tanggal_tutup').show()
+        $('#label_jadwal_pelaksanaan').show()
+        $('#label_lokasi').show()
+        $('#label_kursus').show()
         $('#label_romo').show()
         $('#label_jenis_petugas').hide()
         $('#label_kuota').hide()
@@ -502,7 +522,5 @@ function CheckJadwalPelaksanaann()
         
     }
 }
-
-
 </script>
 @endsection

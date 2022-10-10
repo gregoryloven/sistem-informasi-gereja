@@ -43,6 +43,12 @@
                 <label >Lokasi</label>
                 <input type="text" value="{{$data->lokasi}}" class="form-control" id='lokasii' name='lokasi' placeholder="Lokasi" required>
             </div>
+            @if($data->jenis_event == 'Komuni Pertama' || $data->jenis_event == 'Krisma')
+            <div class="form-group">
+                <label >Keterangan Kursus (Tempat, Tanggal, Waktu)</label>
+                <input type="text" value="{{$data->keterangan_kursus}}" class="form-control" id='keterangan_kursuss' name='keterangan_kursus' placeholder="Keterangan Kursus" required>
+            </div>
+            @endif
             @if($data->jenis_event != 'Petugas Liturgi')
             <div class="form-group">
                 <label >Romo</label>

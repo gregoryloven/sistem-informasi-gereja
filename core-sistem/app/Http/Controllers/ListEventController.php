@@ -31,8 +31,8 @@ class ListEventController extends Controller
         $data = DB::table('list_events')
         ->where([['list_events.jenis_event', '!=', 'Petugas Liturgi'],['list_events.jenis_event', '!=', 'Misa'],['list_events.jenis_event', '!=', 'Tobat']])
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.romo',
-        'list_events.status'
+        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
+        'list_events.romo', 'list_events.status'
         ]);
 
         $data2 = DB::table('list_events')
@@ -65,6 +65,7 @@ class ListEventController extends Controller
         $data->tgl_tutup_pendaftaran = $request->get('tgl_tutup_pendaftaran');
         $data->jadwal_pelaksanaan = $request->get('jadwal_pelaksanaan');
         $data->lokasi = $request->get('lokasi');
+        $data->keterangan_kursus = $request->get('keterangan_kursus');
         $data->romo = $request->get('romo');
         $data->kuota = $request->get('kuota');
         $data->status = "Aktif";
@@ -118,6 +119,7 @@ class ListEventController extends Controller
         $data->tgl_tutup_pendaftaran = $request->get('tgl_tutup_pendaftaran');
         $data->jadwal_pelaksanaan = $request->get('jadwal_pelaksanaan');
         $data->lokasi = $request->get('lokasi');
+        $data->keterangan_kursus = $request->get('keterangan_kursus');
         $data->romo = $request->get('romo');
         $data->kuota = $request->get('kuota');
         $data->save();
