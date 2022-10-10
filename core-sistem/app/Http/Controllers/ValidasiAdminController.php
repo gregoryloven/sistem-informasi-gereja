@@ -10,6 +10,7 @@ use App\Models\PelayananLainnya;
 use App\Models\PendaftaranPelayananLainnya;
 use App\Models\PendaftaranPetugas;
 use App\Models\Riwayat;
+use App\Models\ListEvent;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -314,6 +315,7 @@ class ValidasiAdminController extends Controller
         $reservasi = KomuniPertama::where('status', 'Disetujui Lingkungan')->get();
         $reservasiAll = DB::table('komuni_pertamas')
         ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
+        ->join('users', 'riwayats.user_id', '=', 'users.id')
         ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Komuni Pertama']])
         ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
         ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Komuni Pertama']])
@@ -381,6 +383,65 @@ class ValidasiAdminController extends Controller
         $data->save();
 
         return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Komuni Pertama Berhasil Dibatalkan');
+    }
+
+    public function KursusKomuni()
+    {
+        $data = ListEvent::where('jenis_event', 'like', 'Ko%')->get();
+
+        return view('validasiAdmin.kursusKomuni',compact("data"));
+    }
+
+    public function PendaftarKomuni(Request $request)
+    {
+        $id = $request->id;
+        $komuni = DB::table('riwayats')
+        ->join('komuni_pertamas', 'riwayats.event_id', '=', 'komuni_pertamas.id')
+        ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
+        ->get('komuni_pertamas.*', 'riwayats.*');
+        
+        return view('validasiAdmin.DetailKursusKomuni',compact("komuni", "id"));
+    }
+
+    public function LulusKursusKomuni(Request $request)
+    {
+        $array=$request->get("data");
+        $status=$request->get("status");
+        $list_event_id=$request->get("id");
+
+        foreach($array as $d)
+        {
+            $komuni=KomuniPertama::find($d['id']);
+            
+            if($status == 'lulus')
+            {
+                $komuni->status = "Selesai";
+                $komuni->save();
+
+                $riwayat = new Riwayat();
+                $riwayat->user_id = Auth::user()->id;
+                $riwayat->list_event_id =  $list_event_id;
+                $riwayat->event_id =  $komuni->id;
+                $riwayat->jenis_event =  "Komuni Pertama";
+                $riwayat->status =  "Selesai";
+                $riwayat->save();
+            }
+            else
+            {
+                $komuni->status = "Disetujui KBG";
+                $komuni->save();
+
+                $riwayat = new Riwayat();
+                $riwayat->user_id = Auth::user()->id;
+                $riwayat->list_event_id =  $list_event_id;
+                $riwayat->event_id =  $komuni->id;
+                $riwayat->jenis_event =  "Komuni Pertama";
+                $riwayat->status =  "Disetujui KBG";
+                $riwayat->save();
+            }
+        }
+        return response()->json(array(
+            'status'=>'oke'));
     }
 
     public function krisma()

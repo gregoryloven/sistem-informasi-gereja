@@ -292,6 +292,9 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiAdmin/acceptkomuni', [ValidasiAdminController::class, 'AcceptKomuni'])->name('validasiAdmin.AcceptKomuni');
     Route::post('/validasiAdmin/declinekomuni', [ValidasiAdminController::class, 'DeclineKomuni'])->name('validasiAdmin.DeclineKomuni');
     Route::post('/validasiAdmin/pembatalankomuni', [ValidasiAdminController::class, 'PembatalanKomuni'])->name('validasiAdmin.PembatalanKomuni');
+    Route::get('validasiAdminKursusKomuni', [ValidasiAdminController::class, 'KursusKomuni'])->name('validasiAdmin.KursusKomuni');
+    Route::get('/validasiAdminKursusKomuni/PendaftarKomuni/{id}', [ValidasiAdminController::class, 'PendaftarKomuni'])->name('validasiAdmin.PendaftarKomuni');
+    Route::post('/validasiAdminKursusKomuni/LulusKursusKomuni', [ValidasiAdminController::class, 'LulusKursusKomuni'])->name('validasiAdmin.LulusKursusKomuni');
 
     Route::get('validasiAdminKrisma', [ValidasiAdminController::class, 'krisma'])->name('validasiAdmin.krisma');
     Route::post('/validasiAdmin/acceptkrismasetempat', [ValidasiAdminController::class, 'AcceptKrismaSetempat'])->name('validasiAdmin.AcceptKrismaSetempat');

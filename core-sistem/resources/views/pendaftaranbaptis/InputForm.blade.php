@@ -107,19 +107,37 @@
                 </div>
                 <img id="output" src="" width="200px" height="200px">
                 @endif
+                <div class="form-group">
+                    <input type="checkbox" id="terms" name="terms" onchange="checkbox()">
+                    <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
+                </div><br>
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Baptis"
                 </div>
-                <form action="/checkbox-example" method="POST">
-                    <input type="checkbox" name="terms">
-                    <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
-                </form>
                 <input type="hidden" value="{{$list[0]->id}}" id='list_event_id' name='list_event_id'>
-                <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+                <button type="submit" class="btn btn-primary" id="button" disabled>Ajukan Formulir</button> 
             </form>
             </div>
         </div>
     </div>
 </div>
 <!-- /.container-fluid -->
+@endsection
+
+@section('javascript')
+<script>
+function checkbox()
+{
+    var cek = $('#terms').is(':checked')
+
+    if(cek == true)
+    {
+        $('#button').attr('disabled', false)
+    }
+    else
+    {
+        $('#button').attr('disabled', true)
+    }
+}
+</script>
 @endsection

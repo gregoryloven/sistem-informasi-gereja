@@ -236,5 +236,20 @@ function detail(id)
     }
   });
 }
+
+function checkbox()
+{
+    var cek = $('#terms').val()
+    alert(cek)
+
+    if(cek == true)
+    {
+        $('#button').attr('disabled', false)
+    }
+    else
+    {
+        $('#button').attr('disabled', true)
+    }
+}
 </script>
 @endsection
