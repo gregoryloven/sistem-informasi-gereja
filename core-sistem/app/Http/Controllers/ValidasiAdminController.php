@@ -395,10 +395,11 @@ class ValidasiAdminController extends Controller
     public function PendaftarKomuni(Request $request)
     {
         $id = $request->id;
-        $komuni = DB::table('riwayats')
-        ->join('komuni_pertamas', 'riwayats.event_id', '=', 'komuni_pertamas.id')
+        $komuni = DB::table('komuni_pertamas')
+        ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
         ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
-        ->get('komuni_pertamas.*', 'riwayats.*');
+        ->orderby('komuni_pertamas.nama_lengkap', 'ASC')
+        ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID']);
         
         return view('validasiAdmin.DetailKursusKomuni',compact("komuni", "id"));
     }
@@ -415,28 +416,20 @@ class ValidasiAdminController extends Controller
             
             if($status == 'lulus')
             {
-                $komuni->status = "Selesai";
+                $komuni->kursus = "Lulus";
                 $komuni->save();
 
-                $riwayat = new Riwayat();
-                $riwayat->user_id = Auth::user()->id;
-                $riwayat->list_event_id =  $list_event_id;
-                $riwayat->event_id =  $komuni->id;
-                $riwayat->jenis_event =  "Komuni Pertama";
-                $riwayat->status =  "Selesai";
+                $riwayat = Riwayat::find($d['riwayatID']);
+                $riwayat->kursus = "Lulus";
                 $riwayat->save();
             }
             else
             {
-                $komuni->status = "Disetujui KBG";
+                $komuni->kursus = "Tidak Lulus";
                 $komuni->save();
 
-                $riwayat = new Riwayat();
-                $riwayat->user_id = Auth::user()->id;
-                $riwayat->list_event_id =  $list_event_id;
-                $riwayat->event_id =  $komuni->id;
-                $riwayat->jenis_event =  "Komuni Pertama";
-                $riwayat->status =  "Disetujui KBG";
+                $riwayat = Riwayat::find($d['riwayatID']);
+                $riwayat->kursus = "Tidak Lulus";
                 $riwayat->save();
             }
         }

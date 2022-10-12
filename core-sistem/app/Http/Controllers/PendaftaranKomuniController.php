@@ -88,8 +88,11 @@ class PendaftaranKomuniController extends Controller
     public function detail(Request $request)
     {
         $id=$request->get("id");
-        $log=Riwayat::where([['event_id', '=', $id], ['jenis_event', '=', 'Komuni Pertama']])
-        ->get();
+        // $log=Riwayat::where([['list_event_id', '=', 6], ['event_id', '=', $id], ['jenis_event', '=', 'Komuni Pertama']])
+        $log = DB::table('riwayats')
+        ->join('list_events', 'riwayats.list_event_id', '=', 'list_events.id')
+        ->where([['event_id', '=', $id], ['riwayats.jenis_event', '=', 'Komuni Pertama']])
+        ->get(['riwayats.*', 'list_events.keterangan_kursus as Ket']);
         
         return response()->json(array(
             'status'=>'oke',

@@ -20,6 +20,7 @@ class CreateRiwayatsTable extends Migration
             $table->integer('event_id');
             $table->string('jenis_event');
             $table->string('status');
+            $table->string('kursus')->nullable();
             $table->string('alasan_pembatalan')->nullable();
             $table->string('alasan_penolakan')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

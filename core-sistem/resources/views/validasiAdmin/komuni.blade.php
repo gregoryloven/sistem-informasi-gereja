@@ -3,6 +3,7 @@
 @push('css')
 <style>
     #myTable td {text-align: center; vertical-align: middle;}
+    #myTable2 td {text-align: center; vertical-align: middle;}
 </style>
 @endpush
 
@@ -30,7 +31,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" style="text-align: center;">
+            <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>    
@@ -127,7 +128,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable">
+            <table class="table table-bordered" id="myTable2">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -143,6 +144,7 @@
                         <th>Waktu</th>
                         <th>Surat Baptis</th>
                         <th>Status</th>
+                        <th>Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>

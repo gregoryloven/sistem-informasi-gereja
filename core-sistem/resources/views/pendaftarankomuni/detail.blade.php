@@ -47,8 +47,14 @@
                         @foreach($log as $l) 
                             @if($l->status=='Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
+                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA<br>
+                                <small><b>Keterangan Kursus:</b> {{$l->Ket}}</small>
                             </div>
+                            @endif
+                            @if($l->kursus == 'Lulus')
+                                <small><b>Lulus Kursus</b> - {{tanggal_indonesia($l->updated_at)}}<br>{{waktu_indonesia($l->updated_at)}} WITA</small>
+                            @elseif($l->kursus == 'Tidak Lulus')
+                                <small><b>Tidak Lulus Kursus</b> - {{tanggal_indonesia($l->updated_at)}}<br>{{waktu_indonesia($l->updated_at)}} WITA</small>
                             @endif
                         @endforeach
                     </td></tr>
