@@ -150,8 +150,12 @@ class PendaftaranKrismaController extends Controller
     public function detail(Request $request)
     {
         $id=$request->get("id");
-        $log=Riwayat::where([['event_id', '=', $id], ['jenis_event', 'like', 'Krisma%']])
-        ->get();
+        // $log=Riwayat::where([['event_id', '=', $id], ['jenis_event', 'like', 'Krisma%']])
+        // ->get();
+        $log = DB::table('riwayats')
+        ->join('list_events', 'riwayats.list_event_id', '=', 'list_events.id')
+        ->where([['event_id', '=', $id], ['riwayats.jenis_event', 'like', 'Krisma%']])
+        ->get(['riwayats.*', 'list_events.keterangan_kursus as Ket']);
         
         return response()->json(array(
             'status'=>'oke',
