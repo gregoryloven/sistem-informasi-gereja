@@ -49,7 +49,7 @@
                 </div>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>    
-                        <th>Nama Penerima</th>
+                        <th>Nama Penerima Komuni</th>
                         <th>Status Kursus</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>

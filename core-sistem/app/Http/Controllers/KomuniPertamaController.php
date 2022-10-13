@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\KomuniPertama;
 use App\Models\User;
 use App\Models\Riwayat;
+use App\Models\ListEvent;
 use Auth;
 use DB;
 
@@ -18,8 +19,8 @@ class KomuniPertamaController extends Controller
      */
     public function index()
     {
-        $data = DB::table('list_events')
-        ->where('jenis_event', 'like', 'Ko%')
+        $data = ListEvent::where([['jenis_event', 'like', 'Ko%'], ['status', 'Aktif']])
+        ->orderBy('jadwal_pelaksanaan', 'ASC')
         ->get();
 
         $user = Auth::user()->id;

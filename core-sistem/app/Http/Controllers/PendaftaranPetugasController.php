@@ -21,6 +21,7 @@ class PendaftaranPetugasController extends Controller
         $data = DB::table('list_events')
         ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
         ->where('list_events.jenis_event', 'Petugas Liturgi')
+        ->orderBy('jadwal_pelaksanaan', 'ASC')
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
         'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas',
         ]);

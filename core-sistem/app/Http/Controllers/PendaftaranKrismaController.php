@@ -21,21 +21,22 @@ class PendaftaranKrismaController extends Controller
      */
     public function index()
     {
-        $data = DB::table('list_events')
-                ->where('jenis_event', 'like', 'Kr%')
+        $data = ListEvent::where([['jenis_event', 'like', 'Kr%'], ['status', 'Aktif']])
+                ->orderBy('jadwal_pelaksanaan', 'ASC')
                 ->get();
         $krisma = Krisma::where([['user_id', Auth::user()->id], ['jenis', 'Paroki Setempat']])->get();
         $krisma2 = Krisma::where([['user_id', Auth::user()->id], ['jenis', 'Lintas Paroki']])->get();
+        $user = User::all();
 
-        return view('pendaftarankrisma.index',compact("data", "krisma", "krisma2"));
+        return view('pendaftarankrisma.index',compact("data", "krisma", "krisma2", "user"));
     }
 
     public function OpenForm(Request $request)
     {
         // $this->authorize('lingkungan-permission');
-        if(Auth::user()->status !== "Tervalidasi"){
-            return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
-        } else {
+        // if(Auth::user()->status !== "Tervalidasi"){
+        //     return redirect()->back()->with('error', 'Anda Belum Terdaftar Sebagai Umat Pada Lingkungan & Kbg Yang ada. Silahkan Daftar Halaman Pendaftaran Umat');
+        // } else {
             $id = $request->id;
         
             $list = DB::table('list_events')->where('id', $id)->get();
@@ -46,7 +47,7 @@ class PendaftaranKrismaController extends Controller
                 ->get();
     
             return view('pendaftarankrisma.InputForm',compact("list", "user"));
-        }
+        // }
     }
 
     public function InputFormSetempat(Request $request)

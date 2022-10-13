@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Baptis;
 use App\Models\Riwayat;
+use App\Models\ListEvent;
 use Auth;
 
 class BaptisController extends Controller
@@ -17,8 +18,8 @@ class BaptisController extends Controller
      */
     public function index()
     {
-        $data = DB::table('list_events')
-        ->where('jenis_event', 'like', 'B%')
+        $data = ListEvent::where([['jenis_event', 'like', 'Baptis B%'], ['status', 'Aktif']])
+        ->orderBy('jadwal_pelaksanaan', 'ASC')
         ->get();
 
         $user = Auth::user()->id;

@@ -30,6 +30,9 @@
     </div>
 @endif
 
+<br>
+<small style="color:red;"><label >*Keterangan: Anda dapat mendaftarkan anggota keluarga lainnya</label></small>
+
 <div class="row mb-4 mt-4">
     <div class="col-md-12">
         <div class="card shadow">
@@ -38,7 +41,10 @@
             </div>
             <div class="card-body">
             <form id="formIndividu" class="mb-2" method="POST" action="/pendaftarankomuni/InputForm" enctype="multipart/form-data">
-            @csrf   
+            @csrf
+                <div class="form-group">
+                    <small style="color:red;"><label >*Dibawah ini adalah data akun anda yang terisi otomatis</label></small>
+                </div> 
                 <div class="form-group">
                     <label >Nama Lengkap Penerima Komuni Pertama</label>
                     <input type="text" value="{{$user[0]->nama_lengkap}}" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
@@ -93,16 +99,38 @@
                     <input type="file" value="" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
                 <img id="output" src="" width="200px" height="200px">
+                <div class="form-group">
+                    <input type="checkbox" id="terms" name="terms" onchange="checkbox()">
+                    <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
+                </div><br>
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Komuni Pertama"
                 </div>
                 <input type="hidden" value="{{$list[0]->id}}" id='event_id' name='event_id'>
                 <input type="hidden" value="{{$list[0]->jenis_event}}" id='jenis_event' name='jenis_event'>
-                <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+                <button type="submit" class="btn btn-primary" id="button" disabled>Ajukan Formulir</button> 
             </form>
             </div>
         </div>
     </div>
 </div>
 <!-- /.container-fluid -->
+@endsection
+
+@section('javascript')
+<script>
+function checkbox()
+{
+    var cek = $('#terms').is(':checked')
+
+    if(cek == true)
+    {
+        $('#button').attr('disabled', false)
+    }
+    else
+    {
+        $('#button').attr('disabled', true)
+    }
+}
+</script>
 @endsection

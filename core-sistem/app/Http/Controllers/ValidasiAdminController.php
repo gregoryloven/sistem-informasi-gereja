@@ -26,7 +26,11 @@ class ValidasiAdminController extends Controller
     {
         $user = Auth::user()->id;
 
-        $reservasi = PendaftaranPelayananLainnya::where('status', 'Disetujui Lingkungan')->get();
+        $reservasi = PendaftaranPelayananLainnya::where('status', 'Disetujui Lingkungan')
+        ->orderby('pendaftaran_pelayanan_lainnyas.jadwal', 'ASC')
+        ->orderby('pendaftaran_pelayanan_lainnyas.updated_at', 'ASC')
+        ->get();
+
         $reservasiAll = DB::table('pelayanan_lainnyas')
         ->join('pendaftaran_pelayanan_lainnyas', 'pelayanan_lainnyas.id', '=', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id')
         ->join('riwayats', 'pendaftaran_pelayanan_lainnyas.id', '=', 'riwayats.event_id')
@@ -35,7 +39,7 @@ class ValidasiAdminController extends Controller
         ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
         ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
         ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Pelayanan']])
-        ->orderBy('pendaftaran_pelayanan_lainnyas.jadwal', 'DESC')
+        ->orderBy('riwayats.updated_at', 'DESC')
         ->get(['pendaftaran_pelayanan_lainnyas.nama_lengkap', 'pendaftaran_pelayanan_lainnyas.lingkungan', 'pendaftaran_pelayanan_lainnyas.kbg',
         'pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.jadwal', 
         'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.telepon', 
@@ -100,7 +104,11 @@ class ValidasiAdminController extends Controller
     {
         $user = Auth::user()->id;
         
-        $reservasi = PendaftaranPetugas::where('status', 'Diproses')->get();
+        $reservasi = PendaftaranPetugas::where('status', 'Diproses')
+        ->orderby('pendaftaran_petugas_liturgis.jadwal', 'ASC')
+        ->orderby('pendaftaran_petugas_liturgis.updated_at', 'ASC')
+        ->get();
+
         $reservasiAll = DB::table('pendaftaran_petugas_liturgis')
         ->join('riwayats', 'pendaftaran_petugas_liturgis.id', '=', 'riwayats.event_id')
         ->join('users', 'riwayats.user_id', '=', 'users.id')
@@ -108,7 +116,7 @@ class ValidasiAdminController extends Controller
         ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
         ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
         ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Petugas Liturgi']])
-        ->orderBy('pendaftaran_petugas_liturgis.jadwal', 'DESC')
+        ->orderBy('riwayats.updated_at', 'DESC')
         ->get(['pendaftaran_petugas_liturgis.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
@@ -158,7 +166,11 @@ class ValidasiAdminController extends Controller
     {
         $user = Auth::user()->id;
         
-        $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Bayi']])->get();
+        $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Bayi']])
+        ->orderby('baptiss.jadwal', 'ASC')
+        ->orderby('baptiss.updated_at', 'ASC')
+        ->get();
+        
         $reservasiAll = DB::table('baptiss')
         ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
         ->join('users', 'riwayats.user_id', '=', 'users.id')
@@ -166,7 +178,7 @@ class ValidasiAdminController extends Controller
         ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
         ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
         ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Bayi']])
-        ->orderBy('baptiss.jadwal', 'DESC')
+        ->orderBy('riwayats.updated_at', 'DESC')
         ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
@@ -177,7 +189,11 @@ class ValidasiAdminController extends Controller
     {
         $user = Auth::user()->id;
         
-        $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Dewasa']])->get();
+        $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Dewasa']])
+        ->orderby('baptiss.jadwal', 'ASC')
+        ->orderby('baptiss.updated_at', 'ASC')
+        ->get();
+
         $reservasiAll = DB::table('baptiss')
         ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
         ->join('users', 'riwayats.user_id', '=', 'users.id')
@@ -185,7 +201,7 @@ class ValidasiAdminController extends Controller
         ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
         ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
         ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Dewasa']])
-        ->orderBy('baptiss.jadwal', 'DESC')
+        ->orderBy('riwayats.updated_at', 'DESC')
         ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
@@ -312,14 +328,18 @@ class ValidasiAdminController extends Controller
     {
         $user = Auth::user()->id;
         
-        $reservasi = KomuniPertama::where('status', 'Disetujui Lingkungan')->get();
+        $reservasi = KomuniPertama::where('status', 'Disetujui Lingkungan')
+        ->orderby('komuni_pertamas.jadwal', 'ASC')
+        ->orderby('komuni_pertamas.updated_at', 'ASC')
+        ->get();
+
         $reservasiAll = DB::table('komuni_pertamas')
         ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
         ->join('users', 'riwayats.user_id', '=', 'users.id')
         ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Komuni Pertama']])
         ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
         ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Komuni Pertama']])
-        ->orderBy('komuni_pertamas.jadwal', 'DESC')
+        ->orderBy('riwayats.updated_at', 'DESC')
         ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
@@ -441,8 +461,15 @@ class ValidasiAdminController extends Controller
     {
         $user = Auth::user()->id;
         
-        $reservasi = Krisma::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Paroki Setempat']])->get();
-        $reservasi2 = Krisma::where([['status', 'Diproses'], ['jenis', 'Lintas Paroki']])->get();
+        $reservasi = Krisma::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Paroki Setempat']])
+        ->orderby('krismas.jadwal', 'ASC')
+        ->orderby('krismas.updated_at', 'ASC')
+        ->get();
+
+        $reservasi2 = Krisma::where([['status', 'Diproses'], ['jenis', 'Lintas Paroki']])
+        ->orderby('krismas.jadwal', 'ASC')
+        ->orderby('krismas.updated_at', 'ASC')
+        ->get();
 
         // $reservasiAll = DB::table('krismas')
         // ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')

@@ -19,8 +19,8 @@ class ReservasiTobatController extends Controller
      */
     public function index()
     {
-        $data = DB::table('list_events')
-                ->where([['jenis_event', 'like', 'To%'], ['status', 'Aktif']])
+        $data = ListEvent::where([['jenis_event', 'like', 'To%'], ['status', 'Aktif']])
+                ->orderBy('jadwal_pelaksanaan', 'ASC')
                 ->get();
                 
         $tobat = DB::table('list_events')

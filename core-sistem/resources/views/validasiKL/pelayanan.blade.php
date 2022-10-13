@@ -34,7 +34,7 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Pemohon</th>
                         <th>Jenis Pelayanan</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
@@ -112,7 +112,7 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Pemohon</th>
                         <th>Jenis Pelayanan</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>

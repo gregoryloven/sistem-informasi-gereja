@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Krisma;
 use App\Models\Riwayat;
+use App\Models\ListEvent;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -17,8 +18,8 @@ class KrismaController extends Controller
      */
     public function index()
     {
-        $data = DB::table('list_events')
-        ->where('jenis_event', 'like', 'Kr%')
+        $data = ListEvent::where([['jenis_event', 'like', 'Kr%'], ['status', 'Aktif']])
+        ->orderBy('jadwal_pelaksanaan', 'ASC')
         ->get();
 
         $user = Auth::user()->id;

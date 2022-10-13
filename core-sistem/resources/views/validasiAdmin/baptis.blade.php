@@ -35,15 +35,16 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Lengkap Penerima Baptis</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
                         <th>Orang Tua Ibu</th>
                         <th>Wali Baptis Ayah</th>
                         <th>Wali Baptis Ibu</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
@@ -62,8 +63,9 @@
                         <td st>{{$d->orangtua_ibu}}</td>
                         <td st>{{$d->wali_baptis_ayah}}</td>
                         <td st>{{$d->wali_baptis_ibu}}</td>
+                        <td st>{{$d->lingkungan}}</td>
+                        <td st>{{$d->kbg}}</td>
                         <td st>{{$d->telepon}}</td>
-                        <td st>{{$d->jenis}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
                         <td >
@@ -123,18 +125,20 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Lengkap Penerima Baptis</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
                         <th>Orang Tua Ibu</th>
                         <th>Wali Baptis Ayah</th>
                         <th>Wali Baptis Ibu</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Status</th>
+                        <th>Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -150,8 +154,9 @@
                         <td st>{{$da->orangtua_ibu}}</td>
                         <td st>{{$da->wali_baptis_ayah}}</td>
                         <td st>{{$da->wali_baptis_ibu}}</td>
+                        <td st>{{$da->lingkungan}}</td>
+                        <td st>{{$da->kbg}}</td>
                         <td st>{{$da->telepon}}</td>
-                        <td st>{{$da->jenis}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}}</td>
                         <td st >

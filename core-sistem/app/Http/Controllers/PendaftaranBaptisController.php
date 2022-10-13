@@ -21,8 +21,7 @@ class PendaftaranBaptisController extends Controller
      */
     public function index()
     {
-        $data = DB::table('list_events')
-                ->where([['jenis_event', 'like', 'Baptis B%'], ['status', 'Aktif']])
+        $data = ListEvent::where([['jenis_event', 'like', 'Baptis B%'], ['status', 'Aktif']])
                 ->orderBy('jadwal_pelaksanaan', 'ASC')
                 ->get();
         $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis B%']])->get();
@@ -32,8 +31,8 @@ class PendaftaranBaptisController extends Controller
 
     public function IndexDewasa()
     {
-        $data = DB::table('list_events')
-                ->where('jenis_event', 'like', 'Baptis D%')
+        $data = ListEvent::where([['jenis_event', 'like', 'Baptis D%'], ['status', 'Aktif']])
+                ->orderBy('jadwal_pelaksanaan', 'ASC')
                 ->get();
         $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis D%']])->get();
         $user = User::all();

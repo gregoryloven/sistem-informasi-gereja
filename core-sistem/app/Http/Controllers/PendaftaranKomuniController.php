@@ -21,8 +21,8 @@ class PendaftaranKomuniController extends Controller
      */
     public function index()
     {
-        $data = DB::table('list_events')
-                ->where('jenis_event', 'like', 'Ko%')
+        $data = ListEvent::where([['jenis_event', 'like', 'Ko%'], ['status', 'Aktif']])
+                ->orderBy('jadwal_pelaksanaan', 'ASC')
                 ->get();
         $komuni = KomuniPertama::where('user_id', Auth::user()->id)->get();
         $user = User::all();

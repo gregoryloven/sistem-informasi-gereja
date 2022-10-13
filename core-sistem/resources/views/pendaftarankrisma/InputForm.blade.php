@@ -29,6 +29,14 @@
         {{ session('error') }}
     </div>
 @endif
+<br>
+@if($user[0]->status != 'Tervalidasi')
+<div class="alert alert-danger">
+        Akun Anda Belum Terdaftar Pada Lingkungan atau KBG Sehingga Tidak Dapat Mendaftar Krisma Paroki Setempat. Silahkan Daftar Terlebih Dahulu Pada Halaman Pendaftaran Umat Atau <a href="/pendaftaranumat">Klik Disini</a>
+</div>
+@endif
+<br>
+<small style="color:red;"><label >*Keterangan: Anda dapat mendaftarkan anggota keluarga lainnya</label></small>
 
 <div class="row mb-4 mt-4">
     <div class="col-md-12">
@@ -40,6 +48,7 @@
             <div class="form-group">
                 <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
                 <div class="d-flex justify-content-between">
+                @if($user[0]->status == "Tervalidasi")
                     <div class="form-check">
                         <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="parokiSetempatTab" value="parokiSetempat" checked>
                         <label class="form-check-label" for="parokiSetempat">
@@ -52,10 +61,28 @@
                             Lintas Paroki
                         </label>
                     </div>
+                @elseif ($user[0]->status == "Belum Tervalidasi")
+                <div class="form-check">
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="parokiSetempatTab" value="parokiSetempat" readonly disabled>
+                        <label class="form-check-label" for="parokiSetempat">
+                            Paroki Setempat
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="lintasParokiTab" value="lintasParoki" checked>
+                        <label class="form-check-label" for="lintasParoki">
+                            Lintas Paroki
+                        </label>
+                    </div>
+                    @endif
+                    
                 </div>
             </div>
-            <form id="formSetempat" class="mb-2" method="POST" action="/pendaftarankrisma/InputFormSetempat" enctype="multipart/form-data">
-            @csrf   
+                <form id="formSetempat" class="mb-2" method="POST" action="/pendaftarankrisma/InputFormSetempat" enctype="multipart/form-data">
+            @csrf
+                <div class="form-group">
+                    <small style="color:red;"><label >*Dibawah ini adalah data akun anda yang terisi otomatis</label></small>
+                </div>    
                 <div class="form-group">
                     <label >Nama Lengkap Penerima Krisma</label>
                     <input type="text" value="{{$user[0]->nama_lengkap}}" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
@@ -114,7 +141,11 @@
                     <label>Sertifikat Komuni</label>
                     <input type="file" value="" name="sertifikat_komuni" class="form-control" id="sertifikat_komuni" placeholder="Sertifikat Komuni" onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
-                <img id="output2" src="" width="200px" height="200px">
+                <img id="output2" src="" width="200px" height="200px"><br><br>
+                <div class="form-group">
+                    <input type="checkbox" id="terms" name="terms" onchange="checkbox()">
+                    <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
+                </div><br>
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Krisma"
                 </div>
@@ -122,8 +153,12 @@
                 <input type="hidden" value="{{$list[0]->jenis_event}}" id='jenis_event' name='jenis_event'>
                 <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
             </form>
+            
             <form id="formLintas" class="mb-2" method="POST" action="/pendaftarankrisma/InputFormLintas" enctype="multipart/form-data">
-            @csrf   
+            @csrf
+                <div class="form-group">
+                    <small style="color:red;"><label >*Dibawah ini adalah data akun anda yang terisi otomatis</label></small>
+                </div>    
                 <div class="form-group">
                     <label >Nama Lengkap Penerima Krisma</label>
                     <input type="text" value="{{$user[0]->nama_lengkap}}" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
@@ -187,7 +222,11 @@
                     <label>Sertifikat Komuni</label>
                     <input type="file" value="" name="sertifikat_komuni" class="form-control" id="sertifikat_komuni" placeholder="Sertifikat Komuni" onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
-                <img id="output5" src="" width="200px" height="200px">
+                <img id="output5" src="" width="200px" height="200px"><br><br>
+                <div class="form-group">
+                    <input type="checkbox" id="terms" name="terms" onchange="checkbox()">
+                    <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
+                </div><br>
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Krisma"
                 </div>
@@ -210,6 +249,7 @@
         $(document).ready(function(){
             $("#parokiSetempatTab").trigger("click");
         });
+
         function tabSelect(value) {
             if(value === "parokiSetempat"){
                 document.getElementById("formSetempat").style.display = "block";
@@ -217,6 +257,20 @@
             }else{
                 document.getElementById("formSetempat").style.display = "none";
                 document.getElementById("formLintas").style.display = "block";
+            }
+        }
+
+        function checkbox()
+        {
+            var cek = $('#terms').is(':checked')
+
+            if(cek == true)
+            {
+                $('#button').attr('disabled', false)
+            }
+            else
+            {
+                $('#button').attr('disabled', true)
             }
         }
     </script>

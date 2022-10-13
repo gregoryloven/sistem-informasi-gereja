@@ -37,7 +37,7 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Penerima</th>
+                        <th>Nama Penerima Krisma</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
@@ -147,7 +147,7 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Penerima</th>
+                        <th>Nama Penerima Krisma</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>

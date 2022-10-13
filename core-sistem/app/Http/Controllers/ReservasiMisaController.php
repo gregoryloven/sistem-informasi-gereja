@@ -19,8 +19,8 @@ class ReservasiMisaController extends Controller
      */
     public function index()
     {
-        $data = DB::table('list_events')
-                ->where([['jenis_event', 'like', 'Mi%'], ['status', 'Aktif']])
+        $data = ListEvent::where([['jenis_event', 'like', 'Mi%'], ['status', 'Aktif']])
+                ->orderBy('jadwal_pelaksanaan', 'ASC')
                 ->get();
                 
         $misa = DB::table('list_events')

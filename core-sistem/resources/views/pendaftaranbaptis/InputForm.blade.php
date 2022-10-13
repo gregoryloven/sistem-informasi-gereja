@@ -30,6 +30,9 @@
     </div>
 @endif
 
+<br>
+<small style="color:red;"><label >*Keterangan: Anda dapat mendaftarkan anggota keluarga lainnya</label></small>
+
 <div class="row mb-4 mt-4">
     <div class="col-md-12">
         <div class="card shadow">
@@ -39,7 +42,10 @@
             <div class="card-body">
             <form id="formIndividu" class="mb-2" method="post" action="/pendaftaranbaptis/InputForm" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
+                <div class="form-group">
+                    <small style="color:red;"><label >*Dibawah ini adalah data akun anda yang terisi otomatis</label></small>
+                </div> 
+                <div class="form-group">
                     <label >Nama Lengkap Penerima Baptis</label>
                     <input type="text" value="{{$user[0]->nama_lengkap}}" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
                 </div>    
@@ -106,7 +112,7 @@
                     <input type="file" value="" class="form-control" id='surat_pernyataan' name='surat_pernyataan' placeholder="Surat Pernyataan" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
                 </div>
                 <img id="output" src="" width="200px" height="200px">
-                @endif
+                @endif<br><br>
                 <div class="form-group">
                     <input type="checkbox" id="terms" name="terms" onchange="checkbox()">
                     <label>Saya Menyetujui Formulir Pendaftaran Ini</label>

@@ -35,7 +35,7 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Pemohon</th>
                         <th>Jenis Petugas Liturgi</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
@@ -116,7 +116,7 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Pemohon</th>
                         <th>Jenis Petugas Liturgi</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
