@@ -30,7 +30,7 @@ class CreateKrismasTable extends Migration
             $table->string('romo');
             $table->string('surat_baptis');
             $table->string('sertifikat_komuni');
-            $table->string('surat_pengantar');
+            $table->string('surat_pengantar')->nullable();
             $table->enum('status', ['Diproses','Disetujui KBG','Disetujui Lingkungan','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
             $table->enum('kursus', ['Lulus','Tidak Lulus'])->nullable();
             $table->string('sertifikat_krisma')->nullable();

@@ -150,12 +150,12 @@
                             <div class="alert alert-success" role="alert">
                                 {{$da->status}}
                             </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}</small>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}} WITA</small>
                             @else
                             <div class="alert alert-danger" role="alert">
                                 {{$da->status}}
                             </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}}
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}} WITA
                                 <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
                             @endif
                         </td>

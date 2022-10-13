@@ -407,7 +407,9 @@ class ValidasiAdminController extends Controller
 
     public function KursusKomuni()
     {
-        $data = ListEvent::where('jenis_event', 'like', 'Ko%')->get();
+        $data = ListEvent::where('jenis_event', 'like', 'Ko%')
+        ->orderby('jadwal_pelaksanaan', 'ASC')
+        ->get();
 
         return view('validasiAdmin.kursusKomuni',compact("data"));
     }
@@ -612,5 +614,59 @@ class ValidasiAdminController extends Controller
         $data->save();
 
         return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Krisma Lintas Paroki Berhasil Dibatalkan');
+    }
+
+    public function KursusKrisma()
+    {
+        $data = ListEvent::where('jenis_event', 'like', 'Kr%')
+        ->orderby('jadwal_pelaksanaan', 'ASC')
+        ->get();
+
+        return view('validasiAdmin.kursusKrisma',compact("data"));
+    }
+
+    public function PendaftarKrisma(Request $request)
+    {
+        $id = $request->id;
+        $krisma = DB::table('krismas')
+        ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+        ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
+        ->orderby('krismas.nama_lengkap', 'ASC')
+        ->get(['krismas.*', 'riwayats.id as riwayatID']);
+        
+        return view('validasiAdmin.DetailKursusKrisma',compact("krisma", "id"));
+    }
+
+    public function LulusKursusKrisma(Request $request)
+    {
+        $array=$request->get("data");
+        $status=$request->get("status");
+        $list_event_id=$request->get("id");
+
+        foreach($array as $d)
+        {
+            $krisma=Krisma::find($d['id']);
+            
+            if($status == 'lulus')
+            {
+                $krisma->kursus = "Lulus";
+                $krisma->save();
+
+                $riwayat = Riwayat::find($d['riwayatID']);
+                $riwayat->kursus = "Lulus";
+                $riwayat->save();
+            }
+            else
+            {
+                $krisma->kursus = "Tidak Lulus";
+                $krisma->save();
+
+                $riwayat = Riwayat::find($d['riwayatID']);
+                $riwayat->kursus = "Tidak Lulus";
+                $riwayat->save();
+            }
+        }
+        return response()->json(array(
+            'status'=>'oke'));
     }
 }

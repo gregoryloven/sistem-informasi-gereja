@@ -151,7 +151,7 @@
                 </div>
                 <input type="hidden" value="{{$list[0]->id}}" id='event_id' name='event_id'>
                 <input type="hidden" value="{{$list[0]->jenis_event}}" id='jenis_event' name='jenis_event'>
-                <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+                <button type="submit" class="btn btn-primary" id="button" disabled>Ajukan Formulir</button> 
             </form>
             
             <form id="formLintas" class="mb-2" method="POST" action="/pendaftarankrisma/InputFormLintas" enctype="multipart/form-data">
@@ -224,7 +224,7 @@
                 </div>
                 <img id="output5" src="" width="200px" height="200px"><br><br>
                 <div class="form-group">
-                    <input type="checkbox" id="terms" name="terms" onchange="checkbox()">
+                    <input type="checkbox" id="terms2" name="terms2" onchange="checkbox()">
                     <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
                 </div><br>
                 <div class="alert alert-info" role="alert">
@@ -232,7 +232,7 @@
                 </div>
                 <input type="hidden" value="{{$list[0]->id}}" id='event_id' name='event_id'>
                 <input type="hidden" value="{{$list[0]->jenis_event}}" id='jenis_event' name='jenis_event'>
-                <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+                <button type="submit" class="btn btn-primary" id="button2" disabled>Ajukan Formulir</button> 
             </form>
             </div>
         </div>
@@ -263,14 +263,17 @@
         function checkbox()
         {
             var cek = $('#terms').is(':checked')
+            var cek2 = $('#terms2').is(':checked')
 
-            if(cek == true)
+            if(cek == true || cek2 == true)
             {
                 $('#button').attr('disabled', false)
+                $('#button2').attr('disabled', false)
             }
             else
             {
                 $('#button').attr('disabled', true)
+                $('#button2').attr('disabled', true)
             }
         }
     </script>
