@@ -294,13 +294,13 @@ class ListEventController extends Controller
         $listevent->status = "Selesai";
         $listevent->save();
         if($listevent->jenis_event == "Baptis Bayi"){
-            $baptis = Baptis::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            $baptis = Baptis::where([['jadwal', '=', $request->jadwal_pelaksanaan],['jenis', 'Baptis Bayi'],['status', 'Disetujui Paroki']])->get();
             foreach($baptis as $b){
                 $b->status = "Selesai";
                 $b->save();
             }
 
-            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            $riwayat =  Riwayat::where([['list_event_id', $request->id],['status', 'Disetujui Paroki']])->get();
             foreach($riwayat as $r){
                 $riwayats= new Riwayat();
                 $riwayats->user_id = Auth::user()->id;
@@ -312,13 +312,13 @@ class ListEventController extends Controller
             }
             return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
         } else if($listevent->jenis_event == "Baptis Dewasa") {
-            $baptis = Baptis::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            $baptis = Baptis::where([['jadwal', '=', $request->jadwal_pelaksanaan],['jenis', 'Baptis Dewasa'],['status', 'Disetujui Paroki']])->get();
             foreach($baptis as $b){
                 $b->status = "Selesai";
                 $b->save();
             }
 
-            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            $riwayat =  Riwayat::where([['list_event_id', $request->id],['status', 'Disetujui Paroki']])->get();
             foreach($riwayat as $r){
                 $riwayats= new Riwayat();
                 $riwayats->user_id = Auth::user()->id;
@@ -330,13 +330,13 @@ class ListEventController extends Controller
             }
             return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
         } else if($listevent->jenis_event == "Komuni Pertama") {
-            $komunipertama = KomuniPertama::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            $komunipertama = KomuniPertama::where([['jadwal', '=', $request->jadwal_pelaksanaan],['kursus', 'Lulus']])->get();
             foreach($komunipertama as $k){
                 $k->status = "Selesai";
                 $k->save();
             }
 
-            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            $riwayat =  Riwayat::where([['list_event_id', $request->id],['kursus', 'Lulus']])->get();
             foreach($riwayat as $r){
                 $riwayats= new Riwayat();
                 $riwayats->user_id = Auth::user()->id;
@@ -344,17 +344,18 @@ class ListEventController extends Controller
                 $riwayats->event_id = $r->event_id;
                 $riwayats->jenis_event = $r->jenis_event;
                 $riwayats->status = "Selesai";
+                $riwayats->kursus = "Lulus";
                 $riwayats->save();
             }
             return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
         } else if($listevent->jenis_event == "Krisma") {
-            $krisma = Krisma::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            $krisma = Krisma::where([['jadwal', '=', $request->jadwal_pelaksanaan],['kursus', 'Lulus']])->get();
             foreach($krisma as $k){
                 $k->status = "Selesai";
                 $k->save();
             }
 
-            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            $riwayat =  Riwayat::where([['list_event_id', $request->id],['kursus', 'Lulus']])->get();
             foreach($riwayat as $r){
                 $riwayats= new Riwayat();
                 $riwayats->user_id = Auth::user()->id;
@@ -362,17 +363,18 @@ class ListEventController extends Controller
                 $riwayats->event_id = $r->event_id;
                 $riwayats->jenis_event = $r->jenis_event;
                 $riwayats->status = "Selesai";
+                $riwayats->kursus = "Lulus";
                 $riwayats->save();
             }
             return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
         } else if($listevent->jenis_event == "Petugas Liturgi") {
-            $petugas = PendaftaranPetugas::where('jadwal', '=', $request->jadwal_pelaksanaan)->get();
+            $petugas = PendaftaranPetugas::where([['jadwal', '=', $request->jadwal_pelaksanaan],['status', 'Disetujui Paroki']])->get();
             foreach($petugas as $p){
                 $p->status = "Selesai";
                 $p->save();
             }
 
-            $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+            $riwayat =  Riwayat::where([['list_event_id', $request->id],['status', 'Disetujui Paroki']])->get();
             foreach($riwayat as $r){
                 $riwayats= new Riwayat();
                 $riwayats->user_id = Auth::user()->id;
