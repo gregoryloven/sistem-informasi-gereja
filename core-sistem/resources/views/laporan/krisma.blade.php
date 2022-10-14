@@ -7,12 +7,12 @@
 @endpush
 
 @section('title')
-    Kelulusan Kursus Krisma
+    Laporan Sakramen Krisma
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Kelulusan Kursus Krisma</h1>
+<h1 class="h3 mb-2 text-gray-800">Laporan Sakramen Krisma</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -35,9 +35,11 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>    
                         <th>Jenis Sakramen</th>
-                        <th>Tanggal Krisma</th>
+                        <th>Tanggal Baptis</th>
                         <th>Waktu</th>
-                        <th width="15%"><i class="fa fa-cog"></i></th>
+                        <th>Total Penerima</th>
+                        <th>Total Lulus Kursus</th>
+                        <!-- <th width="15%"><i class="fa fa-cog"></i></th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -49,11 +51,13 @@
                         <td st>{{$d->jenis_event}}</td>
                         <td st>{{tanggal_indonesia($d->jadwal_pelaksanaan)}}</td>
                         <td st>{{waktu_indonesia($d->jadwal_pelaksanaan)}} WITA</td>
-                        <td st>
+                        <td st><strong>{{$jumlah_krisma}} Orang</strong></td>
+                        <td st><strong>{{$jumlah_lulus_kursus}} Orang</strong></td>
+                        <!-- <td st>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href= "{{ url('validasiAdminKursusKrisma/PendaftarKrisma/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Lihat Detail</a>   
+                                <a href= "{{ url('laporanBaptis/DetailBaptis/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Lihat Detail</a>   
                             </div>
-                        </td>
+                        </td> -->
                     </tr>
                     @endforeach
                 </tbody>

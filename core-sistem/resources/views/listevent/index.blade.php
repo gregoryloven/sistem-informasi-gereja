@@ -76,7 +76,7 @@
                         </div>
                         <div style='display:none' id='label_jadwal_pelaksanaan' class="form-group">
                             <label >Jadwal Pelaksanaan</label>
-                            <input type="datetime-local" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksanaan(this)' placeholder="Jadwal Pelaksanaan" required>
+                            <input type="datetime-local" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksanaan(this)' min="<?= date('Y-m-d H:i:s'); ?>" placeholder="Jadwal Pelaksanaan" required>
                         </div>
                         <div style='display:none' id='label_lokasi' class="form-group">
                             <label >Lokasi</label>
@@ -467,9 +467,11 @@ function checkJenisEvent(jenis)
         $('#label_romo').show()
         $('#label_jenis_petugas').hide()
         $('#label_kuota').hide()
+        $('#label_kursus').hide()
 
         $('#petugas_liturgi_id').prop('required',false)
         $('#kuota').prop('required',false)
+        $('#keterangan_kursus').prop('required',false)
     }
     else if($(jenis).val() == 'Komuni Pertama' || $(jenis).val() == 'Krisma')
     {
@@ -496,10 +498,12 @@ function checkJenisEvent(jenis)
         $('#label_jenis_petugas').hide()
         $('#label_tanggal_buka').hide()
         $('#label_tanggal_tutup').hide()
+        $('#label_kursus').hide()
 
         $('#petugas_liturgi_id').prop('required',false)
         $('#tgl_buka_pendaftaran').prop('required',false)
         $('#tgl_tutup_pendaftaran').prop('required',false)
+        $('#keterangan_kursus').prop('required',false)
     }
     else
     {
@@ -511,9 +515,11 @@ function checkJenisEvent(jenis)
         $('#label_lokasi').show()
         $('#label_romo').hide()
         $('#label_kuota').hide()
+        $('#label_kursus').hide()
 
         $('#romo').prop('required',false)
         $('#kuota').prop('required',false)
+        $('#keterangan_kursus').prop('required',false)
     }
 }
 

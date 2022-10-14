@@ -28,6 +28,7 @@ use App\Http\Controllers\ListEventController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\UmatController;
+use App\Http\Controllers\LaporanController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -363,6 +364,13 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     Route::get('/auth/redirect', [UserController::class, 'redirect'])->name('auth.redirect');
     Route::post('/auth/complete-register', [UserController::class, 'complete_register'])->name('auth.complete-register');
+
+    // LAPORAN
+    Route::get('laporanBaptis', [LaporanController::class, 'baptis'])->name('laporan.baptis');
+    Route::get('/laporanBaptis/DetailBaptis/{id}', [LaporanController::class, 'DetailBaptis'])->name('laporan.DetailBaptis');
+    Route::get('laporanBaptisDewasa', [LaporanController::class, 'baptisDewasa'])->name('laporan.baptisDewasa');
+    Route::get('laporanKomuni', [LaporanController::class, 'komuni'])->name('laporan.komuni');
+    Route::get('laporanKrisma', [LaporanController::class, 'krisma'])->name('laporan.krisma');
 
 
     // CETAK SERTIFIKAT

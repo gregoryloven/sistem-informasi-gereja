@@ -26,11 +26,11 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Daftar Peserta
+        Daftar Sesi
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" style="text-align: center;">
+            <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>    

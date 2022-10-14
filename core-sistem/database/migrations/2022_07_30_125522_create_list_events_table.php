@@ -22,7 +22,7 @@ class CreateListEventsTable extends Migration
             $table->date('tgl_tutup_pendaftaran')->nullable();
             $table->datetime('jadwal_pelaksanaan');
             $table->string('lokasi');
-            $table->string('keterangan_kursus');
+            $table->string('keterangan_kursus')->nullable();
             $table->string('romo')->nullable();
             $table->string('kuota')->nullable();
             $table->string('status');

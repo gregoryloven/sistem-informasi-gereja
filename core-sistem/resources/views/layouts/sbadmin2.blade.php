@@ -147,8 +147,10 @@
                 </a>
                 <div id="collapseLaporan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Baptis Bayi</a>
-                        <a class="collapse-item" href="#">Baptis Dewasa</a>
+                        <a class="collapse-item" href="{{ route('laporan.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Bayi</a>
+                        <a class="collapse-item" href="{{ route('laporan.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Dewasa</a>
+                        <a class="collapse-item" href="{{ route('laporan.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
+                        <a class="collapse-item" href="{{ route('laporan.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Krisma</a>
                     </div>
                 </div>
             </li>

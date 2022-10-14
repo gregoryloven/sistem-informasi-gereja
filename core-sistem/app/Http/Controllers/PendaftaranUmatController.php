@@ -26,7 +26,7 @@ class PendaftaranUmatController extends Controller
         ->orwhere([['status', 'Ditolak'], ['id', Auth::user()->id]])
         ->get();
 
-        $umatbaru = Umat::all();
+        $umatbaru = Umat::where('id', Auth::user()->id);
 
         return view('pendaftaranumat.index',compact("ling","kbg","umatlama","umatbaru"));
     }
