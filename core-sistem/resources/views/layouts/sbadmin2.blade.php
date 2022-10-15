@@ -78,7 +78,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Lingkungan</a>
                         <a class="collapse-item" href="{{ route('kbgs.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">KBG</a>
-                        <a class="collapse-item" href="#">Umat</a>
+                        <a class="collapse-item" href="{{ route('umat.umatAll', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Umat</a>
                     </div>
                 </div>
             </li>

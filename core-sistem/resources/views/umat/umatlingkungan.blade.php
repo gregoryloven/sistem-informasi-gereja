@@ -53,7 +53,7 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama</th>
                         <th>Hubungan Darah</th>
                         <th>Jenis Kelamin</th>
                         <th>Alamat</th>

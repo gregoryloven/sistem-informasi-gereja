@@ -13,6 +13,14 @@ use App\Imports\UmatKbgImport;
 
 class UmatController extends Controller
 {
+    public function umatAll()
+    {
+        $data = Umat::where('status', 'Disetujui Lingkungan')->get();
+
+        return view('umat.umat',compact('data'));
+    }
+    
+    
     public function umatKbg()
     {
         $kbg = Auth::user()->kbg->id;
@@ -106,18 +114,19 @@ class UmatController extends Controller
             Excel::import(new UmatLingkunganImport, $request->file('excellingkungan'), \Maatwebsite\Excel\Excel::XLSX);
             return back()->with('status', 'Berhasil ditambah.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.');
+            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.'.$th->getMessage());
         }
         
     }
 
     public function ImportUmatKbg(Request $request)
     {
+        // return $->excelrequestkbg;
         try {
             Excel::import(new UmatKbgImport, $request->file('excelkbg'), \Maatwebsite\Excel\Excel::XLSX);
         return back()->with('status', 'Berhasil ditambah.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.');
+            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.'.$th->getMessage());
         }
         
     }

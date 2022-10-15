@@ -123,6 +123,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/listevent/selesai', [ListEventController::class, 'selesai'])->name('listevent.selesai');
 
     //Daftar Umat KBG
+    Route::get('umat', [UmatController::class, 'umatAll'])->name('umat.umatAll');
     Route::get('umatKbg', [UmatController::class, 'umatKbg'])->name('umat.umatKbg');
     Route::post('/fetchkbg', [UmatController::class, 'fetchkbg'])->name('fetchkbg');
     Route::post('/umat/TambahUmatKBG', [UmatController::class, 'TambahUmatKBG'])->name('umat.TambahUmatKBG');
