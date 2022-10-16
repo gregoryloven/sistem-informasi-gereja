@@ -87,7 +87,7 @@
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
-                                                <a class="dropdown-item" href="{{ url('/user/profile')}}">Profile</a>
+                                                <a class="dropdown-item" href="{{ url('/profileumat') }}">Profile</a>
                                                 <hr>
                                                 <form method="POST" action="{{ route('logout') }}" x-data>
                                                     @csrf

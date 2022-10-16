@@ -29,6 +29,7 @@ use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\UmatController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -104,6 +105,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('/profile', function () {
         return view('profile.index');
     });
+    Route::get('profileumat', [ProfileController::class, 'data'])->name('profile.umat');
+    Route::get('profilekbg', [ProfileController::class, 'data'])->name('profile.kbg');
+    Route::get('profilelingkungan', [ProfileController::class, 'data'])->name('profile.lingkungan');
+    Route::post('/profileumat/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
 
     //User KL
     // Route::resource('userkl', UserKLController::class);

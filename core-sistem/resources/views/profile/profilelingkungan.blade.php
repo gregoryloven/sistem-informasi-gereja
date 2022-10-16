@@ -1,42 +1,7 @@
-@extends('layouts.sbadmin2')
+@extends('layouts.sbkl')
 
 @push('css')
 <style>
-    /* body{
-    color: #8e9194;
-    background-color: #f4f6f9;
-    }
-    .avatar-xl img {
-        width: 110px;
-    }
-    .rounded-circle {
-        border-radius: 50% !important;
-    }
-    img {
-        vertical-align: middle;
-        border-style: none;
-    }
-    .text-muted {
-        color: #aeb0b4 !important;
-    }
-    .text-muted {
-        font-weight: 300;
-    }
-    .form-control {
-        display: block;
-        width: 100%;
-        height: calc(1.5em + 0.75rem + 2px);
-        padding: 0.375rem 0.75rem;
-        font-size: 0.875rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #4d5154;
-        background-color: #ffffff;
-        background-clip: padding-box;
-        border: 1px solid #eef0f3;
-        border-radius: 0.25rem;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    } */
     body {
     margin: 0;
     padding-top: 40px;
@@ -85,7 +50,7 @@
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    font-size: .825rem;
+    font-size: .950rem;
     background: #ffffff;
     color: #2e323c;
 }
@@ -108,15 +73,28 @@
     <h1 class="h3 mb-2 text-gray-800">Profile</h1><br>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h6 class="mb-2 text-primary">Paroki Details</h6>
+				<h6 class="mb-2 text-primary">Detail Akun</h6>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="fullName">Name</label>
-					<input type="text" class="form-control" id="name" name="name" placeholder="Name">
+					<label for="namaLengkap">Nama Lengkap</label>
+					<input type="text" class="form-control" value="{{$data->nama_lengkap}}" id="namaLengkap" placeholder="Nama Lengkap">
 				</div>
 			</div>
-            <div class="row gutters">
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="telepon">Telepon</label>
+					<input type="text" class="form-control" value="{{$data->telepon}}" id="telepon" placeholder="Telepon">
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="lingkungan">Lingkungan</label>
+					<input type="text" class="form-control" value="{{$data->lingkungan->nama_lingkungan}}" id="lingkungan" placeholder="Lingkungan" readonly>
+				</div>
+			</div>
+		</div>
+		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<h6 class="mt-3 mb-2 text-primary">Password</h6>
 			</div>
@@ -136,7 +114,7 @@
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
-                    <button type="button" class="btn btn-secondary">Cancel</button>
+					<button type="button" class="btn btn-secondary">Cancel</button>
 					<button type="submit" class="btn btn-primary">Update</button>
 				</div>
 			</div>
