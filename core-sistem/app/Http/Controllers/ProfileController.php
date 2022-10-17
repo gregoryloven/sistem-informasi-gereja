@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
+use Hash;
 
 class ProfileController extends Controller
 {
@@ -33,9 +34,9 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $data = User::where('id', Auth::user()->id)->first();
-        dd($data);
-
+        // return $request->all();
+        $data = User::find(Auth::user()->id);
+        // return $data;
         if($data->role == "umat")
         {
             $data->nama_lengkap = $request->get("nama_lengkap");
@@ -46,15 +47,65 @@ class ProfileController extends Controller
             $data->telepon = $request->get("telepon");
             $data->save();
 
-            return redirect()->route('profile.profileumat', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Akun Berhasil Diubah');
+            if($request->get("oldPassword") != null && $request->get("newPassword") != null && $request->get("newPassword2") != null)
+            {
+                if($request->get("newPassword") == $request->get("newPassword2")) {
+                    if (Hash::check($request->get("oldPassword"), $data->password)) {
+                        $data->password = bcrypt($request->get("newPassword"));
+                        $data->save();
+                        return redirect()->back()->with('status', 'Password Berhasil Diubah');
+                    } else {
+                        return redirect()->back()->with('error', 'Password Lama Salah');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Password Tidak Sama');
+                }
+            }
+            return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
         else if($data->role == "ketua kbg")
         {
-            return view('profile.profilekbg',compact('data'));
+            $data->nama_lengkap = $request->get("nama_lengkap");
+            $data->telepon = $request->get("telepon");
+            $data->save();
+
+            if($request->get("oldPassword") != null && $request->get("newPassword") != null && $request->get("newPassword2") != null)
+            {
+                if($request->get("newPassword") == $request->get("newPassword2")) {
+                    if (Hash::check($request->get("oldPassword"), $data->password)) {
+                        $data->password = bcrypt($request->get("newPassword"));
+                        $data->save();
+                        return redirect()->back()->with('status', 'Password Berhasil Diubah');
+                    } else {
+                        return redirect()->back()->with('error', 'Password Lama Salah');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Password Tidak Sama');
+                }
+            }
+            return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
         else if($data->role == "ketua lingkungan")
         {
-            return view('profile.profilelingkungan',compact('data'));
+            $data->nama_lengkap = $request->get("nama_lengkap");
+            $data->telepon = $request->get("telepon");
+            $data->save();
+
+            if($request->get("oldPassword") != null && $request->get("newPassword") != null && $request->get("newPassword2") != null)
+            {
+                if($request->get("newPassword") == $request->get("newPassword2")) {
+                    if (Hash::check($request->get("oldPassword"), $data->password)) {
+                        $data->password = bcrypt($request->get("newPassword"));
+                        $data->save();
+                        return redirect()->back()->with('status', 'Password Berhasil Diubah');
+                    } else {
+                        return redirect()->back()->with('error', 'Password Lama Salah');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Password Tidak Sama');
+                }
+            }
+            return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
         else
         {

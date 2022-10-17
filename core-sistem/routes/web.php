@@ -109,6 +109,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('profilekbg', [ProfileController::class, 'data'])->name('profile.kbg');
     Route::get('profilelingkungan', [ProfileController::class, 'data'])->name('profile.lingkungan');
     Route::post('/profileumat/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profilelingkungan/update/{id}', [ProfileController::class, 'update'])->name('profile.updatelingkungan');
+    Route::post('/profilekbg/update/{id}', [ProfileController::class, 'update'])->name('profile.updatekbg');
 
     //User KL
     // Route::resource('userkl', UserKLController::class);

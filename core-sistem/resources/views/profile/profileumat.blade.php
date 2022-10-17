@@ -68,7 +68,22 @@
 @endpush
 
 @section('content')
+<br>
+@if (session('status'))
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fas fa-check"></i> Informasi!</h5>
+    {{ session('status') }}
+</div>
+@elseif(session('error'))
+<div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fas fa-check"></i> Informasi!</h5>
+    {{ session('error') }}
+</div>
+@endif
 <form class="mb-2" method="post" action="{{ url('profileumat/update/'.$data->id )}}">
+@csrf
 <div class="card h-100">
 	<div class="card-body">
     <h1 class="h3 mb-2 text-gray-800">Profile</h1><br>
@@ -130,16 +145,22 @@
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<h6 class="mt-3 mb-2 text-primary">Password</h6>
 			</div>
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="form-group">
+					<label for="newPassword">Old Password</label>
+					<input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Old Password">
+				</div>
+			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="newPassword">New Password</label>
-					<input type="password" class="form-control" id="newPassword" placeholder="New Password">
+					<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password">
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="newPassword">Re-Password</label>
-					<input type="password" class="form-control" id="newPassword" placeholder="New Password">
+					<input type="password" class="form-control" id="newPassword2" name="newPassword2" placeholder="Confirm New Password">
 				</div>
 			</div>
 		</div>
