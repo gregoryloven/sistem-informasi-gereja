@@ -78,6 +78,17 @@
 
                 <div class="col-md-4 mt-3">
                     <div class="card" style="width: 18rem;">
+                        <img src="http://insighttour.id/wp-content/uploads/2020/02/Tata-Cara-Penerimaan-Sakramen-Krisma.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold">Perkawinan</h5>
+                            <p class="card-text">Pendaftaran Perkawinan</p>
+                            <a href="/pendaftaranperkawinan" class="btn btn-primary">Daftar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <div class="card" style="width: 18rem;">
                         <img src="https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1640405169/fsgrr5bve4hpxkjpvdv0.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Permohonan Pelayanan</h5>

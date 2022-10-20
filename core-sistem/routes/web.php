@@ -30,6 +30,7 @@ use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\UmatController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PendaftaranPerkawinanController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -269,6 +270,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/pendaftarankrisma/InputFormLintas', [PendaftaranKrismaController::class, 'InputFormLintas'])->name('pendaftarankrisma.InputFormLintas');
         Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
         Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
+
+        //PendaftaranPerkawinan
+        Route::resource('pendaftaranperkawinan', PendaftaranPerkawinanController::class);
+        Route::get('/pendaftaranperkawinan/InputForm', [PendaftaranPerkawinanController::class, 'InputForm'])->name('pendaftaranperkawinan.InputForm');
 
         //Reservasi Misa
         Route::resource('reservasimisa', ReservasiMisaController::class);
