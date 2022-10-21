@@ -6,6 +6,7 @@ use App\Models\PelayananLainnya;
 use App\Models\PendaftaranPelayananLainnya;
 use App\Models\Riwayat;
 use App\Models\User;
+use App\Models\ListEvent;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -55,9 +56,16 @@ class PelayananLainnyaController extends Controller
         $data->status = "Diproses";
         $data->save();
 
+        $list =  new ListEvent();
+        $list->nama_event = "Pelayanan";
+        $list->jenis_event = "Pelayanan";
+        $list->jadwal_pelaksanaan = $data->jadwal;
+        $list->lokasi = $data->alamat;
+        $list->save();
+
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
-        $riwayat->list_event_id = $request->event_id;
+        $riwayat->list_event_id = $list->id;
         $riwayat->event_id =  $data->id;
         $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Diproses";
