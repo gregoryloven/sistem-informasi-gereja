@@ -29,8 +29,10 @@
     {{ session('error') }}
     </div>
 @endif
-
+<small style="color:red;">*Anda hanya dapat mengajukan pendaftaran sebanyak 1 kali. Jika ingin mengajukan kembali harap tekan "Batal terlebih dahulu.</small>
+@if(count($data)==0)
 <a href="{{ url('pendaftaranperkawinan/create') }}" class="btn btn-info btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Formulir Pendaftaran</a><br><br>
+@endif
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -38,93 +40,151 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable">
+            @if(count($data)!=0)
+            <table class="table table-bordered">
                 <thead>
                     <tr style="text-align: center;">
-                        <th>Keterangan Identitas</th>
+                        <th>KETERANGAN IDENTITAS</th>
                         <th>Calon Suami</th>
                         <th>Calon Istri</th>
-                        <th width="15%"><i class="fa fa-cog"></i></th>
+                        <!-- <th width="15%"><i class="fa fa-cog"></i></th> -->
                     </tr>
                 </thead>
                 <tbody>
-                
+                @foreach($data as $d)
                     <tr>
                         <td>Nama Lengkap</td>
-                        <td>Edo</td>
-                        <td>Maria</td>
+                        <td>{{$d->nama_lengkap_calon_suami}}</td>
+                        <td>{{$d->nama_lengkap_calon_istri}}</td>
                     </tr>
                     <tr>
-                        <td>Tempat & Tgl Lahir</td>
+                        <td>Tempat, Tgl Lahir</td>
+                        <td>{{$d->tempat_lahir_calon_suami}}, {{tanggal_indonesia($d->tanggal_lahir_calon_suami)}}</td>
+                        <td>{{$d->tempat_lahir_calon_istri}}, {{tanggal_indonesia($d->tanggal_lahir_calon_istri)}}</td>
                     </tr>
                     <tr>
                         <td>Pekerjaan</td>
+                        <td>{{$d->pekerjaan_calon_suami}}</td>
+                        <td>{{$d->pekerjaan_calon_istri}}</td>
                     </tr>
                     <tr>
                         <td>Alamat</td>
+                        <td>{{$d->alamat_calon_suami}}</td>
+                        <td>{{$d->alamat_calon_istri}}</td>
                     </tr>
                     <tr>
                         <td>Telepon</td>
+                        <td>{{$d->telepon_calon_suami}}</td>
+                        <td>{{$d->telepon_calon_istri}}</td>
                     </tr>
                     <tr>
                         <td>Agama</td>
+                        <td>{{$d->agama_calon_suami}}</td>
+                        <td>{{$d->agama_calon_istri}}</td>
                     </tr>
                     <tr>
-                        <td><b>IDENTITAS ORANG TUA</b></td>
+                        <td><b>IDENTITAS ORANG TUA</b></td><td></td><td></td>
                     </tr>
                     <tr>
                         <td>Nama Lengkap Ayah</td>
+                        <td>{{$d->nama_ayah_calon_suami}}</td>
+                        <td>{{$d->nama_ayah_calon_istri}}</td>
                     </tr>
                     <tr>
                         <td>Agama</td>
+                        <td>{{$d->agama_ayah_calon_suami}}</td>
+                        <td>{{$d->agama_ayah_calon_suami}}</td>
                     </tr>
                     <tr>
                         <td>Pekerjaan</td>
+                        <td>{{$d->pekerjaan_ayah_calon_suami}}</td>
+                        <td>{{$d->pekerjaan_ayah_calon_istri}}</td>
+
                     </tr>
                     <tr>
                         <td>Nama Lengkap Ibu</td>
+                        <td>{{$d->nama_ibu_calon_suami}}</td>
+                        <td>{{$d->nama_ibu_calon_istri}}</td>
                     </tr>
                     <tr>
                         <td>Agama</td>
-                    </tr>
-                    <tr>
-                        <td>Pekerjaan</td>
+                        <td>{{$d->agama_ibu_calon_suami}}</td>
+                        <td>{{$d->agama_ibu_calon_suami}}</td>
                     </tr>
                     <tr>
                         <td>Alamat</td>
+                        <td>{{$d->alamat_orangtua_calon_suami}}</td>
+                        <td>{{$d->alamat_orangtua_calon_istri}}</td>
                     </tr>
                     <tr>
-                        <td><b>LAMPIRAN PRIBADI</b></td>
+                        <td><b>LAMPIRAN PRIBADI</b></td><td></td><td></td>
                     </tr>
                     <tr>
+                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik" || $d->agama_calon_suami=="Kristen" || $d->agama_calon_istri=="Kristen")    
                         <td>Surat Baptis + Status Liber</td>
+                        <td>@if(isset($d->surat_baptis_calon_suami))<img src="{{asset('file_perkawinan/surat_baptis/'.$d->surat_baptis_calon_suami)}}" height='80px'/>@endif</td>
+                        <td>@if(isset($d->surat_baptis_calon_istri))<img src="{{asset('file_perkawinan/surat_baptis/'.$d->surat_baptis_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                     <tr>
+                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik")
                         <td>Sertifikat Komuni</td>
+                        <td>@if(isset($d->sertifikat_komuni_calon_suami))<img src="{{asset('file_perkawinan/sertifikat_komuni/'.$d->sertifikat_komuni_calon_suami)}}" height='80px'/>@endif</td>
+                        <td>@if(isset($d->sertifikat_komuni_calon_istri))<img src="{{asset('file_perkawinan/sertifikat_komuni/'.$d->sertifikat_komuni_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                     <tr>
+                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik")
                         <td>Sertifikat Krisma</td>
+                        <td>@if(isset($d->sertifikat_krisma_calon_suami))<img src="{{asset('file_perkawinan/sertifikat_krisma/'.$d->sertifikat_krisma_calon_suami)}}" height='80px'/>@endif</td>
+                        <td>@if(isset($d->sertifikat_krisma_calon_istri))<img src="{{asset('file_perkawinan/sertifikat_krisma/'.$d->sertifikat_krisma_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                     <tr>
+                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik")
                         <td>Surat Pengantar Lingkungan</td>
+                        <td>@if(isset($d->suratpengantar_lingkungan_calon_suami))<img src="{{asset('file_perkawinan/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_suami)}}" height='80px'/>@endif</td>
+                        <td>@if(isset($d->suratpengantar_lingkungan_calon_istri))<img src="{{asset('file_perkawinan/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                     <tr>
+                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik")
                         <td>Surat Pengantar Paroki</td>
+                        <td>@if(isset($d->suratpengantar_paroki_calon_suami))<img src="{{asset('file_perkawinan/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_suami)}}" height='80px'/>@endif</td>
+                        <td>@if(isset($d->suratpengantar_paroki_calon_istri))<img src="{{asset('file_perkawinan/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                     <tr>
                         <td>KTP</td>
+                        <td><img src="{{asset('file_perkawinan/ktp/'.$d->ktp_calon_suami)}}" height='80px'/></td>
+                        <td><img src="{{asset('file_perkawinan/ktp/'.$d->ktp_calon_istri)}}" height='80px'/></td>
                     </tr>
                     <tr>
                         <td>KK</td>
+                        <td><img src="{{asset('file_perkawinan/kk/'.$d->kk_calon_suami)}}" height='80px'/></td>
+                        <td><img src="{{asset('file_perkawinan/kk/'.$d->kk_calon_istri)}}" height='80px'/></td>
                     </tr>
                     <tr>
+                    @if($d->agama_calon_suami!="Katolik" || $d->agama_calon_istri!="Katolik")
                         <td>Surat Keterangan Bebas Menikah</td>
+                        <td>@if(isset($d->suratketerangan_bebas_menikah_calon_suami))<img src="{{asset('file_perkawinan/suratketerangan_bebas_menikah/'.$d->suratketerangan_bebas_menikah_calon_suami)}}" height='80px'/>@endif</td>
+                        <td>@if(isset($d->suratketerangan_bebas_menikah_calon_istri))<img src="{{asset('file_perkawinan/suratketerangan_bebas_menikah/'.$d->suratketerangan_bebas_menikah_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                     <tr>
+                    @if($d->agama_calon_suami!="Katolik" || $d->agama_calon_istri!="Katolik")
                         <td>Surat Pernyataan Pihak Non-Katolik</td>
+                        <td>@if(isset($d->suratpernyataan_nonkatolik_calon_suami))<img src="{{asset('file_perkawinan/suratpernyataan_nonkatolik/'.$d->suratpernyataan_nonkatolik_calon_suami)}}" height='80px'/>@endif</td>
+                        <td>@if(isset($d->suratpernyataan_nonkatolik_calon_istri))<img src="{{asset('file_perkawinan/suratpernyataan_nonkatolik/'.$d->suratpernyataan_nonkatolik_calon_istri)}}" height='80px'/>@endif</td>                    
+                    @endif
                     </tr>
-                
                 </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
                 <thead>
                     <tr style="text-align: center;">
                         <th>LAMPIRAN PER-PASANGAN</th>
@@ -132,10 +192,28 @@
                         <th>Foto 4x6 Berdampingan</th>
                         <th>KTP Saksi Nikah</th>
                         <th>Tanggal Kanonik</th>
-                        <th>Tanggal Pelaksanaan Perkawinan</th>
                     </tr>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td><img src="{{asset('file_perkawinan/sertifikat_kpp/'.$d->sertifikat_kpp)}}" height='80px'/></td>
+                            <td><img src="{{asset('file_perkawinan/foto_berdampingan/'.$d->foto_berdampingan)}}" height='80px'/></td>
+                            <td><img src="{{asset('file_perkawinan/ktp_saksi_nikah/'.$d->ktp_saksi_nikah)}}" height='80px'/></td>
+                            <td>{{tanggal_indonesia($d->tanggal_kanonik)}}</td>
+                        </tr>
+                    </tbody>
                 </thead>
+
             </table>
+            <br><h5><b>Tanggal Pelaksanaan Perkawinan:</b> {{tanggal_indonesia($data[0]->tanggal_perkawinan)}} WITA</h5>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="text-right">
+                    <a href="#" data-toggle="modal" class="btn btn-secondary btn-danger">Batal</a>
+                    <a href="#modaltracking" data-toggle="modal" class="btn btn-primary" onclick="detail({{ $d->id }})">Lacak</a>
+				</div>
+			</div>
+            @endforeach
+            @endif
         </div>
     </div>
 </div>

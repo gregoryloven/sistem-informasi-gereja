@@ -273,7 +273,6 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
         //PendaftaranPerkawinan
         Route::resource('pendaftaranperkawinan', PendaftaranPerkawinanController::class);
-        Route::get('/pendaftaranperkawinan/InputForm', [PendaftaranPerkawinanController::class, 'InputForm'])->name('pendaftaranperkawinan.InputForm');
 
         //Reservasi Misa
         Route::resource('reservasimisa', ReservasiMisaController::class);

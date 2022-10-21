@@ -28,7 +28,6 @@ class CreatePerkawinansTable extends Migration
             $table->string('pekerjaan_ayah_calon_suami');
             $table->string('nama_ibu_calon_suami');
             $table->string('agama_ibu_calon_suami');
-            $table->string('pekerjaan_ibu_calon_suami');
             $table->string('alamat_orangtua_calon_suami');
             $table->string('surat_baptis_calon_suami')->nullable();
             $table->string('sertifikat_komuni_calon_suami')->nullable();
@@ -37,7 +36,6 @@ class CreatePerkawinansTable extends Migration
             $table->string('suratpengantar_paroki_calon_suami')->nullable();
             $table->string('suratketerangan_bebas_menikah_calon_suami')->nullable();
             $table->string('suratpernyataan_nonkatolik_calon_suami')->nullable();
-            $table->string('akta_kelahiran_calon_suami');
             $table->string('ktp_calon_suami');
             $table->string('kk_calon_suami');
             $table->string('ttd_calon_suami');
@@ -53,7 +51,6 @@ class CreatePerkawinansTable extends Migration
             $table->string('pekerjaan_ayah_calon_istri');
             $table->string('nama_ibu_calon_istri');
             $table->string('agama_ibu_calon_istri');
-            $table->string('pekerjaan_ibu_calon_istri');
             $table->string('alamat_orangtua_calon_istri');
             $table->string('surat_baptis_calon_istri')->nullable();
             $table->string('sertifikat_komuni_calon_istri')->nullable();
@@ -62,7 +59,6 @@ class CreatePerkawinansTable extends Migration
             $table->string('suratpengantar_paroki_calon_istri')->nullable();
             $table->string('suratketerangan_bebas_menikah_calon_istri')->nullable();
             $table->string('suratpernyataan_nonkatolik_calon_istri')->nullable();
-            $table->string('akta_kelahiran_calon_istri');
             $table->string('ktp_calon_istri');
             $table->string('kk_calon_istri');
             $table->string('ttd_calon_istri');
@@ -71,6 +67,7 @@ class CreatePerkawinansTable extends Migration
             $table->string('ktp_saksi_nikah');
             $table->date('tanggal_kanonik');
             $table->datetime('tanggal_perkawinan');
+            $table->string('status');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

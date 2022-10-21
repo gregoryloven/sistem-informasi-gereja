@@ -31,7 +31,7 @@
                 Formulir Pendaftaran Sakramen Perkawinan
             </div>
             <div class="card-body">
-            <form class="mb-2" method="post" action="/pendaftaranperkawinan/store" enctype="multipart/form-data">
+            <form role="form" class="mb-2" method="post" action="{{ url('pendaftaranperkawinan') }}" enctype="multipart/form-data">
             @csrf
             <div class="row gutters">
                 <!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -98,17 +98,17 @@
                         <img id="output" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div style='display:none' id='label_sertfikat_komuni_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_sertifikat_komuni_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Komuni Pertama</label>
-                        <input type="file" class="form-control" id='sertfikat_komuni_calon_suami' name='sertfikat_komuni_calon_suami' onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" required>
+                        <input type="file" class="form-control" id='sertifikat_komuni_calon_suami' name='sertifikat_komuni_calon_suami' onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output2" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div style='display:none' id='label_sertfikat_krisma_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_sertifikat_krisma_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Krisma (Wajib Disertakan Jika Ada)</label>
-                        <input type="file" class="form-control" id='sertfikat_krisma_calon_suami' name='sertfikat_krisma_calon_suami' onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])">
+                        <input type="file" class="form-control" id='sertifikat_krisma_calon_suami' name='sertifikat_krisma_calon_suami' onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])">
                         <img id="output3" src="" width="100px" height="100px">
                     </div>
                 </div>
@@ -140,17 +140,17 @@
                         <img id="output7" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div style='display:none' id='label_suratpernyataan_bebas_menikah_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratketerangan_bebas_menikah_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
-                        <label >Surat Pernyataan Bebas Menikah</label>
-                        <input type="file" class="form-control" id='suratpernyataan_bebas_menikah_calon_suami' name='suratpernyataan_bebas_menikah_calon_suami' onchange="document.getElementById('output8').src = window.URL.createObjectURL(this.files[0])" required>
+                        <label >Surat Keterangan Bebas Menikah</label>
+                        <input type="file" class="form-control" id='suratketerangan_bebas_menikah_calon_suami' name='suratketerangan_bebas_menikah_calon_suami' onchange="document.getElementById('output8').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output8" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div style='display:none' id='label_suratpernyataan_pihak_nonKatolik_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpernyataan_nonKatolik_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pernyataan Pihak Non-Katolik</label>
-                        <input type="file" class="form-control" id='suratpernyataan_pihak_nonKatolik_calon_suami' name='suratpernyataan_bebas_menikah_calon_suami' onchange="document.getElementById('output9').src = window.URL.createObjectURL(this.files[0])" required>
+                        <input type="file" class="form-control" id='suratpernyataan_nonKatolik_calon_suami' name='suratpernyataan_nonKatolik_calon_suami' onchange="document.getElementById('output9').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output9" src="" width="100px" height="100px">
                     </div>
                 </div>
@@ -207,12 +207,6 @@
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                        <label >Pekerjaan Ibu</label>
-                        <input type="text" class="form-control" id='pekerjaan_ibu_calon_suami' name='pekerjaan_ibu_calon_suami' placeholder="Pekerjaan Ibu Calon Suami" required>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
                         <label >Alamat Orang Tua</label>
                         <input type="text" class="form-control" id='alamat_orangtua_calon_suami' name='alamat_orangtua_calon_suami' placeholder="Alamat Orang Tua Calon Suami" required>
                     </div>
@@ -243,7 +237,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Pekerjaan</label>
-                        <input type="text" class="form-control" id='pekerjaan_calon_istri' name='pekerjaan_calon_istri' placeholder="Pekerjaan Calon Suami" required>
+                        <input type="text" class="form-control" id='pekerjaan_calon_istri' name='pekerjaan_calon_istri' placeholder="Pekerjaan Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -279,17 +273,17 @@
                         <img id="output20" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div style='display:none' id='label_sertfikat_komuni_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_sertifikat_komuni_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Komuni Pertama</label>
-                        <input type="file" class="form-control" id='sertfikat_komuni_calon_istri' name='sertfikat_komuni_calon_istri' onchange="document.getElementById('output21').src = window.URL.createObjectURL(this.files[0])" required>
+                        <input type="file" class="form-control" id='sertifikat_komuni_calon_istri' name='sertifikat_komuni_calon_istri' onchange="document.getElementById('output21').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output21" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div style='display:none' id='label_sertfikat_krisma_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_sertifikat_krisma_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Krisma (Wajib Disertakan Jika Ada)</label>
-                        <input type="file" class="form-control" id='sertfikat_krisma_calon_istri' name='sertfikat_krisma_calon_istri' onchange="document.getElementById('output22').src = window.URL.createObjectURL(this.files[0])">
+                        <input type="file" class="form-control" id='sertifikat_krisma_calon_istri' name='sertifikat_krisma_calon_istri' onchange="document.getElementById('output22').src = window.URL.createObjectURL(this.files[0])">
                         <img id="output22" src="" width="100px" height="100px">
                     </div>
                 </div>
@@ -321,17 +315,17 @@
                         <img id="output26" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div style='display:none' id='label_suratpernyataan_bebas_menikah_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratketerangan_bebas_menikah_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
-                        <label >Surat Pernyataan Bebas Menikah</label>
-                        <input type="file" class="form-control" id='suratpernyataan_bebas_menikah_calon_istri' name='suratpernyataan_bebas_menikah_calon_istri' onchange="document.getElementById('output27').src = window.URL.createObjectURL(this.files[0])" required>
+                        <label >Surat Keterangan Bebas Menikah</label>
+                        <input type="file" class="form-control" id='suratketerangan_bebas_menikah_calon_istri' name='suratketerangan_bebas_menikah_calon_istri' onchange="document.getElementById('output27').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output27" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div style='display:none' id='label_suratpernyataan_pihak_nonKatolik_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpernyataan_nonKatolik_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pernyataan Pihak Non-Katolik</label>
-                        <input type="file" class="form-control" id='suratpernyataan_pihak_nonKatolik_calon_istri' name='suratpernyataan_pihak_nonKatolik_calon_istri' onchange="document.getElementById('output28').src = window.URL.createObjectURL(this.files[0])" required>
+                        <input type="file" class="form-control" id='suratpernyataan_nonKatolik_calon_istri' name='suratpernyataan_nonKatolik_calon_istri' onchange="document.getElementById('output28').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output28" src="" width="100px" height="100px">
                     </div>
                 </div>
@@ -388,12 +382,6 @@
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                        <label >Pekerjaan Ibu</label>
-                        <input type="text" class="form-control" id='pekerjaan_ibu_calon_istri' name='pekerjaan_ibu_calon_istri' placeholder="Pekerjaan Ibu Calon Istri" required>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
                         <label >Alamat Orang Tua</label>
                         <input type="text" class="form-control" id='alamat_orangtua_calon_istri' name='alamat_orangtua_calon_istri' placeholder="Alamat Orang Tua Calon Istri" required>
                     </div>
@@ -408,12 +396,6 @@
                         <label >Sertifikat Kursus Persiapan Perkawinan (KPP)</label>
                         <input type="file" class="form-control" id='sertifikat_kpp' name='sertifikat_kpp' onchange="document.getElementById('output29').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output29" src="" width="100px" height="100px">
-                    </div>
-                </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="form-group">
-                        <label >Tanggal Kanonik</label>
-                        <input type="text" class="form-control" id='tanggal_kanonik' name='tanggal_kanonik' placeholder="Tanggal Kanonik" required>
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -437,21 +419,27 @@
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
+                        <label >Tanggal Kanonik</label>
+                        <input type="date" class="form-control" id='tanggal_kanonik' name='tanggal_kanonik' placeholder="Tanggal Kanonik" required>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="form-group">
                         <label >Tanggal Pelaksanaan Perkawinan</label>
-                        <input type="datetime-local" class="form-control" id='tanggal_pelaksanaan' name='tanggal_pelaksanaan' required>
+                        <input type="datetime-local" class="form-control" id='tanggal_perkawinan' name='tanggal_perkawinan' required>
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >TTD Calon Suami</label>
-                        <input type="file" class="form-control" id='ttd_suami' name='ttd_suami' onchange="document.getElementById('output32').src = window.URL.createObjectURL(this.files[0])" required>
+                        <input type="file" class="form-control" id='ttd_calon_suami' name='ttd_calon_suami' onchange="document.getElementById('output32').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output32" src="" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >TTD Calon Istri</label>
-                        <input type="file" class="form-control" id='ttd_istri' name='ttd_istri' onchange="document.getElementById('output33').src = window.URL.createObjectURL(this.files[0])" required>
+                        <input type="file" class="form-control" id='ttd_calon_istri' name='ttd_calon_istri' onchange="document.getElementById('output33').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output33" src="" width="100px" height="100px">
                     </div>
                 </div>
@@ -497,27 +485,27 @@ function checkAgamaSuami(agama)
     if($(agama).val() == 'Katolik')
     {
         $('#label_surat_baptis_calon_suami').show()
-        $('#label_sertfikat_komuni_calon_suami').show()
-        $('#label_sertfikat_krisma_calon_suami').show()
+        $('#label_sertifikat_komuni_calon_suami').show()
+        $('#label_sertifikat_krisma_calon_suami').show()
         $('#label_suratpengantar_lingkungan_calon_suami').show()
         $('#label_suratpengantar_paroki_calon_suami').show()
         $('#label_ktp_calon_suami').show()
         $('#label_kk_calon_suami').show()
-        $('#label_suratpernyataan_bebas_menikah_calon_suami').hide()
-        $('#label_suratpernyataan_pihak_nonKatolik_calon_suami').hide()
+        $('#label_suratketerangan_bebas_menikah_calon_suami').hide()
+        $('#label_suratpernyataan_nonKatolik_calon_suami').hide()
 
-        $('#suratpernyataan_bebas_menikah_calon_suami').prop('required',false)
-        $('#suratpernyataan_pihak_nonKatolik_calon_suami').prop('required',false)
+        $('#suratketerangan_bebas_menikah_calon_suami').prop('required',false)
+        $('#suratpernyataan_nonKatolik_calon_suami').prop('required',false)
     }
     else if($(agama).val() == 'Kristen')
     {
         $('#label_surat_baptis_calon_suami').show()
         $('#label_ktp_calon_suami').show()
         $('#label_kk_calon_suami').show()
-        $('#label_suratpernyataan_bebas_menikah_calon_suami').show()
-        $('#label_suratpernyataan_pihak_nonKatolik_calon_suami').show()
-        $('#label_sertfikat_komuni_calon_suami').hide()
-        $('#label_sertfikat_krisma_calon_suami').hide()
+        $('#label_suratketerangan_bebas_menikah_calon_suami').show()
+        $('#label_suratpernyataan_nonKatolik_calon_suami').show()
+        $('#label_sertifikat_komuni_calon_suami').hide()
+        $('#label_sertifikat_krisma_calon_suami').hide()
         $('#label_suratpengantar_lingkungan_calon_suami').hide()
         $('#label_suratpengantar_paroki_calon_suami').hide()
 
@@ -529,11 +517,11 @@ function checkAgamaSuami(agama)
     {
         $('#label_ktp_calon_suami').show()
         $('#label_kk_calon_suami').show()
-        $('#label_suratpernyataan_bebas_menikah_calon_suami').show()
-        $('#label_suratpernyataan_pihak_nonKatolik_calon_suami').show()
+        $('#label_suratketerangan_bebas_menikah_calon_suami').show()
+        $('#label_suratpernyataan_nonKatolik_calon_suami').show()
         $('#label_surat_baptis_calon_suami').hide()
-        $('#label_sertfikat_komuni_calon_suami').hide()
-        $('#label_sertfikat_krisma_calon_suami').hide()
+        $('#label_sertifikat_komuni_calon_suami').hide()
+        $('#label_sertifikat_krisma_calon_suami').hide()
         $('#label_suratpengantar_lingkungan_calon_suami').hide()
         $('#label_suratpengantar_paroki_calon_suami').hide()
         
@@ -551,31 +539,31 @@ function checkAgamaIstri(agama)
     if($(agama).val() == 'Katolik')
     {
         $('#label_surat_baptis_calon_istri').show()
-        $('#label_sertfikat_komuni_calon_istri').show()
-        $('#label_sertfikat_krisma_calon_istri').show()
+        $('#label_sertifikat_komuni_calon_istri').show()
+        $('#label_sertifikat_krisma_calon_istri').show()
         $('#label_suratpengantar_lingkungan_calon_istri').show()
         $('#label_suratpengantar_paroki_calon_istri').show()
         $('#label_ktp_calon_istri').show()
         $('#label_kk_calon_istri').show()
-        $('#label_suratpernyataan_bebas_menikah_calon_istri').hide()
-        $('#label_suratpernyataan_pihak_nonKatolik_calon_istri').hide()
+        $('#label_suratketerangan_bebas_menikah_calon_istri').hide()
+        $('#label_suratpernyataan_nonKatolik_calon_istri').hide()
 
-        $('#suratpernyataan_bebas_menikah_calon_istri').prop('required',false)
-        $('#suratpernyataan_pihak_nonKatolik_calon_istri').prop('required',false)
+        $('#suratketerangan_bebas_menikah_calon_istri').prop('required',false)
+        $('#suratpernyataan_nonKatolik_calon_istri').prop('required',false)
     }
     else if($(agama).val() == 'Kristen')
     {
         $('#label_surat_baptis_calon_istri').show()
         $('#label_ktp_calon_istri').show()
         $('#label_kk_calon_istri').show()
-        $('#label_suratpernyataan_bebas_menikah_calon_istri').show()
-        $('#label_suratpernyataan_pihak_nonKatolik_calon_istri').show()
-        $('#label_sertfikat_komuni_calon_istri').hide()
-        $('#label_sertfikat_krisma_calon_istri').hide()
+        $('#label_suratketerangan_bebas_menikah_calon_istri').show()
+        $('#label_suratpernyataan_nonKatolik_calon_istri').show()
+        $('#label_sertifikat_komuni_calon_istri').hide()
+        $('#label_sertifikat_krisma_calon_istri').hide()
         $('#label_suratpengantar_lingkungan_calon_istri').hide()
         $('#label_suratpengantar_paroki_calon_istri').hide()
 
-        $('#sertfikat_komuni_calon_istri').prop('required',false)
+        $('#sertifikat_komuni_calon_istri').prop('required',false)
         $('#suratpengantar_lingkungan_calon_istri').prop('required',false)
         $('#suratpengantar_paroki_calon_istri').prop('required',false)
     }
@@ -583,11 +571,11 @@ function checkAgamaIstri(agama)
     {
         $('#label_ktp_calon_istri').show()
         $('#label_kk_calon_istri').show()
-        $('#label_suratpernyataan_bebas_menikah_calon_istri').show()
-        $('#label_suratpernyataan_pihak_nonKatolik_calon_istri').show()
+        $('#label_suratketerangan_bebas_menikah_calon_istri').show()
+        $('#label_suratpernyataan_nonKatolik_calon_istri').show()
         $('#label_surat_baptis_calon_istri').hide()
-        $('#label_sertfikat_komuni_calon_istri').hide()
-        $('#label_sertfikat_krisma_calon_istri').hide()
+        $('#label_sertifikat_komuni_calon_istri').hide()
+        $('#label_sertifikat_krisma_calon_istri').hide()
         $('#label_suratpengantar_lingkungan_calon_istri').hide()
         $('#label_suratpengantar_paroki_calon_istri').hide()
         
