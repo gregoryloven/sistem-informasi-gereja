@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Perkawinan;
+use App\Models\ListEvent;
+use App\Models\Riwayat;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 
 class PendaftaranPerkawinanController extends Controller
 {
@@ -18,7 +22,6 @@ class PendaftaranPerkawinanController extends Controller
         $data = Perkawinan::where('user_id', Auth::user()->id)->get();
 
         return view('pendaftaranperkawinan.index',compact("data"));
-        // return view('pendaftaranperkawinan.index');
     }
 
     /**
@@ -300,12 +303,40 @@ class PendaftaranPerkawinanController extends Controller
         $data->ktp_saksi_nikah=$imgFile23;
 
         $data->tanggal_kanonik = $request->get("tanggal_kanonik");
+        $data->tempat_perkawinan = $request->get("tempat_perkawinan");
         $data->tanggal_perkawinan = $request->get("tanggal_perkawinan");
         $data->status = "Diproses";
 
         $data->save();
 
+        $list =  new ListEvent();
+        $list->nama_event = "Perkawinan";
+        $list->jenis_event = "Perkawinan";
+        $list->jadwal_pelaksanaan = $data->tanggal_perkawinan;
+        $list->lokasi = $data->tempat_perkawinan;
+        $list->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id = $list->id;
+        $riwayat->event_id =  $data->id;
+        $riwayat->jenis_event = "Perkawinan";
+        $riwayat->status =  "Diproses";
+        $riwayat->save();
+
         return redirect()->route('pendaftaranperkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Perkawinan Berhasil');
+    }
+
+    public function detail(Request $request)
+    {
+        $id=$request->get("id");
+        $log = Riwayat::join('list_events', 'riwayats.list_event_id', '=', 'list_events.id')
+        ->where([['event_id', '=', $id], ['riwayats.jenis_event', '=', 'Perkawinan']])
+        ->get('riwayats.*');
+        
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('pendaftaranperkawinan.detail', compact("log"))->render()),200);
     }
 
     /**
@@ -314,7 +345,7 @@ class PendaftaranPerkawinanController extends Controller
      * @param  \App\Models\Perkawinan  $perkawinan
      * @return \Illuminate\Http\Response
      */
-    public function show(Perkawinan $perkawinan)
+    public function show(Request $request)
     {
         //
     }

@@ -29,10 +29,21 @@
     {{ session('error') }}
     </div>
 @endif
-<small style="color:red;">*Anda hanya dapat mengajukan pendaftaran sebanyak 1 kali. Jika ingin mengajukan kembali harap tekan "Batal terlebih dahulu.</small>
+<small style="color:red;">*Anda hanya dapat mengajukan pendaftaran sebanyak 1 kali. Jika ingin mengajukan kembali harap tekan "Batal" terlebih dahulu.</small><br>
 @if(count($data)==0)
 <a href="{{ url('pendaftaranperkawinan/create') }}" class="btn btn-info btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Formulir Pendaftaran</a><br><br>
 @endif
+
+<!-- TRACKING WITH MODAL -->
+<div class="modal fade" id="modaltracking" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContentt">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -205,11 +216,17 @@
                 </thead>
 
             </table>
-            <br><h5><b>Tanggal Pelaksanaan Perkawinan:</b> {{tanggal_indonesia($data[0]->tanggal_perkawinan)}} WITA</h5>
+            <br><h6><b>Tempat & Tanggal Pelaksanaan Perkawinan:</b> {{$data[0]->tempat_perkawinan}}, {{tanggal_indonesia($data[0]->tanggal_perkawinan)}} WITA</h6>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
                     <a href="#" data-toggle="modal" class="btn btn-secondary btn-danger">Batal</a>
-                    <a href="#modaltracking" data-toggle="modal" class="btn btn-primary" onclick="detail({{ $d->id }})">Lacak</a>
+                    @if($d->status == "Diproses")
+                    <a href="#modaltracking" data-toggle="modal" class="btn btn-info" onclick="detail({{ $d->id }})">Lacak</a>
+                    @elseif($d->status == "Disetujui Paroki")
+                    <a href="#modaltracking" data-toggle="modal" class="btn btn-success" onclick="detail({{ $d->id }})">Lacak</a>
+                    @else
+                    <a href="#modaltracking" data-toggle="modal" class="btn btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
+                    @endif
 				</div>
 			</div>
             @endforeach
@@ -221,6 +238,20 @@
 @endsection
 @section('javascript')
 <script>
+function detail(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('pendaftaranperkawinan.detail', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContentt').html(data.msg);
+    }
+  });
+}
+</script>
 
 </script>
 @endsection

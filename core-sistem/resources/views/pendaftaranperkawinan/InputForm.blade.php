@@ -423,7 +423,15 @@
                         <input type="date" class="form-control" id='tanggal_kanonik' name='tanggal_kanonik' placeholder="Tanggal Kanonik" required>
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label >Tempat Pelaksanaan Perkawinan</label>
+                        <input type="text" class="form-control" value="{{app('currentTenant')->name}}" id='tempat_perkawinan' name='tempat_perkawinan' readonly>
+                    </div>
+                </div>
+                @endif
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Tanggal Pelaksanaan Perkawinan</label>
                         <input type="datetime-local" class="form-control" id='tanggal_perkawinan' name='tanggal_perkawinan' required>

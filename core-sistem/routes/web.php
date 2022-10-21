@@ -273,6 +273,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
         //PendaftaranPerkawinan
         Route::resource('pendaftaranperkawinan', PendaftaranPerkawinanController::class);
+        Route::post('/pendaftaranperkawinan/detail', [PendaftaranPerkawinanController::class, 'detail'])->name('pendaftaranperkawinan.detail');
 
         //Reservasi Misa
         Route::resource('reservasimisa', ReservasiMisaController::class);

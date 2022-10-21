@@ -66,6 +66,7 @@ class CreatePerkawinansTable extends Migration
             $table->string('foto_berdampingan');
             $table->string('ktp_saksi_nikah');
             $table->date('tanggal_kanonik');
+            $table->string('tempat_perkawinan');
             $table->datetime('tanggal_perkawinan');
             $table->string('status');
             $table->foreign('user_id')->references('id')->on('users');
