@@ -437,14 +437,14 @@
                         <input type="datetime-local" class="form-control" id='tanggal_perkawinan' name='tanggal_perkawinan' required>
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >TTD Calon Suami</label>
                         <input type="file" class="form-control" id='ttd_calon_suami' name='ttd_calon_suami' onchange="document.getElementById('output32').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output32" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >TTD Calon Istri</label>
                         <input type="file" class="form-control" id='ttd_calon_istri' name='ttd_calon_istri' onchange="document.getElementById('output33').src = window.URL.createObjectURL(this.files[0])" required>
@@ -588,7 +588,7 @@ function checkAgamaIstri(agama)
         $('#label_suratpengantar_paroki_calon_istri').hide()
         
         $('#surat_baptis_calon_istri').prop('required',false)
-        $('#sertfikat_komuni_calon_istri').prop('required',false)
+        $('#sertifikat_komuni_calon_istri').prop('required',false)
         $('#suratpengantar_lingkungan_calon_istri').prop('required',false)
         $('#suratpengantar_paroki_calon_istri').prop('required',false)
     }

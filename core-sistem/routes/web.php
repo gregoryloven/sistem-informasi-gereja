@@ -321,6 +321,9 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('/validasiAdminKursusKrisma/PendaftarKrisma/{id}', [ValidasiAdminController::class, 'PendaftarKrisma'])->name('validasiAdmin.PendaftarKrisma');
     Route::post('/validasiAdminKursusKrisma/LulusKursusKrisma', [ValidasiAdminController::class, 'LulusKursusKrisma'])->name('validasiAdmin.LulusKursusKrisma');
 
+    Route::get('validasiAdminPerkawinan', [ValidasiAdminController::class, 'perkawinan'])->name('validasiAdmin.perkawinan');
+    Route::get('/validasiAdminPerkawinan/DetailPerkawinan/{id}', [ValidasiAdminController::class, 'DetailPerkawinan'])->name('validasiAdmin.DetailPerkawinan');
+
     // validasi Kbg
     Route::get('validasiKbgPelayanan', [ValidasiKbgController::class, 'pelayanan'])->name('validasiKbg.pelayanan');
     Route::post('/validasiKbg/acceptpelayanan', [ValidasiKbgController::class, 'AcceptPelayanan'])->name('validasiKbg.AcceptPelayanan');

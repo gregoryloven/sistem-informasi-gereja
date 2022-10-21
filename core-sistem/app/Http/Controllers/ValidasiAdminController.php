@@ -11,6 +11,7 @@ use App\Models\PendaftaranPelayananLainnya;
 use App\Models\PendaftaranPetugas;
 use App\Models\Riwayat;
 use App\Models\ListEvent;
+use App\Models\Perkawinan;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -668,5 +669,20 @@ class ValidasiAdminController extends Controller
         }
         return response()->json(array(
             'status'=>'oke'));
+    }
+
+    public function perkawinan()
+    {
+        $reservasi = Perkawinan::where('status', 'Diproses')->get();
+
+        return view('validasiAdmin.perkawinan',compact("reservasi"));
+    }
+
+    public function DetailPerkawinan(Request $request)
+    {
+        $id = $request->id;
+        $data = Perkawinan::where('id', $id)->get();
+
+        return view('validasiAdmin.DetailPerkawinan',compact("data"));
     }
 }
