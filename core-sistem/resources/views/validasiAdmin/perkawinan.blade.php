@@ -60,4 +60,54 @@
         </div>
     </div>
 </div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        Riwayat Validasi
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="myTable2">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Lengkap Calon Suami</th>
+                        <th>Nama Lengkap Calon Istri</th>
+                        <th>Status</th>
+                        <th>Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $i = 0; @endphp
+                    @foreach($reservasiAll as $da)
+                    @php $i += 1; @endphp
+                    <tr>
+                        <td>@php echo $i; @endphp</td>
+                        <td st>{{$da->nama_lengkap_calon_suami}}</td>
+                        <td st>{{$da->nama_lengkap_calon_istri}}</td>
+                        <td st >
+                            @if($da->statusRiwayat == 'Disetujui Paroki') 
+                            <div class="alert alert-success" role="alert">
+                                {{$da->statusRiwayat}}
+                            </div>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}} WITA</small>
+                            @elseif($da->statusRiwayat == 'Ditolak') 
+                            <div class="alert alert-danger" role="alert">
+                                {{$da->statusRiwayat}}
+                            </div>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}} WITA
+                                <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
+                            @endif
+                        </td>
+                        <td st>
+                            @if($da->statusRiwayat == "Disetujui Paroki")
+                            <a href="#modal{{$da->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection

@@ -674,8 +674,13 @@ class ValidasiAdminController extends Controller
     public function perkawinan()
     {
         $reservasi = Perkawinan::where('status', 'Diproses')->get();
+        $reservasiAll = Perkawinan::join('riwayats', 'perkawinans.id', '=', 'riwayats.event_id')
+        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Perkawinan']])
+        ->orderBy('riwayats.updated_at', 'DESC')
+        ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat',
+         'riwayats.alasan_penolakan', 'riwayats.created_at', 'riwayats.updated_at']);
 
-        return view('validasiAdmin.perkawinan',compact("reservasi"));
+        return view('validasiAdmin.perkawinan',compact("reservasi", "reservasiAll"));
     }
 
     public function DetailPerkawinan(Request $request)
@@ -684,5 +689,24 @@ class ValidasiAdminController extends Controller
         $data = Perkawinan::where('id', $id)->get();
 
         return view('validasiAdmin.DetailPerkawinan',compact("data"));
+    }
+
+    public function AcceptPerkawinan(Request $request)
+    {
+        $perkawinan=Perkawinan::find($request->id);
+        $perkawinan->status = "Disetujui Paroki";
+        $perkawinan->save();
+
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
+        $riwayat->event_id =  $perkawinan->id;
+        $riwayat->jenis_event =  "Perkawinan";
+        $riwayat->status =  "Disetujui Paroki";
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.perkawinan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Perkawinan Berhasil Disetujui');
     }
 }

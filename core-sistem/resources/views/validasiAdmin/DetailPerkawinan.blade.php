@@ -193,7 +193,7 @@
                     <form action="/validasiAdmin/acceptperkawinan" method="post">
                         @csrf
                         <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                        <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
+                        <input type="text" name="jadwal" class="d-none" value="{{$d->tanggal_perkawinan}}">
                         <button class="btn btn-success" type="submit">Terima</button>
                     </form>
                     <form action="/validasiAdmin/declineperkawinan" class="ml-2" method="post">
