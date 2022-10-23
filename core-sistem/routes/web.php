@@ -324,6 +324,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('validasiAdminPerkawinan', [ValidasiAdminController::class, 'perkawinan'])->name('validasiAdmin.perkawinan');
     Route::get('/validasiAdminPerkawinan/DetailPerkawinan/{id}', [ValidasiAdminController::class, 'DetailPerkawinan'])->name('validasiAdmin.DetailPerkawinan');
     Route::post('/validasiAdmin/acceptperkawinan', [ValidasiAdminController::class, 'AcceptPerkawinan'])->name('validasiAdmin.AcceptPerkawinan');
+    Route::post('/validasiAdmin/declineperkawinan', [ValidasiAdminController::class, 'DeclinePerkawinan'])->name('validasiAdmin.DeclinePerkawinan');
+    Route::post('/validasiAdminPerkawinan/PembatalanPerkawinan/{id}', [ValidasiAdminController::class, 'PembatalanPerkawinan'])->name('validasiAdmin.PembatalanPerkawinan');
 
     // validasi Kbg
     Route::get('validasiKbgPelayanan', [ValidasiKbgController::class, 'pelayanan'])->name('validasiKbg.pelayanan');

@@ -203,6 +203,31 @@
                     </form>
 				</div>
 			</div><br>
+            <!-- EDIT WITH MODAL -->
+            <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" >
+                        <form role="form" method="POST" action="{{ url('validasiAdmin/declineperkawinan') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Penolakan Pendaftaran Perkawinan</h4>
+                            </div>
+                            <div class="modal-body">
+                                @csrf
+                                <label>Alasan Penolakan:</label>
+                                <input type="hidden" name="id" value="{{$d->id}}">
+                                <input type="text" name="jadwal" class="d-none" value="{{$d->tanggal_perkawinan}}">
+                                <textarea name="alasan_penolakan" class="form-control" id="" cols="30" rows="10" required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-info">Submit</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             @endforeach
         </div>
     </div>

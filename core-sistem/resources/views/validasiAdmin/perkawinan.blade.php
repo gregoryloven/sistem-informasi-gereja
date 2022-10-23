@@ -100,7 +100,12 @@
                         </td>
                         <td st>
                             @if($da->statusRiwayat == "Disetujui Paroki")
-                            <a href="#modal{{$da->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                            <form role="form" method="POST" action="{{ url('validasiAdminPerkawinan/PembatalanPerkawinan/'.$da->id) }}">
+                                @csrf
+                                <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$da->id}}">
+                                <input type="hidden" class="form-control" name="jadwal" value="{{$da->tanggal_perkawinan}}">
+                                <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('Apakah anda yakin ingin membatalkan data ini?')) return false">Batal</button>
+                            </form>
                             @endif
                         </td>
                     </tr>

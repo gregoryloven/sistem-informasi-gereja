@@ -676,6 +676,7 @@ class ValidasiAdminController extends Controller
         $reservasi = Perkawinan::where('status', 'Diproses')->get();
         $reservasiAll = Perkawinan::join('riwayats', 'perkawinans.id', '=', 'riwayats.event_id')
         ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Perkawinan']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'Perkawinan']])
         ->orderBy('riwayats.updated_at', 'DESC')
         ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat',
          'riwayats.alasan_penolakan', 'riwayats.created_at', 'riwayats.updated_at']);
@@ -703,10 +704,47 @@ class ValidasiAdminController extends Controller
         $riwayat->user_id = Auth::user()->id;
         $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $perkawinan->id;
-        $riwayat->jenis_event =  "Perkawinan";
+        $riwayat->jenis_event = "Perkawinan";
         $riwayat->status =  "Disetujui Paroki";
         $riwayat->save();
 
         return redirect()->route('validasiAdmin.perkawinan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Perkawinan Berhasil Disetujui');
+    }
+
+    public function DeclinePerkawinan(Request $request)
+    {
+        $perkawinan=Perkawinan::find($request->id);
+        $perkawinan->status = "Ditolak";
+        $perkawinan->save();
+
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
+        $riwayat->event_id =  $perkawinan->id;
+        $riwayat->jenis_event = "Perkawinan";
+        $riwayat->status =  "Ditolak";
+        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.perkawinan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Perkawinan Berhasil Ditolak');
+    }
+
+    public function PembatalanPerkawinan(Request $request)
+    {
+        $perkawinan=Perkawinan::find($request->id);
+        $perkawinan->delete();
+
+        $riwayat = Riwayat::where([['event_id', $request->id],['jenis_event', 'Perkawinan']])->get();
+        foreach($riwayat as $r)
+        {
+            $r->delete();
+        }
+
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+        $list_event->delete();
+
+        return redirect()->route('validasiAdmin.perkawinan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Perkawinan Berhasil Dibatalkan');
     }
 }
