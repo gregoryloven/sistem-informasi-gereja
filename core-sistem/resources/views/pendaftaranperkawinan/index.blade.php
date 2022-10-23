@@ -217,8 +217,14 @@
             </table>
             <br><h6><b>Tempat & Tanggal Pelaksanaan Perkawinan:</b> {{$data[0]->tempat_perkawinan}}, {{tanggal_indonesia($data[0]->tanggal_perkawinan)}} WITA</h6>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div class="text-right">
-                    <a href="#" data-toggle="modal" class="btn btn-secondary btn-danger">Batal</a>
+				<div class="d-flex justify-content-end">
+                    <form role="form" method="POST" action="{{ url('pendaftaranperkawinan/'.$d->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                        <input type="hidden" class="form-control" name="jadwal" value="{{$d->tanggal_perkawinan}}">
+                        <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('Apakah anda yakin ingin membatalkan pendaftaran ini?')) return false">Batal</button>
+                    </form> 
                     @if($d->status == "Diproses")
                     <a href="#modaltracking" data-toggle="modal" class="btn btn-info" onclick="detail({{ $d->id }})">Lacak</a>
                     @elseif($d->status == "Disetujui Paroki")
@@ -227,7 +233,7 @@
                     <a href="#modaltracking" data-toggle="modal" class="btn btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
                     @endif
 				</div>
-			</div>
+			</div><br>
             @endforeach
             @endif
         </div>

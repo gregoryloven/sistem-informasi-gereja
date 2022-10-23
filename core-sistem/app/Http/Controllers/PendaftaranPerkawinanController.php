@@ -379,8 +379,20 @@ class PendaftaranPerkawinanController extends Controller
      * @param  \App\Models\Perkawinan  $perkawinan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Perkawinan $perkawinan)
+    public function destroy(Request $request)
     {
-        //
+        $perkawinan=Perkawinan::find($request->id);
+        $perkawinan->delete();
+
+        $riwayat = Riwayat::where([['event_id', $request->id],['jenis_event', 'Perkawinan']])->get();
+        foreach($riwayat as $r)
+        {
+            $r->delete();
+        }
+
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+        $list_event->delete();
+
+        return redirect()->route('pendaftaranperkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Perkawinan Berhasil Dibatalkan');
     }
 }
