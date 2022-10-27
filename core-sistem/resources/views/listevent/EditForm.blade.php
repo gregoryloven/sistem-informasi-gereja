@@ -35,21 +35,23 @@
                 <input type="date" value="{{$data->tgl_tutup_pendaftaran}}" class="form-control" id='tgl_tutup_pendaftarann' name='tgl_tutup_pendaftaran'  onchange='CheckEndDatee(this)' placeholder="Tanggal Tutup Pendaftaran" required>
             </div>
             @endif
+            @if($data->jenis_event != 'Kursus Persiapan Perkawinan')
             <div class="form-group">
                 <label >Jadwal Pelaksanaan</label>
                 <input type="datetime-local" value="{{$data->jadwal_pelaksanaan}}" class="form-control" id='jadwal_pelaksanaann' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksanaann(this)' placeholder="Jadwal Pelaksanaan" required>
             </div>
+            @endif
             <div class="form-group">
                 <label >Lokasi</label>
                 <input type="text" value="{{$data->lokasi}}" class="form-control" id='lokasii' name='lokasi' placeholder="Lokasi" required>
             </div>
-            @if($data->jenis_event == 'Komuni Pertama' || $data->jenis_event == 'Krisma')
+            @if($data->jenis_event == 'Komuni Pertama' || $data->jenis_event == 'Krisma' || $data->jenis_event == 'Kursus Persiapan Perkawinan')
             <div class="form-group">
                 <label >Keterangan Kursus (Tempat, Tanggal, Waktu)</label>
                 <input type="text" value="{{$data->keterangan_kursus}}" class="form-control" id='keterangan_kursuss' name='keterangan_kursus' placeholder="Keterangan Kursus" required>
             </div>
             @endif
-            @if($data->jenis_event != 'Petugas Liturgi')
+            @if($data->jenis_event != 'Petugas Liturgi' && $data->jenis_event != 'Kursus Persiapan Perkawinan')
             <div class="form-group">
                 <label >Romo</label>
                 <input type="text" value="{{$data->romo}}" class="form-control" id='romoo' name='romo' placeholder="Romo" required>
