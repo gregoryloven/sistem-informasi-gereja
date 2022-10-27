@@ -31,6 +31,7 @@ use App\Http\Controllers\UmatController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PendaftaranPerkawinanController;
+use App\Http\Controllers\PendaftaranKppController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -271,9 +272,13 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
         Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
 
-        //PendaftaranPerkawinan
+        //Pendaftaran Perkawinan
         Route::resource('pendaftaranperkawinan', PendaftaranPerkawinanController::class);
         Route::post('/pendaftaranperkawinan/detail', [PendaftaranPerkawinanController::class, 'detail'])->name('pendaftaranperkawinan.detail');
+
+        //Pendaftaran KPP
+        Route::resource('pendaftarankpp', PendaftaranKppController::class);
+        Route::get('/pendaftarankpp/OpenForm/{id}', [PendaftaranKppController::class, 'OpenForm'])->name('pendaftarankpp.OpenForm');
 
         //Reservasi Misa
         Route::resource('reservasimisa', ReservasiMisaController::class);

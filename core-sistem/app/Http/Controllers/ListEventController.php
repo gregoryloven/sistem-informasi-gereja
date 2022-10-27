@@ -11,6 +11,7 @@ use App\Models\MisaUsers;
 use App\Models\TobatUsers;
 use App\Models\PendaftaranPetugas;
 use App\Models\Riwayat;
+use App\Models\Kpp;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
@@ -29,7 +30,7 @@ class ListEventController extends Controller
     {
         $petugas=PetugasLiturgi::all();
         $data = DB::table('list_events')
-        ->where([['list_events.jenis_event', '!=', 'Petugas Liturgi'],['list_events.jenis_event', '!=', 'Misa'],['list_events.jenis_event', '!=', 'Tobat']])
+        ->where([['list_events.jenis_event', 'like', 'Baptis%'],['list_events.jenis_event', '=', 'Komuni'],['list_events.jenis_event', '=', 'Krisma']])
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
         'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
         'list_events.romo', 'list_events.status'
@@ -50,9 +51,13 @@ class ListEventController extends Controller
         'list_events.status'
         ]);
 
-        // dd($data);
+        $data4 = DB::table('list_events')
+        ->where('list_events.jenis_event', 'Kursus Persiapan Perkawinan')
+        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+        'list_events.tgl_tutup_pendaftaran','list_events.lokasi','list_events.keterangan_kursus','list_events.status'
+        ]);
 
-        return view('listevent.index',compact("data", "petugas", "data2", "data3"));
+        return view('listevent.index',compact("data", "petugas", "data2", "data3", "data4"));
     }
 
     public function store(Request $request)
@@ -99,6 +104,10 @@ class ListEventController extends Controller
         $krisma=Krisma::where('jadwal', '=', $data->jadwal_pelaksanaan)
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
         'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo')]);
+
+        $kpp=Kpp::where('keterangan_kursus', '=', $data->keterangan_kursus)
+        ->update(['keterangan_kursus' => $request->get('keterangan_kursus'), 
+        'lokasi' => $request->get('lokasi')]);
 
         // $misa=MisaUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
         // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
@@ -283,6 +292,30 @@ class ListEventController extends Controller
                 $data->delete();
                 return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
             }
+        }else if($data->jenis_event == "Kursus Persiapan Perkawinan"){
+            $kpp=Kpp::where('keterangan_kursus', '=', $data->keterangan_kursus)->get();
+            if($kpp->count() > 0){
+                $data->status = "Dibatalkan";
+                $data->save();
+                foreach($kpp as $k){
+                    $k->status = "Dibatalkan";
+                    $k->save();
+                }
+                $riwayat =  Riwayat::where('list_event_id', $request->id)->get();
+                foreach($riwayat as $r){
+                    $riwayats= new Riwayat();
+                    $riwayats->user_id = Auth::user()->id;
+                    $riwayats->list_event_id = $r->list_event_id;
+                    $riwayats->event_id = $r->event_id;
+                    $riwayats->jenis_event = $r->jenis_event;
+                    $riwayats->status = "Dibatalkan";
+                    $riwayats->save();
+                }
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Event Berhasil Dibatalkan');
+            } else {
+                $data->delete();
+                return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Dihapus');
+            }
         }
     }
     
@@ -395,6 +428,24 @@ class ListEventController extends Controller
             $tobat = TobatUsers::where('list_events_id', '=', $request->id)->get();
             foreach($tobat as $t){
                 $tobats = DB::table('tobat_users')->where('list_events_id', $t->list_events_id)->update(['status' => 'Selesai']);
+            }
+            return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
+        } else if($listevent->jenis_event == "Kursus Persiapan Perkawinan") {
+            $kpp = Kpp::where([['keterangan_kursus', '=', $request->keterangan_kursus],['status', 'Lulus']])->get();
+            foreach($kpp as $k){
+                $k->status = "Selesai";
+                $k->save();
+            }
+
+            $riwayat =  Riwayat::where([['list_event_id', $request->id],['kursus', 'Lulus']])->get();
+            foreach($riwayat as $r){
+                $riwayats= new Riwayat();
+                $riwayats->user_id = Auth::user()->id;
+                $riwayats->list_event_id = $r->list_event_id;
+                $riwayats->event_id = $r->event_id;
+                $riwayats->jenis_event = $r->jenis_event;
+                $riwayats->status = "Selesai";
+                $riwayats->save();
             }
             return redirect()->route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Event Berhasil Diselesaikan');
         }
