@@ -71,6 +71,11 @@ class User extends Authenticatable
     	return $this->hasMany(Perkawinan::class, 'user_id', 'id');
     }
 
+    public function kpp()
+    {
+    	return $this->hasMany(Kpp::class, 'user_id', 'id');
+    }
+
     public function list_events()
     {
         return $this->belongsToMany(ListEvent::class);
