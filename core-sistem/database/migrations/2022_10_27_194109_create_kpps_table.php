@@ -21,6 +21,7 @@ class CreateKppsTable extends Migration
             $table->date('tanggal_lahir_calon_suami');
             $table->string('telepon_calon_suami');
             $table->string('nama_ayah_calon_suami');
+            $table->string('nama_ibu_calon_suami');
             $table->string('alamat_calon_suami');
             $table->string('ktp_calon_suami');
             $table->string('suratpengantar_lingkungan_calon_suami')->nullable();
@@ -30,6 +31,7 @@ class CreateKppsTable extends Migration
             $table->date('tanggal_lahir_calon_istri');
             $table->string('telepon_calon_istri');
             $table->string('nama_ayah_calon_istri');
+            $table->string('nama_ibu_calon_istri');
             $table->string('alamat_calon_istri');
             $table->string('ktp_calon_istri');
             $table->string('suratpengantar_lingkungan_calon_istri')->nullable();

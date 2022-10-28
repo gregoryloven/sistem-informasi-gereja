@@ -29,7 +29,7 @@
     {{ session('error') }}
     </div>
 @endif
-<small style="color:red;">*Anda hanya dapat mengajukan pendaftaran sebanyak 1 kali. Jika ingin mengajukan kembali harap tekan "Batal" terlebih dahulu.</small><br>
+<small style="color:red;">*Anda hanya dapat mengajukan pendaftaran sebanyak 1 kali. Jika ingin mengajukan kembali harap tekan "Batal" atau hubungi sekretariat paroki.</small><br>
 @if(count($data)==0)
 <a href="{{ url('pendaftaranperkawinan/create') }}" class="btn btn-info btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Formulir Pendaftaran</a><br><br>
 @endif

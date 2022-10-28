@@ -279,6 +279,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         //Pendaftaran KPP
         Route::resource('pendaftarankpp', PendaftaranKppController::class);
         Route::get('/pendaftarankpp/OpenForm/{id}', [PendaftaranKppController::class, 'OpenForm'])->name('pendaftarankpp.OpenForm');
+        Route::post('/pendaftarankpp/InputForm', [PendaftaranKppController::class, 'InputForm'])->name('pendaftarankpp.InputForm');
+        Route::post('/pendaftarankpp/detail', [PendaftaranKppController::class, 'detail'])->name('pendaftarankpp.detail');
 
         //Reservasi Misa
         Route::resource('reservasimisa', ReservasiMisaController::class);
