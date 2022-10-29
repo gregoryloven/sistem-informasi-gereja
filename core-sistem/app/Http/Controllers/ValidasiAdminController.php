@@ -11,6 +11,7 @@ use App\Models\PendaftaranPelayananLainnya;
 use App\Models\PendaftaranPetugas;
 use App\Models\Riwayat;
 use App\Models\ListEvent;
+use App\Models\Kpp;
 use App\Models\Perkawinan;
 use Illuminate\Http\Request;
 use Auth;
@@ -669,6 +670,80 @@ class ValidasiAdminController extends Controller
         }
         return response()->json(array(
             'status'=>'oke'));
+    }
+
+    public function kpp()
+    {
+        $reservasi = Kpp::where('status', 'Diproses')->get();
+        $reservasiAll = Kpp::join('riwayats', 'kpps.id', '=', 'riwayats.event_id')
+        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Kursus%']])
+        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'like', 'Kursus%']])
+        ->orderBy('riwayats.updated_at', 'DESC')
+        ->get(['kpps.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat',
+         'riwayats.alasan_penolakan', 'riwayats.created_at', 'riwayats.updated_at']);
+
+        return view('validasiAdmin.kpp',compact("reservasi", "reservasiAll"));
+    }
+
+    public function DetailKpp(Request $request)
+    {
+        $id = $request->id;
+        $data = Kpp::where('id', $id)->get();
+
+        return view('validasiAdmin.DetailKpp',compact("data"));
+    }
+
+    public function AcceptKpp(Request $request)
+    {
+        $kpp=Kpp::find($request->id);
+        $kpp->status = "Disetujui Paroki";
+        $kpp->save();
+
+        $list_event = ListEvent::where('keterangan_kursus', $request->keterangan_kursus)->first();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
+        $riwayat->event_id =  $kpp->id;
+        $riwayat->jenis_event = "Kursus Persiapan Perkawinan";
+        $riwayat->status =  "Disetujui Paroki";
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.kpp', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Perkawinan Berhasil Disetujui');
+    }
+
+    public function DeclineKpp(Request $request)
+    {
+        $kpp=Kpp::find($request->id);
+        $kpp->status = "Ditolak";
+        $kpp->save();
+
+        $list_event = ListEvent::where('keterangan_kursus', $request->keterangan_kursus)->first();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
+        $riwayat->event_id =  $kpp->id;
+        $riwayat->jenis_event = "Kursus Persiapan Perkawinan";
+        $riwayat->status =  "Ditolak";
+        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.kpp', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Perkawinan Berhasil Ditolak');
+    }
+
+    public function PembatalanKpp(Request $request)
+    {
+        $kpp=Kpp::find($request->id);
+        $kpp->delete();
+
+        $riwayat = Riwayat::where([['event_id', $request->id],['jenis_event', 'like', 'Kursus%']])->get();
+        foreach($riwayat as $r)
+        {
+            $r->delete();
+        }
+
+        return redirect()->route('validasiAdmin.kpp', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Kursus Persiapan Perkawinan Berhasil Dibatalkan');
     }
 
     public function perkawinan()

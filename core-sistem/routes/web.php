@@ -328,6 +328,12 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('/validasiAdminKursusKrisma/PendaftarKrisma/{id}', [ValidasiAdminController::class, 'PendaftarKrisma'])->name('validasiAdmin.PendaftarKrisma');
     Route::post('/validasiAdminKursusKrisma/LulusKursusKrisma', [ValidasiAdminController::class, 'LulusKursusKrisma'])->name('validasiAdmin.LulusKursusKrisma');
 
+    Route::get('validasiAdminKpp', [ValidasiAdminController::class, 'kpp'])->name('validasiAdmin.kpp');
+    Route::get('/validasiAdminKpp/DetailKpp/{id}', [ValidasiAdminController::class, 'DetailKpp'])->name('validasiAdmin.DetailKpp');
+    Route::post('/validasiAdmin/acceptkpp', [ValidasiAdminController::class, 'AcceptKpp'])->name('validasiAdmin.AcceptKpp');
+    Route::post('/validasiAdmin/declinekpp', [ValidasiAdminController::class, 'DeclineKpp'])->name('validasiAdmin.DeclineKpp');
+    Route::post('/validasiAdminKpp/PembatalanKpp/{id}', [ValidasiAdminController::class, 'PembatalanKpp'])->name('validasiAdmin.PembatalanKpp');
+    
     Route::get('validasiAdminPerkawinan', [ValidasiAdminController::class, 'perkawinan'])->name('validasiAdmin.perkawinan');
     Route::get('/validasiAdminPerkawinan/DetailPerkawinan/{id}', [ValidasiAdminController::class, 'DetailPerkawinan'])->name('validasiAdmin.DetailPerkawinan');
     Route::post('/validasiAdmin/acceptperkawinan', [ValidasiAdminController::class, 'AcceptPerkawinan'])->name('validasiAdmin.AcceptPerkawinan');
