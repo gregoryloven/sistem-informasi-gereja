@@ -135,7 +135,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('validasiAdmin.KursusKomuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
                         <a class="collapse-item" href="{{ route('validasiAdmin.KursusKrisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Krisma</a>
-                        <a class="collapse-item" href="#">Perkawinan</a>
+                        <a class="collapse-item" href="{{ route('validasiAdmin.KursusKpp', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">KPP</a>
                     </div>
                 </div>
             </li>

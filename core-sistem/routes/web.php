@@ -333,6 +333,9 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiAdmin/acceptkpp', [ValidasiAdminController::class, 'AcceptKpp'])->name('validasiAdmin.AcceptKpp');
     Route::post('/validasiAdmin/declinekpp', [ValidasiAdminController::class, 'DeclineKpp'])->name('validasiAdmin.DeclineKpp');
     Route::post('/validasiAdminKpp/PembatalanKpp/{id}', [ValidasiAdminController::class, 'PembatalanKpp'])->name('validasiAdmin.PembatalanKpp');
+    Route::get('validasiAdminKursusKpp', [ValidasiAdminController::class, 'KursusKpp'])->name('validasiAdmin.KursusKpp');
+    Route::get('/validasiAdminKursusKpp/PendaftarKpp/{id}', [ValidasiAdminController::class, 'PendaftarKpp'])->name('validasiAdmin.PendaftarKpp');
+    Route::post('/validasiAdminKursusKpp/LulusKursusKpp', [ValidasiAdminController::class, 'LulusKursusKpp'])->name('validasiAdmin.LulusKursusKpp');
     
     Route::get('validasiAdminPerkawinan', [ValidasiAdminController::class, 'perkawinan'])->name('validasiAdmin.perkawinan');
     Route::get('/validasiAdminPerkawinan/DetailPerkawinan/{id}', [ValidasiAdminController::class, 'DetailPerkawinan'])->name('validasiAdmin.DetailPerkawinan');

@@ -29,16 +29,6 @@
                             <div class="alert alert-success" role="alert">
                                 {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
                             </div>
-                            @endif
-                        @endforeach
-                    </td></tr>
-                    <tr><td>Selesai</td>
-                    <td>
-                        @foreach($log as $l) 
-                            @if($l->status=='Selesai') 
-                            <div class="alert alert-success" role="alert">
-                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
-                            </div>
                             @if($l->kursus == 'Lulus')
                                 <small><b>SELAMAT! Lulus Kursus</b> - {{tanggal_indonesia($l->updated_at)}}<br>{{waktu_indonesia($l->updated_at)}} WITA</small>
                             @elseif($l->kursus == 'Tidak Lulus')
@@ -47,6 +37,18 @@
                             @endif
                         @endforeach
                     </td></tr>
+                    @if($l->status=='Selesai')
+                    <tr><td>Selesai</td>
+                    <td>
+                        @foreach($log as $l) 
+                            @if($l->status=='Selesai') 
+                            <div class="alert alert-success" role="alert">
+                                {{tanggal_indonesia($l->created_at)}}<br>{{waktu_indonesia($l->created_at)}} WITA
+                            </div>
+                            @endif
+                        @endforeach
+                    </td></tr>
+                    @endif
                     @if($l->status=='Ditolak')
                     <tr><td>Ditolak</td>
                     <td>

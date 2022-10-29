@@ -746,6 +746,57 @@ class ValidasiAdminController extends Controller
         return redirect()->route('validasiAdmin.kpp', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Kursus Persiapan Perkawinan Berhasil Dibatalkan');
     }
 
+    public function KursusKpp()
+    {
+        $data = ListEvent::where('jenis_event', 'like', 'Kursus%')->get();
+
+        return view('validasiAdmin.kursusKpp',compact("data"));
+    }
+
+    public function PendaftarKpp(Request $request)
+    {
+        $id = $request->id;
+        $kpp = Kpp::join('riwayats', 'kpps.id', '=', 'riwayats.event_id')
+        ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
+        ->orderby('kpps.nama_lengkap_calon_suami', 'ASC')
+        ->get(['kpps.*', 'riwayats.id as riwayatID']);
+        
+        return view('validasiAdmin.DetailKursusKpp',compact("kpp", "id"));
+    }
+
+    public function LulusKursusKpp(Request $request)
+    {
+        $array=$request->get("data");
+        $status=$request->get("status");
+        $list_event_id=$request->get("id");
+
+        foreach($array as $d)
+        {
+            $kpp=Kpp::find($d['id']);
+            
+            if($status == 'lulus')
+            {
+                $kpp->status = "Lulus";
+                $kpp->save();
+
+                $riwayat = Riwayat::find($d['riwayatID']);
+                $riwayat->kursus = "Lulus";
+                $riwayat->save();
+            }
+            else
+            {
+                $kpp->status = "Tidak Lulus";
+                $kpp->save();
+
+                $riwayat = Riwayat::find($d['riwayatID']);
+                $riwayat->kursus = "Tidak Lulus";
+                $riwayat->save();
+            }
+        }
+        return response()->json(array(
+            'status'=>'oke'));
+    }
+
     public function perkawinan()
     {
         $reservasi = Perkawinan::where('status', 'Diproses')->get();

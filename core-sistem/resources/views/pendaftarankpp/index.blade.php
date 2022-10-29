@@ -184,7 +184,7 @@
                     @endif
                     @if($d->status == "Diproses")
                     <a href="#modaltracking" data-toggle="modal" class="btn btn-info" onclick="detail({{ $d->id }})">Lacak</a>
-                    @elseif($d->status == "Disetujui Paroki")
+                    @elseif($d->status == "Disetujui Paroki" || $d->status == "Lulus")
                     <a href="#modaltracking" data-toggle="modal" class="btn btn-success" onclick="detail({{ $d->id }})">Lacak</a>
                     @else
                     <a href="#modaltracking" data-toggle="modal" class="btn btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
