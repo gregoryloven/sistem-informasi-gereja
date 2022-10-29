@@ -679,7 +679,7 @@ class ValidasiAdminController extends Controller
         ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Kursus%']])
         ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'like', 'Kursus%']])
         ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['kpps.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat',
+        ->get(['kpps.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.kursus',
          'riwayats.alasan_penolakan', 'riwayats.created_at', 'riwayats.updated_at']);
 
         return view('validasiAdmin.kpp',compact("reservasi", "reservasiAll"));

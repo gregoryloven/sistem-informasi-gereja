@@ -87,9 +87,14 @@
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
-                                {{$da->statusRiwayat}}
+                                {{$da->statusRiwayat}}<br>
+                                <small>{{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}} WITA</small>
                             </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}} WITA</small>
+                            @if($da->kursus == 'Lulus')
+                                <small><b>Lulus Kursus</b> - {{tanggal_indonesia($da->updated_at)}}<br>{{waktu_indonesia($da->updated_at)}} WITA</small>
+                            @elseif($da->kursus == 'Tidak Lulus')
+                                <small><b>Tidak Lulus Kursus</b> - {{tanggal_indonesia($da->updated_at)}}<br>{{waktu_indonesia($da->updated_at)}} WITA</small>
+                            @endif
                             @elseif($da->statusRiwayat == 'Ditolak') 
                             <div class="alert alert-danger" role="alert">
                                 {{$da->statusRiwayat}}
@@ -99,7 +104,7 @@
                             @endif
                         </td>
                         <td st>
-                            @if($da->statusRiwayat == "Disetujui Paroki")
+                            @if($da->statusRiwayat == "Disetujui Paroki" && $da->kursus == " ")
                             <form role="form" method="POST" action="{{ url('validasiAdminKpp/PembatalanKpp/'.$da->id) }}">
                                 @csrf
                                 <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$da->id}}">
