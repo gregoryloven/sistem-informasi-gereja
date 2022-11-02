@@ -61,9 +61,9 @@
                             Lintas Paroki
                         </label>
                     </div>
-                @elseif ($user[0]->status == "Belum Tervalidasi")
-                <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="parokiSetempatTab" value="parokiSetempat" readonly disabled>
+                @else
+                    <div class="form-check">
+                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="parokiSetempatTab" value="parokiSetempat" disabled>
                         <label class="form-check-label" for="parokiSetempat">
                             Paroki Setempat
                         </label>
@@ -74,11 +74,11 @@
                             Lintas Paroki
                         </label>
                     </div>
-                    @endif
-                    
+                @endif
                 </div>
             </div>
-                <form id="formSetempat" class="mb-2" method="POST" action="/pendaftarankrisma/InputFormSetempat" enctype="multipart/form-data">
+            
+            <form id="formSetempat" class="mb-2" method="POST" action="/pendaftarankrisma/InputFormSetempat" enctype="multipart/form-data">
             @csrf
                 <div class="form-group">
                     <small style="color:red;"><label >*Dibawah ini adalah data akun anda yang terisi otomatis</label></small>
@@ -105,12 +105,12 @@
                 </div>  
                 <div class="form-group">
                     <label >Lingkungan</label>
-                    <input type="text" value="{{$user[0]->nama_lingkungan}}" class="form-control" id='lingkungan' name='lingkungan' placeholder="Lingkungan" required readonly>
+                    <input type="text" value="@if(isset($user[0]->lingkungan_id)){{$user[0]->lingkungan->nama_lingkungan}} @endif" class="form-control" id='lingkungan' name='lingkungan' required readonly>
                 </div>       
                 <div class="form-group">
                     <label >KBG</label>
-                    <input type="text" value="{{$user[0]->nama_kbg}}" class="form-control" id='kbg' name='kbg' placeholder="KBG" required readonly>
-                </div>           
+                    <input type="text" value="@if(isset($user[0]->kbg_id)){{$user[0]->kbg->nama_kbg}} @endif" class="form-control" id='kbg' name='kbg' required readonly>
+                </div>
                 <div class="form-group">
                     <label >Telepon</label>
                     <input type="text" value="{{$user[0]->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
@@ -180,14 +180,6 @@
                     <input type="text"  class="form-control" id='orangtua_ibu' name='orangtua_ibu' placeholder="Nama Lengkap" required>
                 </div>  
                 <div class="form-group">
-                    <label >Lingkungan</label>
-                    <input type="text" value="{{$user[0]->nama_lingkungan}}" class="form-control" id='lingkungan' name='lingkungan' placeholder="Lingkungan" required readonly>
-                </div>       
-                <div class="form-group">
-                    <label >KBG</label>
-                    <input type="text" value="{{$user[0]->nama_kbg}}" class="form-control" id='kbg' name='kbg' placeholder="KBG" required readonly>
-                </div>           
-                <div class="form-group">
                     <label >Telepon</label>
                     <input type="text" value="{{$user[0]->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
                 </div>
@@ -238,6 +230,8 @@
         </div>
     </div>
 </div>
+
+<input type="hidden" value="{{$user[0]->status}}" id='status'>
 <!-- /.container-fluid -->
 @endsection
 
@@ -247,11 +241,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
     <script>
         $(document).ready(function(){
-            $("#parokiSetempatTab").trigger("click");
+            if($("#status").val() == "Tervalidasi"){
+                $("#parokiSetempatTab").trigger("click");
+            }
+            else{
+                $("#lintasParokiTab").trigger("click");
+            }
         });
 
         function tabSelect(value) {
-            if(value === "parokiSetempat"){
+            if(value == "parokiSetempat"){
                 document.getElementById("formSetempat").style.display = "block";
                 document.getElementById("formLintas").style.display = "none";
             }else{

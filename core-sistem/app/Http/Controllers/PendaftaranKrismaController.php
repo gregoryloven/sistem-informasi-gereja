@@ -40,11 +40,14 @@ class PendaftaranKrismaController extends Controller
             $id = $request->id;
         
             $list = DB::table('list_events')->where('id', $id)->get();
-            $user = DB::table('users')
-                ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-                ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-                ->where('users.id', Auth::user()->id)
-                ->get();
+            $user = User::where('users.id', Auth::user()->id)->get();
+                // dd($user);
+            // $user = DB::table('users')
+            //     ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
+            //     ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
+            //     ->where('users.id', Auth::user()->id)
+            //     ->get('users.*');
+            //     dd($user);
     
             return view('pendaftarankrisma.InputForm',compact("list", "user"));
         // }
