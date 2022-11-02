@@ -30,7 +30,9 @@ class ListEventController extends Controller
     {
         $petugas=PetugasLiturgi::all();
         $data = DB::table('list_events')
-        ->where([['list_events.jenis_event', 'like', 'Baptis%'],['list_events.jenis_event', '=', 'Komuni'],['list_events.jenis_event', '=', 'Krisma']])
+        ->where('list_events.jenis_event', 'like', 'Baptis%')
+        ->orwhere('list_events.jenis_event', 'like', 'Komuni%')
+        ->orwhere('list_events.jenis_event', '=', 'Krisma')
         ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
         'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
         'list_events.romo', 'list_events.status'
