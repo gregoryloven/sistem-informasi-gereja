@@ -1,4 +1,4 @@
-@extends('layouts.sbkbg')
+@extends('layouts.sbkl')
 
 @push('css')
 <style>

@@ -100,7 +100,7 @@
                 </div>
                 <img id="output" src="" width="200px" height="200px">
                 <div class="form-group">
-                    <input type="checkbox" id="terms" name="terms" onchange="checkbox()">
+                <br><input type="checkbox" id="terms" name="terms" onchange="checkbox()">
                     <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
                 </div><br>
                 <div class="alert alert-info" role="alert">
