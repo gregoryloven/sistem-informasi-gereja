@@ -342,6 +342,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiAdmin/acceptperkawinan', [ValidasiAdminController::class, 'AcceptPerkawinan'])->name('validasiAdmin.AcceptPerkawinan');
     Route::post('/validasiAdmin/declineperkawinan', [ValidasiAdminController::class, 'DeclinePerkawinan'])->name('validasiAdmin.DeclinePerkawinan');
     Route::post('/validasiAdminPerkawinan/PembatalanPerkawinan/{id}', [ValidasiAdminController::class, 'PembatalanPerkawinan'])->name('validasiAdmin.PembatalanPerkawinan');
+    Route::post('/validasiAdminPerkawinan/EditForm', [ValidasiAdminController::class, 'EditForm'])->name('validasiAdmin.EditForm');
+    Route::post('/validasiAdminPerkawinan/Update/{id}', [ValidasiAdminController::class, 'Update'])->name('validasiAdmin.Update');
 
     // validasi Kbg
     Route::get('validasiKbgPelayanan', [ValidasiKbgController::class, 'pelayanan'])->name('validasiKbg.pelayanan');
@@ -406,6 +408,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('laporanBaptisDewasa', [LaporanController::class, 'baptisDewasa'])->name('laporan.baptisDewasa');
     Route::get('laporanKomuni', [LaporanController::class, 'komuni'])->name('laporan.komuni');
     Route::get('laporanKrisma', [LaporanController::class, 'krisma'])->name('laporan.krisma');
+    Route::get('laporanKpp', [LaporanController::class, 'kpp'])->name('laporan.kpp');
 
 
     // CETAK SERTIFIKAT
