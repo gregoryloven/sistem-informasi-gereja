@@ -25,6 +25,17 @@
     </div>
 @endif
 
+<!-- EDIT WITH MODAL-->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         Daftar Permohonan
@@ -37,6 +48,8 @@
                         <th width="5%">No</th>
                         <th>Nama Lengkap Calon Suami</th>
                         <th>Nama Lengkap Calon Istri</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -48,6 +61,8 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_lengkap_calon_suami}}</td>
                         <td st>{{$d->nama_lengkap_calon_istri}}</td>
+                        <td st>{{tanggal_indonesia( $d->tanggal_perkawinan)}}</td>
+                        <td st>{{waktu_indonesia( $d->tanggal_perkawinan)}} WITA</td>
                         <td st>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href= "{{ url('validasiAdminPerkawinan/DetailPerkawinan/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Lihat Detail</a>   
@@ -72,6 +87,8 @@
                         <th width="5%">No</th>
                         <th>Nama Lengkap Calon Suami</th>
                         <th>Nama Lengkap Calon Istri</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Status</th>
                         <th>Tindakan</th>
                     </tr>
@@ -84,6 +101,8 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$da->nama_lengkap_calon_suami}}</td>
                         <td st>{{$da->nama_lengkap_calon_istri}}</td>
+                        <td st>{{tanggal_indonesia( $da->tanggal_perkawinan)}}</td>
+                        <td st>{{waktu_indonesia( $da->tanggal_perkawinan)}} WITA</td>
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
@@ -100,12 +119,15 @@
                         </td>
                         <td st>
                             @if($da->statusRiwayat == "Disetujui Paroki")
-                            <form role="form" method="POST" action="{{ url('validasiAdminPerkawinan/PembatalanPerkawinan/'.$da->id) }}">
-                                @csrf
-                                <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$da->id}}">
-                                <input type="hidden" class="form-control" name="jadwal" value="{{$da->tanggal_perkawinan}}">
-                                <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('Apakah anda yakin ingin membatalkan data ini?')) return false">Batal</button>
-                            </form>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $da->id }})">Ubah</a>
+                                <form role="form" method="POST" action="{{ url('validasiAdminPerkawinan/PembatalanPerkawinan/'.$da->id) }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$da->id}}">
+                                    <input type="hidden" class="form-control" name="jadwal" value="{{$da->tanggal_perkawinan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('Apakah anda yakin ingin membatalkan data ini?')) return false">Batal</button>
+                                </form>
+                            </div>
                             @endif
                         </td>
                     </tr>
@@ -115,4 +137,22 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('javascript')
+<script>
+function EditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('validasiAdmin.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+</script>
 @endsection
