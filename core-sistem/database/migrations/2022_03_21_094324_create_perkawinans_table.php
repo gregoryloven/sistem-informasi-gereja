@@ -23,6 +23,7 @@ class CreatePerkawinansTable extends Migration
             $table->string('alamat_calon_suami');
             $table->string('telepon_calon_suami');
             $table->string('agama_calon_suami');
+            $table->string('paroki_calon_suami')->nullable();
             $table->string('nama_ayah_calon_suami');
             $table->string('agama_ayah_calon_suami');
             $table->string('pekerjaan_ayah_calon_suami');
@@ -46,6 +47,7 @@ class CreatePerkawinansTable extends Migration
             $table->string('alamat_calon_istri');
             $table->string('telepon_calon_istri');
             $table->string('agama_calon_istri');
+            $table->string('paroki_calon_istri')->nullable();
             $table->string('nama_ayah_calon_istri');
             $table->string('agama_ayah_calon_istri');
             $table->string('pekerjaan_ayah_calon_istri');
