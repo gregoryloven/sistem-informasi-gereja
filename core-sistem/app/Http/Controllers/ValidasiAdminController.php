@@ -825,6 +825,8 @@ class ValidasiAdminController extends Controller
         $perkawinan->save();
 
         $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+        $list_event->status = "Aktif";
+        $list_event->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
@@ -855,6 +857,28 @@ class ValidasiAdminController extends Controller
         $riwayat->save();
 
         return redirect()->route('validasiAdmin.perkawinan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Perkawinan Berhasil Ditolak');
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Perkawinan::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('validasiAdmin.EditForm',compact("data"))->render()),200);
+    }
+
+    public function Update(Request $request)
+    {
+        $data=Perkawinan::find($request->id);
+
+        $list=ListEvent::where([['jenis_event', 'Perkawinan'], ['jadwal_pelaksanaan', $data->tanggal_perkawinan]])
+        ->update(['jadwal_pelaksanaan' => $request->get('tanggal_perkawinan')]);
+
+        $data->tanggal_perkawinan = $request->get('tanggal_perkawinan');
+        $data->save();
+
+        return redirect()->route('validasiAdmin.perkawinan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tanggal & Waktu Perkawinan Berhasil Diubah');
     }
 
     public function PembatalanPerkawinan(Request $request)
