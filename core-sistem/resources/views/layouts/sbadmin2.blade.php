@@ -86,7 +86,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('listevent.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-pray"></i>
-                    <span>Buat Sesi</span></a>
+                    <span>Sesi</span></a>
             </li>
 
             <li class="nav-item">
@@ -152,6 +152,7 @@
                         <a class="collapse-item" href="{{ route('laporan.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Dewasa</a>
                         <a class="collapse-item" href="{{ route('laporan.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
                         <a class="collapse-item" href="{{ route('laporan.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Krisma</a>
+                        <a class="collapse-item" href="{{ route('laporan.kpp', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">KPP</a>
                     </div>
                 </div>
             </li>
