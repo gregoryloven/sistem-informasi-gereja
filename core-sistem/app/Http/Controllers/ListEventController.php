@@ -12,6 +12,7 @@ use App\Models\TobatUsers;
 use App\Models\PendaftaranPetugas;
 use App\Models\Riwayat;
 use App\Models\Kpp;
+use App\Models\Perkawinan;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
@@ -55,11 +56,17 @@ class ListEventController extends Controller
 
         $data4 = DB::table('list_events')
         ->where('list_events.jenis_event', 'Kursus Persiapan Perkawinan')
-        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+        ->get(['list_events.id','list_events.nama_event','list_events.tgl_buka_pendaftaran',
         'list_events.tgl_tutup_pendaftaran','list_events.lokasi','list_events.keterangan_kursus','list_events.status'
         ]);
 
-        return view('listevent.index',compact("data", "petugas", "data2", "data3", "data4"));
+        $data5 = Perkawinan::join('list_events', 'perkawinans.tanggal_perkawinan', '=', 'list_events.jadwal_pelaksanaan')
+        ->where([['list_events.jenis_event', 'Perkawinan'], ['list_events.status', 'Aktif']])
+        ->get(['perkawinans.nama_lengkap_calon_suami', 'perkawinans.nama_lengkap_calon_istri', 'list_events.id',
+        'list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.status'
+        ]);
+
+        return view('listevent.index',compact("data", "petugas", "data2", "data3", "data4", "data5"));
     }
 
     public function store(Request $request)
@@ -93,7 +100,10 @@ class ListEventController extends Controller
 
     public function update(Request $request)
     {
+        // return $request->all();
+        // return $request->route('id');
         $data=ListEvent::find($request->id);
+        // return $data;
 
         $baptis=Baptis::where([['jenis', '=', $data->jenis_event], ['jadwal', '=', $data->jadwal_pelaksanaan]])
         ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
@@ -111,6 +121,10 @@ class ListEventController extends Controller
         ->update(['keterangan_kursus' => $request->get('keterangan_kursus'), 
         'lokasi' => $request->get('lokasi')]);
 
+        $perkawinan=Perkawinan::where('tanggal_perkawinan', '=', $data->jadwal_pelaksanaan)
+        ->update(['tanggal_perkawinan' => $request->get('jadwal_pelaksanaan')]);
+
+
         // $misa=MisaUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
         // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
         // 'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
@@ -119,17 +133,22 @@ class ListEventController extends Controller
         // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
         // 'lokasi' => $request->get('lokasi'), 'romo' => $request->get('romo'), 'kuota' => $request->get('kuota')]);
 
-        $petugas=PendaftaranPetugas::where('jadwal', '=', $data->jadwal_pelaksanaan)
-        ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
-        'lokasi' => $request->get('lokasi')]);
+        // $petugas=PendaftaranPetugas::where('jadwal', '=', $data->jadwal_pelaksanaan)
+        // ->update(['jadwal' => $request->get('jadwal_pelaksanaan'), 
+        // 'lokasi' => $request->get('lokasi')]);
 
-        $data->nama_event = $request->get('nama_event');
+        if($request->get('nama_event') !== null) {
+            $data->nama_event = $request->get('nama_event');
+        }
         // $data->jenis_event = $request->get('jenis_event');
         // $data->petugas_liturgi_id = $request->get('petugas_liturgi_id');
         $data->tgl_buka_pendaftaran = $request->get('tgl_buka_pendaftaran');
         $data->tgl_tutup_pendaftaran = $request->get('tgl_tutup_pendaftaran');
         $data->jadwal_pelaksanaan = $request->get('jadwal_pelaksanaan');
-        $data->lokasi = $request->get('lokasi');
+
+        if($request->get('lokasi') !== null) {
+            $data->lokasi = $request->get('lokasi');
+        }
         $data->keterangan_kursus = $request->get('keterangan_kursus');
         $data->romo = $request->get('romo');
         $data->kuota = $request->get('kuota');
