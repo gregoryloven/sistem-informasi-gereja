@@ -7,9 +7,10 @@
         @csrf
         @method('PUT')
         <div class="form-body">
+        <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$data->id}}">
+            @if($data->jenis_event != 'Perkawinan')
             <div class="form-group">
                 <label >Nama</label>
-                <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$data->id}}">
                 <input type="text" value="{{$data->nama_event}}" class="form-control" id='nama_eventt' name='nama_event' placeholder="Nama Event">
             </div>
             <div class="form-group">
@@ -35,12 +36,14 @@
                 <input type="date" value="{{$data->tgl_tutup_pendaftaran}}" class="form-control" id='tgl_tutup_pendaftarann' name='tgl_tutup_pendaftaran'  onchange='CheckEndDatee(this)' placeholder="Tanggal Tutup Pendaftaran" required>
             </div>
             @endif
+            @endif
             @if($data->jenis_event != 'Kursus Persiapan Perkawinan')
             <div class="form-group">
                 <label >Jadwal Pelaksanaan</label>
                 <input type="datetime-local" value="{{$data->jadwal_pelaksanaan}}" class="form-control" id='jadwal_pelaksanaann' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksanaann(this)' placeholder="Jadwal Pelaksanaan" required>
             </div>
             @endif
+            @if($data->jenis_event != 'Perkawinan')
             <div class="form-group">
                 <label >Lokasi</label>
                 <input type="text" value="{{$data->lokasi}}" class="form-control" id='lokasii' name='lokasi' placeholder="Lokasi" required>
@@ -56,6 +59,7 @@
                 <label >Romo</label>
                 <input type="text" value="{{$data->romo}}" class="form-control" id='romoo' name='romo' placeholder="Romo" required>
             </div>
+            @endif
             @endif
             @if($data->jenis_event == 'Misa' || $data->jenis_event == 'Tobat')
             <div class="form-group">
