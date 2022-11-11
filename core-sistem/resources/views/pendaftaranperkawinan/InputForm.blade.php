@@ -91,6 +91,18 @@
                         </select>
                     </div>
                 </div>
+                @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
+                <div style='display:none' id='label_paroki_calon_suami' class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label >Paroki Asal</label>
+                        <select class="form-control" id='paroki_calon_suami' name='paroki_calon_suami' onchange='checkParokiSuami(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="{{app('currentTenant')->name}}">{{app('currentTenant')->name}}</option>
+                            <option value="Paroki Luar">Paroki Luar</option>
+                        </select>
+                    </div> 
+                </div> 
+                @endif
                 <div style='display:none' id='label_surat_baptis_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Baptis</label>
@@ -121,7 +133,7 @@
                 </div>
                 <div style='display:none' id='label_suratpengantar_paroki_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
-                        <label >Surat Pengantar Paroki Luar (Jika Paroki Luar)</label>
+                        <label >Surat Pengantar Paroki Luar</label>
                         <input type="file" class="form-control" id='suratpengantar_paroki_calon_suami' name='suratpengantar_paroki_calon_suami' onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])">
                         <img id="output5" src="" width="100px" height="100px">
                     </div>
@@ -266,6 +278,18 @@
                         </select>
                     </div>
                 </div>
+                @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
+                <div style='display:none' id='label_paroki_calon_istri' class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label >Paroki Asal</label>
+                        <select class="form-control" id='paroki_calon_istri' name='paroki_calon_istri' onchange='checkParokiIstri(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="{{app('currentTenant')->name}}">{{app('currentTenant')->name}}</option>
+                            <option value="Paroki Luar">Paroki Luar</option>
+                        </select>
+                    </div> 
+                </div> 
+                @endif
                 <div style='display:none' id='label_surat_baptis_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Baptis</label>
@@ -296,7 +320,7 @@
                 </div>
                 <div style='display:none' id='label_suratpengantar_paroki_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
-                        <label >Surat Pengantar Paroki Luar (Jika Paroki Luar)</label>
+                        <label >Surat Pengantar Paroki Luar</label>
                         <input type="file" class="form-control" id='suratpengantar_paroki_calon_istri' name='suratpengantar_paroki_calon_istri' onchange="document.getElementById('output24').src = window.URL.createObjectURL(this.files[0])">
                         <img id="output24" src="" width="100px" height="100px">
                     </div>
@@ -487,6 +511,24 @@ function checkbox()
     }
 }
 
+function checkParokiSuami(paroki)
+{
+    if($(paroki).val() == '{{app('currentTenant')->name}}')
+    {
+        $('#label_suratpengantar_lingkungan_calon_suami').show()
+        $('#label_suratpengantar_paroki_calon_suami').hide()
+
+        $('#suratpengantar_paroki_calon_suami').prop('required',false)
+    }
+    else
+    {
+        $('#label_suratpengantar_paroki_calon_suami').show()
+        $('#label_suratpengantar_lingkungan_calon_suami').hide()
+
+        $('#suratpengantar_lingkungan_calon_suami').prop('required',false)
+    }
+}
+
 function checkAgamaSuami(agama)
 {
 
@@ -495,10 +537,11 @@ function checkAgamaSuami(agama)
         $('#label_surat_baptis_calon_suami').show()
         $('#label_sertifikat_komuni_calon_suami').show()
         $('#label_sertifikat_krisma_calon_suami').show()
-        $('#label_suratpengantar_lingkungan_calon_suami').show()
-        $('#label_suratpengantar_paroki_calon_suami').show()
+        // $('#label_suratpengantar_lingkungan_calon_suami').show()
+        // $('#label_suratpengantar_paroki_calon_suami').show()
         $('#label_ktp_calon_suami').show()
         $('#label_kk_calon_suami').show()
+        $('#label_paroki_calon_suami').show()
         $('#label_suratketerangan_bebas_menikah_calon_suami').hide()
         $('#label_suratpernyataan_nonKatolik_calon_suami').hide()
 
@@ -512,11 +555,13 @@ function checkAgamaSuami(agama)
         $('#label_kk_calon_suami').show()
         $('#label_suratketerangan_bebas_menikah_calon_suami').show()
         $('#label_suratpernyataan_nonKatolik_calon_suami').show()
+        $('#label_paroki_calon_suami').hide()
         $('#label_sertifikat_komuni_calon_suami').hide()
         $('#label_sertifikat_krisma_calon_suami').hide()
         $('#label_suratpengantar_lingkungan_calon_suami').hide()
         $('#label_suratpengantar_paroki_calon_suami').hide()
 
+        $('#paroki_calon_suami').prop('required',false)
         $('#sertfikat_komuni_calon_suami').prop('required',false)
         $('#suratpengantar_lingkungan_calon_suami').prop('required',false)
         $('#suratpengantar_paroki_calon_suami').prop('required',false)
@@ -527,18 +572,38 @@ function checkAgamaSuami(agama)
         $('#label_kk_calon_suami').show()
         $('#label_suratketerangan_bebas_menikah_calon_suami').show()
         $('#label_suratpernyataan_nonKatolik_calon_suami').show()
+        $('#label_paroki_calon_suami').hide()
         $('#label_surat_baptis_calon_suami').hide()
         $('#label_sertifikat_komuni_calon_suami').hide()
         $('#label_sertifikat_krisma_calon_suami').hide()
         $('#label_suratpengantar_lingkungan_calon_suami').hide()
         $('#label_suratpengantar_paroki_calon_suami').hide()
         
+        $('#paroki_calon_suami').prop('required',false)
         $('#surat_baptis_calon_suami').prop('required',false)
         $('#sertfikat_komuni_calon_suami').prop('required',false)
         $('#suratpengantar_lingkungan_calon_suami').prop('required',false)
         $('#suratpengantar_paroki_calon_suami').prop('required',false)
     }
 
+}
+
+function checkParokiIstri(paroki)
+{
+    if($(paroki).val() == '{{app('currentTenant')->name}}')
+    {
+        $('#label_suratpengantar_lingkungan_calon_istri').show()
+        $('#label_suratpengantar_paroki_calon_istri').hide()
+
+        $('#suratpengantar_paroki_calon_istri').prop('required',false)
+    }
+    else
+    {
+        $('#label_suratpengantar_paroki_calon_istri').show()
+        $('#label_suratpengantar_lingkungan_calon_istri').hide()
+
+        $('#suratpengantar_lingkungan_calon_istri').prop('required',false)
+    }
 }
 
 function checkAgamaIstri(agama)
@@ -549,8 +614,9 @@ function checkAgamaIstri(agama)
         $('#label_surat_baptis_calon_istri').show()
         $('#label_sertifikat_komuni_calon_istri').show()
         $('#label_sertifikat_krisma_calon_istri').show()
-        $('#label_suratpengantar_lingkungan_calon_istri').show()
-        $('#label_suratpengantar_paroki_calon_istri').show()
+        // $('#label_suratpengantar_lingkungan_calon_istri').show()
+        // $('#label_suratpengantar_paroki_calon_istri').show()
+        $('#label_paroki_calon_istri').show()
         $('#label_ktp_calon_istri').show()
         $('#label_kk_calon_istri').show()
         $('#label_suratketerangan_bebas_menikah_calon_istri').hide()
@@ -571,6 +637,7 @@ function checkAgamaIstri(agama)
         $('#label_suratpengantar_lingkungan_calon_istri').hide()
         $('#label_suratpengantar_paroki_calon_istri').hide()
 
+        $('#paroki_calon_istri').prop('required',false)
         $('#sertifikat_komuni_calon_istri').prop('required',false)
         $('#suratpengantar_lingkungan_calon_istri').prop('required',false)
         $('#suratpengantar_paroki_calon_istri').prop('required',false)
@@ -587,6 +654,7 @@ function checkAgamaIstri(agama)
         $('#label_suratpengantar_lingkungan_calon_istri').hide()
         $('#label_suratpengantar_paroki_calon_istri').hide()
         
+        $('#paroki_calon_istri').prop('required',false)
         $('#surat_baptis_calon_istri').prop('required',false)
         $('#sertifikat_komuni_calon_istri').prop('required',false)
         $('#suratpengantar_lingkungan_calon_istri').prop('required',false)

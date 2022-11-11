@@ -31,7 +31,14 @@ class PendaftaranPerkawinanController extends Controller
      */
     public function create()
     {
-        return view('pendaftaranperkawinan.InputForm');
+        $data = Perkawinan::where('user_id', Auth::user()->id)->first();
+        if(isset($data)){
+            return view('pendaftaranperkawinan.InputForm');
+            // return redirect()->route('pendaftaranperkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) );
+        }else{
+            return view('pendaftaranperkawinan.InputForm');
+        }
+
     }
 
     /**
@@ -52,6 +59,7 @@ class PendaftaranPerkawinanController extends Controller
         $data->alamat_calon_suami = $request->get("alamat_calon_suami");
         $data->telepon_calon_suami = $request->get("telepon_calon_suami");
         $data->agama_calon_suami = $request->get("agama_calon_suami");
+        $data->paroki_calon_suami = $request->get("paroki_calon_suami");
 
 
         //Ortu Suami
@@ -70,6 +78,7 @@ class PendaftaranPerkawinanController extends Controller
         $data->alamat_calon_istri = $request->get("alamat_calon_istri");
         $data->telepon_calon_istri = $request->get("telepon_calon_istri");
         $data->agama_calon_istri = $request->get("agama_calon_istri");
+        $data->paroki_calon_istri = $request->get("paroki_calon_istri");
 
         //Ortu Istri
         $data->nama_ayah_calon_istri = $request->get("nama_ayah_calon_istri");
@@ -314,6 +323,7 @@ class PendaftaranPerkawinanController extends Controller
         $list->jenis_event = "Perkawinan";
         $list->jadwal_pelaksanaan = $data->tanggal_perkawinan;
         $list->lokasi = $data->tempat_perkawinan;
+        $list->status = "Pending";
         $list->save();
 
         $riwayat = new Riwayat();
