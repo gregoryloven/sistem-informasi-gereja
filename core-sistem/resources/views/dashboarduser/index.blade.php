@@ -78,10 +78,21 @@
 
                 <div class="col-md-4 mt-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="http://insighttour.id/wp-content/uploads/2020/02/Tata-Cara-Penerimaan-Sakramen-Krisma.jpg" class="card-img-top" alt="...">
+                        <img src="https://sanyospwt.files.wordpress.com/2019/09/1.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold">Kursus Persiapan Perkawinan</h5>
+                            <p class="card-text">Pendaftaran Kursus Persiapan Perkawinan</p>
+                            <a href="/pendaftarankpp" class="btn btn-primary">Daftar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://www.katolisitas.org/wp-content/uploads/2008/08/sakramen-perkawinan.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Perkawinan</h5>
-                            <p class="card-text">Pendaftaran Perkawinan</p>
+                            <p class="card-text">Pendaftaran Perkawinan & Pemberkatan Pernikahan</p><br>
                             <a href="/pendaftaranperkawinan" class="btn btn-primary">Daftar</a>
                         </div>
                     </div>
@@ -162,6 +173,17 @@
                             <h5 class="card-title font-weight-bold">Krisma</h5>
                             <p class="card-text">Pendaftaran Krisma Paroki Setempat & Lintas Serta Riwayat Pendaftaran</p>
                             <a href="/pendaftarankrisma" class="btn btn-primary">Daftar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://www.katolisitas.org/wp-content/uploads/2008/08/sakramen-perkawinan.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold">Perkawinan</h5>
+                            <p class="card-text">Pendaftaran Perkawinan & Pemberkatan Pernikahan</p>
+                            <a href="/pendaftaranperkawinan" class="btn btn-primary">Daftar</a>
                         </div>
                     </div>
                 </div>
