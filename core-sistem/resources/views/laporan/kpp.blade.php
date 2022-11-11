@@ -7,12 +7,12 @@
 @endpush
 
 @section('title')
-    Laporan Sakramen Komuni Pertama
+    Laporan Kursus Persiapan Perkawinan
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Laporan Sakramen Komuni Pertama</h1>
+<h1 class="h3 mb-2 text-gray-800">Laporan Kursus Persiapan Perkawinan</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -35,10 +35,9 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>    
                         <th>Jenis Sakramen</th>
-                        <th>Tanggal Komuni</th>
-                        <th>Waktu</th>
-                        <th>Total Penerima</th>
+                        <th>Keterangan Kursus</th>
                         <th>Total Lulus Kursus</th>
+                        <th>Total Tidak Lulus Kursus</th>
                         <!-- <th width="15%"><i class="fa fa-cog"></i></th> -->
                     </tr>
                 </thead>
@@ -49,8 +48,7 @@
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->jenis_event}}</td>
-                        <td st>{{tanggal_indonesia($d->jadwal_pelaksanaan)}}</td>
-                        <td st>{{waktu_indonesia($d->jadwal_pelaksanaan)}} WITA</td>
+                        <td st>{{$d->keterangan_kursus}}</td>
                         <td st><strong>{{$array[$idx]}} Orang</strong></td>
                         <td st><strong>{{$array2[$idx]}} Orang</strong></td>
                         <!-- <td st>

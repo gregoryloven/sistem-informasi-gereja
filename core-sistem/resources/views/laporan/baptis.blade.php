@@ -43,14 +43,14 @@
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
-                    @foreach($data as $d)
+                    @foreach($data as $idx => $d)
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->jenis_event}}</td>
                         <td st>{{tanggal_indonesia($d->jadwal_pelaksanaan)}}</td>
                         <td st>{{waktu_indonesia($d->jadwal_pelaksanaan)}} WITA</td>
-                        <td st><strong>{{$jumlah_baptis_bayi}} Baptisan</strong></td>
+                        <td st><strong>{{$array[$idx]}} Orang</strong></td>
                         <!-- <td st>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href= "{{ url('laporanBaptis/DetailBaptis/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Lihat Detail</a>   
