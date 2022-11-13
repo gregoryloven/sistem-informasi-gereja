@@ -140,6 +140,12 @@
                 @endif
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
+                        <label >NIK</label>
+                        <input type="number" class="form-control" value="{{$data->nik_calon_suami}}" id='nik_calon_suami' name='nik_calon_suami' placeholder="NIK Calon Suami" required>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="form-group">
                         <label >KTP</label>
                         <input type="file" class="form-control" value="{{$data->ktp_calon_suami}}" id='ktp_calon_suami' name='ktp_calon_suami' onchange="document.getElementById('output6').src = window.URL.createObjectURL(this.files[0])">
                         <img id="output6" src="{{asset('file_perkawinan/ktp/'.$data->ktp_calon_suami)}}" width="100px" height="100px">
@@ -325,6 +331,12 @@
                     </div>
                 </div>
                 @endif
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="form-group">
+                        <label >NIK</label>
+                        <input type="number" class="form-control" value="{{$data->nik_calon_istri}}" id='nik_calon_istri' name='nik_calon_istri' placeholder="NIK Calon Istri" required>
+                    </div>
+                </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >KTP</label>
@@ -541,6 +553,7 @@ function checkAgamaSuami(agama)
         $('#label_sertifikat_krisma_calon_suami').show()
         // $('#label_suratpengantar_lingkungan_calon_suami').show()
         // $('#label_suratpengantar_paroki_calon_suami').show()
+        $('#label_nik_calon_suami').show()
         $('#label_ktp_calon_suami').show()
         $('#label_kk_calon_suami').show()
         $('#label_paroki_calon_suami').show()
@@ -553,6 +566,7 @@ function checkAgamaSuami(agama)
     else if($(agama).val() == 'Kristen')
     {
         $('#label_surat_baptis_calon_suami').show()
+        $('#label_nik_calon_suami').show()
         $('#label_ktp_calon_suami').show()
         $('#label_kk_calon_suami').show()
         $('#label_suratketerangan_bebas_menikah_calon_suami').show()
@@ -564,12 +578,13 @@ function checkAgamaSuami(agama)
         $('#label_suratpengantar_paroki_calon_suami').hide()
 
         $('#paroki_calon_suami').prop('required',false)
-        $('#sertfikat_komuni_calon_suami').prop('required',false)
+        $('#sertifikat_komuni_calon_suami').prop('required',false)
         $('#suratpengantar_lingkungan_calon_suami').prop('required',false)
         $('#suratpengantar_paroki_calon_suami').prop('required',false)
     }
     else
     {
+        $('#label_nik_calon_suami').show()
         $('#label_ktp_calon_suami').show()
         $('#label_kk_calon_suami').show()
         $('#label_suratketerangan_bebas_menikah_calon_suami').show()
@@ -583,7 +598,7 @@ function checkAgamaSuami(agama)
         
         $('#paroki_calon_suami').prop('required',false)
         $('#surat_baptis_calon_suami').prop('required',false)
-        $('#sertfikat_komuni_calon_suami').prop('required',false)
+        $('#sertifikat_komuni_calon_suami').prop('required',false)
         $('#suratpengantar_lingkungan_calon_suami').prop('required',false)
         $('#suratpengantar_paroki_calon_suami').prop('required',false)
     }
@@ -619,6 +634,7 @@ function checkAgamaIstri(agama)
         // $('#label_suratpengantar_lingkungan_calon_istri').show()
         // $('#label_suratpengantar_paroki_calon_istri').show()
         $('#label_paroki_calon_istri').show()
+        $('#label_nik_calon_istri').show()
         $('#label_ktp_calon_istri').show()
         $('#label_kk_calon_istri').show()
         $('#label_suratketerangan_bebas_menikah_calon_istri').hide()
@@ -630,6 +646,7 @@ function checkAgamaIstri(agama)
     else if($(agama).val() == 'Kristen')
     {
         $('#label_surat_baptis_calon_istri').show()
+        $('#label_nik_calon_istri').show()
         $('#label_ktp_calon_istri').show()
         $('#label_kk_calon_istri').show()
         $('#label_suratketerangan_bebas_menikah_calon_istri').show()
@@ -646,6 +663,7 @@ function checkAgamaIstri(agama)
     }
     else
     {
+        $('#label_nik_calon_istri').show()
         $('#label_ktp_calon_istri').show()
         $('#label_kk_calon_istri').show()
         $('#label_suratketerangan_bebas_menikah_calon_istri').show()
