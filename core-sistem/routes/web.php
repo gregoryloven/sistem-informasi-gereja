@@ -275,6 +275,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         //Pendaftaran Perkawinan
         Route::resource('pendaftaranperkawinan', PendaftaranPerkawinanController::class);
         Route::post('/pendaftaranperkawinan/detail', [PendaftaranPerkawinanController::class, 'detail'])->name('pendaftaranperkawinan.detail');
+        Route::get('/pendaftaranperkawinan/EditForm/{id}', [PendaftaranPerkawinanController::class, 'EditForm'])->name('pendaftaranperkawinan.EditForm');
 
         //Pendaftaran KPP
         Route::resource('pendaftarankpp', PendaftaranKppController::class);

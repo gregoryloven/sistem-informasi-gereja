@@ -187,7 +187,7 @@
                     </tbody>
                 </thead>
             </table>
-            <br><h6 style="color:black;"><b>Tempat & Tanggal Pelaksanaan Perkawinan:</b> {{$data[0]->tempat_perkawinan}}, {{tanggal_indonesia($data[0]->tanggal_perkawinan)}} WITA</h6><br>
+            <br><h6 style="color:black;"><b>Permohonan Tempat,Tanggal, Waktu Pelaksanaan Perkawinan:</b> {{$data[0]->tempat_perkawinan}}, {{tanggal_indonesia($data[0]->tanggal_perkawinan)}}, {{waktu_indonesia($data[0]->tanggal_perkawinan)}} WITA</h6><br>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="d-flex">
                     <form action="/validasiAdmin/acceptperkawinan" method="post">
