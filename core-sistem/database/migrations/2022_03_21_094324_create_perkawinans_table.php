@@ -37,6 +37,7 @@ class CreatePerkawinansTable extends Migration
             $table->string('suratpengantar_paroki_calon_suami')->nullable();
             $table->string('suratketerangan_bebas_menikah_calon_suami')->nullable();
             $table->string('suratpernyataan_nonkatolik_calon_suami')->nullable();
+            $table->string('nik_calon_suami');
             $table->string('ktp_calon_suami');
             $table->string('kk_calon_suami');
             $table->string('ttd_calon_suami');
@@ -61,6 +62,7 @@ class CreatePerkawinansTable extends Migration
             $table->string('suratpengantar_paroki_calon_istri')->nullable();
             $table->string('suratketerangan_bebas_menikah_calon_istri')->nullable();
             $table->string('suratpernyataan_nonkatolik_calon_istri')->nullable();
+            $table->string('nik_calon_istri');
             $table->string('ktp_calon_istri');
             $table->string('kk_calon_istri');
             $table->string('ttd_calon_istri');
