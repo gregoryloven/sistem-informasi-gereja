@@ -92,6 +92,13 @@
                         <td>{{$d->agama_calon_suami}}</td>
                         <td>{{$d->agama_calon_istri}}</td>
                     </tr>
+                    @if($d->agama_calon_suami == 'Katolik' || $d->agama_calon_istri == 'Katolik')
+                    <tr>
+                        <td>Paroki</td>
+                        <td>{{$d->paroki_calon_suami}}</td>
+                        <td>{{$d->paroki_calon_istri}}</td>
+                    </tr>
+                    @endif
                     <tr>
                         <td><b>IDENTITAS ORANG TUA</b></td><td></td><td></td>
                     </tr>
@@ -151,18 +158,23 @@
                     @endif
                     </tr>
                     <tr>
-                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik")
+                    @if(isset($d->suratpengantar_lingkungan_calon_suami) || isset($d->suratpengantar_lingkungan_calon_istri))
                         <td>Surat Pengantar Lingkungan</td>
                         <td>@if(isset($d->suratpengantar_lingkungan_calon_suami))<img src="{{asset('file_perkawinan/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_suami)}}" height='80px'/>@endif</td>
                         <td>@if(isset($d->suratpengantar_lingkungan_calon_istri))<img src="{{asset('file_perkawinan/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_istri)}}" height='80px'/>@endif</td>
                     @endif
                     </tr>
                     <tr>
-                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik")
+                    @if(isset($d->suratpengantar_paroki_calon_suami) || isset($d->suratpengantar_paroki_calon_istri))
                         <td>Surat Pengantar Paroki</td>
                         <td>@if(isset($d->suratpengantar_paroki_calon_suami))<img src="{{asset('file_perkawinan/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_suami)}}" height='80px'/>@endif</td>
                         <td>@if(isset($d->suratpengantar_paroki_calon_istri))<img src="{{asset('file_perkawinan/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_istri)}}" height='80px'/>@endif</td>
                     @endif
+                    </tr>
+                    <tr>
+                        <td>NIK</td>
+                        <td>{{$d->nik_calon_suami}}</td>
+                        <td>{{$d->nik_calon_istri}}</td>
                     </tr>
                     <tr>
                         <td>KTP</td>
