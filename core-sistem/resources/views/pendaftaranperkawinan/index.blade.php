@@ -271,7 +271,6 @@ function detail(id)
     }
   });
 }
-</script>
 
 </script>
 @endsection

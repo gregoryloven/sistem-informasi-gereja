@@ -399,6 +399,11 @@
             $('#myTable4').DataTable();
         });
     </script>
+        <script>
+        jQuery(document).ready(function() {    
+            $('#myTable5').DataTable();
+        });
+    </script>
 
 </body>
 </html>
