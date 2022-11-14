@@ -1,4 +1,4 @@
-@extends('layouts.sbuser')
+@extends('layouts.sbadmin2')
 
 @section('title')
     Pendaftaran Sakramen Perkawinan
@@ -28,12 +28,11 @@
     <div class="col-md-12">
         <div class="card shadow">
             <div class="card-header py-3">
-                Ubah Formulir Pendaftaran Sakramen Perkawinan
+                Formulir Pendaftaran Sakramen Perkawinan
             </div>
             <div class="card-body">
-            <form role="form" class="mb-2" method="post" action="{{ url('pendaftaranperkawinan/'.$data->id) }}" enctype="multipart/form-data">
+            <form role="form" class="mb-2" method="post" action="{{ url('perkawinan') }}" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <div class="row gutters">
                 <!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <small style="color:red;"><label >Bertanda * Wajib Diisi</label></small>
@@ -45,135 +44,134 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$data->id}}">
-                        <input type="text" class="form-control" value="{{$data->nama_lengkap_calon_suami}}" id='nama_lengkap_calon_suami' name='nama_lengkap_calon_suami' placeholder="Nama Lengkap Calon Suami" required>
+                        <input type="text" class="form-control" id='nama_lengkap_calon_suami' name='nama_lengkap_calon_suami' placeholder="Nama Lengkap Calon Suami" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Tempat Lahir</label>
-                        <input type="text" class="form-control" value="{{$data->tempat_lahir_calon_suami}}" id='tempat_lahir_calon_suami' name='tempat_lahir_calon_suami' placeholder="Tempat Lahir Calon Suami" required>
+                        <input type="text" class="form-control" id='tempat_lahir_calon_suami' name='tempat_lahir_calon_suami' placeholder="Tempat Lahir Calon Suami" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Tanggal Lahir</label>
-                        <input type="date" class="form-control" value="{{$data->tanggal_lahir_calon_suami}}" id='tanggal_lahir_calon_suami' name='tanggal_lahir_calon_suami' placeholder="Tanggal Lahir Calon Suami" required>
+                        <input type="date" class="form-control" id='tanggal_lahir_calon_suami' name='tanggal_lahir_calon_suami' placeholder="Tanggal Lahir Calon Suami" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Pekerjaan</label>
-                        <input type="text" class="form-control" value="{{$data->pekerjaan_calon_suami}}" id='pekerjaan_calon_suami' name='pekerjaan_calon_suami' placeholder="Pekerjaan Calon Suami" required>
+                        <input type="text" class="form-control" id='pekerjaan_calon_suami' name='pekerjaan_calon_suami' placeholder="Pekerjaan Calon Suami" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Alamat</label>
-                        <input type="text" class="form-control" value="{{$data->alamat_calon_suami}}" id='alamat_calon_suami' name='alamat_calon_suami' placeholder="Alamat Calon Suami" required>
+                        <input type="text" class="form-control" id='alamat_calon_suami' name='alamat_calon_suami' placeholder="Alamat Calon Suami" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Telepon</label>
-                        <input type="text" class="form-control" value="{{$data->telepon_calon_suami}}" id='telepon_calon_suami' name='telepon_calon_suami' placeholder="Telepon Calon Suami" required>
+                        <input type="text" class="form-control" id='telepon_calon_suami' name='telepon_calon_suami' placeholder="Telepon Calon Suami" required>
                     </div> 
                 </div> 
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Agama</label>
-                        <input type="text" class="form-control" value="{{$data->agama_calon_suami}}" id='agama_calon_suami' name='agama_calon_suami' required readonly>
+                        <select class="form-control" id='agama_calon_suami' name='agama_calon_suami' onchange='checkAgamaSuami(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Khonghucu">Khonghucu</option>
+                        </select>
                     </div>
                 </div>
-                @if($data->agama_calon_suami == 'Katolik')
                 @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div style='display:none' id='label_paroki_calon_suami' class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Paroki Asal</label>
-                        <input type="text" class="form-control" value="{{$data->paroki_calon_suami}}" id='paroki_calon_suami' name='paroki_calon_suami' required readonly>
+                        <select class="form-control" id='paroki_calon_suami' name='paroki_calon_suami' onchange='checkParokiSuami(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="{{app('currentTenant')->name}}">{{app('currentTenant')->name}}</option>
+                            <option value="Paroki Luar">Paroki Luar</option>
+                        </select>
                     </div> 
                 </div> 
                 @endif
-                @endif
-                @if($data->agama_calon_suami == 'Katolik' || $data->agama_calon_suami == 'Kristen')
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_surat_baptis_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Baptis</label>
-                        <input type="file" class="form-control" value="{{$data->surat_baptis_calon_suami}}" id='surat_baptis_calon_suami' name='surat_baptis_calon_suami' onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output" src="{{asset('file_perkawinan/surat_baptis/'.$data->surat_baptis_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='surat_baptis_calon_suami' name='surat_baptis_calon_suami' onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
-                @if($data->agama_calon_suami == 'Katolik')
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_sertifikat_komuni_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Komuni Pertama</label>
-                        <input type="file" class="form-control" value="{{$data->sertifikat_komuni_calon_suami}}" id='sertifikat_komuni_calon_suami' name='sertifikat_komuni_calon_suami' onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output2" src="{{asset('file_perkawinan/sertifikat_komuni/'.$data->sertifikat_komuni_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='sertifikat_komuni_calon_suami' name='sertifikat_komuni_calon_suami' onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output2" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_sertifikat_krisma_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Krisma (Wajib Disertakan Jika Ada)</label>
-                        <input type="file" class="form-control" value="{{$data->sertifikat_krisma_calon_suami}}" id='sertifikat_krisma_calon_suami' name='sertifikat_krisma_calon_suami' onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output3" src="{{asset('file_perkawinan/sertifikat_krisma/'.$data->sertifikat_krisma_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='sertifikat_krisma_calon_suami' name='sertifikat_krisma_calon_suami' onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])">
+                        <img id="output3" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
-                @if(isset($data->suratpengantar_lingkungan_calon_suami))
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpengantar_lingkungan_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Lingkungan</label>
-                        <input type="file" class="form-control" value="{{$data->suratpengantar_lingkungan_calon_suami}}" id='suratpengantar_lingkungan_calon_suami' name='suratpengantar_lingkungan_calon_suami' onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output4" src="{{asset('file_perkawinan/suratpengantar_lingkungan/'.$data->suratpengantar_lingkungan_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='suratpengantar_lingkungan_calon_suami' name='suratpengantar_lingkungan_calon_suami' onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output4" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
-                @if(isset($data->suratpengantar_paroki_calon_suami))
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpengantar_paroki_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Paroki Luar</label>
-                        <input type="file" class="form-control" value="{{$data->suratpengantar_paroki_calon_suami}}" id='suratpengantar_paroki_calon_suami' name='suratpengantar_paroki_calon_suami' onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output5" src="{{asset('file_perkawinan/suratpengantar_paroki/'.$data->suratpengantar_paroki_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='suratpengantar_paroki_calon_suami' name='suratpengantar_paroki_calon_suami' onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])">
+                        <img id="output5" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_nik_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >NIK</label>
-                        <input type="number" class="form-control" value="{{$data->nik_calon_suami}}" id='nik_calon_suami' name='nik_calon_suami' placeholder="NIK Calon Suami" required>
+                        <input type="number" class="form-control" id='nik_calon_suami' name='nik_calon_suami' placeholder="NIK Calon Suami" required>
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_ktp_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >KTP</label>
-                        <input type="file" class="form-control" value="{{$data->ktp_calon_suami}}" id='ktp_calon_suami' name='ktp_calon_suami' onchange="document.getElementById('output6').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output6" src="{{asset('file_perkawinan/ktp/'.$data->ktp_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='ktp_calon_suami' name='ktp_calon_suami' onchange="document.getElementById('output6').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output6" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_kk_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Kartu Keluarga</label>
-                        <input type="file" class="form-control" value="{{$data->kk_calon_suami}}" id='kk_calon_suami' name='kk_calon_suami' onchange="document.getElementById('output7').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output7" src="{{asset('file_perkawinan/kk/'.$data->kk_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='kk_calon_suami' name='kk_calon_suami' onchange="document.getElementById('output7').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output7" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @if($data->agama_calon_suami != 'Katolik')
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratketerangan_bebas_menikah_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Keterangan Bebas Menikah</label>
-                        <input type="file" class="form-control" value="{{$data->suratketerangan_bebas_menikah_calon_suami}}" id='suratketerangan_bebas_menikah_calon_suami' name='suratketerangan_bebas_menikah_calon_suami' onchange="document.getElementById('output8').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output8" src="{{asset('file_perkawinan/suratketerangan_bebas_menikah/'.$data->suratketerangan_bebas_menikah_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='suratketerangan_bebas_menikah_calon_suami' name='suratketerangan_bebas_menikah_calon_suami' onchange="document.getElementById('output8').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output8" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpernyataan_nonKatolik_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pernyataan Pihak Non-Katolik</label>
-                        <input type="file" class="form-control" value="{{$data->suratpernyataan_nonkatolik_calon_suami}}" id='suratpernyataan_nonKatolik_calon_suami' name='suratpernyataan_nonKatolik_calon_suami' onchange="document.getElementById('output9').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output9" src="{{asset('file_perkawinan/suratpernyataan_nonkatolik/'.$data->suratpernyataan_nonkatolik_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='suratpernyataan_nonKatolik_calon_suami' name='suratpernyataan_nonKatolik_calon_suami' onchange="document.getElementById('output9').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output9" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
                 
                 <!-- IDENTITAS ORTU CALON SUAMI -->
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -182,20 +180,20 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Nama Lengkap Ayah</label>
-                        <input type="text"  class="form-control" value="{{$data->nama_ayah_calon_suami}}" id='nama_ayah_calon_suami' name='nama_ayah_calon_suami' placeholder="Nama Lengkap Ayah Calon Suami" required>
+                        <input type="text"  class="form-control" id='nama_ayah_calon_suami' name='nama_ayah_calon_suami' placeholder="Nama Lengkap Ayah Calon Suami" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Nama Lengkap Ibu</label>
-                        <input type="text"  class="form-control" value="{{$data->nama_ibu_calon_suami}}" id='nama_ibu_calon_suami' name='nama_ibu_calon_suami' placeholder="Nama Lengkap Ibu Calon Suami" required>
+                        <input type="text"  class="form-control" id='nama_ibu_calon_suami' name='nama_ibu_calon_suami' placeholder="Nama Lengkap Ibu Calon Suami" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Agama Ayah</label>
                         <select class="form-control" id='agama_ayah_calon_suami' name='agama_ayah_calon_suami' required>
-                            <option value="{{$data->agama_ayah_calon_suami}}">{{$data->agama_ayah_calon_suami}}</option>
+                            <option value="" disabled selected>Choose</option>
                             <option value="Katolik">Katolik</option>
                             <option value="Kristen">Kristen</option>
                             <option value="Islam">Islam</option>
@@ -209,7 +207,7 @@
                     <div class="form-group">
                         <label >Agama Ibu</label>
                         <select class="form-control" id='agama_ibu_calon_suami' name='agama_ibu_calon_suami' required>
-                            <option value="{{$data->agama_ibu_calon_suami}}">{{$data->agama_ibu_calon_suami}}</option>
+                            <option value="" disabled selected>Choose</option>
                             <option value="Katolik">Katolik</option>
                             <option value="Kristen">Kristen</option>
                             <option value="Islam">Islam</option>
@@ -222,13 +220,13 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Pekerjaan Ayah</label>
-                        <input type="text" class="form-control" value="{{$data->pekerjaan_ayah_calon_suami}}" id='pekerjaan_ayah_calon_suami' name='pekerjaan_ayah_calon_suami' placeholder="Pekerjaan Ayah Calon Suami" required>
+                        <input type="text" class="form-control" id='pekerjaan_ayah_calon_suami' name='pekerjaan_ayah_calon_suami' placeholder="Pekerjaan Ayah Calon Suami" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Alamat Orang Tua</label>
-                        <input type="text" class="form-control" value="{{$data->alamat_orangtua_calon_suami}}" id='alamat_orangtua_calon_suami' name='alamat_orangtua_calon_suami' placeholder="Alamat Orang Tua Calon Suami" required>
+                        <input type="text" class="form-control" id='alamat_orangtua_calon_suami' name='alamat_orangtua_calon_suami' placeholder="Alamat Orang Tua Calon Suami" required>
                     </div>
                 </div>
 
@@ -239,134 +237,134 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" value="{{$data->nama_lengkap_calon_istri}}" id='nama_lengkap_calon_istri' name='nama_lengkap_calon_istri' placeholder="Nama Lengkap Calon Istri" required>
+                        <input type="text" class="form-control" id='nama_lengkap_calon_istri' name='nama_lengkap_calon_istri' placeholder="Nama Lengkap Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Tempat Lahir</label>
-                        <input type="text" class="form-control" value="{{$data->tempat_lahir_calon_istri}}" id='tempat_lahir_calon_istri' name='tempat_lahir_calon_istri' placeholder="Tempat Lahir Calon Istri" required>
+                        <input type="text" class="form-control" id='tempat_lahir_calon_istri' name='tempat_lahir_calon_istri' placeholder="Tempat Lahir Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Tanggal Lahir</label>
-                        <input type="date" class="form-control" value="{{$data->tanggal_lahir_calon_istri}}" id='tanggal_lahir_calon_istri' name='tanggal_lahir_calon_istri' placeholder="Tanggal Lahir Calon Istri" required>
+                        <input type="date" class="form-control" id='tanggal_lahir_calon_istri' name='tanggal_lahir_calon_istri' placeholder="Tanggal Lahir Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Pekerjaan</label>
-                        <input type="text" class="form-control" value="{{$data->pekerjaan_calon_istri}}" id='pekerjaan_calon_istri' name='pekerjaan_calon_istri' placeholder="Pekerjaan Calon Istri" required>
+                        <input type="text" class="form-control" id='pekerjaan_calon_istri' name='pekerjaan_calon_istri' placeholder="Pekerjaan Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Alamat</label>
-                        <input type="text" class="form-control" value="{{$data->alamat_calon_istri}}" id='alamat_calon_istri' name='alamat_calon_istri' placeholder="Alamat Calon Istri" required>
+                        <input type="text" class="form-control" id='alamat_calon_istri' name='alamat_calon_istri' placeholder="Alamat Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Telepon</label>
-                        <input type="text" class="form-control" value="{{$data->telepon_calon_istri}}" id='telepon_calon_istri' name='telepon_calon_istri' placeholder="Telepon Calon Istri" required>
+                        <input type="text" class="form-control" id='telepon_calon_istri' name='telepon_calon_istri' placeholder="Telepon Calon Istri" required>
                     </div> 
                 </div> 
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Agama</label>
-                        <input type="text" class="form-control" value="{{$data->agama_calon_istri}}" id='agama_calon_istri' name='agama_calon_istri' required readonly>
+                        <select class="form-control" id='agama_calon_istri' name='agama_calon_istri' onchange='checkAgamaIstri(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Khonghucu">Khonghucu</option>
+                        </select>
                     </div>
                 </div>
-                @if($data->agama_calon_istri == 'Katolik')
                 @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div style='display:none' id='label_paroki_calon_istri' class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Paroki Asal</label>
-                        <input type="text" class="form-control" value="{{$data->paroki_calon_istri}}" id='paroki_calon_istri' name='paroki_calon_istri' required readonly>
+                        <select class="form-control" id='paroki_calon_istri' name='paroki_calon_istri' onchange='checkParokiIstri(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="{{app('currentTenant')->name}}">{{app('currentTenant')->name}}</option>
+                            <option value="Paroki Luar">Paroki Luar</option>
+                        </select>
                     </div> 
                 </div> 
                 @endif
-                @endif
-                @if($data->agama_calon_istri == 'Katolik' || $data->agama_calon_istri == 'Kristen')
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_surat_baptis_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Baptis</label>
-                        <input type="file" class="form-control" value="{{$data->surat_baptis_calon_istri}}" id='surat_baptis_calon_istri' name='surat_baptis_calon_istri' onchange="document.getElementById('output20').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output20" src="{{asset('file_perkawinan/surat_baptis/'.$data->surat_baptis_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='surat_baptis_calon_istri' name='surat_baptis_calon_istri' onchange="document.getElementById('output20').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output20" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
-                @if($data->agama_calon_istri == 'Katolik')
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_sertifikat_komuni_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Komuni Pertama</label>
-                        <input type="file" class="form-control" value="{{$data->sertifikat_komuni_calon_istri}}" id='sertifikat_komuni_calon_istri' name='sertifikat_komuni_calon_istri' onchange="document.getElementById('output21').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output21" src="{{asset('file_perkawinan/sertifikat_komuni/'.$data->sertifikat_komuni_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='sertifikat_komuni_calon_istri' name='sertifikat_komuni_calon_istri' onchange="document.getElementById('output21').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output21" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_sertifikat_krisma_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Krisma (Wajib Disertakan Jika Ada)</label>
-                        <input type="file" class="form-control" value="{{$data->sertifikat_krisma_calon_istri}}" id='sertifikat_krisma_calon_istri' name='sertifikat_krisma_calon_istri' onchange="document.getElementById('output22').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output22" src="{{asset('file_perkawinan/sertifikat_krisma/'.$data->sertifikat_krisma_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='sertifikat_krisma_calon_istri' name='sertifikat_krisma_calon_istri' onchange="document.getElementById('output22').src = window.URL.createObjectURL(this.files[0])">
+                        <img id="output22" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
-                @if(isset($data->suratpengantar_lingkungan_calon_istri))
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpengantar_lingkungan_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Lingkungan</label>
-                        <input type="file" class="form-control" value="{{$data->suratpengantar_lingkungan_calon_istri}}" id='suratpengantar_lingkungan_calon_istri' name='suratpengantar_lingkungan_calon_istri' onchange="document.getElementById('output23').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output23" src="{{asset('file_perkawinan/suratpengantar_lingkungan/'.$data->suratpengantar_lingkungan_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='suratpengantar_lingkungan_calon_istri' name='suratpengantar_lingkungan_calon_istri' onchange="document.getElementById('output23').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output23" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
-                @if(isset($data->suratpengantar_paroki_calon_istri))
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpengantar_paroki_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Paroki Luar</label>
-                        <input type="file" class="form-control" value="{{$data->suratpengantar_paroki_calon_istri}}" id='suratpengantar_paroki_calon_istri' name='suratpengantar_paroki_calon_istri' onchange="document.getElementById('output24').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output24" src="{{asset('file_perkawinan/suratpengantar_paroki/'.$data->suratpengantar_paroki_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='suratpengantar_paroki_calon_istri' name='suratpengantar_paroki_calon_istri' onchange="document.getElementById('output24').src = window.URL.createObjectURL(this.files[0])">
+                        <img id="output24" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_nik_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >NIK</label>
-                        <input type="number" class="form-control" value="{{$data->nik_calon_istri}}" id='nik_calon_istri' name='nik_calon_istri' placeholder="NIK Calon Istri" required>
+                        <input type="number" class="form-control" id='nik_calon_istri' name='nik_calon_istri' placeholder="NIK Calon Istri" required>
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_ktp_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >KTP</label>
-                        <input type="file" class="form-control" value="{{$data->ktp_calon_istri}}" id='ktp_calon_istri' name='ktp_calon_istri' onchange="document.getElementById('output25').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output25" src="{{asset('file_perkawinan/ktp/'.$data->ktp_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='ktp_calon_istri' name='ktp_calon_istri' onchange="document.getElementById('output25').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output25" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_kk_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Kartu Keluarga</label>
-                        <input type="file" class="form-control" value="{{$data->kk_calon_istri}}" id='kk_calon_istri' name='kk_calon_istri' onchange="document.getElementById('output26').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output26" src="{{asset('file_perkawinan/kk/'.$data->kk_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='kk_calon_istri' name='kk_calon_istri' onchange="document.getElementById('output26').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output26" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @if($data->agama_calon_istri != 'Katolik')
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratketerangan_bebas_menikah_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Keterangan Bebas Menikah</label>
-                        <input type="file" class="form-control" value="{{$data->suratketerangan_bebas_menikah_calon_istri}}" id='suratketerangan_bebas_menikah_calon_istri' name='suratketerangan_bebas_menikah_calon_istri' onchange="document.getElementById('output27').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output27" src="{{asset('file_perkawinan/suratketerangan_bebas_menikah/'.$data->suratketerangan_bebas_menikah_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='suratketerangan_bebas_menikah_calon_istri' name='suratketerangan_bebas_menikah_calon_istri' onchange="document.getElementById('output27').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output27" src="" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpernyataan_nonKatolik_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pernyataan Pihak Non-Katolik</label>
-                        <input type="file" class="form-control" value="{{$data->suratpernyataan_nonkatolik_calon_istri}}" id='suratpernyataan_nonKatolik_calon_istri' name='suratpernyataan_nonKatolik_calon_istri' onchange="document.getElementById('output28').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output28" src="{{asset('file_perkawinan/suratpernyataan_nonkatolik/'.$data->suratpernyataan_nonkatolik_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='suratpernyataan_nonKatolik_calon_istri' name='suratpernyataan_nonKatolik_calon_istri' onchange="document.getElementById('output28').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output28" src="" width="100px" height="100px">
                     </div>
                 </div>
-                @endif
 
                 <!-- IDENTITAS ORTU CALON ISTRI -->
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -375,20 +373,20 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Nama Lengkap Ayah</label>
-                        <input type="text"  class="form-control" value="{{$data->nama_ayah_calon_istri}}" id='nama_ayah_calon_istri' name='nama_ayah_calon_istri' placeholder="Nama Lengkap Ayah Calon Istri" required>
+                        <input type="text"  class="form-control" id='nama_ayah_calon_istri' name='nama_ayah_calon_istri' placeholder="Nama Lengkap Ayah Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Nama Lengkap Ibu</label>
-                        <input type="text"  class="form-control" value="{{$data->nama_ibu_calon_istri}}" id='nama_ibu_calon_istri' name='nama_ibu_calon_istri' placeholder="Nama Lengkap Ibu Calon Istri" required>
+                        <input type="text"  class="form-control" id='nama_ibu_calon_istri' name='nama_ibu_calon_istri' placeholder="Nama Lengkap Ibu Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Agama Ayah</label>
                         <select class="form-control" id='agama_ayah_calon_istri' name='agama_ayah_calon_istri' required>
-                            <option value="{{$data->agama_ayah_calon_istri}}">{{$data->agama_ayah_calon_istri}}</option>
+                            <option value="" disabled selected>Choose</option>
                             <option value="Katolik">Katolik</option>
                             <option value="Kristen">Kristen</option>
                             <option value="Islam">Islam</option>
@@ -402,7 +400,7 @@
                     <div class="form-group">
                         <label >Agama Ibu</label>
                         <select class="form-control" id='agama_ibu_calon_istri' name='agama_ibu_calon_istri' required>
-                            <option value="{{$data->agama_ibu_calon_istri}}">{{$data->agama_ibu_calon_istri}}</option>
+                            <option value="" disabled selected>Choose</option>
                             <option value="Katolik">Katolik</option>
                             <option value="Kristen">Kristen</option>
                             <option value="Islam">Islam</option>
@@ -415,13 +413,13 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Pekerjaan Ayah</label>
-                        <input type="text" class="form-control" value="{{$data->pekerjaan_ayah_calon_istri}}" id='pekerjaan_ayah_calon_istri' name='pekerjaan_ayah_calon_istri' placeholder="Pekerjaan Ayah Calon Istri" required>
+                        <input type="text" class="form-control" id='pekerjaan_ayah_calon_istri' name='pekerjaan_ayah_calon_istri' placeholder="Pekerjaan Ayah Calon Istri" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Alamat Orang Tua</label>
-                        <input type="text" class="form-control" value="{{$data->alamat_orangtua_calon_istri}}" id='alamat_orangtua_calon_istri' name='alamat_orangtua_calon_istri' placeholder="Alamat Orang Tua Calon Istri" required>
+                        <input type="text" class="form-control" id='alamat_orangtua_calon_istri' name='alamat_orangtua_calon_istri' placeholder="Alamat Orang Tua Calon Istri" required>
                     </div>
                 </div>
 
@@ -432,22 +430,22 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Kursus Persiapan Perkawinan (KPP)</label>
-                        <input type="file" class="form-control" value="{{$data->sertifikat_kpp}}" id='sertifikat_kpp' name='sertifikat_kpp' onchange="document.getElementById('output29').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output29" src="{{asset('file_perkawinan/sertifikat_kpp/'.$data->sertifikat_kpp)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='sertifikat_kpp' name='sertifikat_kpp' onchange="document.getElementById('output29').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output29" src="" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Foto 4x6 Berdampingan (Latar Belakang Bebas)</label>
-                        <input type="file" class="form-control" value="{{$data->foto_berdampingan}}" id='foto_berdampingan' name='foto_berdampingan' onchange="document.getElementById('output30').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output30" src="{{asset('file_perkawinan/foto_berdampingan/'.$data->foto_berdampingan)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='foto_berdampingan' name='foto_berdampingan' onchange="document.getElementById('output30').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output30" src="" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >KTP Saksi Nikah</label>
-                        <input type="file" class="form-control" value="{{$data->ktp_saksi_nikah}}" id='ktp_saksi_nikah' name='ktp_saksi_nikah' onchange="document.getElementById('output31').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output31" src="{{asset('file_perkawinan/ktp_saksi_nikah/'.$data->ktp_saksi_nikah)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='ktp_saksi_nikah' name='ktp_saksi_nikah' onchange="document.getElementById('output31').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output31" src="" width="100px" height="100px">
                     </div>
                 </div>
 
@@ -458,7 +456,7 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Tanggal Kanonik</label>
-                        <input type="date" class="form-control" value="{{$data->tanggal_kanonik}}" id='tanggal_kanonik' name='tanggal_kanonik' placeholder="Tanggal Kanonik" required>
+                        <input type="date" class="form-control" id='tanggal_kanonik' name='tanggal_kanonik' placeholder="Tanggal Kanonik" onchange='mintanggalperkawinan(this)' required>
                     </div>
                 </div>
                 @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
@@ -472,21 +470,21 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Tanggal Pelaksanaan Perkawinan</label>
-                        <input type="datetime-local" class="form-control" value="{{$data->tanggal_perkawinan}}" id='tanggal_perkawinan' name='tanggal_perkawinan' required>
+                        <input type="datetime-local" class="form-control" id='tanggal_perkawinan' name='tanggal_perkawinan' onchange='checktanggalperkawinan(this)' required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >TTD Calon Suami</label>
-                        <input type="file" class="form-control" value="{{$data->ttd_calon_suami}}" id='ttd_calon_suami' name='ttd_calon_suami' onchange="document.getElementById('output32').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output32" src="{{asset('file_perkawinan/ttd/'.$data->ttd_calon_suami)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='ttd_calon_suami' name='ttd_calon_suami' onchange="document.getElementById('output32').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output32" src="" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >TTD Calon Istri</label>
-                        <input type="file" class="form-control" value="{{$data->ttd_calon_istri}}" id='ttd_calon_istri' name='ttd_calon_istri' onchange="document.getElementById('output33').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output33" src="{{asset('file_perkawinan/ttd/'.$data->ttd_calon_istri)}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id='ttd_calon_istri' name='ttd_calon_istri' onchange="document.getElementById('output33').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output33" src="" width="100px" height="100px">
                     </div>
                 </div>
 
@@ -511,6 +509,26 @@
 
 @section('javascript')
 <script>
+function mintanggalperkawinan()
+{
+    // $('#tanggal_perkawinan').attr('min', $('#tanggal_kanonik').val())
+    var h1 = new Date($('#tanggal_kanonik').val())
+    h1.setDate(h1.getDate() + 1)
+    // alert(h1.toISOString().substring(0,10))
+    var enddate = h1.toISOString().substring(0,10) + ' 00:00:00' 
+    $('#tanggal_perkawinan').attr('min', enddate)
+}
+
+function checktanggalperkawinan()
+{
+    if($('#tanggal_kanonik').val() == '')
+    {   
+        alert('Pilih Tanggal Kanonik Pendaftaran Terlebih Dahulu')
+        $('#tanggal_perkawinan').val('')
+        
+    }
+}
+
 function checkbox()
 {
     var cek = $('#terms').is(':checked')
