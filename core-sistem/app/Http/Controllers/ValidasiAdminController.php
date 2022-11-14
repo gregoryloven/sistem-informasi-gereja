@@ -818,6 +818,14 @@ class ValidasiAdminController extends Controller
         return view('validasiAdmin.DetailPerkawinan',compact("data"));
     }
 
+    public function RiwayatPerkawinan(Request $request)
+    {
+        $id = $request->id;
+        $data = Perkawinan::where('id', $id)->get();
+
+        return view('validasiAdmin.RiwayatPerkawinan',compact("data"));
+    }
+
     public function AcceptPerkawinan(Request $request)
     {
         $perkawinan=Perkawinan::find($request->id);
