@@ -9,6 +9,7 @@ use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\BaptisController;
 use App\Http\Controllers\KomuniPertamaController;
 use App\Http\Controllers\KrismaController;
+use App\Http\Controllers\PerkawinanController;
 use App\Http\Controllers\MisaController;
 use App\Http\Controllers\TobatController;
 use App\Http\Controllers\PengurapanOrangSakitController;
@@ -203,6 +204,11 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/krisma/InputFormLintas', [KrismaController::class, 'InputFormLintas'])->name('krisma.InputFormLintas');
     Route::post('/krisma/PembatalanLintas', [KrismaController::class, 'PembatalanLintas'])->name('krisma.PembatalanLintas');
 
+    //Perkawinan
+    Route::resource('perkawinan', PerkawinanController::class);
+    Route::get('/perkawinan/RiwayatPerkawinan/{id}', [PerkawinanController::class, 'RiwayatPerkawinan'])->name('perkawinan.RiwayatPerkawinan');
+    Route::get('/perkawinan/EditForm/{id}', [PerkawinanController::class, 'EditForm'])->name('perkawinan.EditForm');
+
     //Misa
     Route::resource('misas', MisaController::class);
     Route::get('reservasi', [MisaController::class, 'reservasi'])->name('misas.reservasi');
@@ -340,6 +346,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     
     Route::get('validasiAdminPerkawinan', [ValidasiAdminController::class, 'perkawinan'])->name('validasiAdmin.perkawinan');
     Route::get('/validasiAdminPerkawinan/DetailPerkawinan/{id}', [ValidasiAdminController::class, 'DetailPerkawinan'])->name('validasiAdmin.DetailPerkawinan');
+    Route::get('/validasiAdminPerkawinan/RiwayatPerkawinan/{id}', [ValidasiAdminController::class, 'RiwayatPerkawinan'])->name('validasiAdmin.RiwayatPerkawinan');
     Route::post('/validasiAdmin/acceptperkawinan', [ValidasiAdminController::class, 'AcceptPerkawinan'])->name('validasiAdmin.AcceptPerkawinan');
     Route::post('/validasiAdmin/declineperkawinan', [ValidasiAdminController::class, 'DeclinePerkawinan'])->name('validasiAdmin.DeclinePerkawinan');
     Route::post('/validasiAdminPerkawinan/PembatalanPerkawinan/{id}', [ValidasiAdminController::class, 'PembatalanPerkawinan'])->name('validasiAdmin.PembatalanPerkawinan');
