@@ -19,6 +19,17 @@
     </div>
 @endif
 
+<!-- EDIT WITH MODAL-->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         Detail Formulir Pendaftaran 
@@ -65,6 +76,13 @@
                         <td>{{$d->agama_calon_suami}}</td>
                         <td>{{$d->agama_calon_istri}}</td>
                     </tr>
+                    @if($d->agama_calon_suami == 'Katolik' || $d->agama_calon_istri == 'Katolik')
+                    <tr>
+                        <td style="color:black;">Paroki</td>
+                        <td>{{$d->paroki_calon_suami}}</td>
+                        <td>{{$d->paroki_calon_istri}}</td>
+                    </tr>
+                    @endif
                     <tr style="color:black;">
                         <td><b>IDENTITAS ORANG TUA</b></td><td></td><td></td>
                     </tr>
@@ -124,18 +142,23 @@
                     @endif
                     </tr>
                     <tr>
-                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik")
+                    @if(isset($d->suratpengantar_lingkungan_calon_suami) || isset($d->suratpengantar_lingkungan_calon_istri))
                         <td style="color:black;">Surat Pengantar Lingkungan</td>
                         <td>@if(isset($d->suratpengantar_lingkungan_calon_suami))<img src="{{asset('file_perkawinan/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_suami)}}" height='80px'/>@endif</td>
                         <td>@if(isset($d->suratpengantar_lingkungan_calon_istri))<img src="{{asset('file_perkawinan/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_istri)}}" height='80px'/>@endif</td>
                     @endif
                     </tr>
                     <tr>
-                    @if($d->agama_calon_suami=="Katolik" || $d->agama_calon_istri=="Katolik")
+                    @if(isset($d->suratpengantar_paroki_calon_suami) || isset($d->suratpengantar_paroki_calon_istri))
                         <td style="color:black;">Surat Pengantar Paroki</td>
                         <td>@if(isset($d->suratpengantar_paroki_calon_suami))<img src="{{asset('file_perkawinan/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_suami)}}" height='80px'/>@endif</td>
                         <td>@if(isset($d->suratpengantar_paroki_calon_istri))<img src="{{asset('file_perkawinan/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_istri)}}" height='80px'/>@endif</td>
                     @endif
+                    </tr>
+                    <tr>
+                        <td style="color:black;">NIK</td>
+                        <td>{{$d->nik_calon_suami}}</td>
+                        <td>{{$d->nik_calon_istri}}</td>
                     </tr>
                     <tr>
                         <td style="color:black;">KTP</td>
@@ -189,8 +212,11 @@
             </table>
             <br><h6 style="color:black;"><b>Permohonan Tempat,Tanggal, Waktu Pelaksanaan Perkawinan:</b> {{$data[0]->tempat_perkawinan}}, {{tanggal_indonesia($data[0]->tanggal_perkawinan)}}, {{waktu_indonesia($data[0]->tanggal_perkawinan)}} WITA</h6><br>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div class="d-flex">
-                    <form action="/validasiAdmin/acceptperkawinan" method="post">
+				<div class="d-flex justify-content-end">
+                    <form class="ml-2">
+                    <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})">Ubah</a>
+                    </form>
+                    <form action="/validasiAdmin/acceptperkawinan" class="ml-2" method="post">
                         @csrf
                         <input type="text" name="id" class="d-none" value="{{$d->id}}">
                         <input type="text" name="jadwal" class="d-none" value="{{$d->tanggal_perkawinan}}">
@@ -233,4 +259,22 @@
     </div>
 </div>
 
+@endsection
+
+@section('javascript')
+<script>
+function EditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('validasiAdmin.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+</script>
 @endsection
