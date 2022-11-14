@@ -49,10 +49,10 @@ class PendaftaranPerkawinanController extends Controller
      */
     public function store(Request $request)
     {
-        $perkawinan1 = Perkawinan::where('nik_calon_suami', '=', $request->get("nik_calon_suami"));
-        $perkawinan2 = Perkawinan::where('nik_calon_istri', '=', $request->get("nik_calon_istri"));
+        $perkawinan1 = Perkawinan::get("nik_calon_suami");
+        $perkawinan2 = Perkawinan::get("nik_calon_istri");
 
-        if($perkawinan1 || $perkawinan2)
+        if($perkawinan1 == $request->get("nik_calon_suami") || $perkawinan2 == $request->get("nik_calon_istri"))
         {
             return redirect()->route('pendaftaranperkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Pendaftaran Perkawinan Gagal. NIK Telah Terdaftar Sebelumnya.');
         }
@@ -401,10 +401,10 @@ class PendaftaranPerkawinanController extends Controller
 
     public function update(Request $request)
     {
-        $perkawinan1 = Perkawinan::where('nik_calon_suami', '=', $request->get("nik_calon_suami"));
-        $perkawinan2 = Perkawinan::where('nik_calon_istri', '=', $request->get("nik_calon_istri"));
+        $perkawinan1 = Perkawinan::get("nik_calon_suami");
+        $perkawinan2 = Perkawinan::get("nik_calon_istri");
 
-        if($perkawinan1 || $perkawinan2)
+        if($perkawinan1 == $request->get("nik_calon_suami") || $perkawinan2 == $request->get("nik_calon_istri"))
         {
             return redirect()->route('pendaftaranperkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', 'Ubah Data Pendaftaran Perkawinan Gagal. NIK Telah Terdaftar Sebelumnya.');
         }
