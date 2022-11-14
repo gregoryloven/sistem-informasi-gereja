@@ -456,7 +456,7 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Tanggal Kanonik</label>
-                        <input type="date" class="form-control" id='tanggal_kanonik' name='tanggal_kanonik' placeholder="Tanggal Kanonik" required>
+                        <input type="date" class="form-control" id='tanggal_kanonik' name='tanggal_kanonik' placeholder="Tanggal Kanonik" onchange='mintanggalperkawinan(this)' required>
                     </div>
                 </div>
                 @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
@@ -470,7 +470,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Tanggal Pelaksanaan Perkawinan</label>
-                        <input type="datetime-local" class="form-control" id='tanggal_perkawinan' name='tanggal_perkawinan' required>
+                        <input type="datetime-local" class="form-control" id='tanggal_perkawinan' name='tanggal_perkawinan' onchange='checktanggalperkawinan(this)' required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -509,6 +509,26 @@
 
 @section('javascript')
 <script>
+function mintanggalperkawinan()
+{
+    // $('#tanggal_perkawinan').attr('min', $('#tanggal_kanonik').val())
+    var h1 = new Date($('#tanggal_kanonik').val())
+    h1.setDate(h1.getDate() + 1)
+    // alert(h1.toISOString().substring(0,10))
+    var enddate = h1.toISOString().substring(0,10) + ' 00:00:00' 
+    $('#tanggal_perkawinan').attr('min', enddate)
+}
+
+function checktanggalperkawinan()
+{
+    if($('#tanggal_kanonik').val() == '')
+    {   
+        alert('Pilih Tanggal Kanonik Pendaftaran Terlebih Dahulu')
+        $('#tanggal_perkawinan').val('')
+        
+    }
+}
+
 function checkbox()
 {
     var cek = $('#terms').is(':checked')
