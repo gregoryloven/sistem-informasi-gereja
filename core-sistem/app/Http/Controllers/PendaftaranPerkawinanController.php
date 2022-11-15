@@ -727,9 +727,6 @@ class PendaftaranPerkawinanController extends Controller
      */
     public function destroy(Request $request)
     {
-        $perkawinan=Perkawinan::find($request->id);
-        $perkawinan->delete();
-
         $riwayat = Riwayat::where([['event_id', $request->id],['jenis_event', 'Perkawinan']])->get();
         foreach($riwayat as $r)
         {
@@ -738,6 +735,9 @@ class PendaftaranPerkawinanController extends Controller
 
         $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
         $list_event->delete();
+        
+        $perkawinan=Perkawinan::find($request->id);
+        $perkawinan->delete();
 
         return redirect()->route('pendaftaranperkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Perkawinan Berhasil Dibatalkan');
     }
