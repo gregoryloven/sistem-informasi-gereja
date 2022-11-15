@@ -141,7 +141,7 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >NIK</label>
-                        <input type="number" class="form-control" value="{{$data->nik_calon_suami}}" id='nik_calon_suami' name='nik_calon_suami' placeholder="NIK Calon Suami" required>
+                        <input type="number" class="form-control" value="{{$data->nik_calon_suami}}" id='nik_calon_suami' name='nik_calon_suami' placeholder="NIK Calon Suami" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -334,7 +334,7 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >NIK</label>
-                        <input type="number" class="form-control" value="{{$data->nik_calon_istri}}" id='nik_calon_istri' name='nik_calon_istri' placeholder="NIK Calon Istri" required>
+                        <input type="number" class="form-control" value="{{$data->nik_calon_istri}}" id='nik_calon_istri' name='nik_calon_istri' placeholder="NIK Calon Istri" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

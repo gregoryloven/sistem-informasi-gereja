@@ -141,7 +141,7 @@
                 <div style='display:none' id='label_nik_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >NIK</label>
-                        <input type="number" class="form-control" id='nik_calon_suami' name='nik_calon_suami' placeholder="NIK Calon Suami" required>
+                        <input type="number" class="form-control" id='nik_calon_suami' name='nik_calon_suami' placeholder="NIK Calon Suami" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
                     </div>
                 </div>
                 <div style='display:none' id='label_ktp_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -334,7 +334,7 @@
                 <div style='display:none' id='label_nik_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >NIK</label>
-                        <input type="number" class="form-control" id='nik_calon_istri' name='nik_calon_istri' placeholder="NIK Calon Istri" required>
+                        <input type="number" class="form-control" id='nik_calon_istri' name='nik_calon_istri' placeholder="NIK Calon Istri" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
                     </div>
                 </div>
                 <div style='display:none' id='label_ktp_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

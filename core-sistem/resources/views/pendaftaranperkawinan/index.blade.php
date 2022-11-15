@@ -227,12 +227,12 @@
                 </thead>
 
             </table>
-            <br><h6><b>Permohonan Tempat,Tanggal, Waktu Pelaksanaan Perkawinan:</b> {{$data[0]->tempat_perkawinan}}, {{tanggal_indonesia($data[0]->tanggal_perkawinan)}}, {{waktu_indonesia($data[0]->tanggal_perkawinan)}} WITA</h6>
+            <br><h6><b>Permohonan Tempat,Tanggal, Waktu Pelaksanaan Perkawinan:</b> {{$data[0]->tempat_perkawinan}}, {{tanggal_indonesia($data[0]->tanggal_perkawinan)}}, {{waktu_indonesia($data[0]->tanggal_perkawinan)}} WITA</h6><br>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="d-flex justify-content-end">
                 @if($d->status == "Diproses")
                     <a href="{{ url('pendaftaranperkawinan/EditForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-warning">Ubah</a>
-                    <form role="form" method="POST" action="{{ url('pendaftaranperkawinan/'.$d->id) }}">
+                    <form role="form" method="POST" class="ml-1" action="{{ url('pendaftaranperkawinan/'.$d->id) }}">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
@@ -241,11 +241,11 @@
                     </form>
                 @endif
                     @if($d->status == "Diproses")
-                    <a href="#modaltracking" data-toggle="modal" class="btn btn-info" onclick="detail({{ $d->id }})">Lacak</a>
+                    <a href="#modaltracking" data-toggle="modal" class="btn btn-info ml-1" onclick="detail({{ $d->id }})">Lacak</a>
                     @elseif($d->status == "Disetujui Paroki")
-                    <a href="#modaltracking" data-toggle="modal" class="btn btn-success" onclick="detail({{ $d->id }})">Lacak</a>
+                    <a href="#modaltracking" data-toggle="modal" class="btn btn-success ml-1" onclick="detail({{ $d->id }})">Lacak</a>
                     @else
-                    <a href="#modaltracking" data-toggle="modal" class="btn btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
+                    <a href="#modaltracking" data-toggle="modal" class="btn btn-danger ml-1" onclick="detail({{ $d->id }})">Lacak</a>
                     @endif
 				</div>
 			</div><br>
