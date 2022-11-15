@@ -472,7 +472,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >Tanggal Pelaksanaan Perkawinan</label>
-                        <input type="datetime-local" class="form-control" value="{{$data->tanggal_perkawinan}}" id='tanggal_perkawinan' name='tanggal_perkawinan' onchange='checktanggalperkawinan(this)' required>
+                        <input type="datetime-local" class="form-control" value="{{$data->tanggal_perkawinan}}" id='tanggal_perkawinan' name='tanggal_perkawinan' min="<?= $data->tanggal_kanonik ?> 00:00:00" required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">

@@ -511,7 +511,6 @@
 <script>
 function mintanggalperkawinan()
 {
-    // $('#tanggal_perkawinan').attr('min', $('#tanggal_kanonik').val())
     var h1 = new Date($('#tanggal_kanonik').val())
     h1.setDate(h1.getDate() + 1)
     // alert(h1.toISOString().substring(0,10))
