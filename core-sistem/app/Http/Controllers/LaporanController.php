@@ -8,7 +8,10 @@ use App\Models\Baptis;
 use App\Models\KomuniPertama;
 use App\Models\Krisma;
 use App\Models\Kpp;
+use App\Models\Perkawinan;
 use App\Models\Riwayat;
+use Carbon\Carbon;
+use DB;
 
 
 class LaporanController extends Controller
@@ -114,6 +117,16 @@ class LaporanController extends Controller
         }
 
         return view('laporan.kpp',compact("data", "array", "array2"));
+    }
+
+    public function perkawinan(Request $request)
+    {        
+        $data = Perkawinan::orderby('tanggal_perkawinan', 'DESC')->get();
+        $tahun = $request->datetimepicker3;
+
+        $data2 = Perkawinan::whereYear('tanggal_perkawinan', $request->datetimepicker3)->get();
+
+        return view('laporan.perkawinan',compact('data','data2'));
     }
 
 }
