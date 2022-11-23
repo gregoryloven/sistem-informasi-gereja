@@ -97,8 +97,8 @@
                 <div class="form-group">
                     <label>Surat Baptis</label>
                     <input type="file" value="" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
-                </div>
-                <img id="output" src="" width="200px" height="200px">
+                    <img id="output" width="200px" height="200px">
+                </div><br>
                 <div class="form-group">
                 <br><input type="checkbox" id="terms" name="terms" onchange="checkbox()">
                     <label>Saya Menyetujui Formulir Pendaftaran Ini</label>

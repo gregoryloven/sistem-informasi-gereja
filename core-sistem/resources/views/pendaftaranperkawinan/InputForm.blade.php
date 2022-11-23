@@ -107,35 +107,35 @@
                     <div class="form-group">
                         <label >Surat Baptis</label>
                         <input type="file" class="form-control" id='surat_baptis_calon_suami' name='surat_baptis_calon_suami' onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output" src="" width="100px" height="100px">
+                        <img id="output" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_sertifikat_komuni_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Komuni Pertama</label>
                         <input type="file" class="form-control" id='sertifikat_komuni_calon_suami' name='sertifikat_komuni_calon_suami' onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output2" src="" width="100px" height="100px">
+                        <img id="output2" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_sertifikat_krisma_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Krisma (Wajib Disertakan Jika Ada)</label>
                         <input type="file" class="form-control" id='sertifikat_krisma_calon_suami' name='sertifikat_krisma_calon_suami' onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output3" src="" width="100px" height="100px">
+                        <img id="output3" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_suratpengantar_lingkungan_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Lingkungan</label>
                         <input type="file" class="form-control" id='suratpengantar_lingkungan_calon_suami' name='suratpengantar_lingkungan_calon_suami' onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output4" src="" width="100px" height="100px">
+                        <img id="output4" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_suratpengantar_paroki_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Paroki Luar</label>
                         <input type="file" class="form-control" id='suratpengantar_paroki_calon_suami' name='suratpengantar_paroki_calon_suami' onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output5" src="" width="100px" height="100px">
+                        <img id="output5" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_nik_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -148,28 +148,28 @@
                     <div class="form-group">
                         <label >KTP</label>
                         <input type="file" class="form-control" id='ktp_calon_suami' name='ktp_calon_suami' onchange="document.getElementById('output6').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output6" src="" width="100px" height="100px">
+                        <img id="output6" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_kk_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Kartu Keluarga</label>
                         <input type="file" class="form-control" id='kk_calon_suami' name='kk_calon_suami' onchange="document.getElementById('output7').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output7" src="" width="100px" height="100px">
+                        <img id="output7" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_suratketerangan_bebas_menikah_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Keterangan Bebas Menikah</label>
                         <input type="file" class="form-control" id='suratketerangan_bebas_menikah_calon_suami' name='suratketerangan_bebas_menikah_calon_suami' onchange="document.getElementById('output8').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output8" src="" width="100px" height="100px">
+                        <img id="output8" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_suratpernyataan_nonKatolik_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pernyataan Pihak Non-Katolik</label>
                         <input type="file" class="form-control" id='suratpernyataan_nonKatolik_calon_suami' name='suratpernyataan_nonKatolik_calon_suami' onchange="document.getElementById('output9').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output9" src="" width="100px" height="100px">
+                        <img id="output9" width="100px" height="100px">
                     </div>
                 </div>
                 
@@ -300,35 +300,35 @@
                     <div class="form-group">
                         <label >Surat Baptis</label>
                         <input type="file" class="form-control" id='surat_baptis_calon_istri' name='surat_baptis_calon_istri' onchange="document.getElementById('output20').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output20" src="" width="100px" height="100px">
+                        <img id="output20" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_sertifikat_komuni_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Komuni Pertama</label>
                         <input type="file" class="form-control" id='sertifikat_komuni_calon_istri' name='sertifikat_komuni_calon_istri' onchange="document.getElementById('output21').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output21" src="" width="100px" height="100px">
+                        <img id="output21" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_sertifikat_krisma_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Sertifikat Krisma (Wajib Disertakan Jika Ada)</label>
                         <input type="file" class="form-control" id='sertifikat_krisma_calon_istri' name='sertifikat_krisma_calon_istri' onchange="document.getElementById('output22').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output22" src="" width="100px" height="100px">
+                        <img id="output22" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_suratpengantar_lingkungan_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Lingkungan</label>
                         <input type="file" class="form-control" id='suratpengantar_lingkungan_calon_istri' name='suratpengantar_lingkungan_calon_istri' onchange="document.getElementById('output23').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output23" src="" width="100px" height="100px">
+                        <img id="output23" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_suratpengantar_paroki_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Paroki Luar</label>
                         <input type="file" class="form-control" id='suratpengantar_paroki_calon_istri' name='suratpengantar_paroki_calon_istri' onchange="document.getElementById('output24').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output24" src="" width="100px" height="100px">
+                        <img id="output24" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_nik_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -341,28 +341,28 @@
                     <div class="form-group">
                         <label >KTP</label>
                         <input type="file" class="form-control" id='ktp_calon_istri' name='ktp_calon_istri' onchange="document.getElementById('output25').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output25" src="" width="100px" height="100px">
+                        <img id="output25" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_kk_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Kartu Keluarga</label>
                         <input type="file" class="form-control" id='kk_calon_istri' name='kk_calon_istri' onchange="document.getElementById('output26').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output26" src="" width="100px" height="100px">
+                        <img id="output26" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_suratketerangan_bebas_menikah_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Keterangan Bebas Menikah</label>
                         <input type="file" class="form-control" id='suratketerangan_bebas_menikah_calon_istri' name='suratketerangan_bebas_menikah_calon_istri' onchange="document.getElementById('output27').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output27" src="" width="100px" height="100px">
+                        <img id="output27" width="100px" height="100px">
                     </div>
                 </div>
                 <div style='display:none' id='label_suratpernyataan_nonKatolik_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pernyataan Pihak Non-Katolik</label>
                         <input type="file" class="form-control" id='suratpernyataan_nonKatolik_calon_istri' name='suratpernyataan_nonKatolik_calon_istri' onchange="document.getElementById('output28').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output28" src="" width="100px" height="100px">
+                        <img id="output28" width="100px" height="100px">
                     </div>
                 </div>
 
@@ -431,21 +431,21 @@
                     <div class="form-group">
                         <label >Sertifikat Kursus Persiapan Perkawinan (KPP)</label>
                         <input type="file" class="form-control" id='sertifikat_kpp' name='sertifikat_kpp' onchange="document.getElementById('output29').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output29" src="" width="100px" height="100px">
+                        <img id="output29" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Foto 4x6 Berdampingan (Latar Belakang Bebas)</label>
                         <input type="file" class="form-control" id='foto_berdampingan' name='foto_berdampingan' onchange="document.getElementById('output30').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output30" src="" width="100px" height="100px">
+                        <img id="output30" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >KTP Saksi Nikah</label>
                         <input type="file" class="form-control" id='ktp_saksi_nikah' name='ktp_saksi_nikah' onchange="document.getElementById('output31').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output31" src="" width="100px" height="100px">
+                        <img id="output31" width="100px" height="100px">
                     </div>
                 </div>
 
@@ -477,14 +477,14 @@
                     <div class="form-group">
                         <label >TTD Calon Suami</label>
                         <input type="file" class="form-control" id='ttd_calon_suami' name='ttd_calon_suami' onchange="document.getElementById('output32').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output32" src="" width="100px" height="100px">
+                        <img id="output32" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label >TTD Calon Istri</label>
                         <input type="file" class="form-control" id='ttd_calon_istri' name='ttd_calon_istri' onchange="document.getElementById('output33').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output33" src="" width="100px" height="100px">
+                        <img id="output33" width="100px" height="100px">
                     </div>
                 </div>
 

@@ -135,13 +135,13 @@
                 <div class="form-group">
                     <label>Surat Baptis</label>
                     <input type="file" value="" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                    <img id="output" width="200px" height="200px">
                 </div>
-                <img id="output" src="" width="200px" height="200px">
                 <div class="form-group">
                     <label>Sertifikat Komuni</label>
                     <input type="file" value="" name="sertifikat_komuni" class="form-control" id="sertifikat_komuni" placeholder="Sertifikat Komuni" onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" required>
-                </div>
-                <img id="output2" src="" width="200px" height="200px"><br><br>
+                    <img id="output2" width="200px" height="200px">
+                </div><br>
                 <div class="form-group">
                     <input type="checkbox" id="terms" name="terms" onchange="checkbox()">
                     <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
@@ -203,18 +203,18 @@
                 <div class="form-group">
                     <label>Surat Pengantar Paroki Asal</label>
                     <input type="file" value="" name="surat_pengantar" class="form-control" id="surat_pengantar" placeholder="Surat Pengantar" onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])" required>
+                    <img id="output3" width="200px" height="200px">
                 </div>
-                <img id="output3" src="" width="200px" height="200px">
                 <div class="form-group">
                     <label>Surat Baptis</label>
                     <input type="file" value="" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])" required>
+                    <img id="output4" width="200px" height="200px">
                 </div>
-                <img id="output4" src="" width="200px" height="200px">
                 <div class="form-group">
                     <label>Sertifikat Komuni</label>
                     <input type="file" value="" name="sertifikat_komuni" class="form-control" id="sertifikat_komuni" placeholder="Sertifikat Komuni" onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])" required>
-                </div>
-                <img id="output5" src="" width="200px" height="200px"><br><br>
+                    <img id="output5" width="200px" height="200px">
+                </div><br>
                 <div class="form-group">
                     <input type="checkbox" id="terms2" name="terms2" onchange="checkbox()">
                     <label>Saya Menyetujui Formulir Pendaftaran Ini</label>

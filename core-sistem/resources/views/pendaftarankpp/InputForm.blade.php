@@ -155,21 +155,21 @@
                     <div class="form-group">
                         <label >KTP</label>
                         <input type="file" class="form-control" id='ktp_calon_istri' name='ktp_calon_istri' onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output4" src="" width="100px" height="100px">
+                        <img id="output4" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Lingkungan</label>
                         <input type="file" class="form-control" id='suratpengantar_lingkungan_calon_istri' name='suratpengantar_lingkungan_calon_istri' onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output5" src="" width="100px" height="100px">
+                        <img id="output5" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Paroki Luar (Jika Paroki Luar)</label>
                         <input type="file" class="form-control" id='suratpengantar_paroki_calon_istri' name='suratpengantar_paroki_calon_istri' onchange="document.getElementById('output6').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output6" src="" width="100px" height="100px">
+                        <img id="output6" width="100px" height="100px">
                     </div>
                 </div>
 

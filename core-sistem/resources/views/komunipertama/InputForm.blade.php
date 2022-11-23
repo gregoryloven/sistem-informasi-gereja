@@ -91,8 +91,8 @@
                 <div class="form-group">
                     <label>Surat Baptis</label>
                     <input type="file" value="" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                    <img id="output" width="200px" height="200px">
                 </div>
-                <img id="output" src="" width="200px" height="200px">
                 <div class="alert alert-info" role="alert">
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Baptis"
                 </div>
