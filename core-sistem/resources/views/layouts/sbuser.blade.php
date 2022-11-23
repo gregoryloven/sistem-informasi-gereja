@@ -25,6 +25,8 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+
     @yield('javascript')
     @yield('customstyle')
     @stack('css')
@@ -50,6 +52,7 @@
         nav {
             border-bottom: 2px solid #E0E0E0;
         }
+
     </style>
     @stack('css2')
     @laravelPWA
@@ -64,60 +67,48 @@
 
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg">
-                <!-- <a href="#">
-                    <img src="https://i.ibb.co/BC1YQDt/cropped-katedral-logo.png" alt="cropped-katedral-logo" width="100" border="0">
-                </a>     -->
                 @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
-                <h5>Sistem Informasi Gereja Katolik Paroki {{app('currentTenant')->name}}</h5>
-                @endif
-            
-                <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav mr-auto"></ul>
-                    <span class="navbar-text">
-                        <ul class="navbar-nav mr-auto">
-                            @if (Route::has('login'))
-                                @auth
-                                <li class="nav-item">
-                                        <a href="{{ url('/dashboarduser') }}" class="nav-link">Home</a>
-                                    </li> 
-                                    <li class="nav-item">
-                                        <div class="dropdown dropleft">
-                                            <a class="nav-link"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{ucwords(Auth::user()->name)}}
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
-                                                <a class="dropdown-item" href="{{ url('/profileumat') }}">Profile</a>
-                                                <hr>
-                                                <form method="POST" action="{{ route('logout') }}" x-data>
-                                                    @csrf
-                                                    <x-jet-responsive-nav-link class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"><i class="fa-solid fa-arrow-right-from-bracket"></i> {{ __(' Log Out') }}</x-jet-responsive-nav-link>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </li> 
-                                @else
-                                    <li class="nav-item">
-                                        <a href="{{ route('login') }}" class="nav-link">Log in</a>
-                                    </li> 
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a href="{{ route('register') }}" class="nav-link">Register</a>
-                                    </li> 
-                                @endif
-                                @endauth
-                            @endif
-                        </ul>
-                    </span>
-                    <!-- <span class="navbar-text">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">Log in</a>
+
+                <img src="{{asset('logo/'.app('currentTenant')->logo)}}" class="img-responsive" height='70px'>
+                
+                <h5>Selamat Datang Di Paroki {{app('currentTenant')->name}}</h5>
+                <span class="navbar-text ml-auto">
+                <ul class="navbar-nav ml-auto">
+                    @if (Route::has('login'))
+                        @auth
+                        <li class="nav-item">
+                                <a href="{{ url('/dashboarduser') }}" class="nav-link">Home</a>
                             </li> 
-                        </ul>
-                    </span> -->
-                </div>
+                            <li class="nav-item">
+                                <div class="dropdown dropdown">
+                                    <a class="nav-link"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ucwords(Auth::user()->name)}}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="{{ url('/profileumat') }}">Profile</a>
+
+                                        <form method="POST" action="{{ route('logout') }}" x-data>
+                                            @csrf
+                                            <x-jet-responsive-nav-link class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"><i class="fa-solid fa-arrow-right-from-bracket"></i> {{ __(' Log Out') }}</x-jet-responsive-nav-link>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li> 
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="nav-link">Log in</a>
+                            </li> 
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}" class="nav-link">Register</a>
+                            </li> 
+                        @endif
+                        @endauth
+                    @endif
+                </ul>
+                </span>
             </nav>
+
             <!-- End of Navbar -->
 
             <!-- Header Image -->
@@ -142,9 +133,40 @@
 
             </div>
             <!-- End of Content Wrapper -->
+            <!-- ======= Footer ======= -->
+            <!-- Remove the container if you want to extend the Footer to full width. -->
+            <div style="background-color: white; border-top: 2px solid grey;" class="container my-5">
 
+            <footer class="text-center">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <h5>Hubungi Kami</h5><br>
+                <i class="fa fa-phone">:</i> {{app('currentTenant')->telepon}}<br>
+                <i class="fa fa-map-marker">:</i> {{app('currentTenant')->alamat}}
+
+                <!-- Github -->
+                <!-- <a
+                class="btn btn-primary btn-floating m-1"
+                style="background-color: #333333;"
+                href="#!"
+                role="button"
+                ><i class="fab fa-github"></i
+                ></a> -->
+            </section>
+            <!-- Section: Social media -->
+            </div>
+            <!-- Grid container -->
+            </footer>
+
+            </div>
+        <!-- End of .container -->
+        <!-- End Footer -->
         </div>
         <!-- End of Page Wrapper -->
+        @endif
+
     </div>
     <!-- End Page Container -->
 
