@@ -60,6 +60,7 @@
                             @endif
                         @endforeach
                     </td></tr>
+                    @if($l->status=='Selesai')
                     <tr><td>Selesai</td>
                     <td>
                         @foreach($log as $l) 
@@ -71,6 +72,8 @@
                             @endif
                         @endforeach
                     </td></tr>
+                    @endif
+                    @if($l->status=='Ditolak')
                     <tr><td>Ditolak</td>
                     <td>
                         @foreach($log as $l) 
@@ -82,6 +85,8 @@
                             @endif
                         @endforeach
                     </td></tr>
+                    @endif
+                    @if($l->status=='Dibatalkan')
                     <tr><td>Dibatalkan</td>
                     <td>
                         @foreach($log as $l) 
@@ -93,6 +98,7 @@
                             @endif
                         @endforeach
                     </td></tr>
+                    @endif
                 </tbody>
             </table>
         </div>
