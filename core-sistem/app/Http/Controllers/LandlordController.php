@@ -107,6 +107,12 @@ class LandlordController extends Controller
             $tenant->nama_paroki= $request->nama_paroki;
             $tenant->telepon    = $request->nomor_telepon;
             $tenant->alamat     = $request->alamat;
+            $file=$request->file('logo');
+            $imgFolder = 'logo';
+            $extension = $request->file('logo')->extension();
+            $imgFile=time()."_".$request->get('nama').".".$extension;
+            $file->move($imgFolder,$imgFile);
+            $tenant->logo=$imgFile;
             $tenant->domain     = strtolower(preg_replace('/[^A-Za-z0-9]/', '', str_replace(' ', '', $request->domain))).".localhost";
             $tenant->database   = strtolower(preg_replace('/[^A-Za-z0-9]/', '', str_replace(' ', '', $request->domain)));
             $tenant->user_id    = Auth::user()->id;
@@ -130,7 +136,7 @@ class LandlordController extends Controller
             ]);
             return redirect('daftargereja');
         } catch (\Throwable $th) {
-            return redirect('daftargereja')->with('error', 'Nama Database atau Domain sudah terpakai. Silahkan gunakan nama yang lain.');
+            return redirect('daftargereja')->with('error', 'Nama Domain sudah terpakai. Silahkan gunakan nama yang lain.');
         }
     }
 

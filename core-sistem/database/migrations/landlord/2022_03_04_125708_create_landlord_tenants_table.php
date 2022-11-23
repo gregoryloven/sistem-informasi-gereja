@@ -14,6 +14,7 @@ class CreateLandlordTenantsTable extends Migration
             $table->string('nama_paroki')->nullable();
             $table->string('alamat')->nullable();
             $table->string('telepon')->nullable();
+            $table->string('logo')->nullable();
             $table->string('domain')->unique();
             $table->string('database')->unique();
             $table->timestamps();

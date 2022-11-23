@@ -48,7 +48,7 @@
                                     <div class="form-body">
                                         <div class="form-group">
                                             <label for="user_name"class="mb-10"><b>Nama Paroki</b></label>
-                                            <input type="text" class="form-control" id="nama_paroki" name="nama_paroki" required data-error="Tolong isi nomor nama usaha anda" required>
+                                            <input type="text" class="form-control" id="nama_paroki" name="nama_paroki" required data-error="Harap Nama Paroki" required>
                                         </div>                                 
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                     <div class="form-body">  
                                         <div class="form-group">
                                             <label for="user_telepon"class="mb-10"><b>Nomor Telepon</b></label>
-                                            <input type="number" class="form-control" min="0" id="nomor_telepon" name="nomor_telepon" data-error="Tolong isi nomor telepon usaha anda" required>
+                                            <input type="number" class="form-control" min="0" id="nomor_telepon" name="nomor_telepon" data-error="Harap Isi Nomor Telepon Paroki" required>
                                         </div> 
                                     </div>
                                 </div>
@@ -66,7 +66,17 @@
                                     <div class="form-body">
                                         <div class="form-group">
                                             <label for="user_alamat" class="mb-10"><b>Alamat</b></label>
-                                            <textarea class="form-control " name="alamat" id="alamat" cols="20" rows="3" data-error="Tolong isi nomor telepon usaha anda" required></textarea>
+                                            <textarea class="form-control " name="alamat" id="alamat" cols="20" rows="3" data-error="Harap Isi Alamat Paroki" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mt-30">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label for="user_logo" class="mb-10"><b>Logo</b></label>
+                                            <input type="file" name="logo" id="logo" class="form-control"  data-error="Harap Isi Logo Paroki" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                                            <img id="output" width="200px" height="200px">
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +84,7 @@
                                 <div class="col-md-12 mt-30">
                                     <label for="user_name"class="mb-10"><b>Domain Website</b></label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="domain" name="domain" data-error="Tolong isi nama domain yang diinginkan" required>
+                                        <input type="text" class="form-control" id="domain" name="domain" data-error="Harap isi nama domain yang diinginkan" required>
                                         <div class="input-group-append">
                                             <span class="input-group-text">.localhost</span>
                                         </div>
