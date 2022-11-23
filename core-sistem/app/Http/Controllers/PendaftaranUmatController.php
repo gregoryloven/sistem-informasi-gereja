@@ -19,16 +19,23 @@ class PendaftaranUmatController extends Controller
      */
     public function index()
     {
-        $ling = Lingkungan::all();
-        $kbg = Kbg::all();
-        $umatlama = User::where([['status', 'Belum Tervalidasi'], ['id', Auth::user()->id]])
-        ->orwhere([['status', 'Tervalidasi'], ['id', Auth::user()->id]])
-        ->orwhere([['status', 'Ditolak'], ['id', Auth::user()->id]])
-        ->get();
-
-        $umatbaru = Umat::where('id', Auth::user()->id);
-
-        return view('pendaftaranumat.index',compact("ling","kbg","umatlama","umatbaru"));
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $ling = Lingkungan::all();
+            $kbg = Kbg::all();
+            $umatlama = User::where([['status', 'Belum Tervalidasi'], ['id', Auth::user()->id]])
+            ->orwhere([['status', 'Tervalidasi'], ['id', Auth::user()->id]])
+            ->orwhere([['status', 'Ditolak'], ['id', Auth::user()->id]])
+            ->get();
+    
+            $umatbaru = Umat::where('id', Auth::user()->id);
+    
+            return view('pendaftaranumat.index',compact("ling","kbg","umatlama","umatbaru"));
+        }
     }
 
     public function showKbg($id)

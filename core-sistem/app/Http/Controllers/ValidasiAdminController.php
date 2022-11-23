@@ -26,30 +26,37 @@ class ValidasiAdminController extends Controller
      */
      public function pelayanan()
     {
-        $user = Auth::user()->id;
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $user = Auth::user()->id;
 
-        $reservasi = PendaftaranPelayananLainnya::where('status', 'Disetujui Lingkungan')
-        ->orderby('pendaftaran_pelayanan_lainnyas.jadwal', 'ASC')
-        ->orderby('pendaftaran_pelayanan_lainnyas.updated_at', 'ASC')
-        ->get();
-
-        $reservasiAll = DB::table('pelayanan_lainnyas')
-        ->join('pendaftaran_pelayanan_lainnyas', 'pelayanan_lainnyas.id', '=', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id')
-        ->join('riwayats', 'pendaftaran_pelayanan_lainnyas.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Pelayanan']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
-        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Pelayanan']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['pendaftaran_pelayanan_lainnyas.nama_lengkap', 'pendaftaran_pelayanan_lainnyas.lingkungan', 'pendaftaran_pelayanan_lainnyas.kbg',
-        'pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.jadwal', 
-        'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.telepon', 
-        'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.id as riwayatID', 'pendaftaran_pelayanan_lainnyas.id',
-        'riwayats.created_at','riwayats.updated_at', 'users.role']);
-
-        return view('validasiAdmin.pelayanan',compact("reservasi", "reservasiAll"));
+            $reservasi = PendaftaranPelayananLainnya::where('status', 'Disetujui Lingkungan')
+            ->orderby('pendaftaran_pelayanan_lainnyas.jadwal', 'ASC')
+            ->orderby('pendaftaran_pelayanan_lainnyas.updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = DB::table('pelayanan_lainnyas')
+            ->join('pendaftaran_pelayanan_lainnyas', 'pelayanan_lainnyas.id', '=', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id')
+            ->join('riwayats', 'pendaftaran_pelayanan_lainnyas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Pelayanan']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
+            ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Pelayanan']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['pendaftaran_pelayanan_lainnyas.nama_lengkap', 'pendaftaran_pelayanan_lainnyas.lingkungan', 'pendaftaran_pelayanan_lainnyas.kbg',
+            'pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.jadwal', 
+            'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.telepon', 
+            'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.id as riwayatID', 'pendaftaran_pelayanan_lainnyas.id',
+            'riwayats.created_at','riwayats.updated_at', 'users.role']);
+    
+            return view('validasiAdmin.pelayanan',compact("reservasi", "reservasiAll"));
+        }
     }
 
     public function AcceptPelayanan(Request $request)
@@ -104,25 +111,32 @@ class ValidasiAdminController extends Controller
 
     public function petugas(Request $request)
     {
-        $user = Auth::user()->id;
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $user = Auth::user()->id;
         
-        $reservasi = PendaftaranPetugas::where('status', 'Diproses')
-        ->orderby('pendaftaran_petugas_liturgis.jadwal', 'ASC')
-        ->orderby('pendaftaran_petugas_liturgis.updated_at', 'ASC')
-        ->get();
-
-        $reservasiAll = DB::table('pendaftaran_petugas_liturgis')
-        ->join('riwayats', 'pendaftaran_petugas_liturgis.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Petugas Liturgi']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
-        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Petugas Liturgi']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['pendaftaran_petugas_liturgis.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        return view('validasiAdmin.petugas',compact("reservasi", "reservasiAll"));
+            $reservasi = PendaftaranPetugas::where('status', 'Diproses')
+            ->orderby('pendaftaran_petugas_liturgis.jadwal', 'ASC')
+            ->orderby('pendaftaran_petugas_liturgis.updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = DB::table('pendaftaran_petugas_liturgis')
+            ->join('riwayats', 'pendaftaran_petugas_liturgis.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Petugas Liturgi']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Petugas Liturgi']])
+            ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Petugas Liturgi']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['pendaftaran_petugas_liturgis.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+    
+            return view('validasiAdmin.petugas',compact("reservasi", "reservasiAll"));
+        }
     }
 
     public function AcceptPetugas(Request $request)
@@ -166,48 +180,62 @@ class ValidasiAdminController extends Controller
 
     public function baptis()
     {
-        $user = Auth::user()->id;
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $user = Auth::user()->id;
         
-        $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Bayi']])
-        ->orderby('baptiss.jadwal', 'ASC')
-        ->orderby('baptiss.updated_at', 'ASC')
-        ->get();
-        
-        $reservasiAll = DB::table('baptiss')
-        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Baptis Bayi']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
-        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Bayi']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
+            $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Bayi']])
+            ->orderby('baptiss.jadwal', 'ASC')
+            ->orderby('baptiss.updated_at', 'ASC')
+            ->get();
+            
+            $reservasiAll = DB::table('baptiss')
+            ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Baptis Bayi']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
+            ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Bayi']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+    
+            return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
+        }
     }
 
     public function baptisDewasa()
     {
-        $user = Auth::user()->id;
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $user = Auth::user()->id;
         
-        $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Dewasa']])
-        ->orderby('baptiss.jadwal', 'ASC')
-        ->orderby('baptiss.updated_at', 'ASC')
-        ->get();
-
-        $reservasiAll = DB::table('baptiss')
-        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Baptis Dewasa']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
-        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Dewasa']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        return view('validasiAdmin.baptisDewasa',compact("reservasi", "reservasiAll"));
+            $reservasi = Baptis::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Baptis Dewasa']])
+            ->orderby('baptiss.jadwal', 'ASC')
+            ->orderby('baptiss.updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = DB::table('baptiss')
+            ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Baptis Dewasa']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
+            ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Dewasa']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+    
+            return view('validasiAdmin.baptisDewasa',compact("reservasi", "reservasiAll"));
+        }
     }
 
     public function AcceptBaptis(Request $request)
@@ -328,24 +356,31 @@ class ValidasiAdminController extends Controller
 
     public function komuni(Request $request)
     {
-        $user = Auth::user()->id;
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $user = Auth::user()->id;
         
-        $reservasi = KomuniPertama::where('status', 'Disetujui Lingkungan')
-        ->orderby('komuni_pertamas.jadwal', 'ASC')
-        ->orderby('komuni_pertamas.updated_at', 'ASC')
-        ->get();
-
-        $reservasiAll = DB::table('komuni_pertamas')
-        ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Komuni Pertama']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
-        ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Komuni Pertama']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        return view('validasiAdmin.komuni',compact("reservasi", "reservasiAll"));
+            $reservasi = KomuniPertama::where('status', 'Disetujui Lingkungan')
+            ->orderby('komuni_pertamas.jadwal', 'ASC')
+            ->orderby('komuni_pertamas.updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = DB::table('komuni_pertamas')
+            ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Komuni Pertama']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
+            ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Komuni Pertama']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+    
+            return view('validasiAdmin.komuni',compact("reservasi", "reservasiAll"));
+        }
     }
 
     public function AcceptKomuni(Request $request)
@@ -409,23 +444,37 @@ class ValidasiAdminController extends Controller
 
     public function KursusKomuni()
     {
-        $data = ListEvent::where('jenis_event', 'like', 'Ko%')
-        ->orderby('jadwal_pelaksanaan', 'ASC')
-        ->get();
-
-        return view('validasiAdmin.kursusKomuni',compact("data"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where('jenis_event', 'like', 'Ko%')
+            ->orderby('jadwal_pelaksanaan', 'ASC')
+            ->get();
+    
+            return view('validasiAdmin.kursusKomuni',compact("data"));
+        }
     }
 
     public function PendaftarKomuni(Request $request)
     {
-        $id = $request->id;
-        $komuni = DB::table('komuni_pertamas')
-        ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
-        ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
-        ->orderby('komuni_pertamas.nama_lengkap', 'ASC')
-        ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID']);
-        
-        return view('validasiAdmin.DetailKursusKomuni',compact("komuni", "id"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $id = $request->id;
+            $komuni = DB::table('komuni_pertamas')
+            ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
+            ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
+            ->orderby('komuni_pertamas.nama_lengkap', 'ASC')
+            ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID']);
+            
+            return view('validasiAdmin.DetailKursusKomuni',compact("komuni", "id"));
+        }
     }
 
     public function LulusKursusKomuni(Request $request)
@@ -463,17 +512,26 @@ class ValidasiAdminController extends Controller
 
     public function krisma()
     {
-        $user = Auth::user()->id;
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $user = Auth::user()->id;
         
-        $reservasi = Krisma::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Paroki Setempat']])
-        ->orderby('krismas.jadwal', 'ASC')
-        ->orderby('krismas.updated_at', 'ASC')
-        ->get();
+            $reservasi = Krisma::where([['status', 'Disetujui Lingkungan'], ['jenis', 'Paroki Setempat']])
+            ->orderby('krismas.jadwal', 'ASC')
+            ->orderby('krismas.updated_at', 'ASC')
+            ->get();
+    
+            $reservasi2 = Krisma::where([['status', 'Diproses'], ['jenis', 'Lintas Paroki']])
+            ->orderby('krismas.jadwal', 'ASC')
+            ->orderby('krismas.updated_at', 'ASC')
+            ->get();
 
-        $reservasi2 = Krisma::where([['status', 'Diproses'], ['jenis', 'Lintas Paroki']])
-        ->orderby('krismas.jadwal', 'ASC')
-        ->orderby('krismas.updated_at', 'ASC')
-        ->get();
+            return view('validasiAdmin.krisma',compact("reservasi", "reservasi2"));
+        }
 
         // $reservasiAll = DB::table('krismas')
         // ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
@@ -497,7 +555,6 @@ class ValidasiAdminController extends Controller
         // ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
         // 'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
 
-        return view('validasiAdmin.krisma',compact("reservasi", "reservasi2"));
     }
 
     public function AcceptKrismaSetempat(Request $request)
@@ -620,23 +677,37 @@ class ValidasiAdminController extends Controller
 
     public function KursusKrisma()
     {
-        $data = ListEvent::where('jenis_event', 'like', 'Kr%')
-        ->orderby('jadwal_pelaksanaan', 'ASC')
-        ->get();
-
-        return view('validasiAdmin.kursusKrisma',compact("data"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where('jenis_event', 'like', 'Kr%')
+            ->orderby('jadwal_pelaksanaan', 'ASC')
+            ->get();
+    
+            return view('validasiAdmin.kursusKrisma',compact("data"));
+        }
     }
 
     public function PendaftarKrisma(Request $request)
     {
-        $id = $request->id;
-        $krisma = DB::table('krismas')
-        ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
-        ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
-        ->orderby('krismas.nama_lengkap', 'ASC')
-        ->get(['krismas.*', 'riwayats.id as riwayatID']);
-        
-        return view('validasiAdmin.DetailKursusKrisma',compact("krisma", "id"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $id = $request->id;
+            $krisma = DB::table('krismas')
+            ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+            ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
+            ->orderby('krismas.nama_lengkap', 'ASC')
+            ->get(['krismas.*', 'riwayats.id as riwayatID']);
+            
+            return view('validasiAdmin.DetailKursusKrisma',compact("krisma", "id"));
+        }
     }
 
     public function LulusKursusKrisma(Request $request)
@@ -674,23 +745,37 @@ class ValidasiAdminController extends Controller
 
     public function kpp()
     {
-        $reservasi = Kpp::where('status', 'Diproses')->get();
-        $reservasiAll = Kpp::join('riwayats', 'kpps.id', '=', 'riwayats.event_id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Kursus%']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'like', 'Kursus%']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['kpps.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.kursus',
-         'riwayats.alasan_penolakan', 'riwayats.created_at', 'riwayats.updated_at']);
-
-        return view('validasiAdmin.kpp',compact("reservasi", "reservasiAll"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $reservasi = Kpp::where('status', 'Diproses')->get();
+            $reservasiAll = Kpp::join('riwayats', 'kpps.id', '=', 'riwayats.event_id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Kursus%']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'like', 'Kursus%']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['kpps.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.kursus',
+             'riwayats.alasan_penolakan', 'riwayats.created_at', 'riwayats.updated_at']);
+    
+            return view('validasiAdmin.kpp',compact("reservasi", "reservasiAll"));
+        }
     }
 
     public function DetailKpp(Request $request)
     {
-        $id = $request->id;
-        $data = Kpp::where('id', $id)->get();
-
-        return view('validasiAdmin.DetailKpp',compact("data"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $id = $request->id;
+            $data = Kpp::where('id', $id)->get();
+    
+            return view('validasiAdmin.DetailKpp',compact("data"));
+        }
     }
 
     public function AcceptKpp(Request $request)
@@ -748,20 +833,34 @@ class ValidasiAdminController extends Controller
 
     public function KursusKpp()
     {
-        $data = ListEvent::where('jenis_event', 'like', 'Kursus%')->get();
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where('jenis_event', 'like', 'Kursus%')->get();
 
-        return view('validasiAdmin.kursusKpp',compact("data"));
+            return view('validasiAdmin.kursusKpp',compact("data"));
+        }
     }
 
     public function PendaftarKpp(Request $request)
     {
-        $id = $request->id;
-        $kpp = Kpp::join('riwayats', 'kpps.id', '=', 'riwayats.event_id')
-        ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
-        ->orderby('kpps.nama_lengkap_calon_suami', 'ASC')
-        ->get(['kpps.*', 'riwayats.id as riwayatID']);
-        
-        return view('validasiAdmin.DetailKursusKpp',compact("kpp", "id"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $id = $request->id;
+            $kpp = Kpp::join('riwayats', 'kpps.id', '=', 'riwayats.event_id')
+            ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
+            ->orderby('kpps.nama_lengkap_calon_suami', 'ASC')
+            ->get(['kpps.*', 'riwayats.id as riwayatID']);
+            
+            return view('validasiAdmin.DetailKursusKpp',compact("kpp", "id"));
+        }
     }
 
     public function LulusKursusKpp(Request $request)
@@ -799,31 +898,52 @@ class ValidasiAdminController extends Controller
 
     public function perkawinan()
     {
-        $reservasi = Perkawinan::where('status', 'Diproses')->get();
-        $reservasiAll = Perkawinan::join('riwayats', 'perkawinans.id', '=', 'riwayats.event_id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Perkawinan']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'Perkawinan']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat',
-         'riwayats.alasan_penolakan', 'riwayats.created_at', 'riwayats.updated_at']);
-
-        return view('validasiAdmin.perkawinan',compact("reservasi", "reservasiAll"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $reservasi = Perkawinan::where('status', 'Diproses')->get();
+            $reservasiAll = Perkawinan::join('riwayats', 'perkawinans.id', '=', 'riwayats.event_id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Perkawinan']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'Perkawinan']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat',
+             'riwayats.alasan_penolakan', 'riwayats.created_at', 'riwayats.updated_at']);
+    
+            return view('validasiAdmin.perkawinan',compact("reservasi", "reservasiAll"));
+        }
     }
 
     public function DetailPerkawinan(Request $request)
     {
-        $id = $request->id;
-        $data = Perkawinan::where('id', $id)->get();
-
-        return view('validasiAdmin.DetailPerkawinan',compact("data"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $id = $request->id;
+            $data = Perkawinan::where('id', $id)->get();
+    
+            return view('validasiAdmin.DetailPerkawinan',compact("data"));
+        }
     }
 
     public function RiwayatPerkawinan(Request $request)
     {
-        $id = $request->id;
-        $data = Perkawinan::where('id', $id)->get();
-
-        return view('validasiAdmin.RiwayatPerkawinan',compact("data"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $id = $request->id;
+            $data = Perkawinan::where('id', $id)->get();
+    
+            return view('validasiAdmin.RiwayatPerkawinan',compact("data"));
+        }
     }
 
     public function AcceptPerkawinan(Request $request)

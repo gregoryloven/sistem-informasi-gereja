@@ -17,16 +17,23 @@ class PerkawinanController extends Controller
      */
     public function index()
     {
-        $user = Auth::user()->id;
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $user = Auth::user()->id;
         
-        $data = Perkawinan::join('riwayats', 'perkawinans.id', '=', 'riwayats.event_id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Perkawinan']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Perkawinan']])
-        ->orderBy('perkawinans.updated_at', 'DESC')
-        ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
-        'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
-
-        return view('perkawinan.index',compact("data"));
+            $data = Perkawinan::join('riwayats', 'perkawinans.id', '=', 'riwayats.event_id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Perkawinan']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Perkawinan']])
+            ->orderBy('perkawinans.updated_at', 'DESC')
+            ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+            'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
+    
+            return view('perkawinan.index',compact("data"));
+        }
     }
 
     /**
@@ -36,7 +43,14 @@ class PerkawinanController extends Controller
      */
     public function create()
     {
-        return view('perkawinan.InputForm');
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            return view('perkawinan.InputForm');
+        }
     }
 
     /**

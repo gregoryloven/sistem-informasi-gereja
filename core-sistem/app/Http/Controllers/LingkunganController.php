@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lingkungan;
+use Auth;
 
 class LingkunganController extends Controller
 {
@@ -14,8 +15,15 @@ class LingkunganController extends Controller
      */
     public function index()
     {
-        $data=Lingkungan::all();
-        return view('lingkungan.index',compact("data"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data=Lingkungan::all();
+            return view('lingkungan.index',compact("data"));
+        }
     }
 
     /**
@@ -95,16 +103,18 @@ class LingkunganController extends Controller
     public function destroy(Request $request)
     {
         $lingkungan=Lingkungan::find($request->id);
-        try
-        {
-            $lingkungan->delete();
-            return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Lingkungan Berhasil Dihapus');    
-        }
-        catch(\Exception $e)
-        {
-            $msg = "Gagal menghapus data paroki";
-            return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
-        }
+        $lingkungan->delete();
+        return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Lingkungan Berhasil Dihapus');    
+        // try
+        // {
+        //     $lingkungan->delete();
+        //     return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Lingkungan Berhasil Dihapus');    
+        // }
+        // catch(\Exception $e)
+        // {
+        //     $msg = "Gagal Menghapus Lingkungan";
+        //     return redirect()->route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+        // }
     }
 
     public function EditForm(Request $request)

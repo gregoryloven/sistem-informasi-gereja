@@ -19,18 +19,25 @@ class ReservasiTobatController extends Controller
      */
     public function index()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'To%'], ['status', 'Aktif']])
-                ->orderBy('jadwal_pelaksanaan', 'ASC')
-                ->get();
-                
-        $tobat = DB::table('list_events')
-        ->join('tobat_users', 'list_events.id', '=', 'tobat_users.list_events_id')
-        ->where('users_id', Auth::user()->id)
-        ->get(['list_events.*', 'tobat_users.users_id as usersID', 'tobat_users.list_events_id as listeventsID', 
-        'tobat_users.kode_booking', 'tobat_users.jumlah_tiket', 'tobat_users.status', 'tobat_users.created_at', 
-        'tobat_users.updated_at']);
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'To%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+            
+            $tobat = DB::table('list_events')
+            ->join('tobat_users', 'list_events.id', '=', 'tobat_users.list_events_id')
+            ->where('users_id', Auth::user()->id)
+            ->get(['list_events.*', 'tobat_users.users_id as usersID', 'tobat_users.list_events_id as listeventsID', 
+            'tobat_users.kode_booking', 'tobat_users.jumlah_tiket', 'tobat_users.status', 'tobat_users.created_at', 
+            'tobat_users.updated_at']);
 
-        return view('reservasitobat.index',compact("data", "tobat"));
+            return view('reservasitobat.index',compact("data", "tobat"));
+        }
     }
 
     public function PesanTiket(Request $request)

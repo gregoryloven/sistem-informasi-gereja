@@ -19,9 +19,16 @@ class PendaftaranPerkawinanController extends Controller
      */
     public function index()
     {
-        $data = Perkawinan::where('user_id', Auth::user()->id)->get();
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $data = Perkawinan::where('user_id', Auth::user()->id)->get();
 
-        return view('pendaftaranperkawinan.index',compact("data"));
+            return view('pendaftaranperkawinan.index',compact("data"));
+        }
     }
 
     /**
@@ -31,14 +38,21 @@ class PendaftaranPerkawinanController extends Controller
      */
     public function create()
     {
-        $data = Perkawinan::where('user_id', Auth::user()->id)->first();
-        if(isset($data)){
-            return view('pendaftaranperkawinan.InputForm');
-            // return redirect()->route('pendaftaranperkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) );
-        }else{
-            return view('pendaftaranperkawinan.InputForm');
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
         }
-
+        else
+        {
+            $data = Perkawinan::where('user_id', Auth::user()->id)->first();
+            if(isset($data)){
+                return view('pendaftaranperkawinan.InputForm');
+                // return redirect()->route('pendaftaranperkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) );
+            }else{
+                return view('pendaftaranperkawinan.InputForm');
+            }
+    
+        }
     }
 
     /**

@@ -18,20 +18,27 @@ class BaptisController extends Controller
      */
     public function index()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'Baptis B%'], ['status', 'Aktif']])
-        ->orderBy('jadwal_pelaksanaan', 'ASC')
-        ->get();
-
-        $user = Auth::user()->id;
-        $baptis = DB::table('baptiss')
-        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'B%']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'B%']])
-        ->orderBy('baptiss.jadwal', 'DESC')
-        ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
-        'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
-
-        return view('baptis.index',compact("data", "baptis"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'Baptis B%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+    
+            $user = Auth::user()->id;
+            $baptis = DB::table('baptiss')
+            ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'B%']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'B%']])
+            ->orderBy('baptiss.jadwal', 'DESC')
+            ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+            'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
+    
+            return view('baptis.index',compact("data", "baptis"));
+        }
     }
 
     public function OpenForm(Request $request)

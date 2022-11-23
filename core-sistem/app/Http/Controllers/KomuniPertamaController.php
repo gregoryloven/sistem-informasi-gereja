@@ -19,20 +19,27 @@ class KomuniPertamaController extends Controller
      */
     public function index()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'Ko%'], ['status', 'Aktif']])
-        ->orderBy('jadwal_pelaksanaan', 'ASC')
-        ->get();
-
-        $user = Auth::user()->id;
-        $komuni = DB::table('komuni_pertamas')
-        ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Ko%']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'Ko%']])
-        ->orderBy('komuni_pertamas.jadwal', 'DESC')
-        ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
-        'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
-
-        return view('komunipertama.index',compact("data", "komuni"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'Ko%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+    
+            $user = Auth::user()->id;
+            $komuni = DB::table('komuni_pertamas')
+            ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Ko%']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'Ko%']])
+            ->orderBy('komuni_pertamas.jadwal', 'DESC')
+            ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+            'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
+    
+            return view('komunipertama.index',compact("data", "komuni"));
+        }
     }
 
     public function OpenForm(Request $request)

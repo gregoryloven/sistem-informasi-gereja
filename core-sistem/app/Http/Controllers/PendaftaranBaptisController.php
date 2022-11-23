@@ -21,22 +21,36 @@ class PendaftaranBaptisController extends Controller
      */
     public function index()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'Baptis B%'], ['status', 'Aktif']])
-                ->orderBy('jadwal_pelaksanaan', 'ASC')
-                ->get();
-        $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis B%']])->get();
-        $user = User::all();
-        return view('pendaftaranbaptis.index',compact("data", "baptis", "user"));
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'Baptis B%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+            $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis B%']])->get();
+            $user = User::all();
+            return view('pendaftaranbaptis.index',compact("data", "baptis", "user"));
+        }
     }
 
     public function IndexDewasa()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'Baptis D%'], ['status', 'Aktif']])
-                ->orderBy('jadwal_pelaksanaan', 'ASC')
-                ->get();
-        $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis D%']])->get();
-        $user = User::all();
-        return view('pendaftaranbaptis.indexDewasa',compact("data", "baptis", "user"));
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'Baptis D%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+            $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis D%']])->get();
+            $user = User::all();
+            return view('pendaftaranbaptis.indexDewasa',compact("data", "baptis", "user"));
+        }
     }
 
     public function OpenForm(Request $request)

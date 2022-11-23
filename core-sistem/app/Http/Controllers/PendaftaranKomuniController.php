@@ -21,12 +21,19 @@ class PendaftaranKomuniController extends Controller
      */
     public function index()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'Ko%'], ['status', 'Aktif']])
-                ->orderBy('jadwal_pelaksanaan', 'ASC')
-                ->get();
-        $komuni = KomuniPertama::where('user_id', Auth::user()->id)->get();
-        $user = User::all();
-        return view('pendaftarankomuni.index',compact("data", "komuni", "user"));
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'Ko%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+            $komuni = KomuniPertama::where('user_id', Auth::user()->id)->get();
+            $user = User::all();
+            return view('pendaftarankomuni.index',compact("data", "komuni", "user"));
+        }
     }
 
     public function OpenForm(Request $request)

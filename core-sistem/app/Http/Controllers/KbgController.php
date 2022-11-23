@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kbg;
 use App\Models\Lingkungan;
 use Illuminate\Http\Request;
+use Auth;
 
 class KbgController extends Controller
 {
@@ -15,9 +16,16 @@ class KbgController extends Controller
      */
     public function index()
     {
-        $data=Kbg::all();
-        $ling=Lingkungan::all();
-        return view('kbg.index',compact("data", "ling"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data=Kbg::all();
+            $ling=Lingkungan::all();
+            return view('kbg.index',compact("data", "ling"));
+        }
     }
 
     /**

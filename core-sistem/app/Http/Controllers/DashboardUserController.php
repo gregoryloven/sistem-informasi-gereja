@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ListEvent;
+use Auth;
 
 class DashboardUserController extends Controller
 {
     public function index()
     {
-        // $data = ListEvent::all();
-        // return view('dashboarduser.index',compact("data"));
-        return view('dashboarduser.index');
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            return view('dashboarduser.index');
+        }
     }
 
     public function FormPendaftaran(Request $request)

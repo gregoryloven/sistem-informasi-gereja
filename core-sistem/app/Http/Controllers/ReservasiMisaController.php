@@ -19,18 +19,25 @@ class ReservasiMisaController extends Controller
      */
     public function index()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'Mi%'], ['status', 'Aktif']])
-                ->orderBy('jadwal_pelaksanaan', 'ASC')
-                ->get();
-                
-        $misa = DB::table('list_events')
-        ->join('misa_users', 'list_events.id', '=', 'misa_users.list_events_id')
-        ->where('users_id', Auth::user()->id)
-        ->get(['list_events.*', 'misa_users.users_id as usersID', 'misa_users.list_events_id as listeventsID', 
-        'misa_users.kode_booking', 'misa_users.jumlah_tiket', 'misa_users.status', 'misa_users.created_at', 
-        'misa_users.updated_at']);
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'Mi%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+            
+            $misa = DB::table('list_events')
+            ->join('misa_users', 'list_events.id', '=', 'misa_users.list_events_id')
+            ->where('users_id', Auth::user()->id)
+            ->get(['list_events.*', 'misa_users.users_id as usersID', 'misa_users.list_events_id as listeventsID', 
+            'misa_users.kode_booking', 'misa_users.jumlah_tiket', 'misa_users.status', 'misa_users.created_at', 
+            'misa_users.updated_at']);
 
-        return view('reservasimisa.index',compact("data", "misa"));
+            return view('reservasimisa.index',compact("data", "misa"));
+        }
     }
 
     // public function PesanTiket(Request $request)

@@ -21,14 +21,21 @@ class PendaftaranKrismaController extends Controller
      */
     public function index()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'Kr%'], ['status', 'Aktif']])
-                ->orderBy('jadwal_pelaksanaan', 'ASC')
-                ->get();
-        $krisma = Krisma::where([['user_id', Auth::user()->id], ['jenis', 'Paroki Setempat']])->get();
-        $krisma2 = Krisma::where([['user_id', Auth::user()->id], ['jenis', 'Lintas Paroki']])->get();
-        $user = User::all();
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'Kr%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+            $krisma = Krisma::where([['user_id', Auth::user()->id], ['jenis', 'Paroki Setempat']])->get();
+            $krisma2 = Krisma::where([['user_id', Auth::user()->id], ['jenis', 'Lintas Paroki']])->get();
+            $user = User::all();
 
-        return view('pendaftarankrisma.index',compact("data", "krisma", "krisma2", "user"));
+    return view('pendaftarankrisma.index',compact("data", "krisma", "krisma2", "user"));
+        }
     }
 
     public function OpenForm(Request $request)

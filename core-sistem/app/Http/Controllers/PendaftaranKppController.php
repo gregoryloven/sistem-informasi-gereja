@@ -18,11 +18,17 @@ class PendaftaranKppController extends Controller
      */
     public function index()
     {
-        $list = ListEvent::where([['jenis_event', 'like', 'Kursus%'], ['status', 'Aktif']])
-        ->get();
-        $data = Kpp::where('user_id', Auth::user()->id)->get();
-
-        return view('pendaftarankpp.index',compact("list", "data"));
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
+        }
+        else
+        {
+            $list = ListEvent::where([['jenis_event', 'like', 'Kursus%'], ['status', 'Aktif']])->get();
+            $data = Kpp::where('user_id', Auth::user()->id)->get();
+    
+            return view('pendaftarankpp.index',compact("list", "data"));
+        }
     }
 
     public function OpenForm(Request $request)

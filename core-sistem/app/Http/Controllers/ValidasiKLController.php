@@ -18,19 +18,26 @@ class ValidasiKLController extends Controller
 {
     public function umatLama()
     {
-        $lingkungan = Auth::user()->lingkungan_id;
-        $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
-
-        $umatlama = User::where([["status", "Belum Tervalidasi"], ['lingkungan_id', $lingkungan]])
-        ->orderby('updated_at', 'ASC')
-        ->get();
-
-        $umatlama2 = User::where([["status", "Tervalidasi"], ['lingkungan_id', $lingkungan]])
-        ->orwhere([['status', 'Ditolak'], ['lingkungan_id', $lingkungan]])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-
-        return view('validasiKL.umatLama',compact("umatlama", "umatlama2", "lingkungan2"));
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan_id;
+            $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
+    
+            $umatlama = User::where([["status", "Belum Tervalidasi"], ['lingkungan_id', $lingkungan]])
+            ->orderby('updated_at', 'ASC')
+            ->get();
+    
+            $umatlama2 = User::where([["status", "Tervalidasi"], ['lingkungan_id', $lingkungan]])
+            ->orwhere([['status', 'Ditolak'], ['lingkungan_id', $lingkungan]])
+            ->orderBy('updated_at', 'DESC')
+            ->get();
+    
+            return view('validasiKL.umatLama',compact("umatlama", "umatlama2", "lingkungan2"));
+        }
     }
 
     public function AcceptUmatLama(Request $request)
@@ -55,19 +62,26 @@ class ValidasiKLController extends Controller
 
     public function umatBaru()
     {
-        $lingkungan = Auth::user()->lingkungan_id;
-        $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
-
-        $umatbaru = Umat::where([["status", "Disetujui KBG"], ['lingkungan_id', $lingkungan]])
-        ->orderBy('updated_at', 'ASC')
-        ->get();
-
-        $umatbaru2 = Umat::where([["status", "Disetujui Lingkungan"], ['lingkungan_id', $lingkungan]])
-        ->orwhere([['status', 'Ditolak'], ['lingkungan_id', $lingkungan]])
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-
-        return view('validasiKL.umatBaru',compact("umatbaru", "umatbaru2", "lingkungan2"));
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan_id;
+            $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
+    
+            $umatbaru = Umat::where([["status", "Disetujui KBG"], ['lingkungan_id', $lingkungan]])
+            ->orderBy('updated_at', 'ASC')
+            ->get();
+    
+            $umatbaru2 = Umat::where([["status", "Disetujui Lingkungan"], ['lingkungan_id', $lingkungan]])
+            ->orwhere([['status', 'Ditolak'], ['lingkungan_id', $lingkungan]])
+            ->orderBy('updated_at', 'DESC')
+            ->get();
+    
+            return view('validasiKL.umatBaru',compact("umatbaru", "umatbaru2", "lingkungan2"));
+        }
     }
 
     public function AcceptUmatBaru(Request $request)
@@ -85,29 +99,36 @@ class ValidasiKLController extends Controller
     
     public function pelayanan()
     {
-        $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
-        $user = Auth::user()->id;
-
-        $reservasi = PendaftaranPelayananLainnya::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan]])
-        ->orderby('pendaftaran_pelayanan_lainnyas.jadwal', 'ASC')
-        ->orderby('pendaftaran_pelayanan_lainnyas.updated_at', 'ASC')
-        ->get();
-        
-        $reservasiAll = DB::table('pelayanan_lainnyas')
-        ->join('pendaftaran_pelayanan_lainnyas', 'pelayanan_lainnyas.id', '=', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id')
-        ->join('riwayats', 'pendaftaran_pelayanan_lainnyas.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Pelayanan']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Pelayanan']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['pendaftaran_pelayanan_lainnyas.nama_lengkap', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id',
-        'pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.jadwal', 
-        'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.telepon', 
-        'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        return view('validasiKL.pelayanan',compact("reservasi", "reservasiAll", "lingkungan"));
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
+            $user = Auth::user()->id;
+    
+            $reservasi = PendaftaranPelayananLainnya::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan]])
+            ->orderby('pendaftaran_pelayanan_lainnyas.jadwal', 'ASC')
+            ->orderby('pendaftaran_pelayanan_lainnyas.updated_at', 'ASC')
+            ->get();
+            
+            $reservasiAll = DB::table('pelayanan_lainnyas')
+            ->join('pendaftaran_pelayanan_lainnyas', 'pelayanan_lainnyas.id', '=', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id')
+            ->join('riwayats', 'pendaftaran_pelayanan_lainnyas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Pelayanan']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pelayanan']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Pelayanan']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['pendaftaran_pelayanan_lainnyas.nama_lengkap', 'pendaftaran_pelayanan_lainnyas.pelayanan_lainnya_id',
+            'pelayanan_lainnyas.jenis_pelayanan as jenisPelayanan', 'pendaftaran_pelayanan_lainnyas.jadwal', 
+            'pendaftaran_pelayanan_lainnyas.alamat', 'pendaftaran_pelayanan_lainnyas.telepon', 
+            'pendaftaran_pelayanan_lainnyas.keterangan', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+    
+            return view('validasiKL.pelayanan',compact("reservasi", "reservasiAll", "lingkungan"));
+        }
     }
 
     public function AcceptPelayanan(Request $request)
@@ -145,48 +166,62 @@ class ValidasiKLController extends Controller
 
     public function baptis()
     {
-        $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
-        $user = Auth::user()->id;
-
-        $reservasi = Baptis::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan], ['jenis', 'Baptis Bayi']])
-        ->orderby('baptiss.jadwal', 'ASC')
-        ->orderby('baptiss.updated_at', 'ASC')
-        ->get();
-
-        $reservasiAll = DB::table('baptiss')
-        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Bayi']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Bayi']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        return view('validasiKL.baptis',compact("reservasi", "reservasiAll", "lingkungan"));
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
+            $user = Auth::user()->id;
+    
+            $reservasi = Baptis::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan], ['jenis', 'Baptis Bayi']])
+            ->orderby('baptiss.jadwal', 'ASC')
+            ->orderby('baptiss.updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = DB::table('baptiss')
+            ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Bayi']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Bayi']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+    
+            return view('validasiKL.baptis',compact("reservasi", "reservasiAll", "lingkungan"));
+        }
     }
 
     public function baptisDewasa()
     {
-        $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
-        $user = Auth::user()->id;
-
-        $reservasi = Baptis::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan], ['jenis', 'Baptis Dewasa']])
-        ->orderby('baptiss.jadwal', 'ASC')
-        ->orderby('baptiss.updated_at', 'ASC')
-        ->get();
-
-        $reservasiAll = DB::table('baptiss')
-        ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Dewasa']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Dewasa']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        return view('validasiKL.baptisDewasa',compact("reservasi", "reservasiAll", "lingkungan"));
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
+            $user = Auth::user()->id;
+    
+            $reservasi = Baptis::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan], ['jenis', 'Baptis Dewasa']])
+            ->orderby('baptiss.jadwal', 'ASC')
+            ->orderby('baptiss.updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = DB::table('baptiss')
+            ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Dewasa']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Baptis Dewasa']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+    
+            return view('validasiKL.baptisDewasa',compact("reservasi", "reservasiAll", "lingkungan"));
+        }
     }
 
     public function AcceptBaptis(Request $request)
@@ -269,25 +304,32 @@ class ValidasiKLController extends Controller
 
     public function komuni()
     {
-        $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
-        $user = Auth::user()->id;
-        
-        $reservasi = KomuniPertama::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan]])
-        ->orderby('komuni_pertamas.jadwal', 'ASC')
-        ->orderby('komuni_pertamas.updated_at', 'ASC')
-        ->get();
-
-        $reservasiAll = DB::table('komuni_pertamas')
-        ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Komuni Pertama']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Komuni Pertama']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['komuni_pertamas.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-        
-        return view('validasiKL.komuni',compact("reservasi", "reservasiAll", "lingkungan"));
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
+            $user = Auth::user()->id;
+            
+            $reservasi = KomuniPertama::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan]])
+            ->orderby('komuni_pertamas.jadwal', 'ASC')
+            ->orderby('komuni_pertamas.updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = DB::table('komuni_pertamas')
+            ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Komuni Pertama']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Komuni Pertama']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['komuni_pertamas.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+            
+            return view('validasiKL.komuni',compact("reservasi", "reservasiAll", "lingkungan"));
+        }
     }
 
     public function AcceptKomuni(Request $request)
@@ -332,25 +374,32 @@ class ValidasiKLController extends Controller
 
     public function krisma()
     {
-        $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
-        $user = Auth::user()->id;
-
-        $reservasi = krisma::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan], ['jenis', 'Paroki Setempat']])
-        ->orderby('krismas.jadwal', 'ASC')
-        ->orderby('krismas.updated_at', 'ASC')
-        ->get();
-
-        $reservasiAll = DB::table('krismas')
-        ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Krisma Setempat']])
-        ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Krisma Setempat']])
-        ->orderBy('riwayats.updated_at', 'DESC')
-        ->get(['krismas.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        return view('validasiKL.krisma',compact("reservasi", "reservasiAll", "lingkungan"));
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan->nama_lingkungan;
+            $user = Auth::user()->id;
+    
+            $reservasi = krisma::where([["status", "Disetujui KBG"], ['lingkungan', $lingkungan], ['jenis', 'Paroki Setempat']])
+            ->orderby('krismas.jadwal', 'ASC')
+            ->orderby('krismas.updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = DB::table('krismas')
+            ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Lingkungan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Krisma Setempat']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['lingkungan', $lingkungan], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['lingkungan', $lingkungan], ['riwayats.jenis_event', 'Krisma Setempat']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['krismas.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+    
+            return view('validasiKL.krisma',compact("reservasi", "reservasiAll", "lingkungan"));
+        }
     }
 
     public function AcceptKrisma(Request $request)

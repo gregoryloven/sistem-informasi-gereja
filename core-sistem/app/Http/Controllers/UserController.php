@@ -111,10 +111,17 @@ class UserController extends Controller
 
     public function DaftarKL()
     {
-        $users = User::where([['role', 'ketua lingkungan']])->get();
-        $ling = Lingkungan::all();
-
-        return view('user.kl',compact("users", "ling"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $users = User::where([['role', 'ketua lingkungan']])->get();
+            $ling = Lingkungan::all();
+    
+            return view('user.kl',compact("users", "ling"));
+        }
     }
 
     public function TambahKL(Request $request)
@@ -153,10 +160,17 @@ class UserController extends Controller
 
     public function DaftarKKBG()
     {
-        $users = User::where([['role', 'ketua kbg']])->get();
-        $kbg = Kbg::all();
-
-        return view('user.kkbg',compact("users", "kbg"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $users = User::where([['role', 'ketua kbg']])->get();
+            $kbg = Kbg::all();
+    
+            return view('user.kkbg',compact("users", "kbg"));
+        }
     }
 
     public function TambahKKBG(Request $request)

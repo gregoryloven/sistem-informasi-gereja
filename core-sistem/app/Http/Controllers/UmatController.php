@@ -15,21 +15,35 @@ class UmatController extends Controller
 {
     public function umatAll()
     {
-        $data = Umat::where('status', 'Disetujui Lingkungan')->get();
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data = Umat::where('status', 'Disetujui Lingkungan')->get();
 
-        return view('umat.umat',compact('data'));
+            return view('umat.umat',compact('data'));
+        }
     }
     
     
     public function umatKbg()
     {
-        $kbg = Auth::user()->kbg->id;
+        if(Auth::user()->role != 'ketua kbg')
+        {
+            return back();
+        }
+        else
+        {
+            $kbg = Auth::user()->kbg->id;
 
-        $ling = Lingkungan::all();
-        $data = Umat::where([['kbg_id', $kbg], ['status', 'Disetujui Lingkungan']])
-        ->get();
-
-        return view('umat.umatkbg',compact('data','ling'));
+            $ling = Lingkungan::all();
+            $data = Umat::where([['kbg_id', $kbg], ['status', 'Disetujui Lingkungan']])
+            ->get();
+    
+            return view('umat.umatkbg',compact('data','ling'));
+        }
     }
 
     public function fetchkbgumat(Request $request)
@@ -87,14 +101,21 @@ class UmatController extends Controller
 
     public function umatLingkungan()
     {
-        $lingkungan = Auth::user()->lingkungan->id;
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan->id;
 
-        $ling = Lingkungan::all();
-        $kbg = Kbg::all();
-        $data = Umat::where([['lingkungan_id', $lingkungan], ['status', 'Disetujui Lingkungan']])
-        ->get();
-
-        return view('umat.umatlingkungan',compact('data','ling','kbg'));
+            $ling = Lingkungan::all();
+            $kbg = Kbg::all();
+            $data = Umat::where([['lingkungan_id', $lingkungan], ['status', 'Disetujui Lingkungan']])
+            ->get();
+    
+            return view('umat.umatlingkungan',compact('data','ling','kbg'));
+        }
     }
 
     public function DownloadExcelLingkungan(Request $request)

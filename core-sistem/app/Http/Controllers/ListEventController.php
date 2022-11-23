@@ -29,44 +29,51 @@ class ListEventController extends Controller
      */
     public function index()
     {
-        $petugas=PetugasLiturgi::all();
-        $data = DB::table('list_events')
-        ->where('list_events.jenis_event', 'like', 'Baptis%')
-        ->orwhere('list_events.jenis_event', 'like', 'Komuni%')
-        ->orwhere('list_events.jenis_event', '=', 'Krisma')
-        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
-        'list_events.romo', 'list_events.status'
-        ]);
-
-        $data2 = DB::table('list_events')
-        ->where('list_events.jenis_event', '=', 'Misa')
-        ->orwhere('list_events.jenis_event', '=', 'Tobat')
-        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.jadwal_pelaksanaan',
-        'list_events.lokasi','list_events.kuota','list_events.romo', 'list_events.status'
-        ]);
-
-        $data3 = DB::table('list_events')
-        ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
-        ->where('list_events.jenis_event', 'Petugas Liturgi')
-        ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas',
-        'list_events.status'
-        ]);
-
-        $data4 = DB::table('list_events')
-        ->where('list_events.jenis_event', 'Kursus Persiapan Perkawinan')
-        ->get(['list_events.id','list_events.nama_event','list_events.tgl_buka_pendaftaran',
-        'list_events.tgl_tutup_pendaftaran','list_events.lokasi','list_events.keterangan_kursus','list_events.status'
-        ]);
-
-        $data5 = Perkawinan::join('list_events', 'perkawinans.tanggal_perkawinan', '=', 'list_events.jadwal_pelaksanaan')
-        ->where([['list_events.jenis_event', 'Perkawinan'], ['list_events.status', 'Aktif']])
-        ->get(['perkawinans.nama_lengkap_calon_suami', 'perkawinans.nama_lengkap_calon_istri', 'list_events.id',
-        'list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.status'
-        ]);
-
-        return view('listevent.index',compact("data", "petugas", "data2", "data3", "data4", "data5"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $petugas=PetugasLiturgi::all();
+            $data = DB::table('list_events')
+            ->where('list_events.jenis_event', 'like', 'Baptis%')
+            ->orwhere('list_events.jenis_event', 'like', 'Komuni%')
+            ->orwhere('list_events.jenis_event', '=', 'Krisma')
+            ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+            'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
+            'list_events.romo', 'list_events.status'
+            ]);
+    
+            $data2 = DB::table('list_events')
+            ->where('list_events.jenis_event', '=', 'Misa')
+            ->orwhere('list_events.jenis_event', '=', 'Tobat')
+            ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.jadwal_pelaksanaan',
+            'list_events.lokasi','list_events.kuota','list_events.romo', 'list_events.status'
+            ]);
+    
+            $data3 = DB::table('list_events')
+            ->join('petugas_liturgis', 'list_events.petugas_liturgi_id', '=', 'petugas_liturgis.id')
+            ->where('list_events.jenis_event', 'Petugas Liturgi')
+            ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+            'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi','petugas_liturgis.jenis_petugas as jenisPetugas',
+            'list_events.status'
+            ]);
+    
+            $data4 = DB::table('list_events')
+            ->where('list_events.jenis_event', 'Kursus Persiapan Perkawinan')
+            ->get(['list_events.id','list_events.nama_event','list_events.tgl_buka_pendaftaran',
+            'list_events.tgl_tutup_pendaftaran','list_events.lokasi','list_events.keterangan_kursus','list_events.status'
+            ]);
+    
+            $data5 = Perkawinan::join('list_events', 'perkawinans.tanggal_perkawinan', '=', 'list_events.jadwal_pelaksanaan')
+            ->where([['list_events.jenis_event', 'Perkawinan'], ['list_events.status', 'Aktif']])
+            ->get(['perkawinans.nama_lengkap_calon_suami', 'perkawinans.nama_lengkap_calon_istri', 'list_events.id',
+            'list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.status'
+            ]);
+    
+            return view('listevent.index',compact("data", "petugas", "data2", "data3", "data4", "data5"));
+        }
     }
 
     public function store(Request $request)

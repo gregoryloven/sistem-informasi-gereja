@@ -18,30 +18,37 @@ class KrismaController extends Controller
      */
     public function index()
     {
-        $data = ListEvent::where([['jenis_event', 'like', 'Kr%'], ['status', 'Aktif']])
-        ->orderBy('jadwal_pelaksanaan', 'ASC')
-        ->get();
-
-        $user = Auth::user()->id;
-        $krisma = DB::table('krismas')
-        ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Setempat']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
-        ->orderBy('krismas.jadwal', 'DESC')
-        ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
-        'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan', 'users.role']);
-
-        $krisma2 = DB::table('krismas')
-        ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
-        ->join('users', 'riwayats.user_id', '=', 'users.id')
-        ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Lintas']])
-        ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Lintas']])
-        ->orderBy('krismas.jadwal', 'DESC')
-        ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
-        'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan', 'users.role']);
-
-        return view('krisma.index',compact("data","krisma","krisma2"));
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $data = ListEvent::where([['jenis_event', 'like', 'Kr%'], ['status', 'Aktif']])
+            ->orderBy('jadwal_pelaksanaan', 'ASC')
+            ->get();
+    
+            $user = Auth::user()->id;
+            $krisma = DB::table('krismas')
+            ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Setempat']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
+            ->orderBy('krismas.jadwal', 'DESC')
+            ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+            'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan', 'users.role']);
+    
+            $krisma2 = DB::table('krismas')
+            ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Lintas']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Lintas']])
+            ->orderBy('krismas.jadwal', 'DESC')
+            ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+            'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan', 'users.role']);
+    
+            return view('krisma.index',compact("data","krisma","krisma2"));
+        }
     }
 
     public function OpenForm(Request $request)
