@@ -48,7 +48,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        List Sesi 
+        Sesi yang Tersedia 
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -56,8 +56,6 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Event</th>
-                        <th>Jenis Event</th>
                         <th>Tanggal Buka Pendaftaran</th>
                         <th>Tanggal Tutup Pendaftaran</th>
                         <th>Tanggal Pelaksanaan</th>
@@ -73,8 +71,6 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->nama_event}}</td>
-                        <td st>{{$d->jenis_event}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
@@ -104,7 +100,7 @@
                     <thead>
                         <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Penerima</th>
+                        <th>Nama Lengkap Penerima Krisma</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
@@ -224,7 +220,7 @@
                     <thead>
                         <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Penerima</th>
+                        <th>Nama Lengkap Penerima Krisma</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>

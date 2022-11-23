@@ -69,8 +69,6 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <!-- <th>Nama Event</th> -->
-                        <th>Jenis Sakramen</th>
                         <th>Tanggal Buka Pendaftaran</th>
                         <th>Tanggal Tutup Pendaftaran</th>
                         <th>Tanggal Pelaksanaan</th>
@@ -86,8 +84,6 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <!-- <td st>{{$d->nama_event}}</td> -->
-                        <td st>{{$d->jenis_event}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
@@ -127,7 +123,6 @@
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Lokasi</th>
@@ -153,7 +148,6 @@
                             <td st>{{$d->lingkungan}}</td>
                             <td st>{{$d->kbg}}</td>
                             <td st>{{$d->telepon}}</td>
-                            <td st>{{$d->jenis}}</td>
                             <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                             <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                             <td st>{{$d->lokasi}}</td>

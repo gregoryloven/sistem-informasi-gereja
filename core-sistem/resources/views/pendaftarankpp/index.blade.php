@@ -65,7 +65,6 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Acara</th>
                         <th>Tanggal Buka Pendaftaran</th>
                         <th>Tanggal Tutup Pendaftaran</th>
                         <th>Keterangan Kursus</th>
@@ -79,7 +78,6 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->jenis_event}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
                         <td st>{{$d->keterangan_kursus}}</td>
