@@ -86,7 +86,8 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="{{ url('/profileumat') }}">Profile</a>
-
+                                        <a class="dropdown-item" href="{{ url('/ubahpassword') }}">Password</a>
+                                        <div class="dropdown-divider"></div>
                                         <form method="POST" action="{{ route('logout') }}" x-data>
                                             @csrf
                                             <x-jet-responsive-nav-link class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"><i class="fa-solid fa-arrow-right-from-bracket"></i> {{ __(' Log Out') }}</x-jet-responsive-nav-link>

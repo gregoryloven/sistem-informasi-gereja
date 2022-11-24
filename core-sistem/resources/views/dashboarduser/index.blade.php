@@ -14,7 +14,7 @@
 @section('content')
 <!-- Page Heading -->
 <div class="p-3">
-    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Fitur Yang Tersedia:</h1>
+    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Layanan Yang Tersedia:</h1>
 
     <div class="row">
         <div class="col-md-12">
