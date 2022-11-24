@@ -4,7 +4,7 @@
 <style>
     body {
     margin: 0;
-    padding-top: 40px;
+    /* padding-top: 40px; */
     color: #2e323c;
     background: #f5f6fa;
     position: relative;
@@ -93,13 +93,13 @@
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<div class="form-group">
 						<label for="namaLengkap">Nama Lengkap</label>
-						<input type="text" class="form-control" value="{{$data->nama_lengkap}}" id="namaLengkap" name="nama_lengkap" placeholder="Nama Lengkap">
+						<input type="text" class="form-control" value="{{$data->nama_lengkap}}" id="namaLengkap" name="nama_lengkap" placeholder="Nama Lengkap" required>
 					</div>
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<div class="form-group">
 						<label for="telepon">Telepon</label>
-						<input type="text" class="form-control" value="{{$data->telepon}}" id="telepon" name="telepon" placeholder="Telepon">
+						<input type="text" class="form-control" value="{{$data->telepon}}" id="telepon" name="telepon" placeholder="Telepon" required>
 					</div>
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -111,32 +111,9 @@
 			</div>
 			<div class="row gutters">
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-					<h6 class="mt-3 mb-2 text-primary">Password</h6>
-				</div>
-				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-					<div class="form-group">
-						<label for="newPassword">Old Password</label>
-						<input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Old Password">
-					</div>
-				</div>
-				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-					<div class="form-group">
-						<label for="newPassword">New Password</label>
-						<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password">
-					</div>
-				</div>
-				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-					<div class="form-group">
-						<label for="newPassword">Re-Password</label>
-						<input type="password" class="form-control" id="newPassword2" name="newPassword2" placeholder="Confirm New Password">
-					</div>
-				</div>
-			</div>
-			<div class="row gutters">
-				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 					<div class="text-right">
 						<button type="button" class="btn btn-secondary">Cancel</button>
-						<button type="submit" class="btn btn-primary">Update</button>
+						<button type="submit" class="btn btn-primary">Simpan</button>
 					</div>
 				</div>
 			</div>

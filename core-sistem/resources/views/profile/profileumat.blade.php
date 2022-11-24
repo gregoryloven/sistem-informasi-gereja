@@ -4,7 +4,7 @@
 <style>
     body {
     margin: 0;
-    padding-top: 40px;
+    /* padding-top: 40px; */
     color: #2e323c;
     background: #f5f6fa;
     position: relative;
@@ -95,37 +95,50 @@
 				<div class="form-group">
 					<label for="namaLengkap">Nama Lengkap</label>
 					<input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$data->id}}">
-					<input type="text" class="form-control" value="{{$data->nama_lengkap}}" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap">
+					<input type="text" class="form-control" value="{{$data->nama_lengkap}}" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap" required>
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="tempatLahir">Tempat Lahir</label>
-					<input type="text" class="form-control" value="{{$data->tempat_lahir}}" id="tempat_lahir" name="tempat_lahir" placeholder="Tempat Lahir">
+					<input type="text" class="form-control" value="{{$data->tempat_lahir}}" id="tempat_lahir" name="tempat_lahir" placeholder="Tempat Lahir" required>
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="tanggalLahir">Tanggal Lahir</label>
-					<input type="date" class="form-control" value="{{$data->tanggal_lahir}}" id="tanggal_lahir" name="tanggal_lahir" placeholder="Tanggal Lahir">
+					<input type="date" class="form-control" value="{{$data->tanggal_lahir}}" id="tanggal_lahir" name="tanggal_lahir" placeholder="Tanggal Lahir" required>
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="agama">Agama</label>
-					<input type="text" class="form-control" value="{{$data->agama}}" id="agama" name="agama" placeholder="Agama">
+					<select class="form-control" id='agama' name='agama' required>
+						<option value="{{$data->agama}}" selected>{{$data->agama}}</option>
+						<option value="Katolik">Katolik</option>
+						<option value="Kristen">Kristen</option>
+						<option value="Islam">Islam</option>
+						<option value="Buddha">Buddha</option>
+						<option value="Hindu">Hindu</option>
+						<option value="Khonghucu">Khonghucu</option>
+					</select>
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="jenisKelamin">Jenis Kelamin</label>
-					<input type="text" class="form-control" value="{{$data->jenis_kelamin}}" id="jenis_kelamin" name="jenis_kelamin" placeholder="Laki-Laki/Perempuan">
+					<select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
+						<option value="{{$data->jenis_kelamin}}" selected>{{$data->jenis_kelamin}}</option>
+						<option value="Laki-Laki">Laki-Laki</option>
+						<option value="Perempuan">Perempuan</option>
+
+					</select>
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="telepon">Telepon</label>
-					<input type="text" class="form-control" value="{{$data->telepon}}" id="telepon" name="telepon" placeholder="Telepon">
+					<input type="text" class="form-control" value="{{$data->telepon}}" id="telepon" name="telepon" placeholder="Telepon" required>
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -143,32 +156,9 @@
 		</div>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h6 class="mt-3 mb-2 text-primary">Password</h6>
-			</div>
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div class="form-group">
-					<label for="newPassword">Old Password</label>
-					<input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Old Password">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="newPassword">New Password</label>
-					<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password">
-				</div>
-			</div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="newPassword">Re-Password</label>
-					<input type="password" class="form-control" id="newPassword2" name="newPassword2" placeholder="Confirm New Password">
-				</div>
-			</div>
-		</div>
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
 					<button type="button" class="btn btn-secondary">Cancel</button>
-					<button type="submit" class="btn btn-primary">Update</button>
+					<button type="submit" class="btn btn-primary">Simpan</button>
 				</div>
 			</div>
 		</div>
