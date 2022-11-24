@@ -131,6 +131,7 @@ class LandlordController extends Controller
                 'email'         => Auth::user()->email,
                 'password'      => Auth::user()->password,
                 'role'          => 'admin',
+                'agama'          => 'Katolik',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ]);
