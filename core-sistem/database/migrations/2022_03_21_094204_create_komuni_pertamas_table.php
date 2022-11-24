@@ -27,10 +27,9 @@ class CreateKomuniPertamasTable extends Migration
             $table->dateTime('jadwal');
             $table->string('lokasi');
             $table->string('romo');
-            $table->string('surat_baptis')->nullable();
+            $table->string('surat_baptis');
             $table->enum('status', ['Diproses','Disetujui KBG','Disetujui Lingkungan','Disetujui Paroki','Ditolak','Dibatalkan','Selesai']);
             $table->enum('kursus', ['Lulus','Tidak Lulus'])->nullable();
-            $table->string('sertifikat_komuni')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

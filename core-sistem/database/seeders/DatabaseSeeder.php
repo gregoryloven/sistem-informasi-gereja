@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         // Tenant::checkCurrent()
         //    ? $this->runTenantSpecificSeeders()
         //    : $this->runLandlordSpecificSeeders();
-        $this->call(ParokiSeeder::class);
+        // $this->call(ParokiSeeder::class);
         $this->call(LingkunganSeeder::class);
         $this->call(KbgSeeder::class);
         $this->call(PelayananLainnyaSeeder::class);

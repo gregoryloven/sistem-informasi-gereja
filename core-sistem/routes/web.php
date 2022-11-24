@@ -33,6 +33,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PendaftaranPerkawinanController;
 use App\Http\Controllers\PendaftaranKppController;
+use App\Http\Controllers\PasswordController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -111,9 +112,13 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('profileumat', [ProfileController::class, 'data'])->name('profile.umat');
     Route::get('profilekbg', [ProfileController::class, 'data'])->name('profile.kbg');
     Route::get('profilelingkungan', [ProfileController::class, 'data'])->name('profile.lingkungan');
+    Route::get('profileadmin', [ProfileController::class, 'data'])->name('profile.admin');
     Route::post('/profileumat/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profilelingkungan/update/{id}', [ProfileController::class, 'update'])->name('profile.updatelingkungan');
     Route::post('/profilekbg/update/{id}', [ProfileController::class, 'update'])->name('profile.updatekbg');
+    Route::post('/profileadmin/update/{id}', [ProfileController::class, 'update'])->name('profile.updateadmin');
+
+    Route::resource('ubahpassword', PasswordController::class);
 
     //User KL
     // Route::resource('userkl', UserKLController::class);
@@ -132,7 +137,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/listevent/EditForm', [ListEventController::class, 'EditForm'])->name('listevent.EditForm');
     Route::post('/listevent/selesai', [ListEventController::class, 'selesai'])->name('listevent.selesai');
 
-    //Daftar Umat KBG
+    //Daftar Umat 
     Route::get('umat', [UmatController::class, 'umatAll'])->name('umat.umatAll');
     Route::get('umatKbg', [UmatController::class, 'umatKbg'])->name('umat.umatKbg');
     Route::post('/fetchkbg', [UmatController::class, 'fetchkbg'])->name('fetchkbg');
@@ -417,6 +422,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('laporanKomuni', [LaporanController::class, 'komuni'])->name('laporan.komuni');
     Route::get('laporanKrisma', [LaporanController::class, 'krisma'])->name('laporan.krisma');
     Route::get('laporanKpp', [LaporanController::class, 'kpp'])->name('laporan.kpp');
+    Route::get('laporanPerkawinan', [LaporanController::class, 'perkawinan'])->name('laporan.perkawinan2');
+    Route::post('/laporan/perkawinan', [LaporanController::class, 'perkawinan'])->name('laporan.perkawinan');
 
 
     // CETAK SERTIFIKAT

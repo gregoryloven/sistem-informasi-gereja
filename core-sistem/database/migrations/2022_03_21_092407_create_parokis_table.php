@@ -13,14 +13,14 @@ class CreateParokisTable extends Migration
      */
     public function up()
     {
-        Schema::create('parokis', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_paroki');
-            $table->string('alamat');
-            $table->string('email');
-            $table->string('telepon');
-            $table->timestamps();
-        });
+        // Schema::create('parokis', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('nama_paroki');
+        //     $table->string('alamat');
+        //     $table->string('email');
+        //     $table->string('telepon');
+        //     $table->timestamps();
+        // });
     }
 
     /**
