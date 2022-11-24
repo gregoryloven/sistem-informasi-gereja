@@ -9,10 +9,17 @@ use Auth;
 class DashboardUserController extends Controller
 {
     public function index()
-    {
-        if(Auth::user()->role != 'umat')
+    {        
+        if(optional(Auth::user())->id)
         {
-            return back();
+            if(Auth::user()->role == 'umat')
+            {
+                return view('dashboarduser.index');
+            }
+            else
+            {
+                return back();
+            }
         }
         else
         {
