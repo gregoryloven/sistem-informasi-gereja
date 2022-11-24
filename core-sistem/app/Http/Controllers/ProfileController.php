@@ -4,14 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Tenant;
 use Auth;
 use Hash;
+use DB;
 
 class ProfileController extends Controller
 {
     public function data()
     {
         $data = User::where('id', Auth::user()->id)->first();
+        // $tenant = Tenant::join('users', 'tenants.nama_paroki', '=', 'users.name')
+        // ->where()
+        // $tenant = DB::connection('landlord')->table('tenants')->join('us')
+        // $user =  DB::connection('tenant')->table('users')->where('id', Auth::user()->id)->first();
+// dd($tenant);
+
+        // if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
+        // {
+        //     $tenant = DB::connection('landlord')->table('tenants')->where('name', app('currentTenant')->name)->first();
+        // }
+        $tenant = Tenant::where('name', app('currentTenant')->name)->first();
 
         if($data->role == "umat")
         {
@@ -27,7 +40,7 @@ class ProfileController extends Controller
         }
         else
         {
-            return view('profile.index',compact('data'));
+            return view('profile.profileadmin',compact('data', 'tenant'));
         }
         
     }
@@ -36,6 +49,12 @@ class ProfileController extends Controller
     {
         // return $request->all();
         $data = User::find(Auth::user()->id);
+
+        if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
+        {
+            $tenant = Tenant::where('name', app('currentTenant')->name)->first();
+        }
+
         // return $data;
         if($data->role == "umat")
         {
@@ -47,20 +66,6 @@ class ProfileController extends Controller
             $data->telepon = $request->get("telepon");
             $data->save();
 
-            if($request->get("oldPassword") != null && $request->get("newPassword") != null && $request->get("newPassword2") != null)
-            {
-                if($request->get("newPassword") == $request->get("newPassword2")) {
-                    if (Hash::check($request->get("oldPassword"), $data->password)) {
-                        $data->password = bcrypt($request->get("newPassword"));
-                        $data->save();
-                        return redirect()->back()->with('status', 'Password Berhasil Diubah');
-                    } else {
-                        return redirect()->back()->with('error', 'Password Lama Salah');
-                    }
-                } else {
-                    return redirect()->back()->with('error', 'Password Tidak Sama');
-                }
-            }
             return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
         else if($data->role == "ketua kbg")
@@ -69,20 +74,6 @@ class ProfileController extends Controller
             $data->telepon = $request->get("telepon");
             $data->save();
 
-            if($request->get("oldPassword") != null && $request->get("newPassword") != null && $request->get("newPassword2") != null)
-            {
-                if($request->get("newPassword") == $request->get("newPassword2")) {
-                    if (Hash::check($request->get("oldPassword"), $data->password)) {
-                        $data->password = bcrypt($request->get("newPassword"));
-                        $data->save();
-                        return redirect()->back()->with('status', 'Password Berhasil Diubah');
-                    } else {
-                        return redirect()->back()->with('error', 'Password Lama Salah');
-                    }
-                } else {
-                    return redirect()->back()->with('error', 'Password Tidak Sama');
-                }
-            }
             return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
         else if($data->role == "ketua lingkungan")
@@ -91,29 +82,31 @@ class ProfileController extends Controller
             $data->telepon = $request->get("telepon");
             $data->save();
 
-            if($request->get("oldPassword") != null && $request->get("newPassword") != null && $request->get("newPassword2") != null)
-            {
-                if($request->get("newPassword") == $request->get("newPassword2")) {
-                    if (Hash::check($request->get("oldPassword"), $data->password)) {
-                        $data->password = bcrypt($request->get("newPassword"));
-                        $data->save();
-                        return redirect()->back()->with('status', 'Password Berhasil Diubah');
-                    } else {
-                        return redirect()->back()->with('error', 'Password Lama Salah');
-                    }
-                } else {
-                    return redirect()->back()->with('error', 'Password Tidak Sama');
-                }
-            }
             return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
-        else
+        else if($data->role == "admin")
         {
-            return view('profile.index',compact('data'));
+            $data->name = $request->get("name");
+            $tenant->nama_paroki = $request->get("nama_paroki");
+            $tenant->alamat = $request->get("alamat");
+            $tenant->telepon = $request->get("telepon");
+
+            $file=$request->file('logo');
+            if(isset($file))
+            {
+                $imgFolder = 'logo';
+                $extension = $request->file('logo')->extension();
+                $imgfile=time()."_".$request->get('nama').".".$extension;
+                $file->move($imgFolder,$imgfile);
+                $tenant->logo=$imgfile;
+            }
+
+            $data->save();
+            $tenant->save();
+
+            return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
-
     }
-
 }
 
 
