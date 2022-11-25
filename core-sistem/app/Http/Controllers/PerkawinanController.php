@@ -32,7 +32,7 @@ class PerkawinanController extends Controller
             // ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
             // 'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_penolakan']);
 
-            $data = Perkawinan::where('status', 'Disetujui Paroki')
+            $data = Perkawinan::where([['status', 'Disetujui Paroki'], ['user_id', Auth::user()->id]])
             ->orderBy('updated_at', 'DESC')
             ->get();
     
@@ -354,13 +354,13 @@ class PerkawinanController extends Controller
                 $list->status = "Disetujui Paroki";
                 $list->save();
         
-                $riwayat = new Riwayat();
-                $riwayat->user_id = Auth::user()->id;
-                $riwayat->list_event_id = $list->id;
-                $riwayat->event_id =  $data->id;
-                $riwayat->jenis_event = "Perkawinan";
-                $riwayat->status =  "Disetujui Paroki";
-                $riwayat->save();
+                // $riwayat = new Riwayat();
+                // $riwayat->user_id = Auth::user()->id;
+                // $riwayat->list_event_id = $list->id;
+                // $riwayat->event_id =  $data->id;
+                // $riwayat->jenis_event = "Perkawinan";
+                // $riwayat->status =  "Disetujui Paroki";
+                // $riwayat->save();
         
                 return redirect()->route('perkawinan.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Perkawinan Berhasil');
             }

@@ -34,7 +34,7 @@ class KppController extends Controller
             // ->get(['kpps.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
             // 'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_penolakan']);
 
-            $data = Kpp::where('status', 'Disetujui Paroki')
+            $data = Kpp::where([['status', 'Disetujui Paroki'], ['user_id', Auth::user()->id]])
             ->orderBy('updated_at', 'DESC')
             ->get();
     
@@ -175,13 +175,13 @@ class KppController extends Controller
         
                 $data->save();
         
-                $riwayat = new Riwayat();
-                $riwayat->user_id = Auth::user()->id;
-                $riwayat->list_event_id = $request->list_event_id;
-                $riwayat->jenis_event =  $request->jenis_event;
-                $riwayat->event_id =  $data->id;
-                $riwayat->status =  "Disetujui Paroki";
-                $riwayat->save();
+                // $riwayat = new Riwayat();
+                // $riwayat->user_id = Auth::user()->id;
+                // $riwayat->list_event_id = $request->list_event_id;
+                // $riwayat->jenis_event =  $request->jenis_event;
+                // $riwayat->event_id =  $data->id;
+                // $riwayat->status =  "Disetujui Paroki";
+                // $riwayat->save();
         
                 return redirect()->route('kpp.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Kursus Persiapan Perkawinan Berhasil');
             }
