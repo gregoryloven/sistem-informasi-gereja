@@ -7,6 +7,8 @@ use App\Models\KomuniPertama;
 use App\Models\User;
 use App\Models\Riwayat;
 use App\Models\ListEvent;
+use App\Models\Kbg;
+use App\Models\Lingkungan;
 use Auth;
 use DB;
 
@@ -30,13 +32,17 @@ class KomuniPertamaController extends Controller
             ->get();
     
             $user = Auth::user()->id;
-            $komuni = DB::table('komuni_pertamas')
-            ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
-            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Ko%']])
-            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'Ko%']])
-            ->orderBy('komuni_pertamas.jadwal', 'DESC')
-            ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
-            'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
+            // $komuni = DB::table('komuni_pertamas')
+            // ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
+            // ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Ko%']])
+            // ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'Ko%']])
+            // ->orderBy('komuni_pertamas.jadwal', 'DESC')
+            // ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+            // 'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
+
+            $komuni = KomuniPertama::where([['status', 'Disetujui Paroki'], ['user_id', Auth::user()->id]])
+            ->orderby('jadwal', 'ASC')
+            ->get();
     
             return view('komunipertama.index',compact("data", "komuni"));
         }
@@ -45,14 +51,11 @@ class KomuniPertamaController extends Controller
     public function OpenForm(Request $request)
     {
         $id = $request->id;
-        $list = DB::table('list_events')->where('id', $id)->get();
-        $user = DB::table('users')
-            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-            ->where('users.id', Auth::user()->id)
-            ->get();
+        $list = ListEvent::where('id', $id)->get();
+        $kbg = Kbg::all();
+        $ling = Lingkungan::all();
 
-        return view('komunipertama.InputForm',compact("list", "user"));
+        return view('komunipertama.InputForm',compact("list", "kbg", "ling"));
     }
 
     public function store(Request $request)
@@ -81,14 +84,14 @@ class KomuniPertamaController extends Controller
 
         $data->save();
 
-        $riwayat = new Riwayat();
-        $riwayat->user_id = Auth::user()->id;
-        $riwayat->jenis_event =  $request->get("jenis_event");
-        $riwayat->event_id =  $data->id;
-        $riwayat->status =  "Disetujui Paroki";
-        $riwayat->save();
+        // $riwayat = new Riwayat();
+        // $riwayat->user_id = Auth::user()->id;
+        // $riwayat->jenis_event =  $request->get("jenis_event");
+        // $riwayat->event_id =  $data->id;
+        // $riwayat->status =  "Disetujui Paroki";
+        // $riwayat->save();
 
-        return redirect()->route('komunipertama.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Pertama Berhasil Ditambahkan');
+        return redirect()->route('komunipertama.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Komuni Pertama Berhasil');
     }
 
     public function EditForm(Request $request)
@@ -194,13 +197,13 @@ class KomuniPertamaController extends Controller
         try
         {
             $komunipertama->delete();
-            return redirect()->route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Komuni Pertama Berhasil Dihapus');
+            return redirect()->route('komunipertama.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Komuni Pertama Berhasil Dihapus');
         
         }
         catch(\Exception $e)
         {
             $komunipertama = "Gagal Menghapus Data Komuni Pertama";
-            return redirect()->route('komunipertamas.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+            return redirect()->route('komunipertama.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
         }
     }
 }

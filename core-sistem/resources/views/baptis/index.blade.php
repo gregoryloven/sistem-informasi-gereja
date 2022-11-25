@@ -145,7 +145,7 @@
                             <td st>
                                 @if($d->status == "Disetujui Paroki")
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-warning" onclick="EditForm({{ $d->id }})">Edit</a>
+                                    <!-- <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-warning" onclick="EditForm({{ $d->id }})">Edit</a> -->
                                     <a href="#modal{{$d->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-danger">Batal</a>
                                 </div>
                                 @endif
