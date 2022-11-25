@@ -25,12 +25,16 @@ class PerkawinanController extends Controller
         {
             $user = Auth::user()->id;
         
-            $data = Perkawinan::join('riwayats', 'perkawinans.id', '=', 'riwayats.event_id')
-            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Perkawinan']])
-            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Perkawinan']])
-            ->orderBy('perkawinans.updated_at', 'DESC')
-            ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
-            'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
+            // $data = Perkawinan::join('riwayats', 'perkawinans.id', '=', 'riwayats.event_id')
+            // ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Perkawinan']])
+            // ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'Perkawinan']])
+            // ->orderBy('perkawinans.updated_at', 'DESC')
+            // ->get(['perkawinans.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+            // 'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_penolakan']);
+
+            $data = Perkawinan::where('status', 'Disetujui Paroki')
+            ->orderBy('updated_at', 'DESC')
+            ->get();
     
             return view('perkawinan.index',compact("data"));
         }
@@ -422,7 +426,6 @@ class PerkawinanController extends Controller
             {
                 $data=Perkawinan::find($request->id);
 
-                $data->user_id = Auth::user()->id;
                 //Calon Suami
                 $data->nama_lengkap_calon_suami = $request->get("nama_lengkap_calon_suami");
                 $data->tempat_lahir_calon_suami = $request->get("tempat_lahir_calon_suami");
@@ -430,8 +433,6 @@ class PerkawinanController extends Controller
                 $data->pekerjaan_calon_suami = $request->get("pekerjaan_calon_suami");
                 $data->alamat_calon_suami = $request->get("alamat_calon_suami");
                 $data->telepon_calon_suami = $request->get("telepon_calon_suami");
-                $data->agama_calon_suami = $request->get("agama_calon_suami");
-                $data->paroki_calon_suami = $request->get("paroki_calon_suami");
                 $data->nik_calon_suami = $request->get("nik_calon_suami");
         
                 //Ortu Suami
@@ -449,8 +450,6 @@ class PerkawinanController extends Controller
                 $data->pekerjaan_calon_istri = $request->get("pekerjaan_calon_istri");
                 $data->alamat_calon_istri = $request->get("alamat_calon_istri");
                 $data->telepon_calon_istri = $request->get("telepon_calon_istri");
-                $data->agama_calon_istri = $request->get("agama_calon_istri");
-                $data->paroki_calon_istri = $request->get("paroki_calon_istri");
                 $data->nik_calon_istri = $request->get("nik_calon_istri");
         
                 //Ortu Istri
@@ -709,9 +708,7 @@ class PerkawinanController extends Controller
                 }
         
                 $data->tanggal_kanonik = $request->get("tanggal_kanonik");
-                $data->tempat_perkawinan = $request->get("tempat_perkawinan");
                 $data->tanggal_perkawinan = $request->get("tanggal_perkawinan");
-                $data->status = "Diproses";
         
                 $data->save();
         
