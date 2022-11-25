@@ -121,7 +121,7 @@
                             @if($da->statusRiwayat == "Disetujui Paroki")
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <div><a href= "{{ url('validasiAdminPerkawinan/RiwayatPerkawinan/'.$da->id) }}" class="btn btn-xs btn-flat btn-info">Detail</a></div>
-                                <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning ml-1" onclick="EditForm({{ $da->id }})">Ubah</a></div>
+                                <!-- <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning ml-1" onclick="EditForm({{ $da->id }})">Ubah</a></div> -->
                                 <form role="form" method="POST"  action="{{ url('validasiAdminPerkawinan/PembatalanPerkawinan/'.$da->id) }}">
                                     @csrf
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$da->id}}">

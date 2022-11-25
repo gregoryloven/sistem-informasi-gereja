@@ -58,7 +58,7 @@
                         <td st>{{$d->kbg}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st class="d-flex justify-content-center">
                             @if($d->status == "Diproses")
@@ -139,7 +139,7 @@
                         <td st>{{$da->kbg}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st>{{$da->lokasi}}</td>
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui Paroki') 

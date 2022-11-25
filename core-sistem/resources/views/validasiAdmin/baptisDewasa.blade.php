@@ -169,7 +169,7 @@
                         <td st>{{$da->kbg}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}" height='80px'/></td>
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui Paroki') 
@@ -189,11 +189,6 @@
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}} WITA
                                 <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
-                            @else
-                            <div class="alert alert-success" role="alert">
-                                {{$da->statusRiwayat}}
-                            </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}} WITA</small>
                             @endif
                         </td>
                         <td st>

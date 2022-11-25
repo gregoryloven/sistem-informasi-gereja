@@ -199,7 +199,6 @@ class ValidasiAdminController extends Controller
             ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Baptis Bayi']])
             ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
             ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Bayi']])
-            ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Bayi']])
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
@@ -229,7 +228,6 @@ class ValidasiAdminController extends Controller
             ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Baptis Dewasa']])
             ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
             ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Baptis Dewasa']])
-            ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Baptis Dewasa']])
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
@@ -374,7 +372,7 @@ class ValidasiAdminController extends Controller
             ->join('users', 'riwayats.user_id', '=', 'users.id')
             ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Komuni Pertama']])
             ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
-            ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Komuni Pertama']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Komuni Pertama']])
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['komuni_pertamas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
@@ -752,6 +750,7 @@ class ValidasiAdminController extends Controller
         else
         {
             $reservasi = Kpp::where('status', 'Diproses')->get();
+
             $reservasiAll = Kpp::join('riwayats', 'kpps.id', '=', 'riwayats.event_id')
             ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Kursus%']])
             ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.jenis_event', 'like', 'Kursus%']])
@@ -1011,17 +1010,18 @@ class ValidasiAdminController extends Controller
 
     public function PembatalanPerkawinan(Request $request)
     {
-        $perkawinan=Perkawinan::find($request->id);
-        $perkawinan->delete();
-
+        
         $riwayat = Riwayat::where([['event_id', $request->id],['jenis_event', 'Perkawinan']])->get();
         foreach($riwayat as $r)
         {
             $r->delete();
         }
-
+        
         $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
         $list_event->delete();
+
+        $perkawinan=Perkawinan::find($request->id);
+        $perkawinan->delete();
 
         return redirect()->route('validasiAdmin.perkawinan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Perkawinan Berhasil Dibatalkan');
     }

@@ -67,7 +67,7 @@
                         <td st>{{$d->kbg}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td >
                             @if($d->status == "Disetujui Lingkungan")
                             <form action="/validasiAdmin/acceptbaptis" method="post">
@@ -158,7 +158,7 @@
                         <td st>{{$da->kbg}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
@@ -177,11 +177,6 @@
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}} WITA
                                 <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
-                            @else
-                            <div class="alert alert-success" role="alert">
-                                {{$da->statusRiwayat}}
-                            </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}} WITA</small>
                             @endif
                         </td>
                         <td st>

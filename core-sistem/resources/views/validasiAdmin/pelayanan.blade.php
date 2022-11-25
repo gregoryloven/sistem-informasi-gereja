@@ -57,7 +57,7 @@
                         <td st>{{$d->lingkungan}}</td>
                         <td st>{{$d->kbg}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{$d->keterangan}}</td>
@@ -142,7 +142,7 @@
                         <td st>{{$da->lingkungan}}</td>
                         <td st>{{$da->kbg}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
-                        <td st>{{waktu_indonesia( $da->jadwal)}}</td>
+                        <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st>{{$da->alamat}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st>{{$da->keterangan}}</td>
