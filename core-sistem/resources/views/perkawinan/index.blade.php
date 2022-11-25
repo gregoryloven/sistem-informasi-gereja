@@ -66,12 +66,13 @@
                                 {{$d->status}}
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}} WITA</small>
+                            @endif
                         </td>
                         <td st>
                             @if($d->status == "Disetujui Paroki")
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <div><a href= "{{ url('perkawinan/RiwayatPerkawinan/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Detail</a></div>
-                                <div><a href="{{ url('perkawinan/EditForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-warning ml-1">Ubah</a></div>
+                                <!-- <div><a href="{{ url('perkawinan/EditForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-warning ml-1">Ubah</a></div> -->
                                 <form role="form" method="POST"  action="{{ url('perkawinan/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')

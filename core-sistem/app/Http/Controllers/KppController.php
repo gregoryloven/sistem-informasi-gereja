@@ -50,6 +50,14 @@ class KppController extends Controller
         return view('kpp.InputForm',compact("list"));
     }
 
+    public function RiwayatKpp(Request $request)
+    {
+        $id = $request->id;
+        $data = Kpp::where('id', $id)->get();
+
+        return view('kpp.RiwayatKpp',compact("data"));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

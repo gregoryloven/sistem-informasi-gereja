@@ -1,7 +1,7 @@
 @extends('layouts.sbadmin2')
 
 @section('title')
-    Riwayat Validasi Formulir Pendaftaran  Sakramen Perkawinan
+    Riwayat Validasi Formulir Pendaftaran Sakramen Perkawinan
 @endsection
 
 @section('content')

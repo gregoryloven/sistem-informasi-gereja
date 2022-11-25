@@ -127,12 +127,14 @@
                             <div class="alert alert-success" role="alert">
                                 {{$d->status}}
                             </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}} WITA</small>
+                            <small><b>Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}} WITA</small>
+                            @endif
                         </td>
                         <td st>
                             @if($d->status == "Disetujui Paroki")
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <div><a href="{{ url('kpp/EditForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-warning">Ubah</a></div>
+                                <!-- <div><a href="{{ url('kpp/EditForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-warning">Ubah</a></div> -->
+                                <div><a href= "{{ url('kpp/RiwayatKpp/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Detail</a></div>
                                 <form role="form" method="POST"  action="{{ url('kpp/'.$d->id) }}">
                                     @csrf
                                     @method('DELETE')

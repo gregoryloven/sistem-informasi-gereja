@@ -214,6 +214,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::resource('kpp', KppController::class);
     Route::get('/kpp/OpenForm/{id}', [KppController::class, 'OpenForm'])->name('kpp.OpenForm');
     Route::get('/kpp/EditForm/{id}', [KppController::class, 'EditForm'])->name('kpp.EditForm');
+    Route::get('/kpp/RiwayatKpp/{id}', [KppController::class, 'RiwayatKpp'])->name('kpp.RiwayatKpp');
 
 
     //Perkawinan
