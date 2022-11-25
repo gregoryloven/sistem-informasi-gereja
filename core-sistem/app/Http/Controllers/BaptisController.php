@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Baptis;
 use App\Models\Riwayat;
 use App\Models\ListEvent;
+use App\Models\Kbg;
+use App\Models\Lingkungan;
 use Auth;
 
 class BaptisController extends Controller
@@ -28,14 +30,18 @@ class BaptisController extends Controller
             ->orderBy('jadwal_pelaksanaan', 'ASC')
             ->get();
     
-            $user = Auth::user()->id;
-            $baptis = DB::table('baptiss')
-            ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
-            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'B%']])
-            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'B%']])
-            ->orderBy('baptiss.jadwal', 'DESC')
-            ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
-            'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
+            // $user = Auth::user()->id;
+            // $baptis = DB::table('baptiss')
+            // ->join('riwayats', 'baptiss.id', '=', 'riwayats.event_id')
+            // ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'B%']])
+            // ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'like', 'B%']])
+            // ->orderBy('baptiss.jadwal', 'DESC')
+            // ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 
+            // 'riwayats.created_at', 'riwayats.updated_at', 'riwayats.alasan_pembatalan']);
+
+            $baptis = Baptis::where([['jenis', 'like', 'Baptis B%'], ['status', 'Disetujui Paroki'], ['user_id', Auth::user()->id]])
+            ->orderby('jadwal', 'ASC')
+            ->get();
     
             return view('baptis.index',compact("data", "baptis"));
         }
@@ -44,14 +50,11 @@ class BaptisController extends Controller
     public function OpenForm(Request $request)
     {
         $id = $request->id;
-        $list = DB::table('list_events')->where('id', $id)->get();
-        $user = DB::table('users')
-            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-            ->where('users.id', Auth::user()->id)
-            ->get();
+        $list = ListEvent::where('id', $id)->get();
+        $kbg = Kbg::all();
+        $ling = Lingkungan::all();
 
-        return view('baptis.InputForm',compact("list", "user"));
+        return view('baptis.InputForm',compact("list", "kbg", "ling"));
     }
 
     public function store(Request $request)
@@ -75,14 +78,14 @@ class BaptisController extends Controller
         $data->status = "Disetujui Paroki";
         $data->save();
 
-        $riwayat = new Riwayat();
-        $riwayat->user_id = Auth::user()->id;
-        $riwayat->jenis_event =  $data->jenis;
-        $riwayat->event_id =  $data->id;
-        $riwayat->status =  "Disetujui Paroki";
-        $riwayat->save();
+        // $riwayat = new Riwayat();
+        // $riwayat->user_id = Auth::user()->id;
+        // $riwayat->jenis_event =  $data->jenis;
+        // $riwayat->event_id =  $data->id;
+        // $riwayat->status =  "Disetujui Paroki";
+        // $riwayat->save();
 
-        return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Berhasil Ditambahkan');
+        return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Berhasil');
     }
 
     public function EditForm(Request $request)
@@ -175,13 +178,13 @@ class BaptisController extends Controller
         try
         {
             $baptis->delete();
-            return redirect()->route('baptiss.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Baptis Berhasil Dihapus');
+            return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Berhasil Dihapus');
         
         }
         catch(\Exception $e)
         {
             $baptis = "Gagal Menghapus Data Baptis";
-            return redirect()->route('baptiss.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
+            return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
         }
     }
 

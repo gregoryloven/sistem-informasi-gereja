@@ -129,53 +129,26 @@
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->romo}}</td>
                             <td st>
-                                @if($d->status == "Disetujui Paroki" || $d->status == "Selesai")
+                                @if($d->status == "Disetujui Paroki")
                                     <div class="alert alert-success" role="alert">
                                         {{$d->status}}
                                     </div>
                                     <small><b>Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
-                                @else
-                                <div class="alert alert-danger" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    <small><b>Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}
-                                    <br><b>Alasan:</b> {{$d->alasan_pembatalan}}</small>
                                 @endif
                             </td>
                             <td st>
                                 @if($d->status == "Disetujui Paroki")
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <!-- <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-warning" onclick="EditForm({{ $d->id }})">Edit</a> -->
-                                    <a href="#modal{{$d->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-danger">Batal</a>
+                                    <form role="form" method="POST" action="{{ url('baptis/'.$d->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                        <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('Apakah anda yakin ingin membatalkan data ini?')) return false">Batal</button>
+                                    </form>
                                 </div>
                                 @endif
                             </td>
                         </tr>
-                        <!-- EDIT WITH MODAL -->
-                        <div class="modal fade" id="modal{{$d->riwayatID}}" tabindex="-1" role="basic" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content" >
-                                    <form role="form" method="POST" action="{{ url('baptis/Pembatalan') }}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                            <h4 class="modal-title">Pembatalan Pendaftaran Baptis</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            @csrf
-                                            <label>Alasan Pembatalan:</label>
-                                            <input type="hidden" name="id" value="{{$d->id}}">
-                                            <input type="hidden" name="riwayatID" value="{{$d->riwayatID}}">
-                                            <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-info">Submit</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                         @endforeach
                     </tbody>
                 </table>

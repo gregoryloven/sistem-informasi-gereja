@@ -31,7 +31,7 @@ class KomuniPertamaController extends Controller
             ->orderBy('jadwal_pelaksanaan', 'ASC')
             ->get();
     
-            $user = Auth::user()->id;
+            // $user = Auth::user()->id;
             // $komuni = DB::table('komuni_pertamas')
             // ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
             // ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'like', 'Ko%']])

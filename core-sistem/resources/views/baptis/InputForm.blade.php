@@ -69,11 +69,21 @@
                 </div>  
                 <div class="form-group">
                     <label >Lingkungan</label>
-                    <input type="text" class="form-control" id='lingkungan' name='lingkungan' placeholder="Lingkungan" required>
+                    <select class="form-control" id='lingkungan' name='lingkungan'>
+                        <option value="" disabled selected>Choose</option>
+                        @foreach($ling as $l)
+                        <option value="{{ $l->nama_lingkungan }}">{{ $l->nama_lingkungan }}</option>
+                        @endforeach
+                    </select>
                 </div>       
                 <div class="form-group">
                     <label >KBG</label>
-                    <input type="text" class="form-control" id='kbg' name='kbg' placeholder="KBG" required>
+                    <select class="form-control" id='kbg' name='kbg'>
+                        <option value="" disabled selected>Choose</option>
+                        @foreach($kbg as $k)
+                        <option value="{{ $k->nama_kbg }}">{{ $k->nama_kbg }}</option>
+                        @endforeach
+                    </select>
                 </div>           
                 <div class="form-group">
                     <label >Telepon</label>
