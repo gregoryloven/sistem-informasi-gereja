@@ -139,53 +139,26 @@
                             <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/></a></td>
                             <td st><a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}" height='80px'/></a></td>
                             <td st>
-                                @if($d->status == "Disetujui Paroki" || $d->status == "Selesai")
+                                @if($d->status == "Disetujui Paroki")
                                     <div class="alert alert-success" role="alert">
                                         {{$d->status}}
                                     </div>
                                     <small><b>Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
-                                @else
-                                <div class="alert alert-danger" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    <small><b>Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}
-                                    <br><b>Alasan:</b> {{$d->alasan_pembatalan}}<br><b>Oleh:</b> {{$d->role}}</small>
                                 @endif
                             </td>
                             <td st>
                                 @if($d->status == "Disetujui Paroki")
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-warning" onclick="EditForm({{ $d->id }})">Edit</a>
-                                    <a href="#modal{{$d->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-danger">Batal</a>
+                                    <form role="form" method="POST" action="{{ url('krisma/'.$d->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                        <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('Apakah anda yakin ingin membatalkan data ini?')) return false">Batal</button>
+                                    </form>
                                 </div>
                                 @endif
                             </td>
                         </tr>
-                        <!-- EDIT WITH MODAL -->
-                        <div class="modal fade" id="modal{{$d->riwayatID}}" tabindex="-1" role="basic" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content" >
-                                    <form role="form" method="POST" action="{{ url('krisma/PembatalanSetempat') }}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                            <h5 class="modal-title">Pembatalan Pendaftaran Krisma</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            @csrf
-                                            <label>Alasan Pembatalan:</label>
-                                            <input type="hidden" name="id" value="{{$d->id}}">
-                                            <input type="hidden" name="riwayatID" value="{{$d->riwayatID}}">
-                                            <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-info">Submit</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                         <!-- POP UP WITH MODAL -->
                         <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                             <div class="modal-dialog" style="width:400px; height=400px;">
@@ -261,53 +234,26 @@
                             <td st><a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}" height='80px'/></a></td>
                             <td st><a href="#modalPopUp3{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pengantar/'.$d->surat_pengantar)}}" height='80px'/></a></td>
                             <td st>
-                                @if($d->status == "Disetujui Paroki" || $d->status == "Selesai")
+                                @if($d->status == "Disetujui Paroki")
                                     <div class="alert alert-success" role="alert">
                                         {{$d->status}}
                                     </div>
                                     <small><b>Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
-                                @else
-                                <div class="alert alert-danger" role="alert">
-                                        {{$d->status}}
-                                    </div>
-                                    <small><b>Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}
-                                    <br><b>Alasan:</b> {{$d->alasan_pembatalan}}<br><b>Oleh:</b> {{$d->role}}</small>
                                 @endif
                             </td>
                             <td st>
                                 @if($d->status == "Disetujui Paroki")
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="#modalEdit2" data-toggle="modal" class="btn btn-xs btn-warning" onclick="EditForm2({{ $d->id }})">Edit</a>
-                                    <a href="#modal{{$d->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-danger">Batal</a>
+                                    <form role="form" method="POST" action="{{ url('krisma/'.$d->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                        <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('Apakah anda yakin ingin membatalkan data ini?')) return false">Batal</button>
+                                    </form>
                                 </div>
                                 @endif
                             </td>
                         </tr>
-                        <!-- EDIT WITH MODAL -->
-                        <div class="modal fade" id="modal{{$d->riwayatID}}" tabindex="-1" role="basic" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content" >
-                                    <form role="form" method="POST" action="{{ url('krisma/PembatalanLintas') }}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                            <h5 class="modal-title">Pembatalan Pendaftaran Krisma</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            @csrf
-                                            <label>Alasan Pembatalan:</label>
-                                            <input type="hidden" name="id" value="{{$d->id}}">
-                                            <input type="hidden" name="riwayatID" value="{{$d->riwayatID}}">
-                                            <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-info">Submit</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                         <!-- POP UP WITH MODAL -->
                         <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                             <div class="modal-dialog" style="width:400px; height=400px;">
