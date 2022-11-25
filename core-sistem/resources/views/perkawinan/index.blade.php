@@ -61,21 +61,14 @@
                         <td st>{{tanggal_indonesia( $d->tanggal_perkawinan)}}</td>
                         <td st>{{waktu_indonesia( $d->tanggal_perkawinan)}} WITA</td>
                         <td st >
-                            @if($d->statusRiwayat == 'Disetujui Paroki') 
+                            @if($d->status == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
-                                {{$d->statusRiwayat}}
+                                {{$d->status}}
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}} WITA</small>
-                            @elseif($d->statusRiwayat == 'Ditolak') 
-                            <div class="alert alert-danger" role="alert">
-                                {{$d->statusRiwayat}}
-                            </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}} WITA
-                                <br><b>Alasan:</b> {{$d->alasan_penolakan}}</small>
-                            @endif
                         </td>
                         <td st>
-                            @if($d->statusRiwayat == "Disetujui Paroki")
+                            @if($d->status == "Disetujui Paroki")
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <div><a href= "{{ url('perkawinan/RiwayatPerkawinan/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Detail</a></div>
                                 <div><a href="{{ url('perkawinan/EditForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-warning ml-1">Ubah</a></div>
