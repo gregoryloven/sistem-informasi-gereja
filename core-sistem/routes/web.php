@@ -34,6 +34,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PendaftaranPerkawinanController;
 use App\Http\Controllers\PendaftaranKppController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\KppController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -208,6 +209,12 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/krisma/PembatalanSetempat', [KrismaController::class, 'PembatalanSetempat'])->name('krisma.PembatalanSetempat');
     Route::post('/krisma/InputFormLintas', [KrismaController::class, 'InputFormLintas'])->name('krisma.InputFormLintas');
     Route::post('/krisma/PembatalanLintas', [KrismaController::class, 'PembatalanLintas'])->name('krisma.PembatalanLintas');
+
+    //KPP
+    Route::resource('kpp', KppController::class);
+    Route::get('/kpp/OpenForm/{id}', [KppController::class, 'OpenForm'])->name('kpp.OpenForm');
+    Route::get('/kpp/EditForm/{id}', [KppController::class, 'EditForm'])->name('kpp.EditForm');
+
 
     //Perkawinan
     Route::resource('perkawinan', PerkawinanController::class);

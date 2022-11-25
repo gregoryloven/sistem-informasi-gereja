@@ -78,8 +78,7 @@ class PendaftaranKppController extends Controller
         $data->telepon_calon_istri = $request->get("telepon_calon_istri");
 
         $data->keterangan_kursus = $request->get("keterangan_kursus");
-        // $data->lokasi = $request->get("lokasi");
-        $data->lokasi = "Gereja A";
+        $data->lokasi = $request->get("lokasi");
         $data->status = "Diproses";
 
         //ktp
