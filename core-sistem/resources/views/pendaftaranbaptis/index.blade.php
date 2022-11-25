@@ -167,8 +167,13 @@
                                 @endif
                             </td>
                             <td st>
-                                @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
-                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                                @if($d->status == "Diproses")
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})">Ubah</a></div>
+                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                    <div><a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger ml-1">Batal</a></div>
+                                    @endif
+                                </div>    
                                 @endif
                                 @if ($d->status == 'Selesai')
                                 <form role="form" method="GET" action="{{ url('/sertifikat/baptisbayi') }}">
@@ -217,6 +222,20 @@
 
 @section('javascript')
 <script>
+function EditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('pendaftaranbaptis.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+
 function detail(id)
 {
   $.ajax({

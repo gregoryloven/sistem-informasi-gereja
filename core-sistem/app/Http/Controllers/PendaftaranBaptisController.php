@@ -185,6 +185,61 @@ class PendaftaranBaptisController extends Controller
             'msg'=>view('pendaftaranbaptis.detail', compact("log"))->render()),200);
     }
 
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Baptis::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('pendaftaranbaptis.EditForm',compact("data"))->render()),200);
+    }
+
+    public function update(Request $request)
+    {
+        $baptis=Baptis::find($request->id);
+
+        if($baptis->jenis == 'Baptis Bayi')
+        {
+            $baptis->nama_lengkap = $request->get("nama_lengkap");
+            $baptis->tempat_lahir = $request->get("tempat_lahir");
+            $baptis->tanggal_lahir = $request->get("tanggal_lahir");
+            $baptis->orangtua_ayah = $request->get("orangtua_ayah");
+            $baptis->orangtua_ibu = $request->get("orangtua_ibu");
+            $baptis->wali_baptis_ayah = $request->get("wali_baptis_ayah");
+            $baptis->wali_baptis_ibu = $request->get("wali_baptis_ibu");
+            $baptis->telepon = $request->get("telepon");
+            $baptis->save();
+
+            return redirect()->route('pendaftaranbaptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Bayi Berhasil Diubah');
+        }
+        else
+        {
+            $data->nama_lengkap = $request->get("nama_lengkap");
+            $data->tempat_lahir = $request->get("tempat_lahir");
+            $data->tanggal_lahir = $request->get("tanggal_lahir");
+            $data->orangtua_ayah = $request->get("orangtua_ayah");
+            $data->orangtua_ibu = $request->get("orangtua_ibu");
+            $data->wali_baptis_ayah = $request->get("wali_baptis_ayah");
+            $data->wali_baptis_ibu = $request->get("wali_baptis_ibu");
+            $data->telepon = $request->get("telepon");
+
+            $file=$request->file('surat_pernyataan');
+            if(isset($file))
+            {
+                $imgFolder = 'file_sertifikat/surat_pernyataan';
+                $extension = $request->file('surat_pernyataan')->extension();
+                $imgFile=time()."_".$request->get('nama').".".$extension;
+                $file->move($imgFolder,$imgFile);
+                $data->surat_pernyataan=$imgFile;
+            }
+
+            $data->save();
+            
+            return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Dewasa Berhasil Ubah');
+        }
+
+    }
+
     public function Pembatalan(Request $request)
     {
         $data=Baptis::find($request->id);

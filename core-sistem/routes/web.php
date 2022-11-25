@@ -275,12 +275,14 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::get('/pendaftaranbaptis/OpenForm/{id}', [PendaftaranBaptisController::class, 'OpenForm'])->name('pendaftaranbaptis.OpenForm');
         Route::post('/pendaftaranbaptis/Pembatalan', [PendaftaranBaptisController::class, 'Pembatalan'])->name('pendaftaranbaptis.Pembatalan');
         Route::post('/pendaftaranbaptis/detail', [PendaftaranBaptisController::class, 'detail'])->name('pendaftaranbaptis.detail');
+        Route::post('/pendaftaranbaptis/EditForm', [PendaftaranBaptisController::class, 'EditForm'])->name('pendaftaranbaptis.EditForm');
 
         //Pendaftaran Baptis Dewasa
         Route::get('pendaftaranbaptisdewasa', [PendaftaranBaptisController::class, 'indexDewasa'])->name('pendaftaranbaptis.indexDewasa');
         Route::post('/pendaftaranbaptis/InputFormDewasa', [PendaftaranBaptisController::class, 'InputFormDewasa'])->name('pendaftaranbaptis.InputFormDewasa');
         Route::get('/pendaftaranbaptis/OpenFormDewasa/{id}', [PendaftaranBaptisController::class, 'OpenFormDewasa'])->name('pendaftaranbaptis.OpenFormDewasa');
         Route::post('/pendaftaranbaptis/detailDewasa', [PendaftaranBaptisController::class, 'detailDewasa'])->name('pendaftaranbaptis.detailDewasa');
+        Route::post('/pendaftaranbaptis/EditFormDewasa', [PendaftaranBaptisController::class, 'EditFormDewasa'])->name('pendaftaranbaptis.EditFormDewasa');
 
         //Pendaftaran Komuni
         Route::resource('pendaftarankomuni', PendaftaranKomuniController::class);
