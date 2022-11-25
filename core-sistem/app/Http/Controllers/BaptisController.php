@@ -85,7 +85,7 @@ class BaptisController extends Controller
         // $riwayat->status =  "Disetujui Paroki";
         // $riwayat->save();
 
-        return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Berhasil');
+        return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Bayi Berhasil');
     }
 
     public function EditForm(Request $request)
@@ -178,12 +178,12 @@ class BaptisController extends Controller
         try
         {
             $baptis->delete();
-            return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Berhasil Dihapus');
+            return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Bayi Berhasil Dihapus');
         
         }
         catch(\Exception $e)
         {
-            $baptis = "Gagal Menghapus Data Baptis";
+            $baptis = "Gagal Menghapus Data Baptis Bayi";
             return redirect()->route('baptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error', $msg);    
         }
     }

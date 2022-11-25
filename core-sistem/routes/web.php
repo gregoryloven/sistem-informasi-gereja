@@ -35,6 +35,7 @@ use App\Http\Controllers\PendaftaranPerkawinanController;
 use App\Http\Controllers\PendaftaranKppController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\KppController;
+use App\Http\Controllers\BaptisDewasaController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -187,12 +188,15 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     //Keluarga
     Route::resource('keluargas', KeluargaController::class);
 
-    //Baptis
+    //Baptis Bayi
     Route::resource('baptis', BaptisController::class);
     Route::post('/baptis/EditForm', [BaptisController::class, 'EditForm'])->name('baptis.EditForm');
     Route::get('/baptis/OpenForm/{id}', [BaptisController::class, 'OpenForm'])->name('baptis.OpenForm');
     Route::post('/baptis/Pembatalan', [BaptisController::class, 'Pembatalan'])->name('baptis.Pembatalan');
 
+    //Baptis Dewasa
+    Route::resource('baptisdewasa', BaptisDewasaController::class);
+    Route::get('/baptisdewasa/OpenForm/{id}', [BaptisDewasaController::class, 'OpenForm'])->name('baptisdewasa.OpenForm');
 
     //Komuni Pertama
     Route::resource('komunipertama', KomuniPertamaController::class);

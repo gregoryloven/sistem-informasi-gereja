@@ -8,12 +8,12 @@
 @endpush
 
 @section('title')
-    Sakramen Baptis Bayi
+    Sakramen Baptis Dewasa
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Daftar Penerima Sakramen Baptis Bayi</h1>
+<h1 class="h3 mb-2 text-gray-800">Daftar Penerima Sakramen Baptis Dewasa</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -24,17 +24,6 @@
         {{ session('error') }}
     </div>
 @endif
-
-<!-- EDIT WITH MODAL-->
-<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" id="modalContent">
-            <div style="text-align: center;">
-                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -69,7 +58,7 @@
                         <td st>{{$d->romo}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href= "{{ url('baptis/OpenForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Formulir Pendaftaran</a>   
+                                <a href= "{{ url('baptisdewasa/OpenForm/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Formulir Pendaftaran</a>   
                             </div>
                         </td>
                     </tr>
@@ -90,22 +79,23 @@
                     <thead>
                         <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama Lengkap Penerima Baptis</th>
-                        <th>Tempat Lahir</th>
-                        <th>Tanggal Lahir</th>
-                        <th>Orang Tua Ayah</th>
-                        <th>Orang Tua Ibu</th>
-                        <th>Wali Baptis Ayah</th>
-                        <th>Wali Baptis Ibu</th>
-                        <th>Lingkungan</th>
-                        <th>KBG</th>
-                        <th>Telepon</th>
-                        <th>Tanggal Pelaksanaan</th>
-                        <th>Waktu Pelaksanaan</th>
-                        <th>Lokasi</th>
-                        <th>Romo</th>
-                        <th>Status</th>
-                        <th>Tindakan</th>
+                            <th>Nama Lengkap Penerima Baptis</th>
+                            <th>Tempat Lahir</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Orang Tua Ayah</th>
+                            <th>Orang Tua Ibu</th>
+                            <th>Wali Baptis Ayah</th>
+                            <th>Wali Baptis Ibu</th>
+                            <th>Lingkungan</th>
+                            <th>KBG</th>
+                            <th>Telepon</th>
+                            <th>Tanggal Pelaksanaan</th>
+                            <th>Waktu Pelaksanaan</th>
+                            <th>Lokasi</th>
+                            <th>Romo</th>
+                            <th>Surat Pernyataan</th>
+                            <th>Status</th>
+                            <th>Tindakan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,9 +115,10 @@
                             <td st>{{$d->kbg}}</td>
                             <td st>{{$d->telepon}}</td>
                             <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
-                            <td st>{{waktu_indonesia( $d->jadwal)}}</td>
+                            <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->romo}}</td>
+                            <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}" height='80px'/></td>
                             <td st>
                                 @if($d->status == "Disetujui Paroki")
                                     <div class="alert alert-success" role="alert">
@@ -139,7 +130,7 @@
                             <td st>
                                 @if($d->status == "Disetujui Paroki")
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <form role="form" method="POST" action="{{ url('baptis/'.$d->id) }}">
+                                    <form role="form" method="POST" action="{{ url('baptisdewasa/'.$d->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
@@ -149,6 +140,14 @@
                                 @endif
                             </td>
                         </tr>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}">
+                                </div>
+                            </div>
+                        </div>
                         @endforeach
                     </tbody>
                 </table>
@@ -157,22 +156,4 @@
     </div>
 </div>
 <!-- /.container-fluid -->
-@endsection
-
-@section('javascript')
-<script>
-function EditForm(id)
-{
-  $.ajax({
-    type:'POST',
-    url:'{{ route('baptis.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
-    data:{'_token':'<?php echo csrf_token() ?>',
-          'id':id
-         },
-    success: function(data){
-      $('#modalContent').html(data.msg)
-    }
-  });
-}
-</script>
 @endsection
