@@ -114,8 +114,6 @@ class PendaftaranKrismaController extends Controller
         $data->tanggal_lahir = $request->get("tanggal_lahir");
         $data->orangtua_ayah = $request->get("orangtua_ayah");
         $data->orangtua_ibu = $request->get("orangtua_ibu");
-        $data->lingkungan = $request->get("lingkungan");
-        $data->kbg = $request->get("kbg");
         $data->telepon = $request->get("telepon");
         $data->jenis = "Lintas Paroki";
         $data->jadwal = $request->get("jadwal");
@@ -160,10 +158,7 @@ class PendaftaranKrismaController extends Controller
     public function detail(Request $request)
     {
         $id=$request->get("id");
-        // $log=Riwayat::where([['event_id', '=', $id], ['jenis_event', 'like', 'Krisma%']])
-        // ->get();
-        $log = DB::table('riwayats')
-        ->join('list_events', 'riwayats.list_event_id', '=', 'list_events.id')
+        $log=Riwayat::join('list_events', 'riwayats.list_event_id', '=', 'list_events.id')
         ->where([['event_id', '=', $id], ['riwayats.jenis_event', 'like', 'Krisma%']])
         ->get(['riwayats.*', 'list_events.keterangan_kursus as Ket']);
         

@@ -243,8 +243,6 @@
                         <th>Tanggal Lahir</th>
                         <th>Orang Tua Ayah</th>
                         <th>Orang Tua Ibu</th>
-                        <th>Lingkungan</th>
-                        <th>KBG</th>
                         <th>Telepon</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
@@ -268,8 +266,6 @@
                             <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
                             <td st>{{$d->orangtua_ayah}}</td>
                             <td st>{{$d->orangtua_ibu}}</td>
-                            <td st>{{$d->lingkungan}}</td>
-                            <td st>{{$d->kbg}}</td>
                             <td st>{{$d->telepon}}</td>
                             <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                             <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
@@ -279,7 +275,7 @@
                             <td st><a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}" height='80px'/></a></td>
                             <td st><a href="#modalPopUp3{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pengantar/'.$d->surat_pengantar)}}" height='80px'/></a></td>
                             <td st>
-                                @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                @if($d->status == "Diproses")
                                 
                                 <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-info" onclick="detail({{ $d->id }})">Lacak</a>
                                 

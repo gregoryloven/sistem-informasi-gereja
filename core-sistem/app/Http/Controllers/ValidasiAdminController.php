@@ -528,31 +528,29 @@ class ValidasiAdminController extends Controller
             ->orderby('krismas.updated_at', 'ASC')
             ->get();
 
-            return view('validasiAdmin.krisma',compact("reservasi", "reservasi2"));
+            $reservasiAll = DB::table('krismas')
+            ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Setempat']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
+            ->orderBy('krismas.jadwal', 'DESC')
+            ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+
+            $reservasiAll2 = DB::table('krismas')
+            ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Lintas']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Lintas']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Lintas']])
+            ->orderBy('krismas.jadwal', 'DESC')
+            ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+            return view('validasiAdmin.krisma',compact("reservasi", "reservasi2", "reservasiAll", "reservasiAll2"));
         }
-
-        // $reservasiAll = DB::table('krismas')
-        // ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
-        // ->join('users', 'riwayats.user_id', '=', 'users.id')
-        // ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Setempat']])
-        // ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
-        // ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Setempat']])
-        // ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Krisma Setempat']])
-        // ->orderBy('krismas.jadwal', 'DESC')
-        // ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        // 'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
-        // $reservasiAll2 = DB::table('krismas')
-        // ->join('riwayats', 'krismas.id', '=', 'riwayats.event_id')
-        // ->join('users', 'riwayats.user_id', '=', 'users.id')
-        // ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Krisma Lintas']])
-        // ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Lintas']])
-        // ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Krisma Lintas']])
-        // ->orwhere([['riwayats.status', 'Selesai'], ['riwayats.jenis_event', 'Krisma Lintas']])
-        // ->orderBy('krismas.jadwal', 'DESC')
-        // ->get(['krismas.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
-        // 'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
-
     }
 
     public function AcceptKrismaSetempat(Request $request)

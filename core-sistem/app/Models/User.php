@@ -66,6 +66,11 @@ class User extends Authenticatable
     	return $this->hasMany(KomuniPertama::class, 'user_id', 'id');
     }
 
+    public function krisma()
+    {
+    	return $this->hasMany(Krisma::class, 'user_id', 'id');
+    }
+
     public function perkawinan()
     {
     	return $this->hasMany(Perkawinan::class, 'user_id', 'id');

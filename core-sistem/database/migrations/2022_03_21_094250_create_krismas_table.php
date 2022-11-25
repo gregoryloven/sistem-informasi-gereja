@@ -21,8 +21,8 @@ class CreateKrismasTable extends Migration
             $table->date('tanggal_lahir');
             $table->string('orangtua_ayah');
             $table->string('orangtua_ibu');
-            $table->string('lingkungan');
-            $table->string('kbg');
+            $table->string('lingkungan')->nullable();
+            $table->string('kbg')->nullable();
             $table->string('telepon');
             $table->enum('jenis', ['Paroki Setempat', 'Lintas Paroki']);
             $table->dateTime('jadwal');
