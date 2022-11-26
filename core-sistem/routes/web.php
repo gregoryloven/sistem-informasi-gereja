@@ -358,6 +358,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     Route::get('validasiAdminKpp', [ValidasiAdminController::class, 'kpp'])->name('validasiAdmin.kpp');
     Route::get('/validasiAdminKpp/DetailKpp/{id}', [ValidasiAdminController::class, 'DetailKpp'])->name('validasiAdmin.DetailKpp');
+    Route::get('/validasiAdminKpp/RiwayatKpp/{id}', [ValidasiAdminController::class, 'RiwayatKpp'])->name('validasiAdmin.RiwayatKpp');
     Route::post('/validasiAdmin/acceptkpp', [ValidasiAdminController::class, 'AcceptKpp'])->name('validasiAdmin.AcceptKpp');
     Route::post('/validasiAdmin/declinekpp', [ValidasiAdminController::class, 'DeclineKpp'])->name('validasiAdmin.DeclineKpp');
     Route::post('/validasiAdminKpp/PembatalanKpp/{id}', [ValidasiAdminController::class, 'PembatalanKpp'])->name('validasiAdmin.PembatalanKpp');

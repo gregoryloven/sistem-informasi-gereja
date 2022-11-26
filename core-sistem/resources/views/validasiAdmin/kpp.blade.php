@@ -104,13 +104,16 @@
                             @endif
                         </td>
                         <td st>
-                            @if($da->statusRiwayat == "Disetujui Paroki" && $da->kursus == " ")
-                            <form role="form" method="POST" action="{{ url('validasiAdminKpp/PembatalanKpp/'.$da->id) }}">
-                                @csrf
-                                <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$da->id}}">
-                                <input type="hidden" class="form-control" name="keterangan_kursus" value="{{$da->keterangan_kursus}}">
-                                <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('Apakah anda yakin ingin membatalkan data ini?')) return false">Batal</button>
-                            </form>
+                            @if($da->statusRiwayat == "Disetujui Paroki")
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <div><a href= "{{ url('validasiAdminKpp/RiwayatKpp/'.$da->id) }}" class="btn btn-xs btn-flat btn-info">Detail</a></div>
+                                <form role="form" method="POST" action="{{ url('validasiAdminKpp/PembatalanKpp/'.$da->id) }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$da->id}}">
+                                    <input type="hidden" class="form-control" name="keterangan_kursus" value="{{$da->keterangan_kursus}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger ml-1" onclick="if(!confirm('Apakah anda yakin ingin membatalkan data ini?')) return false">Batal</button>
+                                </form>
+                            </div>
                             @endif
                         </td>
                     </tr>

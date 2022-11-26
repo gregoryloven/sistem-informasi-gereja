@@ -36,59 +36,80 @@
                 <tbody>
                 @foreach($data as $d)
                     <tr>
-                        <td>Nama Lengkap</td>
+                        <td style="color:black;">Nama Lengkap</td>
                         <td>{{$d->nama_lengkap_calon_suami}}</td>
                         <td>{{$d->nama_lengkap_calon_istri}}</td>
                     </tr>
                     <tr>
-                        <td>Tempat, Tgl Lahir</td>
+                        <td style="color:black;">Tempat, Tgl Lahir</td>
                         <td>{{$d->tempat_lahir_calon_suami}}, {{tanggal_indonesia($d->tanggal_lahir_calon_suami)}}</td>
                         <td>{{$d->tempat_lahir_calon_istri}}, {{tanggal_indonesia($d->tanggal_lahir_calon_istri)}}</td>
                     </tr>
                     <tr>
-                        <td>Alamat</td>
+                        <td style="color:black;">Alamat</td>
                         <td>{{$d->alamat_calon_suami}}</td>
                         <td>{{$d->alamat_calon_istri}}</td>
                     </tr>
                     <tr>
-                        <td>Telepon</td>
+                        <td style="color:black;">Telepon</td>
                         <td>{{$d->telepon_calon_suami}}</td>
                         <td>{{$d->telepon_calon_istri}}</td>
                     </tr>
                     <tr>
+                        <td style="color:black;">Agama</td>
+                        <td>{{$d->agama_calon_suami}}</td>
+                        <td>{{$d->agama_calon_istri}}</td>
+                    </tr>
+                    @if($d->agama_calon_suami == 'Katolik' || $d->agama_calon_istri == 'Katolik')
+                    <tr>
+                        <td style="color:black;">Paroki</td>
+                        <td>{{$d->paroki_calon_suami}}</td>
+                        <td>{{$d->paroki_calon_istri}}</td>
+                    </tr>
+                    @endif
+                    <tr style="color:black;">
                         <td><b>IDENTITAS ORANG TUA</b></td><td></td><td></td>
                     </tr>
                     <tr>
-                        <td>Nama Lengkap Ayah</td>
+                        <td style="color:black;">Nama Lengkap Ayah</td>
                         <td>{{$d->nama_ayah_calon_suami}}</td>
                         <td>{{$d->nama_ayah_calon_istri}}</td>
                     </tr>
                     <tr>
-                        <td>Nama Lengkap Ibu</td>
+                        <td style="color:black;">Nama Lengkap Ibu</td>
                         <td>{{$d->nama_ibu_calon_suami}}</td>
                         <td>{{$d->nama_ibu_calon_istri}}</td>
                     </tr>
-                    <tr>
+                    <tr style="color:black;">
                         <td><b>LAMPIRAN PRIBADI</b></td><td></td><td></td>
                     </tr>
                     <tr>
-                        <td>KTP</td>
+                        <td style="color:black;">NIK</td>
+                        <td>{{$d->nik_calon_suami}}</td>
+                        <td>{{$d->nik_calon_istri}}</td>
+                    </tr>
+                    <tr>
+                        <td style="color:black;">KTP</td>
                         <td><img src="{{asset('file_kpp/ktp/'.$d->ktp_calon_suami)}}" height='80px'/></td>
                         <td><img src="{{asset('file_kpp/ktp/'.$d->ktp_calon_istri)}}" height='80px'/></td>
                     </tr>
                     <tr>
-                        <td>Surat Pengantar Lingkungan</td>
+                    @if(isset($d->suratpengantar_lingkungan_calon_suami) || isset($d->suratpengantar_lingkungan_calon_istri))
+                        <td style="color:black;">Surat Pengantar Lingkungan</td>
                         <td>@if(isset($d->suratpengantar_lingkungan_calon_suami))<img src="{{asset('file_kpp/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_suami)}}" height='80px'/>@endif</td>
                         <td>@if(isset($d->suratpengantar_lingkungan_calon_istri))<img src="{{asset('file_kpp/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                     <tr>
-                        <td>Surat Pengantar Paroki</td>
+                    @if(isset($d->suratpengantar_paroki_calon_suami) || isset($d->suratpengantar_paroki_calon_istri))
+                        <td style="color:black;">Surat Pengantar Paroki</td>
                         <td>@if(isset($d->suratpengantar_paroki_calon_suami))<img src="{{asset('file_kpp/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_suami)}}" height='80px'/>@endif</td>
                         <td>@if(isset($d->suratpengantar_paroki_calon_istri))<img src="{{asset('file_kpp/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                 </tbody>
             </table>
-            <br><h6><b>Tempat & Keterangan KPP:</b> {{$data[0]->lokasi}}, {{$data[0]->keterangan_kursus}}</h6>
+            <br><h6 style="color:black;"><b>Tempat & Keterangan KPP:</b> {{$data[0]->lokasi}}, {{$data[0]->keterangan_kursus}}</h6>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="d-flex justify-content-end">
                     <form action="/validasiAdmin/declinekpp" class="ml-2" method="post">

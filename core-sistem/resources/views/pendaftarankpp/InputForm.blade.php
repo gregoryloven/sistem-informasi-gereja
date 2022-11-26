@@ -82,26 +82,58 @@
                         <label >Telepon</label>
                         <input type="text" class="form-control" id='telepon_calon_suami' name='telepon_calon_suami' placeholder="Telepon Calon Suami" required>
                     </div> 
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label >Agama</label>
+                        <select class="form-control" id='agama_calon_suami' name='agama_calon_suami' onchange='checkAgamaSuami(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Khonghucu">Khonghucu</option>
+                        </select>
+                    </div>
+                </div>
+                @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
+                <div style='display:none' id='label_paroki_calon_suami' class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label >Paroki Asal</label>
+                        <select class="form-control" id='paroki_calon_suami' name='paroki_calon_suami' onchange='checkParokiSuami(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="{{app('currentTenant')->name}}">{{app('currentTenant')->name}}</option>
+                            <option value="Paroki Luar">Paroki Luar</option>
+                        </select>
+                    </div> 
                 </div> 
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                @endif
+                <div style='display:none' id='label_nik_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="form-group">
+                        <label >NIK</label>
+                        <input type="number" class="form-control" id='nik_calon_suami' name='nik_calon_suami' placeholder="NIK Calon Suami" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
+                    </div>
+                </div> 
+                <div style='display:none' id='label_ktp_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >KTP</label>
                         <input type="file" class="form-control" id='ktp_calon_suami' name='ktp_calon_suami' onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
-                        <img id="output"  width="100px" height="100px">
+                        <img id="output" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpengantar_lingkungan_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Lingkungan</label>
                         <input type="file" class="form-control" id='suratpengantar_lingkungan_calon_suami' name='suratpengantar_lingkungan_calon_suami' onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output2"  width="100px" height="100px">
+                        <img id="output2" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpengantar_paroki_calon_suami' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
-                        <label >Surat Pengantar Paroki Luar (Jika Paroki Luar)</label>
+                        <label >Surat Pengantar Paroki Luar</label>
                         <input type="file" class="form-control" id='suratpengantar_paroki_calon_suami' name='suratpengantar_paroki_calon_suami' onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])">
-                        <img id="output3"  width="100px" height="100px">
+                        <img id="output3" width="100px" height="100px">
                     </div>
                 </div>
 
@@ -150,24 +182,56 @@
                         <label >Telepon</label>
                         <input type="text" class="form-control" id='telepon_calon_istri' name='telepon_calon_istri' placeholder="Telepon Calon Istri" required>
                     </div> 
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label >Agama</label>
+                        <select class="form-control" id='agama_calon_istri' name='agama_calon_istri' onchange='checkAgamaIstri(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Khonghucu">Khonghucu</option>
+                        </select>
+                    </div>
+                </div>
+                @if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
+                <div style='display:none' id='label_paroki_calon_istri' class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label >Paroki Asal</label>
+                        <select class="form-control" id='paroki_calon_istri' name='paroki_calon_istri' onchange='checkParokiIstri(this)' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="{{app('currentTenant')->name}}">{{app('currentTenant')->name}}</option>
+                            <option value="Paroki Luar">Paroki Luar</option>
+                        </select>
+                    </div> 
                 </div> 
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                @endif
+                <div style='display:none' id='label_nik_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="form-group">
+                        <label >NIK</label>
+                        <input type="number" class="form-control" id='nik_calon_istri' name='nik_calon_istri' placeholder="NIK Calon Istri" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
+                    </div>
+                </div> 
+                <div style='display:none' id='label_ktp_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >KTP</label>
                         <input type="file" class="form-control" id='ktp_calon_istri' name='ktp_calon_istri' onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])" required>
                         <img id="output4" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpengantar_lingkungan_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
                         <label >Surat Pengantar Lingkungan</label>
                         <input type="file" class="form-control" id='suratpengantar_lingkungan_calon_istri' name='suratpengantar_lingkungan_calon_istri' onchange="document.getElementById('output5').src = window.URL.createObjectURL(this.files[0])">
                         <img id="output5" width="100px" height="100px">
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div style='display:none' id='label_suratpengantar_paroki_calon_istri' class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="form-group">
-                        <label >Surat Pengantar Paroki Luar (Jika Paroki Luar)</label>
+                        <label >Surat Pengantar Paroki Luar</label>
                         <input type="file" class="form-control" id='suratpengantar_paroki_calon_istri' name='suratpengantar_paroki_calon_istri' onchange="document.getElementById('output6').src = window.URL.createObjectURL(this.files[0])">
                         <img id="output6" width="100px" height="100px">
                     </div>
@@ -221,6 +285,80 @@ function checkbox()
     else
     {
         $('#button').attr('disabled', true)
+    }
+}
+
+function checkParokiSuami(paroki)
+{
+    if($(paroki).val() == '{{app('currentTenant')->name}}')
+    {
+        $('#label_suratpengantar_lingkungan_calon_suami').show()
+        $('#label_suratpengantar_paroki_calon_suami').hide()
+
+        $('#suratpengantar_paroki_calon_suami').prop('required',false)
+    }
+    else
+    {
+        $('#label_suratpengantar_paroki_calon_suami').show()
+        $('#label_suratpengantar_lingkungan_calon_suami').hide()
+
+        $('#suratpengantar_lingkungan_calon_suami').prop('required',false)
+    }
+}
+
+function checkAgamaSuami(agama)
+{
+
+    if($(agama).val() == 'Katolik')
+    {
+        $('#label_nik_calon_suami').show()
+        $('#label_ktp_calon_suami').show()
+        $('#label_paroki_calon_suami').show()
+    }
+    else
+    {
+        $('#label_nik_calon_suami').show()
+        $('#label_ktp_calon_suami').show()
+        $('#label_paroki_calon_suami').hide()
+
+        $('#paroki_calon_suami').prop('required',false)
+    }
+}
+
+function checkAgamaIstri(agama)
+{
+
+    if($(agama).val() == 'Katolik')
+    {
+        $('#label_nik_calon_istri').show()
+        $('#label_ktp_calon_istri').show()
+        $('#label_paroki_calon_istri').show()
+    }
+    else
+    {        
+        $('#label_nik_calon_istri').show()
+        $('#label_ktp_calon_istri').show()
+        $('#label_paroki_calon_istri').hide()
+
+        $('#paroki_calon_istri').prop('required',false)
+    }
+}
+
+function checkParokiIstri(paroki)
+{
+    if($(paroki).val() == '{{app('currentTenant')->name}}')
+    {
+        $('#label_suratpengantar_lingkungan_calon_istri').show()
+        $('#label_suratpengantar_paroki_calon_istri').hide()
+
+        $('#suratpengantar_paroki_calon_istri').prop('required',false)
+    }
+    else
+    {
+        $('#label_suratpengantar_paroki_calon_istri').show()
+        $('#label_suratpengantar_lingkungan_calon_istri').hide()
+
+        $('#suratpengantar_lingkungan_calon_istri').prop('required',false)
     }
 }
 </script>

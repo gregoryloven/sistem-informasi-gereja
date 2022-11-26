@@ -174,14 +174,18 @@
                         <td><img src="{{asset('file_kpp/ktp/'.$d->ktp_calon_istri)}}" height='80px'/></td>
                     </tr>
                     <tr>
+                    @if(isset($d->suratpengantar_lingkungan_calon_suami) || isset($d->suratpengantar_lingkungan_calon_istri))
                         <td style="color:black;">Surat Pengantar Lingkungan</td>
                         <td>@if(isset($d->suratpengantar_lingkungan_calon_suami))<img src="{{asset('file_kpp/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_suami)}}" height='80px'/>@endif</td>
                         <td>@if(isset($d->suratpengantar_lingkungan_calon_istri))<img src="{{asset('file_kpp/suratpengantar_lingkungan/'.$d->suratpengantar_lingkungan_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                     <tr>
+                    @if(isset($d->suratpengantar_paroki_calon_suami) || isset($d->suratpengantar_paroki_calon_istri))
                         <td style="color:black;">Surat Pengantar Paroki</td>
                         <td>@if(isset($d->suratpengantar_paroki_calon_suami))<img src="{{asset('file_kpp/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_suami)}}" height='80px'/>@endif</td>
                         <td>@if(isset($d->suratpengantar_paroki_calon_istri))<img src="{{asset('file_kpp/suratpengantar_paroki/'.$d->suratpengantar_paroki_calon_istri)}}" height='80px'/>@endif</td>
+                    @endif
                     </tr>
                 </tbody>
             </table>

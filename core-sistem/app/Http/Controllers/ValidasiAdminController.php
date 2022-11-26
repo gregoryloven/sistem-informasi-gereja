@@ -775,6 +775,21 @@ class ValidasiAdminController extends Controller
         }
     }
 
+    public function RiwayatKpp(Request $request)
+    {
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $id = $request->id;
+            $data = Kpp::where('id', $id)->get();
+    
+            return view('validasiAdmin.RiwayatKpp',compact("data"));
+        }
+    }
+
     public function AcceptKpp(Request $request)
     {
         $kpp=Kpp::find($request->id);
