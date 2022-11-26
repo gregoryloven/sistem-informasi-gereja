@@ -9,6 +9,7 @@ use App\Models\Krisma;
 use App\Models\Kbg;
 use App\Models\Riwayat;
 use App\Models\ListEvent;
+use App\Models\PengurapanOrangSakit;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -52,11 +53,14 @@ class ValidasiKbgController extends Controller
     public function AcceptPelayanan(Request $request)
     {
         $pelayanan=PendaftaranPelayananLainnya::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $pelayanan->status = "Disetujui KBG";
         $pelayanan->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $pelayanan->id;
         $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Disetujui KBG";
@@ -68,11 +72,14 @@ class ValidasiKbgController extends Controller
     public function DeclinePelayanan(Request $request)
     {
         $pelayanan=PendaftaranPelayananLainnya::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $pelayanan->status = "Ditolak";
         $pelayanan->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id = $pelayanan->id;
         $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Ditolak";
@@ -80,6 +87,74 @@ class ValidasiKbgController extends Controller
         $riwayat->save();
 
         return redirect()->route('validasiKbg.pelayanan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pelayanan Berhasil Ditolak');
+    }
+
+    public function pengurapan()
+    {
+        if(Auth::user()->role != 'ketua kbg')
+        {
+            return back();
+        }
+        else
+        {
+            $kbg = Auth::user()->kbg->nama_kbg;
+            $user = Auth::user()->id;
+    
+            $reservasi = PengurapanOrangSakit::where([["status", "Diproses"], ['kbg', $kbg]])
+            ->orderby('jadwal', 'ASC')
+            ->orderby('updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = PengurapanOrangSakit::join('riwayats', 'pengurapan_orang_sakits.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui KBG'], ['kbg', $kbg], ['riwayats.jenis_event', 'Pengurapan']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['kbg', $kbg], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pengurapan']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['kbg', $kbg], ['riwayats.jenis_event', 'Pengurapan']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['pengurapan_orang_sakits.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+            
+            return view('validasiKbg.pengurapan',compact("reservasi", "reservasiAll", "kbg"));
+        }
+    }
+
+    public function AcceptPengurapan(Request $request)
+    {
+        $pengurapan=PengurapanOrangSakit::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
+        $pengurapan->status = "Disetujui KBG";
+        $pengurapan->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
+        $riwayat->event_id =  $pengurapan->id;
+        $riwayat->jenis_event =  "Pengurapan";
+        $riwayat->status =  "Disetujui KBG";
+        $riwayat->save();
+
+        return redirect()->route('validasiKbg.pengurapan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pengurapan Orang Sakit Berhasil Disetujui');
+    }
+
+    public function DeclinePengurapan(Request $request)
+    {
+        $pengurapan=PengurapanOrangSakit::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+ 
+        $pengurapan->status = "Ditolak";
+        $pengurapan->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
+        $riwayat->event_id = $pengurapan->id;
+        $riwayat->jenis_event =  "Pengurapan";
+        $riwayat->status =  "Ditolak";
+        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+        $riwayat->save();
+
+        return redirect()->route('validasiKbg.pengurapan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Pengurapan Orang Sakit Berhasil Ditolak');
     }
 
     public function baptis()

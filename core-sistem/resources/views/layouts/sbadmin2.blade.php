@@ -138,6 +138,7 @@
                         <a class="collapse-item" href="{{ route('validasiAdmin.kpp', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">KPP</a>
                         <a class="collapse-item" href="{{ route('validasiAdmin.perkawinan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Perkawinan</a>
                         <a class="collapse-item" href="{{ route('validasiAdmin.pelayanan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Pelayanan Lainnya</a>
+                        <a class="collapse-item" href="{{ route('validasiAdmin.pengurapan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Pengurapan Orang Sakit</a>
                         <a class="collapse-item" href="{{ route('validasiAdmin.petugas', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Petugas Liturgi</a>
                     </div>
                 </div>
