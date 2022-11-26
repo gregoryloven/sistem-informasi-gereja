@@ -38,7 +38,7 @@
                         <th>Nama Pemohon</th>
                         <th>Tanggal Pelayanan</th>
                         <th>Waktu Pelayanan</th>
-                        <th>Alamat</th>
+                        <th>Alamat Pelaksanaan</th>
                         <th>Telepon</th>
                         <th>Keterangan</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
@@ -116,7 +116,7 @@
                         <th>Nama Pemohon</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
-                        <th>Alamat</th>
+                        <th>Alamat Pelaksanaan</th>
                         <th>Telepon</th>
                         <th>Keterangan</th>
                         <th>Status</th>

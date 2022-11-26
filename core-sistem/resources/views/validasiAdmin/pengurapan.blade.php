@@ -1,4 +1,4 @@
-@extends('layouts.sbkl')
+@extends('layouts.sbadmin2')
 
 @push('css')
 <style>
@@ -13,7 +13,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Pengurapan Orang Sakit - Lingkungan {{$lingkungan}}</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Pengurapan Orang Sakit</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -36,6 +36,8 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama Pemohon</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Alamat Pelaksanaan</th>
@@ -51,20 +53,22 @@
                     <tr style="text-align: center;">
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_lengkap}}</td>
+                        <td st>{{$d->lingkungan}}</td>
+                        <td st>{{$d->kbg}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{$d->keterangan}}</td>
                         <td st>
-                            @if($d->status == "Disetujui KBG")
-                            <form action="/validasiKL/acceptpengurapan" method="post">
+                            @if($d->status == "Disetujui Lingkungan")
+                            <form action="/validasiAdmin/acceptpengurapan" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validasiKL/declinepengurapan" class="ml-2" method="post">
+                            <form action="/validasiAdmin/declinepengurapan" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a>
@@ -76,11 +80,11 @@
                     <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" >
-                                <form role="form" method="POST" action="{{ url('validasiKL/declinepengurapan') }}" enctype="multipart/form-data">
+                                <form role="form" method="POST" action="{{ url('validasiAdmin/declinepengurapan') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Penolakan Pengurapan Orang Sakit</h4>
+                                        <h4 class="modal-title">Penolakan Pendaftaran Pelayanan</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
@@ -103,10 +107,10 @@
         </div>
     </div>
 </div>
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        Riwayat Validasi
-    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            Riwayat Validasi
+        </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable2">
@@ -114,12 +118,15 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama Pemohon</th>
+                        <th>Lingkungan</th>
+                        <th>KBG</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Alamat Pelaksanaan</th>
                         <th>Telepon</th>
                         <th>Keterangan</th>
                         <th>Status</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -129,13 +136,15 @@
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$da->nama_lengkap}}</td>
+                        <td st>{{$da->lingkungan}}</td>
+                        <td st>{{$da->kbg}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st>{{$da->alamat}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st>{{$da->keterangan}}</td>
-                        <td st >
-                            @if($da->statusRiwayat == 'Disetujui Lingkungan') 
+                        <td st>
+                            @if($da->statusRiwayat == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
@@ -146,7 +155,7 @@
                             </div>
                             <small><b>Pada:</b> {{tanggal_indonesia($da->created_at)}}, {{waktu_indonesia($da->created_at)}} WITA
                                 <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
-                            @else
+                            @elseif($da->statusRiwayat == 'Dibatalkan') 
                             <div class="alert alert-danger" role="alert">
                                 {{$da->statusRiwayat}}
                             </div>
@@ -154,7 +163,38 @@
                                 <br><b>Alasan:</b> {{$da->alasan_pembatalan}}<br><b>Oleh:</b> {{$da->role}}</small>
                             @endif
                         </td>
+                        <td st>
+                            @if($da->statusRiwayat == "Disetujui Paroki")
+                            <a href="#modal{{$da->riwayatID}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                            @endif
+                        </td>
                     </tr>
+                    <!-- EDIT WITH MODAL -->
+                    <div class="modal fade" id="modal{{$da->riwayatID}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form role="form" method="POST" action="{{ url('validasiAdmin/pembatalanpengurapan') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                        <h4 class="modal-title">Pembatalan Pengurapan Orang Sakit</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @csrf
+                                        <label>Alasan Pembatalan:</label>
+                                        <input type="hidden" name="id" value="{{$da->id}}">
+                                        <input type="hidden" name="riwayatID" value="{{$da->riwayatID}}">
+                                        <input type="text" name="jadwal" class="d-none" value="{{$da->jadwal}}">
+                                        <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-info">Submit</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>

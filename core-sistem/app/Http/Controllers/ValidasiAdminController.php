@@ -13,6 +13,7 @@ use App\Models\Riwayat;
 use App\Models\ListEvent;
 use App\Models\Kpp;
 use App\Models\Perkawinan;
+use App\Models\PengurapanOrangSakit;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -24,7 +25,7 @@ class ValidasiAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function pelayanan()
+    public function pelayanan()
     {
         if(Auth::user()->role != 'admin')
         {
@@ -62,11 +63,14 @@ class ValidasiAdminController extends Controller
     public function AcceptPelayanan(Request $request)
     {
         $pelayanan=PendaftaranPelayananLainnya::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $pelayanan->status = "Disetujui Paroki";
         $pelayanan->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id =  $pelayanan->id;
         $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Disetujui Paroki";
@@ -78,11 +82,14 @@ class ValidasiAdminController extends Controller
     public function DeclinePelayanan(Request $request)
     {
         $pelayanan=PendaftaranPelayananLainnya::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
         $pelayanan->status = "Ditolak";
         $pelayanan->save();
 
         $riwayat = new Riwayat();
         $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
         $riwayat->event_id = $pelayanan->id;
         $riwayat->jenis_event =  "Pelayanan";
         $riwayat->status =  "Ditolak";
@@ -107,6 +114,88 @@ class ValidasiAdminController extends Controller
         $data->save();
 
         return redirect()->route('validasiAdmin.pelayanan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Pelayanan Berhasil Dibatalkan');
+    }
+
+    public function pengurapan()
+    {
+        if(Auth::user()->role != 'admin')
+        {
+            return back();
+        }
+        else
+        {
+            $user = Auth::user()->id;
+
+            $reservasi = PengurapanOrangSakit::where('status', 'Disetujui Lingkungan')
+            ->orderby('jadwal', 'ASC')
+            ->orderby('updated_at', 'ASC')
+            ->get();
+    
+            $reservasiAll = PengurapanOrangSakit::join('riwayats', 'pengurapan_orang_sakits.id', '=', 'riwayats.event_id')
+            ->join('users', 'riwayats.user_id', '=', 'users.id')
+            ->where([['riwayats.status', 'Disetujui Paroki'], ['riwayats.jenis_event', 'Pengurapan']])
+            ->orwhere([['riwayats.status', 'Ditolak'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pengurapan']])
+            ->orwhere([['riwayats.status', 'Dibatalkan'], ['riwayats.user_id', $user], ['riwayats.jenis_event', 'Pengurapan']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['pengurapan_orang_sakits.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
+            'riwayats.alasan_pembatalan', 'riwayats.id as riwayatID', 'riwayats.created_at','riwayats.updated_at', 'users.role']);
+    
+            return view('validasiAdmin.pengurapan',compact("reservasi", "reservasiAll"));
+        }
+    }
+
+    public function AcceptPengurapan(Request $request)
+    {
+        $pengurapan=PengurapanOrangSakit::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
+        $pengurapan->status = "Disetujui Paroki";
+        $pengurapan->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
+        $riwayat->event_id =  $pengurapan->id;
+        $riwayat->jenis_event =  "Pengurapan";
+        $riwayat->status =  "Disetujui Paroki";
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.pengurapan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pengurapan Orang Sakit Berhasil Disetujui');
+    }
+
+    public function DeclinePengurapan(Request $request)
+    {
+        $pengurapan=PengurapanOrangSakit::find($request->id);
+        $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+
+        $pengurapan->status = "Ditolak";
+        $pengurapan->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->list_event_id =  $list_event->id;
+        $riwayat->event_id = $pengurapan->id;
+        $riwayat->jenis_event =  "Pengurapan";
+        $riwayat->status =  "Ditolak";
+        $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+        $riwayat->save();
+
+        return redirect()->route('validasiAdmin.pengurapan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pengurapan Orang Sakit Berhasil Ditolak');
+    }
+
+    public function PembatalanPengurapan(Request $request)
+    {
+        $data=PengurapanOrangSakit::find($request->id);
+
+        $data->status = "Dibatalkan";
+
+        $riwayat = Riwayat::find($request->riwayatID);
+        $riwayat->status =  "Dibatalkan";
+        $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
+        $riwayat->save();
+        $data->save();
+
+        return redirect()->route('validasiAdmin.pengurapan', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pengurapan Orang Sakit Berhasil Dibatalkan');
     }
 
     public function petugas(Request $request)

@@ -128,7 +128,7 @@
                         <th>Telepon</th>
                         <th>Keterangan</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -192,7 +192,7 @@
                                         <label>Alasan Pembatalan:</label>
                                         <input type="hidden" name="id" value="{{$da->id}}">
                                         <input type="hidden" name="riwayatID" value="{{$da->riwayatID}}">
-                                        <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
+                                        <input type="text" name="jadwal" class="d-none" value="{{$da->jadwal}}">
                                         <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                     </div>
                                     <div class="modal-footer">
