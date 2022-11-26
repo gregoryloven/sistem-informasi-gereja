@@ -20,23 +20,30 @@ class PelayananLainnyaController extends Controller
      */
     public function index()
     {
-        $pelayanan = PelayananLainnya::all();
-        $data = PendaftaranPelayananLainnya::where('user_id', Auth::user()->id)->get();
-        if (Auth::user()->status !== "Tervalidasi") {
-            $user = [];
-        } else {
-            $user = DB::table('users')
-            ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-            ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-            ->where('users.id', Auth::user()->id)
-            ->get();
+        if(Auth::user()->role != 'umat')
+        {
+            return back();
         }
-        $riwayat = Riwayat::all();
-
-        if(optional(Auth::user())->id){
-            return view('pelayananlainnya.index',compact("pelayanan", "data", "user", "riwayat"));
-        }else{
-            return redirect('/login');
+        else
+        {
+            $pelayanan = PelayananLainnya::all();
+            $data = PendaftaranPelayananLainnya::where('user_id', Auth::user()->id)->get();
+            if (Auth::user()->status !== "Tervalidasi") {
+                $user = [];
+            } else {
+                $user = DB::table('users')
+                ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
+                ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
+                ->where('users.id', Auth::user()->id)
+                ->get();
+            }
+            $riwayat = Riwayat::all();
+    
+            if(optional(Auth::user())->id){
+                return view('pelayananlainnya.index',compact("pelayanan", "data", "user", "riwayat"));
+            }else{
+                return redirect('/login');
+            }
         }
     }
 

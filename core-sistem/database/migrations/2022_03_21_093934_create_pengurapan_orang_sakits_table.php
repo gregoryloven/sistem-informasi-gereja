@@ -17,10 +17,13 @@ class CreatePengurapanOrangSakitsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('nama_lengkap');
+            $table->string('lingkungan');
+            $table->string('kbg');
             $table->dateTime('jadwal');
             $table->string('alamat');
             $table->string('telepon');
             $table->string('keterangan');
+            $table->string('status');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

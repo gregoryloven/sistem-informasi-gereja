@@ -36,6 +36,7 @@ use App\Http\Controllers\PendaftaranKppController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\KppController;
 use App\Http\Controllers\BaptisDewasaController;
+use App\Http\Controllers\PendaftaranPengurapanController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -252,6 +253,11 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/pelayananlainnya/InputFormAll', [PelayananLainnyaController::class, 'InputFormAll'])->name('pelayananlainnya.InputFormAll');
         Route::post('/pelayananlainnya/Pembatalan', [PelayananLainnyaController::class, 'Pembatalan'])->name('pelayananlainnya.Pembatalan');
         Route::post('/pelayananlainnya/detail', [PelayananLainnyaController::class, 'detail'])->name('pelayananlainnya.detail');
+
+        //Pengurapan Orang Sakit
+        Route::resource('pendaftaranpengurapan', PendaftaranPengurapanController::class);
+        Route::post('/pendaftaranpengurapan/Pembatalan', [PendaftaranPengurapanController::class, 'Pembatalan'])->name('pendaftaranpengurapan.Pembatalan');
+        Route::post('/pendaftaranpengurapan/detail', [PendaftaranPengurapanController::class, 'detail'])->name('pendaftaranpengurapan.detail');
 
         //Pendaftaran Umat
         Route::resource('pendaftaranumat', PendaftaranUmatController::class);
