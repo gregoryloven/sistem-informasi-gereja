@@ -7,12 +7,12 @@
 @endpush
 
 @section('title')
-    Daftar Umat KBG
+    Daftar Umat
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Daftar Umat KBG</h1>
+<h1 class="h3 mb-2 text-gray-800">Daftar Umat</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}

@@ -14,6 +14,7 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('umatKbg') }}">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -27,10 +28,12 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('umatKbg') }}">
         <div class="card border-left-success shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -44,10 +47,12 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('umatKbg') }}">
         <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -65,10 +70,12 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('umatKbg') }}">
         <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -86,6 +93,7 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Pending Requests Card Example -->
@@ -128,6 +136,26 @@
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
+        <a href="{{ url('validasiKbgKomuni') }}">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Komuni Pertama</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlah_komuni_pertama}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
         <a href="{{ url('validasiKbgKrisma') }}">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
@@ -147,13 +175,13 @@
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <a href="{{ url('validasiKbgKomuni') }}">
+        <a href="{{ url('validasiKbgPelayanan') }}">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Komuni Pertama</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlah_komuni_pertama}}</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pelayanan Lainnya</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlah_pelayanan_lainnya}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-check fa-2x text-gray-300"></i>
@@ -166,13 +194,13 @@
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <a href="{{ url('validasiKbgPelayanan') }}">
+        <a href="{{ url('validasiKbgPengurapan') }}">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pelayanan Lainnya</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlah_pelayanan_lainnya}}</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pengurapan Orang Sakit</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$jumlah_pengurapan}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-check fa-2x text-gray-300"></i>
