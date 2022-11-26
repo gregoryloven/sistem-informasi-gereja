@@ -115,7 +115,7 @@
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Pengurapan Orang Sakit</h5>
                             <p class="card-text">Pendaftaran Pengurapan Orang Sakit & Perminyakan</p><br>
-                            <a href="/pengurapan" class="btn btn-primary">Daftar</a>
+                            <a href="/pendaftaranpengurapan" class="btn btn-primary">Daftar</a>
                         </div>
                     </div>
                 </div>
@@ -227,7 +227,7 @@
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Pengurapan Orang Sakit</h5>
                             <p class="card-text">Pendaftaran Pengurapan Orang Sakit & Perminyakan</p><br>
-                            <a href="/pengurapan" class="btn btn-primary">Daftar</a>
+                            <a href="/pendaftaranpengurapan" class="btn btn-primary">Daftar</a>
                         </div>
                     </div>
                 </div>

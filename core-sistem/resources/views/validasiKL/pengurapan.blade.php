@@ -8,12 +8,12 @@
 @endpush
 
 @section('title')
-    Validasi Pelayanan
+    Validasi Pengurapan Orang Sakit
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Pelayanan - Lingkungan {{$lingkungan}}</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Pengurapan Orang Sakit - Lingkungan {{$lingkungan}}</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -36,7 +36,6 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama Pemohon</th>
-                        <th>Jenis Pelayanan</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Alamat</th>
@@ -52,7 +51,6 @@
                     <tr style="text-align: center;">
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_lengkap}}</td>
-                        <td st>{{$d->Pelayanan->jenis_pelayanan}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td st>{{$d->alamat}}</td>
@@ -60,13 +58,13 @@
                         <td st>{{$d->keterangan}}</td>
                         <td st>
                             @if($d->status == "Disetujui KBG")
-                            <form action="/validasiKL/acceptpelayanan" method="post">
+                            <form action="/validasiKL/acceptpengurapan" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validasiKL/declinepelayanan" class="ml-2" method="post">
+                            <form action="/validasiKL/declinepengurapan" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a>
@@ -78,11 +76,11 @@
                     <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" >
-                                <form role="form" method="POST" action="{{ url('validasiKL/declinepelayanan') }}" enctype="multipart/form-data">
+                                <form role="form" method="POST" action="{{ url('validasiKL/declinepengurapan') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Penolakan Pelayanan</h4>
+                                        <h4 class="modal-title">Penolakan Pengurapan Orang Sakit</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf
@@ -116,7 +114,6 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama Pemohon</th>
-                        <th>Jenis Pelayanan</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Alamat</th>
@@ -132,7 +129,6 @@
                     <tr>
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$da->nama_lengkap}}</td>
-                        <td st>{{$da->jenisPelayanan}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st>{{$da->alamat}}</td>
