@@ -167,6 +167,94 @@ class PendaftaranKrismaController extends Controller
             'msg'=>view('pendaftarankrisma.detail', compact("log"))->render()),200);
     }
 
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Krisma::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('pendaftarankrisma.EditForm',compact("data"))->render()),200);
+    }
+
+    public function update(Request $request)
+    {
+        $data=Krisma::find($request->id);
+        if($data->jenis == "Paroki Setempat")
+        {
+            $data->nama_lengkap = $request->get("nama_lengkap");
+            $data->tempat_lahir = $request->get("tempat_lahir");
+            $data->tanggal_lahir = $request->get("tanggal_lahir");
+            $data->orangtua_ayah = $request->get("orangtua_ayah");
+            $data->orangtua_ibu = $request->get("orangtua_ibu");
+            $data->telepon = $request->get("telepon");
+
+            $file=$request->file('surat_baptis');
+            if(isset($file)){
+                $imgFolder = 'file_sertifikat/surat_baptis';
+                $extension = $request->file('surat_baptis')->extension();
+                $imgFile=time()."_".$request->get('nama').".".$extension;
+                $file->move($imgFolder,$imgFile);
+                $data->surat_baptis=$imgFile;
+            }
+
+            $file2=$request->file('sertifikat_komuni');
+            if(isset($file2))
+            {
+                $imgFolder2 = 'file_sertifikat/sertifikat_komuni';
+                $extension2 = $request->file('sertifikat_komuni')->extension();
+                $imgFile2=time()."_".$request->get('nama').".".$extension;
+                $file2->move($imgFolder2,$imgFile2);
+                $data->sertifikat_komuni=$imgFile2;
+            }
+
+            $data->save();
+            
+            return redirect()->route('pendaftarankrisma.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Krisma Paroki Setempat Berhasil Diubah');
+        }
+        else
+        {
+            $data->nama_lengkap = $request->get("nama_lengkap");
+            $data->tempat_lahir = $request->get("tempat_lahir");
+            $data->tanggal_lahir = $request->get("tanggal_lahir");
+            $data->orangtua_ayah = $request->get("orangtua_ayah");
+            $data->orangtua_ibu = $request->get("orangtua_ibu");
+            $data->telepon = $request->get("telepon");
+
+            $file=$request->file('surat_baptis');
+            if(isset($file)){
+                $imgFolder = 'file_sertifikat/surat_baptis';
+                $extension = $request->file('surat_baptis')->extension();
+                $imgFile=time()."_".$request->get('nama').".".$extension;
+                $file->move($imgFolder,$imgFile);
+                $data->surat_baptis=$imgFile;
+            }
+            
+            $file2=$request->file('sertifikat_komuni');
+            if(isset($file2))
+            {
+                $imgFolder2 = 'file_sertifikat/sertifikat_komuni';
+                $extension2 = $request->file('sertifikat_komuni')->extension();
+                $imgFile2=time()."_".$request->get('nama').".".$extension;
+                $file2->move($imgFolder2,$imgFile2);
+                $data->sertifikat_komuni=$imgFile2;
+            }
+
+            $file3=$request->file('surat_pengantar');
+            if(isset($file3))
+            {
+                $imgFolder3 = 'file_sertifikat/surat_pengantar';
+                $extension3 = $request->file('surat_pengantar')->extension();
+                $imgFile3=time()."_".$request->get('nama').".".$extension;
+                $file3->move($imgFolder3,$imgFile3);
+                $data->surat_pengantar=$imgFile3;
+            }
+
+            $data->save();
+            
+            return redirect()->route('pendaftarankrisma.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Krisma Lintas Paroki Berhasil Diubah');
+        }
+    }
+
     public function Pembatalan(Request $request)
     {
         $data=Krisma::find($request->id);
@@ -234,18 +322,6 @@ class PendaftaranKrismaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(PendaftaranKrisma $pendaftaranKrisma)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PendaftaranKrisma  $pendaftaranKrisma
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PendaftaranKrisma $pendaftaranKrisma)
     {
         //
     }

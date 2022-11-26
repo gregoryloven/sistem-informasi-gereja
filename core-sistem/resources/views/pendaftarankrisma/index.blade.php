@@ -168,16 +168,21 @@
                                 @endif
                             </td>
                             <td st>
-                                @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
-                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                                @if($d->status == "Diproses")
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})">Ubah</a></div>
+                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                    <div><a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger ml-1">Batal</a></div>
+                                    @endif
+                                </div>    
                                 @endif
-                                @if ($d->status == 'Selesai')
+                                <!-- @if ($d->status == 'Selesai')
                                 <form role="form" method="GET" action="{{ url('/sertifikat/krisma') }}">
                                     <input type="hidden" class="form-control" id='id' name='id' value="{{$d->user_id}}">
                                     {{-- <input type="hidden" class="form-control" id='jadwal' name='jadwal' value="{{$d->jadwal}}"> --}}
                                     <button type="submit" class="btn btn-xs btn-flat btn-info">Cetak Sertifikat</button>
                                 </form>
-                                @endif
+                                @endif -->
                             </td>
                         </tr>
                         <!-- EDIT WITH MODAL -->
@@ -188,7 +193,7 @@
                                         @csrf
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                            <h4 class="modal-title">Pembatalan Pendaftaran Sakramen Krisma</h4>
+                                            <h4 class="modal-title">Pembatalan Krisma</h4>
                                         </div>
                                         <div class="modal-body">
                                             @csrf
@@ -289,7 +294,12 @@
                             </td>
                             <td st>
                                 @if($d->status == "Diproses")
-                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})">Ubah</a></div>
+                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
+                                    <div><a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger ml-1">Batal</a></div>
+                                    @endif
+                                </div>    
                                 @endif
                             </td>
                         </tr>
@@ -302,7 +312,7 @@
                                         @csrf
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                            <h4 class="modal-title">Pembatalan Pendaftaran Sakramen Krisma</h4>
+                                            <h4 class="modal-title">Pembatalan Krisma</h4>
                                         </div>
                                         <div class="modal-body">
                                             @csrf
@@ -355,6 +365,20 @@
 @section('javascript')
 <script src='http://code.jquery.com/ui/1.11.0/jquery-ui.js'></script>
 <script>
+function EditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('pendaftarankrisma.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+
 function detail(id)
 {
   $.ajax({
