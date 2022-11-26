@@ -1,7 +1,7 @@
-<form role="form" method='POST' action="{{ url('pendaftaranbaptis/'.$data->id )}}" enctype="multipart/form-data">
+<form role="form" method='POST' action="{{ url('pendaftarankomuni/'.$data->id )}}" enctype="multipart/form-data">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title">Ubah Pendaftaran Baptis Bayi</h4>
+        <h4 class="modal-title">Ubah Pendaftaran Komuni Pertama</h4>
     </div>
     <div class="modal-body">
         @csrf
@@ -9,7 +9,7 @@
         <div class="form-body">
             <div class="form-group">
                 <input type="hidden" name="id" value="{{$data->id}}">
-                <label >Nama Lengkap Penerima Baptis</label>
+                <label >Nama Lengkap Penerima Komuni Pertama</label>
                 <input type="text" value="{{$data->nama_lengkap}}" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
             </div>    
             <div class="form-group">
@@ -27,14 +27,6 @@
             <div class="form-group">
                 <label >Orang Tua Ibu</label>
                 <input type="text" value="{{$data->orangtua_ibu}}" class="form-control" id='orangtua_ibu' name='orangtua_ibu' placeholder="Nama Lengkap" required>
-            </div> 
-            <div class="form-group">
-                <label >Wali Baptis Ayah</label>
-                <input type="text" value="{{$data->wali_baptis_ayah}}" class="form-control" id='wali_baptis_ayah' name='wali_baptis_ayah' placeholder="Nama Lengkap" required>
-            </div>  
-            <div class="form-group">
-                <label >Wali Baptis Ibu</label>
-                <input type="text" value="{{$data->wali_baptis_ibu}}" class="form-control" id='wali_baptis_ibu' name='wali_baptis_ibu' placeholder="Nama Lengkap" required>
             </div>  
             <div class="form-group">
                 <label >Lingkungan</label>
@@ -49,11 +41,7 @@
                 <input type="text" value="{{$data->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
             </div>
             <div class="form-group">
-                <label >Jenis</label>
-                <input type="text" value="{{$data->jenis}}" class="form-control" id='jenis' name='jenis' placeholder="Jenis" required readonly>
-            </div>
-            <div class="form-group">
-                <label >Jadwal Pelaksanaan</label>
+                <label >Tanggal Pelaksanaan</label>
                 <input type="text" value="{{tanggal_indonesia($data->jadwal)}}" class="form-control" placeholder="Tanggal Pembaptisan" required readonly>
                 <input type="hidden" value="{{$data->jadwal}}" id='jadwal' name='jadwal'>
             </div>
@@ -69,13 +57,11 @@
                 <label >Romo</label>
                 <input type="text" value="{{$data->romo}}" class="form-control" id='romo' name='romo' placeholder="Romo" required readonly>
             </div>
-            @if($data->jenis == 'Baptis Dewasa')
             <div class="form-group">
-                <label >Surat Pernyataan</label>
-                <input type="file" value="{{$data->surat_pernyataan}}" class="form-control" id='surat_pernyataan' name='surat_pernyataan' placeholder="Surat Pernyataan" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
-                <img id="output" src="{{asset('file_sertifikat/surat_pernyataan/'.$data->surat_pernyataan)}}" width="80px" height="80px">
+                <label>Surat Baptis</label>
+                <input type="file" value="{{$data->surat_baptis}}" name="surat_baptis" class="form-control" id="surat_baptis" placeholder="Surat Baptis" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                <img id="output" src="{{asset('file_sertifikat/surat_baptis/'.$data->surat_baptis)}}" width="80px" height="80px">
             </div>
-            @endif
         </div>
     </div>
     <div class="modal-footer">

@@ -104,6 +104,40 @@ class PendaftaranKomuniController extends Controller
             'msg'=>view('pendaftarankomuni.detail', compact("log"))->render()),200);
     }
 
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=KomuniPertama::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('pendaftarankomuni.EditForm',compact("data"))->render()),200);
+    }
+
+    public function update(Request $request)
+    {
+        $komuni=KomuniPertama::find($request->id);
+        $komuni->nama_lengkap = $request->get("nama_lengkap");
+        $komuni->tempat_lahir = $request->get("tempat_lahir");
+        $komuni->tanggal_lahir = $request->get("tanggal_lahir");
+        $komuni->orangtua_ayah = $request->get("orangtua_ayah");
+        $komuni->orangtua_ibu = $request->get("orangtua_ibu");
+        $komuni->telepon = $request->get("telepon");
+
+        $file=$request->file('surat_baptis');
+        if(isset($file))
+        {
+            $imgFolder = 'file_sertifikat/surat_baptis';
+            $extension = $request->file('surat_baptis')->extension();
+            $imgFile=time()."_".$request->get('nama').".".$extension;
+            $file->move($imgFolder,$imgFile);
+            $komuni->surat_baptis=$imgFile;
+        }
+
+        $komuni->save();
+        
+        return redirect()->route('pendaftarankomuni.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Data Pendaftaran Komuni Pertama Berhasil Diubah');
+    }
+
     public function Pembatalan(Request $request)
     {
         $data=KomuniPertama::find($request->id);
@@ -174,18 +208,6 @@ class PendaftaranKomuniController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(PendaftaranKomuni $pendaftaranKomuni)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PendaftaranKomuni  $pendaftaranKomuni
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PendaftaranKomuni $pendaftaranKomuni)
     {
         //
     }

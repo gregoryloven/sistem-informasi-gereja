@@ -114,10 +114,6 @@ class KomuniPertamaController extends Controller
         $komuni->lingkungan = $request->get("lingkungan");
         $komuni->kbg = $request->get("kbg");
         $komuni->telepon = $request->get("telepon");
-        $komuni->jadwal = $request->get("jadwal");
-        $komuni->lokasi = $request->get("lokasi");
-        $komuni->romo = $request->get("romo");
-        $komuni->status = "Disetujui Paroki";
 
         $file=$request->file('surat_baptis');
         if(isset($file))

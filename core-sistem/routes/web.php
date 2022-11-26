@@ -282,13 +282,13 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/pendaftaranbaptis/InputFormDewasa', [PendaftaranBaptisController::class, 'InputFormDewasa'])->name('pendaftaranbaptis.InputFormDewasa');
         Route::get('/pendaftaranbaptis/OpenFormDewasa/{id}', [PendaftaranBaptisController::class, 'OpenFormDewasa'])->name('pendaftaranbaptis.OpenFormDewasa');
         Route::post('/pendaftaranbaptis/detailDewasa', [PendaftaranBaptisController::class, 'detailDewasa'])->name('pendaftaranbaptis.detailDewasa');
-        Route::post('/pendaftaranbaptis/EditFormDewasa', [PendaftaranBaptisController::class, 'EditFormDewasa'])->name('pendaftaranbaptis.EditFormDewasa');
 
         //Pendaftaran Komuni
         Route::resource('pendaftarankomuni', PendaftaranKomuniController::class);
         Route::post('/pendaftarankomuni/InputForm', [PendaftaranKomuniController::class, 'InputForm'])->name('pendaftarankomuni.InputForm');
         Route::get('/pendaftarankomuni/OpenForm/{id}', [PendaftaranKomuniController::class, 'OpenForm'])->name('pendaftarankomuni.OpenForm');
         Route::post('/pendaftarankomuni/detail', [PendaftaranKomuniController::class, 'detail'])->name('pendaftarankomuni.detail');
+        Route::post('/pendaftarankomuni/EditForm', [PendaftaranKomuniController::class, 'EditForm'])->name('pendaftarankomuni.EditForm');
 
         //Pendaftaran Krisma
         Route::resource('pendaftarankrisma', PendaftaranKrismaController::class);
@@ -296,6 +296,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/pendaftarankrisma/InputFormLintas', [PendaftaranKrismaController::class, 'InputFormLintas'])->name('pendaftarankrisma.InputFormLintas');
         Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
         Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
+        Route::post('/pendaftarankrisma/EditForm', [PendaftaranKrismaController::class, 'EditForm'])->name('pendaftarankrisma.EditForm');
 
         //Pendaftaran Perkawinan
         Route::resource('pendaftaranperkawinan', PendaftaranPerkawinanController::class);
@@ -307,6 +308,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::get('/pendaftarankpp/OpenForm/{id}', [PendaftaranKppController::class, 'OpenForm'])->name('pendaftarankpp.OpenForm');
         Route::post('/pendaftarankpp/InputForm', [PendaftaranKppController::class, 'InputForm'])->name('pendaftarankpp.InputForm');
         Route::post('/pendaftarankpp/detail', [PendaftaranKppController::class, 'detail'])->name('pendaftarankpp.detail');
+        Route::get('/pendaftarankpp/EditForm/{id}', [PendaftaranKppController::class, 'EditForm'])->name('pendaftarankpp.EditForm');
 
         //Reservasi Misa
         Route::resource('reservasimisa', ReservasiMisaController::class);
