@@ -175,13 +175,13 @@
                                     @endif
                                 </div>    
                                 @endif
-                                @if ($d->status == 'Selesai')
+                                <!-- @if ($d->status == 'Selesai')
                                 <form role="form" method="GET" action="{{ url('/sertifikat/baptisbayi') }}">
                                     <input type="hidden" class="form-control" id='id' name='id' value="{{$d->user_id}}">
                                     <input type="hidden" class="form-control" id='jenis' name='jenis' value="{{$d->jenis}}">
                                     <input type="hidden" class="form-control" id='jadwal' name='jadwal' value="{{$d->jadwal}}">
                                     <button type="submit" class="btn btn-xs btn-flat btn-info">Cetak Sertifikat</button>
-                                </form>
+                                </form> -->
                             @endif
                             </td>
                         </tr>

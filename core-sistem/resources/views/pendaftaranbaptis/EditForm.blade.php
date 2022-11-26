@@ -69,6 +69,13 @@
                 <label >Romo</label>
                 <input type="text" value="{{$data->romo}}" class="form-control" id='romo' name='romo' placeholder="Romo" required readonly>
             </div>
+            @if($data->jenis == 'Baptis Dewasa')
+            <div class="form-group">
+                <label >Surat Pernyataan</label>
+                <input type="file" value="{{$data->surat_pernyataan}}" class="form-control" id='surat_pernyataan' name='surat_pernyataan' placeholder="Surat Pernyataan" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                <img id="output" src="{{asset('file_sertifikat/surat_pernyataan/'.$data->surat_pernyataan)}}" width="80px" height="80px">
+            </div>
+            @endif
         </div>
     </div>
     <div class="modal-footer">

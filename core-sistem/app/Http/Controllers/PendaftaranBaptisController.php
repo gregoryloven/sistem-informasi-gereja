@@ -214,14 +214,14 @@ class PendaftaranBaptisController extends Controller
         }
         else
         {
-            $data->nama_lengkap = $request->get("nama_lengkap");
-            $data->tempat_lahir = $request->get("tempat_lahir");
-            $data->tanggal_lahir = $request->get("tanggal_lahir");
-            $data->orangtua_ayah = $request->get("orangtua_ayah");
-            $data->orangtua_ibu = $request->get("orangtua_ibu");
-            $data->wali_baptis_ayah = $request->get("wali_baptis_ayah");
-            $data->wali_baptis_ibu = $request->get("wali_baptis_ibu");
-            $data->telepon = $request->get("telepon");
+            $baptis->nama_lengkap = $request->get("nama_lengkap");
+            $baptis->tempat_lahir = $request->get("tempat_lahir");
+            $baptis->tanggal_lahir = $request->get("tanggal_lahir");
+            $baptis->orangtua_ayah = $request->get("orangtua_ayah");
+            $baptis->orangtua_ibu = $request->get("orangtua_ibu");
+            $baptis->wali_baptis_ayah = $request->get("wali_baptis_ayah");
+            $baptis->wali_baptis_ibu = $request->get("wali_baptis_ibu");
+            $baptis->telepon = $request->get("telepon");
 
             $file=$request->file('surat_pernyataan');
             if(isset($file))
@@ -230,10 +230,10 @@ class PendaftaranBaptisController extends Controller
                 $extension = $request->file('surat_pernyataan')->extension();
                 $imgFile=time()."_".$request->get('nama').".".$extension;
                 $file->move($imgFolder,$imgFile);
-                $data->surat_pernyataan=$imgFile;
+                $baptis->surat_pernyataan=$imgFile;
             }
 
-            $data->save();
+            $baptis->save();
             
             return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Dewasa Berhasil Ubah');
         }
