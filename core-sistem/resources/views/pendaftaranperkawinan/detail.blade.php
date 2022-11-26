@@ -7,8 +7,8 @@
             <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr style="text-align: center;">
-                        <th>Tanggal Aksi</th>
                         <th>Status</th>
+                        <th>Tanggal Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
