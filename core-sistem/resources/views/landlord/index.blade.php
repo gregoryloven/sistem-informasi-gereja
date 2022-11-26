@@ -86,7 +86,7 @@
 </section><!-- End About Section --> --}}
 
 <!-- ======= Counts Section ======= -->
-<section id="counts" class="counts section-bg">
+<!-- <section id="counts" class="counts section-bg">
 <div class="container">
 
     <div class="row justify-content-end">
@@ -112,17 +112,18 @@
         </div>
     </div>
 
-    <!-- <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
+    <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
         <div class="count-box">
         <span data-purecounter-start="0" data-purecounter-end="20" data-purecounter-duration="2" class="purecounter"></span>
         <p>Awards</p>
         </div>
-    </div> -->
+    </div>
 
     </div>
 
 </div>
-</section><!-- End Counts Section -->
+</section> -->
+<!-- End Counts Section -->
 
 {{-- <!-- ======= About Video Section ======= -->
 <section id="about-video" class="about-video">
@@ -283,8 +284,7 @@
 <div class="container" data-aos="fade-up">
 
     <div class="section-title">
-    <h2>Fitur</h2>
-    <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+    <h2>Layanan Yang Ditawarkan</h2>
     </div>
 
     <div class="row">
@@ -296,8 +296,7 @@
             </svg>
             <i class="bx bxl-dribbble"></i>
         </div>
-        <h4><a href="">Pendaftaran Umat</a></h4>
-        <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+        <h4><a href="">Manajemen & Pendaftaran Umat</a></h4>
         </div>
     </div>
 
@@ -309,8 +308,7 @@
             </svg>
             <i class="bx bx-file"></i>
         </div>
-        <h4><a href="">Pendaftaran Sakramen</a></h4>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+        <h4><a href="">Manajemen & Pendaftaran Sakramen</a></h4>
         </div>
     </div>
 
@@ -322,8 +320,7 @@
             </svg>
             <i class="bx bx-tachometer"></i>
         </div>
-        <h4><a href="">Reservasi Misa</a></h4>
-        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+        <h4><a href="">Manajemen & Reservasi Misa</a></h4>
         </div>
     </div>
 
