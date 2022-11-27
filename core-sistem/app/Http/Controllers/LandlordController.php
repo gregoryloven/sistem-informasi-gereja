@@ -101,6 +101,9 @@ class LandlordController extends Controller
     {
         try {
             // return $request->all();
+            ini_set('max_execution_time', 360);
+            // ini_set('max_input_time', 120);
+            // ini_set('memory_limit', 512);
 
             $tenant = new Tenant;
             $tenant->name       = $request->nama_paroki;
@@ -118,7 +121,8 @@ class LandlordController extends Controller
             $tenant->user_id    = Auth::user()->id;
             $tenant->save();
 
-            $newTenant = Tenant::where('database', strtolower(preg_replace('/[^A-Za-z0-9]/', '', str_replace(' ', '', $request->domain))))->first();
+            // $newTenant = Tenant::where('database', strtolower(preg_replace('/[^A-Za-z0-9]/', '', str_replace(' ', '', $tenant->database))))->first();
+            $newTenant = Tenant::where('database', $request->domain)->first();
             $dbname = strtolower(preg_replace('/[^A-Za-z0-9]/', '', str_replace(' ', '', $request->domain)));
             
             // return $newTenant->id;
@@ -131,7 +135,7 @@ class LandlordController extends Controller
                 'email'         => Auth::user()->email,
                 'password'      => Auth::user()->password,
                 'role'          => 'admin',
-                'agama'          => 'Katolik',
+                'agama'         => 'Katolik',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ]);
