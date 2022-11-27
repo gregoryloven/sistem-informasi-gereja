@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Tenant;
+use App\Models\Tenant2;
 use Auth;
 use Hash;
 use DB;
@@ -24,7 +24,7 @@ class ProfileController extends Controller
         // {
         //     $tenant = DB::connection('landlord')->table('tenants')->where('name', app('currentTenant')->name)->first();
         // }
-        $tenant = Tenant::where('name', app('currentTenant')->name)->first();
+        $tenant = Tenant2::where('name', app('currentTenant')->name)->first();
 
         if($data->role == "umat")
         {
@@ -52,7 +52,7 @@ class ProfileController extends Controller
 
         if(\Spatie\Multitenancy\Models\Tenant::checkCurrent())
         {
-            $tenant = Tenant::where('name', app('currentTenant')->name)->first();
+            $tenant = Tenant2::where('name', app('currentTenant')->name)->first();
         }
 
         // return $data;
