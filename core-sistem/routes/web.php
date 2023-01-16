@@ -139,6 +139,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::resource('listevent', ListEventController::class);
     Route::post('/listevent/EditForm', [ListEventController::class, 'EditForm'])->name('listevent.EditForm');
     Route::post('/listevent/selesai', [ListEventController::class, 'selesai'])->name('listevent.selesai');
+    Route::post('listevent/laporan', [ListEventController::class, 'laporan'])->name('listevent.laporan');
 
     //Daftar Umat 
     Route::get('umat', [UmatController::class, 'umatAll'])->name('umat.umatAll');
@@ -150,6 +151,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     //Daftar Umat Lingkungan
     Route::get('umatLingkungan', [UmatController::class, 'umatLingkungan'])->name('umat.umatLingkungan');
+    Route::post('/umat/TambahUmatLingkungan', [UmatController::class, 'TambahUmatLingkungan'])->name('umat.TambahUmatLingkungan');
+    Route::post('/umat/delete', [UmatController::class, 'delete'])->name('umat.delete');
     Route::post('/fetchkbgumat', [UmatController::class, 'fetchkbgumat'])->name('fetchkbgumat');
     Route::post('/umat/EditFormUmatLingkungan', [UmatController::class, 'EditFormUmatLingkungan'])->name('umat.EditFormUmatLingkungan');
     Route::post('/umat/UbahUmatLingkungan/{id}', [UmatController::class, 'UbahUmatLingkungan'])->name('umat.UbahUmatLingkungan');
@@ -263,7 +266,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::resource('pendaftaranumat', PendaftaranUmatController::class);
         Route::post('/pendaftaranumat/InputFormLama', [PendaftaranUmatController::class, 'InputFormLama']);
         Route::post('/pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
-        Route::post('/pendaftaranumat/InputFormBaru', [PendaftaranUmatController::class, 'InputFormBaru']);
+        Route::post('/pendaftaranumat/detail', [PendaftaranUmatController::class, 'detail'])->name('pendaftaranumat.detail');
+        Route::post('/pendaftaranumat/EditForm', [PendaftaranUmatController::class, 'EditForm'])->name('pendaftaranumat.EditForm');
         Route::post('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
         Route::post('/fetchkbgbaru', [PendaftaranUmatController::class, 'fetchkbgbaru'])->name('fetchkbgbaru');
         Route::post('/pendaftaranumat/Pembatalan', [PendaftaranUmatController::class, 'Pembatalan']);
@@ -387,6 +391,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/validasiAdminPerkawinan/Update/{id}', [ValidasiAdminController::class, 'Update'])->name('validasiAdmin.Update');
 
     // validasi Kbg
+    Route::get('validasiKbgUmatBaru', [ValidasiKbgController::class, 'umatBaru'])->name('validasiKbg.umatBaru');
+    Route::post('/validasiKbg/acceptumatbaru', [ValidasiKbgController::class, 'AcceptUmatBaru'])->name('validasiKbg.AcceptUmatBaru');
+    Route::post('/validasiKbg/declineumatbaru', [ValidasiKbgController::class, 'DeclineUmatBaru'])->name('validasiKbg.DeclineUmatBaru');
+
     Route::get('validasiKbgPelayanan', [ValidasiKbgController::class, 'pelayanan'])->name('validasiKbg.pelayanan');
     Route::post('/validasiKbg/acceptpelayanan', [ValidasiKbgController::class, 'AcceptPelayanan'])->name('validasiKbg.AcceptPelayanan');
     Route::post('/validasiKbg/declinepelayanan', [ValidasiKbgController::class, 'DeclinePelayanan'])->name('validasiKbg.DeclinePelayanan');
@@ -453,13 +461,28 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
     // LAPORAN
     Route::get('laporanBaptis', [LaporanController::class, 'baptis'])->name('laporan.baptis');
+    Route::get('/laporan/baptisbayi', [LaporanController::class, 'baptis'])->name('laporan.baptis2');
+    Route::get('laporanBaptis/detail/{id}', [LaporanController::class, 'detailgagal'])->name('laporan.detailgagal');
     Route::get('/laporanBaptis/DetailBaptis/{id}', [LaporanController::class, 'DetailBaptis'])->name('laporan.DetailBaptis');
+
     Route::get('laporanBaptisDewasa', [LaporanController::class, 'baptisDewasa'])->name('laporan.baptisDewasa');
+    Route::get('/laporan/baptisdewasa', [LaporanController::class, 'baptisDewasa'])->name('laporan.baptisDewasa2');
+    Route::get('laporanBaptis/detaildewasa/{id}', [LaporanController::class, 'detailgagaldewasa'])->name('laporan.detailgagaldewasa');
+
     Route::get('laporanKomuni', [LaporanController::class, 'komuni'])->name('laporan.komuni');
+    Route::get('/laporan/komuni', [LaporanController::class, 'komuni'])->name('laporan.komuni2');
+    Route::get('laporanKomuni/detail/{id}', [LaporanController::class, 'detailgagalkomuni'])->name('laporan.detailgagalkomuni');
+
     Route::get('laporanKrisma', [LaporanController::class, 'krisma'])->name('laporan.krisma');
+    Route::get('/laporan/krisma', [LaporanController::class, 'krisma'])->name('laporan.krisma2');
+    Route::get('laporanKrisma/detail/{id}', [LaporanController::class, 'detailgagalkrisma'])->name('laporan.detailgagalkrisma');
+
     Route::get('laporanKpp', [LaporanController::class, 'kpp'])->name('laporan.kpp');
+
     Route::get('laporanPerkawinan', [LaporanController::class, 'perkawinan'])->name('laporan.perkawinan2');
-    Route::post('/laporan/perkawinan', [LaporanController::class, 'perkawinan'])->name('laporan.perkawinan');
+    Route::get('/laporan/perkawinan', [LaporanController::class, 'perkawinan'])->name('laporan.perkawinan');
+    Route::get('laporanPerkawinan/detaillingkungan', [LaporanController::class, 'detaillingkungan'])->name('laporan.detailperkawinan');
+    Route::post('laporan/perkawinan/detaillingkungan', [LaporanController::class, 'detaillingkungan'])->name('laporan.detailperkawinan2');
 
 
     // CETAK SERTIFIKAT
@@ -473,8 +496,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+    return view('dashboarduser.index');
+})->name('dashboarduser');
 
 Route::get('/offline', function () {
     return view('vendor.laravelpwa.offline');

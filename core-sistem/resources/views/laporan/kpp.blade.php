@@ -24,9 +24,10 @@
     </div>
 @endif
 
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Daftar Sesi
+        Daftar Semua Sesi
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -36,9 +37,10 @@
                         <th width="5%">No</th>    
                         <th>Jenis Sakramen</th>
                         <th>Keterangan Kursus</th>
+                        <th>Total Pendaftar</th>
+                        <th>Total Pendaftar (Disetujui Paroki)</th>
                         <th>Total Lulus Kursus</th>
                         <th>Total Tidak Lulus Kursus</th>
-                        <!-- <th width="15%"><i class="fa fa-cog"></i></th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -47,15 +49,12 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->jenis_event}}</td>
+                        <td st>{{$d->nama_event}}</td>
                         <td st>{{$d->keterangan_kursus}}</td>
                         <td st><strong>{{$array[$idx]}} Orang</strong></td>
                         <td st><strong>{{$array2[$idx]}} Orang</strong></td>
-                        <!-- <td st>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href= "{{ url('laporanBaptis/DetailBaptis/'.$d->id) }}" class="btn btn-xs btn-flat btn-info">Lihat Detail</a>   
-                            </div>
-                        </td> -->
+                        <td st><strong>{{$array3[$idx]}} Orang</strong></td>
+                        <td st><strong>{{$array4[$idx]}} Orang</strong></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -63,5 +62,6 @@
         </div>
     </div>
 </div>
+
 <!-- /.container-fluid -->
 @endsection

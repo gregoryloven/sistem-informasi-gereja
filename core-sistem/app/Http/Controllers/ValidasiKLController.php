@@ -28,16 +28,23 @@ class ValidasiKLController extends Controller
             $lingkungan = Auth::user()->lingkungan_id;
             $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
     
-            $umatlama = User::where([["status", "Belum Tervalidasi"], ['lingkungan_id', $lingkungan]])
-            ->orderby('updated_at', 'ASC')
+            // $umatlama = User::join('riwayats', 'users.id', '=', 'riwayats.user_id')
+            // ->where([['users.status', 'Belum Tervalidasi'], ['lingkungan_id', $lingkungan]])
+            // ->orderby('riwayats.created_at', 'ASC')
+            // ->get(['users.*', 'riwayats.id as riwayatID']);
+
+            $umatlama = User::where([['status', 'Belum Tervalidasi'], ['lingkungan_id', $lingkungan]])
+            ->orderby('created_at', 'ASC')
             ->get();
-    
-            $umatlama2 = User::where([["status", "Tervalidasi"], ['lingkungan_id', $lingkungan]])
-            ->orwhere([['status', 'Ditolak'], ['lingkungan_id', $lingkungan]])
-            ->orderBy('updated_at', 'DESC')
-            ->get();
-    
-            return view('validasiKL.umatLama',compact("umatlama", "umatlama2", "lingkungan2"));
+            $riwayat = Riwayat::all();
+
+            $umatlama2 = User::join('riwayats', 'users.id', '=', 'riwayats.user_id')
+            ->where([['users.status', 'Tervalidasi'], ['lingkungan_id', $lingkungan], ['jenis_event', 'Umat Lama']])
+            ->orwhere([['users.status', 'Ditolak'], ['lingkungan_id', $lingkungan], ['jenis_event', 'Umat Lama']])
+            ->orderBy('riwayats.updated_at', 'DESC')
+            ->get(['users.*','riwayats.status as statusRiwayat', 'riwayats.updated_at as riwayatupdated', 'riwayats.alasan_penolakan']);
+
+            return view('validasiKL.umatLama',compact("umatlama", "umatlama2", "lingkungan2", "riwayat"));
         }
     }
 
@@ -48,6 +55,13 @@ class ValidasiKLController extends Controller
         $umat->status = "Tervalidasi";
         $umat->save();
 
+        $riwayat = Riwayat::where([['user_id', '=', $umat->id], ['jenis_event', '=', 'Umat Lama']]) 
+        ->update(['status' => 'Tervalidasi']);
+
+        // $riwayat = Riwayat::find($request->riwayatID);
+        // $riwayat->status = "Tervalidasi";
+        // $riwayat->save();
+
         return redirect()->route('validasiKL.umatLama', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Lama Berhasil');
     }
 
@@ -57,6 +71,14 @@ class ValidasiKLController extends Controller
 
         $umat->status = "Ditolak";
         $umat->save();
+
+        $riwayat = Riwayat::where([['user_id', '=', $umat->id], ['jenis_event', '=', 'Umat Lama']]) 
+        ->update(['status' => 'Ditolak', 'alasan_penolakan' => $request->get("alasan_penolakan")]);
+
+        // $riwayat = Riwayat::find($request->riwayatID);
+        // $riwayat->status = "Ditolak";
+        // $riwayat->alasan_penolakan = $request->get("alasan_penolakan");
+        // $riwayat->save();
 
         return redirect()->route('validasiKL.umatLama', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Validasi Umat Lama Berhasil');
     }
@@ -72,9 +94,10 @@ class ValidasiKLController extends Controller
             $lingkungan = Auth::user()->lingkungan_id;
             $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
     
-            $umatbaru = Umat::where([["status", "Disetujui KBG"], ['lingkungan_id', $lingkungan]])
-            ->orderBy('updated_at', 'ASC')
-            ->get();
+            $umatbaru = Umat::join('users', 'umats.user_id', '=', 'users.id')
+            ->where([["umats.status", "Disetujui KBG"], ['umats.lingkungan_id', $lingkungan]])
+            ->orderBy('umats.updated_at', 'ASC')
+            ->get(['umats.*','users.id as userid']);
     
             $umatbaru2 = Umat::where([["status", "Disetujui Lingkungan"], ['lingkungan_id', $lingkungan]])
             ->orwhere([['status', 'Ditolak'], ['lingkungan_id', $lingkungan]])
@@ -87,15 +110,59 @@ class ValidasiKLController extends Controller
 
     public function AcceptUmatBaru(Request $request)
     {
-        // $user=User::find($request->id);
-        // $user->status = "Tervalidasi";
-        // $user->save();
+        $user=User::find($request->userid);
         
+        if($user->status == 'Tervalidasi')
+        {
+            $umat=Umat::find($request->id);
+            $umat->status = "Disetujui Lingkungan";
+            $umat->save();
+
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $umat->id;
+            $riwayat->jenis_event =  "Umat Baru";
+            $riwayat->status =  "Disetujui Lingkungan";
+            $riwayat->save();
+
+            return redirect()->route('validasiKL.umatBaru', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Baru Berhasil');
+        }
+        else
+        {
+            $user->lingkungan_id = $request->get("lingkungan_id");
+            $user->kbg_id = $request->get("kbg_id");
+            $user->status = "Tervalidasi";
+            $user->save();
+
+            $umat=Umat::find($request->id);
+            $umat->status = "Disetujui Lingkungan";
+            $umat->save();
+
+            $riwayat = new Riwayat();
+            $riwayat->user_id = Auth::user()->id;
+            $riwayat->event_id =  $umat->id;
+            $riwayat->jenis_event =  "Umat Baru";
+            $riwayat->status =  "Disetujui Lingkungan";
+            $riwayat->save();
+
+            return redirect()->route('validasiKL.umatBaru', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Baru Berhasil');
+        }
+    }
+
+    public function DeclineUmatBaru(Request $request)
+    {        
         $umat=Umat::find($request->id);
-        $umat->status = "Disetujui Lingkungan";
+        $umat->status = "Ditolak";
         $umat->save();
 
-        return redirect()->route('validasiKL.umatBaru', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Baru Berhasil');
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $umat->id;
+        $riwayat->jenis_event =  "Umat Baru";
+        $riwayat->status =  "Ditolak";
+        $riwayat->save();
+
+        return redirect()->route('validasiKL.umatBaru', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Baru Ditolak');
     }
     
     public function pelayanan()
@@ -430,7 +497,6 @@ class ValidasiKLController extends Controller
     {
         $komuni=KomuniPertama::find($request->id);
         $komuni->status = "Ditolak";
-        $komuni->alasan_penolakan = $request->get("alasan_penolakan");
         $komuni->save();
 
         $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();

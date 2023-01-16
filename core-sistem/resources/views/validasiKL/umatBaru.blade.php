@@ -38,10 +38,9 @@
                         <th>Nama Lengkap</th>
                         <th>Hubungan Darah</th>
                         <th>Jenis Kelamin</th>
-                        <th>Lingkungan</th>
-                        <th>KBG</th>
                         <th>Telepon</th>
                         <th>Foto Tanda Pengenal</th>
+                        <th>Nomor Kartu Keluarga</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -54,31 +53,32 @@
                         <td st>{{$d->nama_lengkap}}</td>
                         <td st>{{$d->hubungan}}</td>
                         <td st>{{$d->jenis_kelamin}}</td>
-                        <td st>{{$d->lingkungan->nama_lingkungan}}</td>
-                        <td st>{{$d->kbg->nama_kbg}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('tanda_pengenal/'.$d->foto_ktp)}}" height='80px'/></td>
+                        <td st>{{$d->no_kk}}</td>
                         <td st>
                             @if($d->status == "Disetujui KBG")
                             <form action="/validasiKL/acceptumatbaru" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
+                                <input type="text" name="lingkungan_id" class="d-none" value="{{$d->lingkungan_id}}">
+                                <input type="text" name="kbg_id" class="d-none" value="{{$d->kbg_id}}">
+                                <input type="text" name="userid" class="d-none" value="{{$d->userid}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
-                            <form action="/validasiKL/declineumatbaru" class="ml-2" method="post">
+                            <form action="/validasiKL/declineumatbaru" class="mt-1" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                                <button class="btn btn-danger" type="submit">Tolak</button>
-                                <!-- <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a> -->
+                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a>
                             </form>
                             @endif
                         </td>
                     </tr>
-                    <!-- EDIT WITH MODAL
+                    <!-- EDIT WITH MODAL -->
                     <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" >
-                                <form role="form" method="POST" action="{{ url('validasiKL/declineumat') }}" enctype="multipart/form-data">
+                                <form role="form" method="POST" action="{{ url('validasiKL/declineumatbaru') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -97,7 +97,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <!-- POP UP WITH MODAL -->
                     <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog" style="width:400px; height=400px;">
@@ -125,10 +125,9 @@
                         <th>Nama Lengkap</th>
                         <th>Hubungan Darah</th>
                         <th>Jenis Kelamin</th>
-                        <th>Lingkungan</th>
-                        <th>KBG</th>
                         <th>Telepon</th>
                         <th>Foto Tanda Pengenal</th>
+                        <th>Nomor Kartu Keluarga</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -141,10 +140,9 @@
                         <td st>{{$da->nama_lengkap}}</td>
                         <td st>{{$da->hubungan}}</td>
                         <td st>{{$da->jenis_kelamin}}</td>
-                        <td st>{{$da->lingkungan->nama_lingkungan}}</td>
-                        <td st>{{$da->kbg->nama_kbg}}</td>
                         <td st>{{$da->telepon}}</td>
-                        <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('foto_ktp/'.$da->foto_ktp)}}" height='80px'/></td>
+                        <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('tanda_pengenal/'.$da->foto_ktp)}}" height='80px'/></td>
+                        <td st>{{$da->no_kk}}</td>
                         <td st >
                             @if($da->status == 'Disetujui Lingkungan') 
                             <div class="alert alert-success" role="alert">
@@ -160,6 +158,14 @@
                             @endif
                         </td>
                     </tr>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$da->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('tanda_pengenal/'.$da->foto_ktp)}}">
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>

@@ -7,16 +7,18 @@
     #myTable3 td {text-align: center; vertical-align: middle;}
     #myTable4 td {text-align: center; vertical-align: middle;}
     #myTable5 td {text-align: center; vertical-align: middle;}
+    #myTable6 td {text-align: center; vertical-align: middle;}
+    #myTable7 td {text-align: center; vertical-align: middle;}
 </style>
 @endpush
 
 @section('title')
-    List Events
+    Daftar Sesi
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">List Events</h1>
+<h1 class="h3 mb-2 text-gray-800">Daftar Sesi</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -27,7 +29,7 @@
         {{ session('error') }}
     </div>
 @endif
-<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Event</a><br><br>
+<a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Sesi</a><br><br>
 
 <!-- CREATE WITH MODAL -->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
@@ -37,22 +39,22 @@
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Tambah Event</h4>
+                    <h4 class="modal-title">Tambah Sesi</h4>
                 </div>
                 <div class="modal-body">
                     @csrf
                     <div class="form-body">
                         <div class="form-group">
-                            <label >Jenis Event</label>
+                            <label >Jenis Sesi</label>
                             <select class="form-control" id='jenis_event' name='jenis_event' onchange='checkJenisEvent(this)' required>
                                 <option value="" disabled selected>Choose</option>
                                 <option value="Baptis Bayi">Baptis Bayi</option>
                                 <option value="Baptis Dewasa">Baptis Dewasa</option>
                                 <option value="Komuni Pertama">Komuni Pertama</option>
                                 <option value="Krisma">Krisma</option>
-                                <option value="Tobat">Tobat</option>
                                 <option value="Kursus Persiapan Perkawinan">Kursus Persiapan Perkawinan</option>
                                 <option value="Misa">Misa</option>
+                                <option value="Tobat">Pengakuan Dosa</option>
                                 <option value="Petugas Liturgi">Petugas Liturgi</option>
                             </select>
                         </div>
@@ -79,7 +81,7 @@
                         </div>
                         <div style='display:none' id='label_jadwal_pelaksanaan' class="form-group">
                             <label >Jadwal Pelaksanaan</label>
-                            <input type="datetime-local" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksanaan(this)' min="<?= date('Y-m-d H:i:s'); ?>" placeholder="Jadwal Pelaksanaan" required>
+                            <input type="datetime-local" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' onchange='CheckJadwalPelaksanaan(this)' min="<?= date('Y-m-d 00:00:00'); ?>" placeholder="Jadwal Pelaksanaan" required>
                         </div>
                         <div style='display:none' id='label_lokasi' class="form-group">
                             <label >Lokasi</label>
@@ -121,11 +123,155 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Sesi Sakramen Baptis, Komuni Pertama, Krisma
+        Sesi Sakramen Baptis Bayi
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Event</th>
+                        <th>Jenis Event</th>
+                        <th>Tanggal Buka Pendaftaran</th>
+                        <th>Tanggal Tutup Pendaftaran</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th>Romo</th>
+                        <th>Status</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $i = 0; @endphp
+                    @foreach($data as $d)
+                    @php $i += 1; @endphp
+                    <tr>
+                        <td>@php echo $i; @endphp</td>
+                        <td st>{{$d->nama_event}}</td>
+                        <td st>{{$d->jenis_event}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
+                        <td st>{{$d->lokasi}}</td>
+                        <td st>{{$d->romo}}</td>
+                        <td st>
+                            @if($d->status == 'Aktif')
+                            <div class="alert alert-info" role="alert">{{$d->status}}</div>
+                            @elseif($d->status == 'Selesai')
+                            <div class="alert alert-success" role="alert">{{$d->status}}</div>
+                            @else
+                            <div class="alert alert-danger" role="alert">{{$d->status}}</div>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($d->status == 'Aktif')
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus sesi ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan sesi ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                            </div>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        Sesi Sakramen Baptis Dewasa
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="myTable2">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Event</th>
+                        <th>Jenis Event</th>
+                        <th>Tanggal Buka Pendaftaran</th>
+                        <th>Tanggal Tutup Pendaftaran</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th>Romo</th>
+                        <th>Status</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $i = 0; @endphp
+                    @foreach($data5 as $d)
+                    @php $i += 1; @endphp
+                    <tr>
+                        <td>@php echo $i; @endphp</td>
+                        <td st>{{$d->nama_event}}</td>
+                        <td st>{{$d->jenis_event}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
+                        <td st>{{$d->lokasi}}</td>
+                        <td st>{{$d->romo}}</td>
+                        <td st>
+                            @if($d->status == 'Aktif')
+                            <div class="alert alert-info" role="alert">{{$d->status}}</div>
+                            @elseif($d->status == 'Selesai')
+                            <div class="alert alert-success" role="alert">{{$d->status}}</div>
+                            @else
+                            <div class="alert alert-danger" role="alert">{{$d->status}}</div>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($d->status == 'Aktif')
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus sesi ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan sesi ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                            </div>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        Sesi Sakramen Komuni Pertama
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="myTable3">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -144,7 +290,7 @@
                 </thead>
                 <tbody>
                     @php $i = 0; @endphp
-                    @foreach($data as $d)
+                    @foreach($data6 as $d)
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
@@ -153,7 +299,7 @@
                         <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->keterangan_kursus}}</td>
                         <td st>{{$d->romo}}</td>
@@ -174,49 +320,16 @@
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus sesi ini?')) return false"><i class="fa fa-trash"></i></button>
                                 </form>
                                 <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
                                     @csrf
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                     <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan sesi ini?')) return false"><i class="fa fa-check"></i></button>
                                 </form>
                             </div>
                             @endif
-                            <!-- <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a> <br>
-                                @if ($d->status == 'Dibatalkan')
-                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" class="form-control" id='idbaptis' name='idbaptis' placeholder="Type your name" value="{{$d->id}}">
-                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
-                                </form>
-                                @elseif ($d->status == 'Selesai')
-                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
-                                    @csrf
-                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
-                                </form>
-                                @else
-                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" class="form-control" id='idbaptis' name='idbaptis' placeholder="Type your name" value="{{$d->id}}">
-                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
-                                </form>
-                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
-                                    @csrf
-                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
-                                </form>
-                                @endif
-                            </div> -->
                         </td>
                     </tr>
                     @endforeach
@@ -225,13 +338,88 @@
         </div>
     </div>
 </div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        Sesi Sakramen Krisma
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="myTable4">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Event</th>
+                        <th>Jenis Event</th>
+                        <th>Tanggal Buka Pendaftaran</th>
+                        <th>Tanggal Tutup Pendaftaran</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th>Keterangan Kursus</th>
+                        <th>Romo</th>
+                        <th>Status</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $i = 0; @endphp
+                    @foreach($data7 as $d)
+                    @php $i += 1; @endphp
+                    <tr>
+                        <td>@php echo $i; @endphp</td>
+                        <td st>{{$d->nama_event}}</td>
+                        <td st>{{$d->jenis_event}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
+                        <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
+                        <td st>{{$d->lokasi}}</td>
+                        <td st>{{$d->keterangan_kursus}}</td>
+                        <td st>{{$d->romo}}</td>
+                        <td st>
+                            @if($d->status == 'Aktif')
+                            <div class="alert alert-info" role="alert">{{$d->status}}</div>
+                            @elseif($d->status == 'Selesai')
+                            <div class="alert alert-success" role="alert">{{$d->status}}</div>
+                            @else
+                            <div class="alert alert-danger" role="alert">{{$d->status}}</div>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($d->status == 'Aktif')
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus sesi ini?')) return false"><i class="fa fa-trash"></i></button>
+                                </form>
+                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
+                                    @csrf
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan sesi ini?')) return false"><i class="fa fa-check"></i></button>
+                                </form>
+                            </div>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         Sesi Kursus Persiapan Perkawinan
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable4">
+            <table class="table table-bordered" id="myTable5">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -272,13 +460,13 @@
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus sesi ini?')) return false"><i class="fa fa-trash"></i></button>
                                 </form>
                                 <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
                                     @csrf
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                     <input type="hidden" class="form-control" id='keterangan_kursus' name='keterangan_kursus' placeholder="Type your name" value="{{$d->keterangan_kursus}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan sesi ini?')) return false"><i class="fa fa-check"></i></button>
                                 </form>
                             </div>
                             @endif
@@ -290,78 +478,14 @@
         </div>
     </div>
 </div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        Sesi Sakramen Perkawinan
+        Sesi Misa & Pengakuan Dosa
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable5">
-                <thead>
-                    <tr style="text-align: center;">
-                        <th width="5%">No</th>
-                        <th>Nama Lengkap Calon Suami</th>
-                        <th>Nama Lengkap Calon Istri</th>
-                        <th>Lokasi</th>
-                        <th>Tanggal Pelaksanaan</th>
-                        <th>Waktu Pelaksanaan</th>
-                        <th>Status</th>
-                        <th width="15%"><i class="fa fa-cog"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $i = 0; @endphp
-                    @foreach($data5 as $d)
-                    @php $i += 1; @endphp
-                    <tr>
-                        <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->nama_lengkap_calon_suami}}</td>
-                        <td st>{{$d->nama_lengkap_calon_istri}}</td>
-                        <td st>{{$d->lokasi}}</td>
-                        <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                        <td st>
-                            @if($d->status == 'Aktif' || $d->status == 'Pending')
-                            <div class="alert alert-info" role="alert">{{$d->status}}</div>
-                            @elseif($d->status == 'Selesai')
-                            <div class="alert alert-success" role="alert">{{$d->status}}</div>
-                            @else
-                            <div class="alert alert-danger" role="alert">{{$d->status}}</div>
-                            @endif
-                        </td>
-                        <td>
-                            @if ($d->status == 'Aktif')
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
-                                <form role="form" method="POST" action="{{ url('listevent/'.$d->id) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
-                                </form>
-                                <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
-                                    @csrf
-                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    
-                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
-                                </form>
-                            </div>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        Sesi Misa & Tobat
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="myTable2">
+            <table class="table table-bordered" id="myTable6">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -385,7 +509,7 @@
                         <td st>{{$d->nama_event}}</td>
                         <td st>{{$d->jenis_event}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st>{{$d->romo}}</td>
                         <td st>{{$d->kuota}}</td>
@@ -412,13 +536,13 @@
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus sesi ini?')) return false"><i class="fa fa-trash"></i></button>
                                 </form>
                                 <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
                                     @csrf
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                     <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan sesi ini?')) return false"><i class="fa fa-check"></i></button>
                                 </form>
                             </div>
                             @endif
@@ -430,13 +554,14 @@
         </div>
     </div>
 </div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         Sesi Petugas Liturgi
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable3">
+            <table class="table table-bordered" id="myTable7">
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
@@ -464,7 +589,7 @@
                         <td st>{{tanggal_indonesia($d->tgl_buka_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia($d->tgl_tutup_pendaftaran)}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal_pelaksanaan)}}</td>
-                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}}</td>
+                        <td st>{{waktu_indonesia( $d->jadwal_pelaksanaan)}} WITA</td>
                         <td st>{{$d->lokasi}}</td>
                         <td st><div class=" alert alert-success">{{$d->status}}</div></td>
                         <td>
@@ -475,13 +600,13 @@
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus sesi ini?')) return false"><i class="fa fa-trash"></i></button>
                                 </form>
                                 <form role="form" method="POST" action="{{ url('listevent/selesai') }}">
                                     @csrf
                                     <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                     <input type="hidden" class="form-control" id='jadwal_pelaksanaan' name='jadwal_pelaksanaan' placeholder="Type your name" value="{{$d->jadwal_pelaksanaan}}">
-                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan event ini?')) return false"><i class="fa fa-check"></i></button>
+                                    <button type="submit" class="btn btn-xs btn-flat btn-success" onclick="if(!confirm('apakah anda yakin ingin menyelesaikan sesi ini?')) return false"><i class="fa fa-check"></i></button>
                                 </form>
                             </div>
                             @endif    
@@ -681,30 +806,21 @@ function MinStartDatee()
 
 function CheckEndDatee()
 {
-    if($('#tgl_buka_pendaftarann').val() == '')
+    $('#tgl_tutup_pendaftarann').attr('min', $('#tgl_buka_pendaftarann').val())
+
+    if($('#tgl_buka_pendaftarann').val() != '')
     {   
-        alert('Pilih Tanggal Buka Pendaftaran Terlebih Dahulu')
-        $('#tgl_tutup_pendaftarann').val('')
-        
-    }
-    var h1 = new Date($('#tgl_tutup_pendaftarann').val())
-    h1.setDate(h1.getDate() + 1)
-    // alert(h1.toISOString().substring(0,10))
-    var enddate = h1.toISOString().substring(0,10) + ' 00:00:00' 
-    $('#jadwal_pelaksanaann').attr('min', enddate)
+        var h1 = new Date($('#tgl_tutup_pendaftarann').val())
+        h1.setDate(h1.getDate() + 1)
+        // alert(h1.toISOString().substring(0,10))
+        var enddate = h1.toISOString().substring(0,10) + ' 00:00:00' 
+        $('#jadwal_pelaksanaann').attr('min', enddate)
+    } 
 }
 
 function CheckJadwalPelaksanaann()
 {
-    if($('#tgl_buka_pendaftarann').val() == '' || $('#tgl_tutup_pendaftarann').val() == '')
-    {   
-        if($('#jenis_eventt').val() != 'Misa' && $('#jenis_eventt').val() != 'Tobat')
-        {
-            alert('Pilih Tanggal Buka dan Tutup Pendaftaran Terlebih Dahulu')
-            $('#jadwal_pelaksanaann').val('')
-        }
-        
-    }
+    $('#jadwal_pelaksanaann').attr('min', $('#tgl_tutup_pendaftarann').val())
 }
 </script>
 @endsection

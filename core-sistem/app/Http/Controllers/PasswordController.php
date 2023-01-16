@@ -123,7 +123,6 @@ class PasswordController extends Controller
                     return redirect()->back()->with('error', 'Password Tidak Sama');
                 }
             }
-            return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
         else if($data->role == "ketua lingkungan")
         {
@@ -141,11 +140,23 @@ class PasswordController extends Controller
                     return redirect()->back()->with('error', 'Password Tidak Sama');
                 }
             }
-            return redirect()->back()->with('status', 'Data Akun Berhasil Diubah');
         }
         else
         {
-            return view('profile.index',compact('data'));
+            if($request->get("oldPassword") != null && $request->get("newPassword") != null && $request->get("newPassword2") != null)
+            {
+                if($request->get("newPassword") == $request->get("newPassword2")) {
+                    if (Hash::check($request->get("oldPassword"), $data->password)) {
+                        $data->password = bcrypt($request->get("newPassword"));
+                        $data->save();
+                        return redirect()->back()->with('status', 'Password Berhasil Diubah');
+                    } else {
+                        return redirect()->back()->with('error', 'Password Lama Salah');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Password Tidak Sama');
+                }
+            }
         }
 
     }

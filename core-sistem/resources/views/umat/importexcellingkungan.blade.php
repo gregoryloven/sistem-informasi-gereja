@@ -8,7 +8,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <p>Upload file data umat yang akan diimport pada database. Harap Menggunakan format template yang sudah disediakan. <br> Klik <a href="{{url('/umat/DownloadExcelLingkungan')}}">Disini</a> Untuk Mendonwload Template Excel</p>
+                <p>Upload file data umat yang akan diimport pada database. Harap Menggunakan format template yang sudah disediakan. <br> Klik <a href="{{url('/umat/DownloadExcelLingkungan')}}">Disini</a> Untuk Mengunduh Template Excel</p>
                 <form role="form" method="POST" action="{{ url('umat/ImportUmatLingkungan') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-body">

@@ -82,7 +82,7 @@ class ReservasiTobatController extends Controller
             return redirect()->back()->with('error', 'Kuota tidak mencukupi');
         }
 
-        return redirect()->route('reservasitobat.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tiket Tobat Berhasil Dipesan');
+        return redirect()->route('reservasitobat.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tiket Pengakuan Dosa Berhasil Dipesan');
     }
 
     public function Pembatalan(Request $request)
@@ -96,7 +96,7 @@ class ReservasiTobatController extends Controller
         $listevent->kuota += $request->jumlah_tiket;
         $listevent->save();
 
-        return redirect()->route('reservasitobat.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tiket Tobat Telah Dibatalkan');
+        return redirect()->route('reservasitobat.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tiket Pengakuan Dosa Telah Dibatalkan');
     }
 
     /**

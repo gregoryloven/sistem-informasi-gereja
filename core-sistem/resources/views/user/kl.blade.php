@@ -55,11 +55,15 @@
                             <label >Username</label>
                             <input type="text" class="form-control" id='name' name='name' oninput='autogmail()' placeholder="Username" required>
                         </div>
-                        <div class="form-group" style="width:60%">
-                            <label >Email</label>
-                            <input type="text" class="form-control" id='email' name='email' placeholder="Email" required>
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <label >Email</label>
+                                <input type="text" class="form-control" id='email' name='email' placeholder="Email" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">@gmail.com</span>
+                                </div>
+                            </div>
                         </div>
-                        <div><b>@gmail.com</b></div>
                         <div class="form-group">
                             <label >Password</label>
                             <input type="password" class="form-control" id='password' name='password' placeholder="Password" required>
@@ -97,7 +101,7 @@
                 <div class="modal-body">
                     @csrf
                     <div class="form-body">
-                        <h4> APAKAH ANDA YAKIN MEMBUAT SEMUA AKUN KETUA LINGKUNGAN? <h4>
+                        <h5> APAKAH ANDA YAKIN MEMBUAT SEMUA AKUN KETUA LINGKUNGAN? <h5>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -113,9 +117,11 @@
                 <a href="{{ url('user/TambahAllKL') }}" type="submit" class="btn btn-info">Submit</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div> -->
-
+<b><p>Password Default: 12345</p></b>
 <div class="card shadow mb-4">
-    <div class="card-header py-3"></div>
+    <div class="card-header py-3">
+        Daftar Akun Ketua Lingkungan
+    </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable">

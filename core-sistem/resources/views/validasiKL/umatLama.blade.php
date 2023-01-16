@@ -37,7 +37,8 @@
                         <th width="5%">No</th>
                         <th>Nama Lengkap</th>
                         <th>Jenis Kelamin</th>
-                        <th>Alamat</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Telepon</th>
@@ -52,7 +53,8 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_lengkap}}</td>
                         <td st>{{$d->jenis_kelamin}}</td>
-                        <td st>{{$d->alamat}}</td>
+                        <td st>{{$d->tempat_lahir}}</td>
+                        <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
                         <td st>{{$d->lingkungan->nama_lingkungan}}</td>
                         <td st>{{$d->kbg->nama_kbg}}</td>
                         <td st>{{$d->telepon}}</td>
@@ -61,22 +63,22 @@
                             <form action="/validasiKL/acceptumatlama" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
+                                <input type="hidden" name="riwayatID" value="{{$riwayat[0]->user_id}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
                             <form action="/validasiKL/declineumatlama" class="ml-2" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
-                                <button class="btn btn-danger" type="submit">Tolak</button>
-                                <!-- <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a> -->
+                                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-danger">Tolak</a>
                             </form>
                             @endif
                         </td>
                     </tr>
-                    <!-- EDIT WITH MODAL
+                    <!-- EDIT WITH MODAL -->
                     <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content" >
-                                <form role="form" method="POST" action="{{ url('validasiKL/declineumat') }}" enctype="multipart/form-data">
+                                <form role="form" method="POST" action="{{ url('validasiKL/declineumatlama') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -86,6 +88,7 @@
                                         @csrf
                                         <label>Alasan Penolakan:</label>
                                         <input type="hidden" name="id" value="{{$d->id}}">
+                                        <input type="hidden" name="riwayatID" value="{{$riwayat[0]->user_id}}">
                                         <textarea name="alasan_penolakan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                     </div>
                                     <div class="modal-footer">
@@ -95,7 +98,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     @endforeach
                 </tbody>
             </table>
@@ -114,6 +117,8 @@
                         <th width="5%">No</th>
                         <th>Nama Lengkap</th>
                         <th>Jenis Kelamin</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Telepon</th>
@@ -128,20 +133,22 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$da->nama_lengkap}}</td>
                         <td st>{{$da->jenis_kelamin}}</td>
+                        <td st>{{$da->tempat_lahir}}</td>
+                        <td st>{{tanggal_indonesia($da->tanggal_lahir)}}</td>
                         <td st>{{$da->lingkungan->nama_lingkungan}}</td>
                         <td st>{{$da->kbg->nama_kbg}}</td>
                         <td st>{{$da->telepon}}</td>
                         <td st >
-                            @if($da->status == 'Tervalidasi') 
+                            @if($da->statusRiwayat == 'Tervalidasi') 
                             <div class="alert alert-success" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
                             </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}} WITA</small>
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->riwayatupdated)}}, {{waktu_indonesia($da->riwayatupdated)}} WITA</small>
                             @else
                             <div class="alert alert-danger" role="alert">
-                                {{$da->status}}
+                                {{$da->statusRiwayat}}
                             </div>
-                            <small><b>Pada:</b> {{tanggal_indonesia($da->updated_at)}}, {{waktu_indonesia($da->updated_at)}} WITA
+                            <small><b>Pada:</b> {{tanggal_indonesia($da->riwayatupdated)}}, {{waktu_indonesia($da->riwayatupdated)}} WITA
                                 <br><b>Alasan:</b> {{$da->alasan_penolakan}}</small>
                             @endif
                         </td>

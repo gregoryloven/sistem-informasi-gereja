@@ -12,7 +12,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Daftar Umat KBG</h1>
+<h1 class="h3 mb-2 text-gray-800">Daftar Umat KBG {{$kbg2}}</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -25,7 +25,7 @@
 @endif
 <div class="row">
     <div class="col-auto"><a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Umat</a></div>
-    <div class="col-auto"><a href="#modalImportKbg" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-print"></i> Import Data</a><br><br>
+    <!-- <div class="col-auto"><a href="#modalImportKbg" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-print"></i> Import Data</a><br><br> -->
     </div>
 </div>
 
@@ -116,12 +116,13 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama</th>
+                        <th>Nama Lengkap</th>
                         <th>Hubungan Darah</th>
                         <th>Jenis Kelamin</th>
                         <th>Alamat</th>
                         <th>Telepon</th>
                         <th>KBG</th>
+                        <th>No KK</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -137,6 +138,7 @@
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{$d->kbg->nama_kbg}}</td>
+                        <td st>{{$d->no_kk}}</td>
                         <td>
                             <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditFormUmatKBG({{ $d->id }})"><i class="fa fa-pen"></i></a>
                         </td>

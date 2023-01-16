@@ -94,20 +94,20 @@
 			</div>
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="form-group">
-					<label for="newPassword">Old Password</label>
-					<input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Old Password" required>
+					<label for="newPassword">Password Lama</label>
+					<input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Password Lama" required>
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="newPassword">New Password</label>
-					<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password" required>
+					<label for="newPassword">Password Baru</label>
+					<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Password Baru" required>
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="newPassword">Re-Password</label>
-					<input type="password" class="form-control" id="newPassword2" name="newPassword2" placeholder="Confirm New Password" required>
+					<label for="newPassword">Konfirmasi Password Baru</label>
+					<input type="password" class="form-control" id="newPassword2" name="newPassword2" placeholder="Konfirmasi Password Baru" required>
 				</div>
 			</div>
 		</div>

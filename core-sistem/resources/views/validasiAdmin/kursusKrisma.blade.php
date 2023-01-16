@@ -34,7 +34,6 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>    
-                        <th>Jenis Sakramen</th>
                         <th>Tanggal Krisma</th>
                         <th>Waktu</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
@@ -46,7 +45,6 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->jenis_event}}</td>
                         <td st>{{tanggal_indonesia($d->jadwal_pelaksanaan)}}</td>
                         <td st>{{waktu_indonesia($d->jadwal_pelaksanaan)}} WITA</td>
                         <td st>

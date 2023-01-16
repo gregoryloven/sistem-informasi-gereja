@@ -37,9 +37,28 @@ class ListEventController extends Controller
         {
             $petugas=PetugasLiturgi::all();
             $data = DB::table('list_events')
-            ->where('list_events.jenis_event', 'like', 'Baptis%')
-            ->orwhere('list_events.jenis_event', 'like', 'Komuni%')
-            ->orwhere('list_events.jenis_event', '=', 'Krisma')
+            ->where('list_events.jenis_event', 'like', 'Baptis B%')
+            ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+            'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 
+            'list_events.romo', 'list_events.status'
+            ]);
+
+            $data5 = DB::table('list_events')
+            ->where('list_events.jenis_event', 'like', 'Baptis D%')
+            ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+            'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 
+            'list_events.romo', 'list_events.status'
+            ]);
+
+            $data6 = DB::table('list_events')
+            ->where('list_events.jenis_event', 'like', 'Komuni%')
+            ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+            'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
+            'list_events.romo', 'list_events.status'
+            ]);
+
+            $data7 = DB::table('list_events')
+            ->where('list_events.jenis_event', 'like', 'Krisma%')
             ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
             'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
             'list_events.romo', 'list_events.status'
@@ -66,13 +85,22 @@ class ListEventController extends Controller
             'list_events.tgl_tutup_pendaftaran','list_events.lokasi','list_events.keterangan_kursus','list_events.status'
             ]);
     
-            $data5 = Perkawinan::join('list_events', 'perkawinans.tanggal_perkawinan', '=', 'list_events.jadwal_pelaksanaan')
-            ->where([['list_events.jenis_event', 'Perkawinan'], ['list_events.status', 'Aktif']])
-            ->get(['perkawinans.nama_lengkap_calon_suami', 'perkawinans.nama_lengkap_calon_istri', 'list_events.id',
-            'list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.status'
-            ]);
+            // $data5 = Perkawinan::join('list_events', 'perkawinans.tanggal_perkawinan', '=', 'list_events.jadwal_pelaksanaan')
+            // ->where([['list_events.jenis_event', 'Perkawinan'], ['list_events.status', 'Aktif']])
+            // ->get(['perkawinans.nama_lengkap_calon_suami', 'perkawinans.nama_lengkap_calon_istri', 'list_events.id',
+            // 'list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.status'
+            // ]);
+
+            // $data8 = DB::table('list_events')
+            // ->where('list_events.jenis_event', 'like', 'Baptis%')
+            // ->orwhere('list_events.jenis_event', 'like', 'Komuni%')
+            // ->orwhere('list_events.jenis_event', '=', 'Krisma')
+            // ->get(['list_events.id','list_events.nama_event','list_events.jenis_event','list_events.tgl_buka_pendaftaran',
+            // 'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
+            // 'list_events.romo', 'list_events.status'
+            // ]);
     
-            return view('listevent.index',compact("data", "petugas", "data2", "data3", "data4", "data5"));
+            return view('listevent.index',compact("data", "petugas", "data2", "data3", "data4", "data5", "data6", "data7"));
         }
     }
 
@@ -128,8 +156,8 @@ class ListEventController extends Controller
         ->update(['keterangan_kursus' => $request->get('keterangan_kursus'), 
         'lokasi' => $request->get('lokasi')]);
 
-        $perkawinan=Perkawinan::where('tanggal_perkawinan', '=', $data->jadwal_pelaksanaan)
-        ->update(['tanggal_perkawinan' => $request->get('jadwal_pelaksanaan')]);
+        // $perkawinan=Perkawinan::where('tanggal_perkawinan', '=', $data->jadwal_pelaksanaan)
+        // ->update(['tanggal_perkawinan' => $request->get('jadwal_pelaksanaan')]);
 
 
         // $misa=MisaUsers::where('jadwal', '=', $data->jadwal_pelaksanaan)
@@ -149,7 +177,7 @@ class ListEventController extends Controller
         }
         // $data->jenis_event = $request->get('jenis_event');
         // $data->petugas_liturgi_id = $request->get('petugas_liturgi_id');
-        $data->tgl_buka_pendaftaran = $request->get('tgl_buka_pendaftaran');
+        // $data->tgl_buka_pendaftaran = $request->get('tgl_buka_pendaftaran');
         $data->tgl_tutup_pendaftaran = $request->get('tgl_tutup_pendaftaran');
         $data->jadwal_pelaksanaan = $request->get('jadwal_pelaksanaan');
 
@@ -479,6 +507,11 @@ class ListEventController extends Controller
         }
     }
 
+    public function laporan(Request $request)
+    {
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -495,9 +528,20 @@ class ListEventController extends Controller
      * @param  \App\Models\ListEvent  $listEvent
      * @return \Illuminate\Http\Response
      */
-    public function show(ListEvent $listEvent)
+    public function show(Request $request)
     {
-        //
+        $jenis = $request->jenis_event;
+        $startDate = $request->datetimepicker3;
+        $endDate = $request->datetimepicker6;  
+
+        $data = ListEvent::select(DB::raw('count(list_events.id) as jumlah_sesi'), 'list_events.jenis_event as jenis_event')
+        ->where('jenis_event', $jenis)
+        ->whereYear('jadwal_pelaksanaan', '>=', (int)$startDate)
+        ->whereYear('jadwal_pelaksanaan', '<=', (int)$endDate)
+        ->groupby('list_events.jenis_event')
+        ->get();
+
+        return view('listevent.laporan', compact('data','jenis','startDate','endDate'));
     }
 
     /**

@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -20,7 +21,6 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('layout/css/sb-admin-2.min.css')}}" rel="stylesheet">
-    @yield('javascript')
     @yield('customstyle')
     @stack('css')
     @laravelPWA
@@ -35,7 +35,7 @@
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/adminlingkungan">
                 <div class="sidebar-brand-text mx-3">Lingkungan</div>
             </a>
 
@@ -276,8 +276,8 @@
     
 
     <!-- Page level custom scripts -->
-    <script src="{{ asset('layout/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{ asset('layout/js/demo/chart-pie-demo.js')}}"></script>
+    <!-- <script src="{{ asset('layout/js/demo/chart-area-demo.js')}}"></script>
+    <script src="{{ asset('layout/js/demo/chart-pie-demo.js')}}"></script> -->
 
     <script>
         jQuery(document).ready(function() {    
@@ -289,7 +289,7 @@
             $('#myTable2').DataTable();
         });
     </script>
-    
+    @yield('javascript')
 </body>
 
 </html>

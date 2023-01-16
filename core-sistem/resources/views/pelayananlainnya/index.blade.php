@@ -69,7 +69,7 @@
             <form id="formIndividu" class="mb-2" method="post" action="/pelayananlainnya/InputForm">
             @csrf
             @if (empty($user))
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-danger" role="alert">
                 Anda Belum Melakukan Pendaftaran Umat atau Proses Pendaftaran Umat Pada Lingkungan & Kbg Sedang Diproses!
             </div>
             @else
@@ -187,7 +187,7 @@
                                             @csrf
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                <h4 class="modal-title">Pembatalan Reservasi</h4>
+                                                <h4 class="modal-title">Pembatalan Pelayanan</h4>
                                             </div>
                                             <div class="modal-body">
                                                 @csrf

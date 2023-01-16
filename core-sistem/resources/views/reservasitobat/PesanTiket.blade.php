@@ -1,7 +1,7 @@
 <form role="form" method='POST' method="post" action="/reservasitobat" enctype="multipart/form-data">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title">Pemesanan Tiket Tobat</h4>
+        <h4 class="modal-title">Pemesanan Tiket Pengakuan Dosa</h4>
     </div>
     <div class="modal-body">
         @csrf

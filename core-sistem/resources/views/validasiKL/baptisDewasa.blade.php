@@ -43,7 +43,6 @@
                         <th>Wali Baptis Ayah</th>
                         <th>Wali Baptis Ibu</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Surat Pernyataan</th>
@@ -64,7 +63,6 @@
                         <td st>{{$d->wali_baptis_ayah}}</td>
                         <td st>{{$d->wali_baptis_ibu}}</td>
                         <td st>{{$d->telepon}}</td>
-                        <td st>{{$d->jenis}}</td>
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}} WITA</td>
                         <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}" height='80px'/></td>
@@ -141,7 +139,6 @@
                         <th>Wali Baptis Ayah</th>
                         <th>Wali Baptis Ibu</th>
                         <th>Telepon</th>
-                        <th>Jenis</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Surat Pernyataan</th>
@@ -162,7 +159,6 @@
                         <td st>{{$da->wali_baptis_ayah}}</td>
                         <td st>{{$da->wali_baptis_ibu}}</td>
                         <td st>{{$da->telepon}}</td>
-                        <td st>{{$da->jenis}}</td>
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td> 
                         <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}" height='80px'/></td>

@@ -27,7 +27,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 
-    @yield('javascript')
     @yield('customstyle')
     @stack('css')
     <style>
@@ -171,6 +170,7 @@
     </div>
     <!-- End Page Container -->
 
+    @yield('javascript')
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('layout/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{ asset('layout/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -183,11 +183,7 @@
     <script type="text/javascript" src="{{ asset('layout/vendor/datatables/jquery.dataTables.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('layout/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
     
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('layout/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{ asset('layout/js/demo/chart-pie-demo.js')}}"></script>
-
+    
     <script>
         jQuery(document).ready(function() {    
             $('#myTable').DataTable();
@@ -203,7 +199,6 @@
             $('#myTable3').DataTable();
         });
     </script>
-    @yield('javascript')
 </body>
 
 </html>

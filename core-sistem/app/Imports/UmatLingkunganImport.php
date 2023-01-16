@@ -30,6 +30,7 @@ class UmatLingkunganImport implements ToCollection, WithHeadingRow
             
             $umat->alamat = $r['alamat'];
             $umat->telepon = $r['telepon'];
+            $umat->no_kk = $r['no_kk'];
             $umat->status = "Disetujui Lingkungan";
             $umat->save();
         }

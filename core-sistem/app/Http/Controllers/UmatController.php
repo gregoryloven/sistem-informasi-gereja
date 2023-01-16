@@ -21,7 +21,10 @@ class UmatController extends Controller
         }
         else
         {
-            $data = Umat::where('status', 'Disetujui Lingkungan')->get();
+            $data = Umat::where('status', 'Disetujui Lingkungan')
+            ->orderby('lingkungan_id', 'ASC')
+            ->orderby('no_kk', 'ASC')
+            ->get();
 
             return view('umat.umat',compact('data'));
         }
@@ -37,12 +40,13 @@ class UmatController extends Controller
         else
         {
             $kbg = Auth::user()->kbg->id;
+            $kbg2 = Auth::user()->kbg->nama_kbg;
 
             $ling = Lingkungan::all();
             $data = Umat::where([['kbg_id', $kbg], ['status', 'Disetujui Lingkungan']])
             ->get();
     
-            return view('umat.umatkbg',compact('data','ling'));
+            return view('umat.umatkbg',compact('data','ling','kbg2'));
         }
     }
 
@@ -73,6 +77,24 @@ class UmatController extends Controller
         $data->save();
 
         return redirect('/umatKbg')->with('status', 'Pendaftaran Umat Berhasil');
+    }
+
+    public function TambahUmatLingkungan(Request $request)
+    {
+        $data = new Umat();
+        $data->user_id = Auth::user()->id;
+        $data->nama_lengkap = $request->get("nama_lengkap");
+        $data->hubungan = $request->get("hubungan_darah");
+        $data->jenis_kelamin = $request->get("jenis_kelamin");
+        $data->lingkungan_id = $request->get("lingkungan_id");
+        $data->kbg_id = $request->get("kbg_id");
+        $data->alamat = $request->get("alamat");
+        $data->telepon = $request->get("telepon");
+        $data->no_kk = $request->get("no_kk");
+        $data->status = "Disetujui Lingkungan";
+        $data->save();
+
+        return redirect('/umatLingkungan')->with('status', 'Pendaftaran Umat Berhasil');
     }
 
     public function EditFormUmatKBG(Request $request)
@@ -108,13 +130,15 @@ class UmatController extends Controller
         else
         {
             $lingkungan = Auth::user()->lingkungan->id;
+            $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
 
             $ling = Lingkungan::all();
             $kbg = Kbg::all();
             $data = Umat::where([['lingkungan_id', $lingkungan], ['status', 'Disetujui Lingkungan']])
+            ->orderby('no_kk', 'ASC')
             ->get();
     
-            return view('umat.umatlingkungan',compact('data','ling','kbg'));
+            return view('umat.umatlingkungan',compact('data','ling','kbg','lingkungan2'));
         }
     }
 
@@ -133,9 +157,9 @@ class UmatController extends Controller
         // return $request->excellingkungan;
         try {
             Excel::import(new UmatLingkunganImport, $request->file('excellingkungan'), \Maatwebsite\Excel\Excel::XLSX);
-            return back()->with('status', 'Berhasil ditambah.');
+            return back()->with('status', 'Data Umat Berhasil ditambah.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.'.$th->getMessage());
+            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.');
         }
         
     }
@@ -145,10 +169,18 @@ class UmatController extends Controller
         // return $->excelrequestkbg;
         try {
             Excel::import(new UmatKbgImport, $request->file('excelkbg'), \Maatwebsite\Excel\Excel::XLSX);
-        return back()->with('status', 'Berhasil ditambah.');
+        return back()->with('status', 'Data Umat Berhasil ditambah.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.'.$th->getMessage());
+            return back()->with('error', 'Terjadi Kesalahan. Mohon Ikuti Format Excel yang telah disediakan Dan Periksa Kembali Penamaan Kbg atau Lingkungan.');
         }
         
+    }
+
+    public function delete(Request $request)
+    {
+        $data=Umat::find($request->id);
+        $data->delete();
+
+        return redirect('/umatLingkungan')->with('status', 'Hapus Data Umat Berhasil');
     }
 }

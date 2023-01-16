@@ -54,11 +54,11 @@
     </div>
 </div>
 
-@if($user[0]->status != 'Tervalidasi')
+<!-- @if($user[0]->status != 'Tervalidasi')
 <div class="alert alert-danger">
         Akun Anda Belum Terdaftar Pada Lingkungan atau KBG. Silahkan Daftar Terlebih Dahulu Pada Halaman Pendaftaran Umat Atau <a href="/pendaftaranumat">Klik Disini</a>
 </div>
-@endif
+@endif -->
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">

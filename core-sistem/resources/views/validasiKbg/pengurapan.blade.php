@@ -36,8 +36,8 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama Pemohon</th>
-                        <th>Tanggal Pelayanan</th>
-                        <th>Waktu Pelayanan</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Alamat Pelaksanaan</th>
                         <th>Telepon</th>
                         <th>Keterangan</th>
@@ -80,7 +80,7 @@
                                     @csrf
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                        <h4 class="modal-title">Penolakan Pendaftaran Pelayanan</h4>
+                                        <h4 class="modal-title">Penolakan Pendaftaran Pengurapan</h4>
                                     </div>
                                     <div class="modal-body">
                                         @csrf

@@ -8,12 +8,12 @@
 @endpush
 
 @section('title')
-    Validasi Baptis
+    Validasi Baptis Dewasa
 @endsection
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Validasi Baptis</h1>
+<h1 class="h3 mb-2 text-gray-800">Validasi Baptis Baptis Dewasa</h1>
 @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}

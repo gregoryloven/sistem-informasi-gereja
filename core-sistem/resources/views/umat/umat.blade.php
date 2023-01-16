@@ -34,14 +34,14 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
-                        <th>Nama</th>
+                        <th>Nama Lengkap</th>
                         <th>Hubungan Darah</th>
                         <th>Jenis Kelamin</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Alamat</th>
                         <th>Telepon</th>
-                        <th width="15%"><i class="fa fa-cog"></i></th>
+                        <th>No KK</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +57,7 @@
                         <td st>{{$d->kbg->nama_kbg}}</td>
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->telepon}}</td>
+                        <td st>{{$d->no_kk}}</td>
                     </tr>
                     @endforeach
                 </tbody>

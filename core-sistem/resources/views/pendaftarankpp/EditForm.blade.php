@@ -1,4 +1,4 @@
-@extends('layouts.sbadmin2')
+@extends('layouts.sbuser')
 
 @section('title')
     Kursus Persiapan Perkawinan

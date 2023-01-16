@@ -69,7 +69,7 @@
             <form class="mb-2" method="post" action="/pendaftaranpengurapan">
             @csrf
             @if (empty($user))
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-danger" role="alert">
                 Anda Belum Melakukan Pendaftaran Umat atau Proses Pendaftaran Umat Pada Lingkungan & Kbg Sedang Diproses!
             </div>
             @else

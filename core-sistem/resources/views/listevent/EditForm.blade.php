@@ -1,7 +1,7 @@
 <form role="form" method='POST' action="{{ url('listevent/'.$data->id )}}" enctype="multipart/form-data">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title">Edit Event</h4>
+        <h4 class="modal-title">Ubah Sesi</h4>
     </div>
     <div class="modal-body">
         @csrf
@@ -29,7 +29,7 @@
             @if($data->jenis_event != 'Misa' && $data->jenis_event != 'Tobat')
             <div class="form-group">
                 <label >Tanggal Buka Pendaftaran</label>
-                <input type="date" value="{{$data->tgl_buka_pendaftaran}}" class="form-control" id='tgl_buka_pendaftarann' name='tgl_buka_pendaftaran'  onchange='MinStartDatee(this)' min="<?= date('Y-m-d'); ?>" placeholder="Tanggal Buka Pendaftaran" required>
+                <input type="date" value="{{$data->tgl_buka_pendaftaran}}" class="form-control" id='tgl_buka_pendaftarann' name='tgl_buka_pendaftaran' placeholder="Tanggal Buka Pendaftaran" readonly>
             </div>
             <div class="form-group">
                 <label >Tanggal Tutup Pendaftaran</label>

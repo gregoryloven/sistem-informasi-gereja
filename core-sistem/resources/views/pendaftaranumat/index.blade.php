@@ -30,6 +30,47 @@
     </div>
 @endif
 
+<!-- EDIT WITH MODAL-->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TRACKING WITH MODAL -->
+<div class="modal fade" id="modaltracking" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContentt">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="form-group">
+    <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
+    <div class="d-flex justify-content-between">
+        <div class="form-check">
+            <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatLamaTab" value="umatLama" checked>
+            <label class="form-check-label" for="umatLamaTab">
+                Umat Lama
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatBaruTab" value="umatBaru">
+            <label class="form-check-label" for="umatBaruTab">
+                Umat Baru
+            </label>
+        </div>
+    </div>
+</div>
+
 <div class="row mb-4 mt-4">
     <div class="col-md-12">
         <div class="card shadow">
@@ -39,106 +80,220 @@
             
             @if (Auth::User()->status == 'Tervalidasi')
             <div class="card-body">
-                <div class="alert alert-success" role="alert">
-                    Anda Telah Terdaftar Sebagai Umat Pada Lingkungan & Kbg Berikut!<br>
-                </div>
-                <div class="form-group">
-                    <label >Lingkungan</label>
-                    <input type="text" class="form-control" value="{{ Auth::user()->lingkungan->nama_lingkungan }}" disabled>
-                </div>
-                <div class="form-group">
-                    <label>KBG</label>
-                    <input type="text" class="form-control" value="{{ Auth::user()->kbg->nama_kbg }}" disabled>
-                </div>
-                @foreach($umatlama as $d)
-                @if($d->status == 'Tervalidasi') 
-                <div class="alert alert-success" role="alert">
-                    <b>{{$d->status}}</b><small><b> -- Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}</small>
-                </div>
-                @endif
-                @endforeach
+                <form id="formLama" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormLama') }}" enctype="multipart/form-data">
+                    <div class="alert alert-success" role="alert">
+                        Anda Telah Terdaftar Sebagai Umat Pada Lingkungan & Kbg Berikut!<br>
+                    </div>
+                    <div class="form-group">
+                        <label >Lingkungan</label>
+                        <input type="text" class="form-control" value="{{ Auth::user()->lingkungan->nama_lingkungan }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>KBG</label>
+                        <input type="text" class="form-control" value="{{ Auth::user()->kbg->nama_kbg }}" disabled>
+                    </div>
+                    @foreach($umatlama as $d)
+                    @if($d->statusRiwayat == 'Tervalidasi') 
+                    <div class="alert alert-success" role="alert">
+                        <b>{{$d->statusRiwayat}}</b><small><b> -- Pada:</b> {{tanggal_indonesia($d->riwayatupdated)}}, {{waktu_indonesia($d->riwayatupdated)}}</small>
+                    </div>
+                    @endif
+                    @endforeach
+                </form>
+                <form id="formBaru" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormBaru') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label >Nama Lengkap</label>
+                        <input type="text" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
+                    </div> 
+                    <div class="form-group">
+                    <label >Hubungan Darah</label>
+                        <select class="form-control" id='hubungan_darah' name='hubungan_darah' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="Kepala Keluarga">Kepala Keluarga</option>
+                            <option value="Istri">Istri</option>
+                            <option value="Anak">Anak</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >Jenis Kelamin</label>
+                        <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="Laki-Laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >Lingkungan</label>
+                        <select class="form-control" id='lingkungan_id_baru' name='lingkungan_id_baru'>
+                        <option value="" disabled selected>Choose</option>
+                        @foreach($ling as $l)
+                        <option value="{{ $l->id }}">{{ $l->nama_lingkungan }} ({{$l->batasan_wilayah}})</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >KBG</label>
+                        <select class="form-control" id='kbg_id_baru' name='kbg_id_baru'>
+                            <option value="" disabled selected>Choose</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >Alamat</label>
+                        <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
+                    </div>
+                    <div class="form-group">
+                        <label >Telepon</label>
+                        <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Foto KTP / Tanda Pengenal Yang Berisi Informasi Agama</label>
+                        <input type="file" class="form-control" name="foto_ktp"  id="foto_ktp" placeholder="Foto Tanda Pengenal" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output" width="200px" height="200px">
+                    </div>
+                    <div class="form-group">
+                        <label >Nomor Kartu Keluarga</label>
+                        <input type="number" class="form-control" id='no_kk' name='no_kk' placeholder="Nomor Kartu Keluarga" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Baru"
+                    </div>
+                    <input type="hidden" value="" id='event_id' name='event_id'>
+                    <input type="hidden" value="" id='jenis_event' name='jenis_event'>
+                    <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+                </form>
             </div>
             @elseif(Auth::User()->status == 'Belum Tervalidasi')
             <div class="card-body">
-                <div class="form-group">
-                    <label >Lingkungan</label>
-                    <input type="text" class="form-control" value="{{ Auth::user()->lingkungan->nama_lingkungan }}" disabled>
-                </div>
-                <div class="form-group">
-                    <label>KBG</label>
-                    <input type="text" class="form-control" value="{{ Auth::user()->kbg->nama_kbg }}" disabled>
-                </div>
-                @foreach($umatlama as $d)
-                @if($d->status == 'Belum Tervalidasi') 
-                <div class="alert alert-info" role="alert">
-                    <b>{{$d->status}}</b><small><b> -- Pendaftaran Pada:</b> {{tanggal_indonesia($d->created_at)}}, {{waktu_indonesia($d->created_at)}}</small>
-                </div>
-                <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
-                <!-- EDIT WITH MODAL -->
-                <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content" >
-                            <form role="form" method="POST" action="{{ url('pendaftaranumat/Pembatalan') }}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                    <h4 class="modal-title">Pembatalan Pendaftaran Umat Lama</h4>
-                                </div>
-                                <div class="modal-body">
+                <form id="formLama" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormLama') }}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label >Lingkungan</label>
+                        <input type="text" class="form-control" value="{{ Auth::user()->lingkungan->nama_lingkungan }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>KBG</label>
+                        <input type="text" class="form-control" value="{{ Auth::user()->kbg->nama_kbg }}" disabled>
+                    </div>
+                    @foreach($umatlama as $d)
+                    @if($d->statusRiwayat == 'Belum Tervalidasi') 
+                    <div class="alert alert-info" role="alert">
+                        <b>{{$d->statusRiwayat}}</b><small><b> -- Pendaftaran Pada:</b> {{tanggal_indonesia($d->riwayatcreated)}}, {{waktu_indonesia($d->riwayatcreated)}}</small>
+                    </div>
+                    <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                    <!-- EDIT WITH MODAL -->
+                    <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" >
+                                <form role="form" method="POST" action="{{ url('pendaftaranumat/Pembatalan') }}" enctype="multipart/form-data">
                                     @csrf
-                                    <div class="form-body">
-                                    <input type="hidden" name="id" value="{{$d->id}}">
-                                    <h6> Apakah Anda Yakin Ingin Membatalkan Pendaftaran? </h6>
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                        <h4 class="modal-title">Pembatalan Pendaftaran Umat Lama</h4>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-info">Submit</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </form>
+                                    <div class="modal-body">
+                                        @csrf
+                                        <div class="form-body">
+                                        <input type="hidden" name="id" value="{{$d->id}}">
+                                        <input type="hidden" name="riwayatID" value="{{$d->riwayatID}}">
+                                        <h6> Apakah Anda Yakin Ingin Membatalkan Pendaftaran? </h6>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-info">Submit</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 @endif
                 @endforeach
+
+                <form id="formBaru" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormBaru') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label >Nama Lengkap</label>
+                        <input type="text" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
+                    </div> 
+                    <div class="form-group">
+                    <label >Hubungan Darah</label>
+                        <select class="form-control" id='hubungan_darah' name='hubungan_darah' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="Kepala Keluarga">Kepala Keluarga</option>
+                            <option value="Istri">Istri</option>
+                            <option value="Anak">Anak</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >Jenis Kelamin</label>
+                        <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
+                            <option value="" disabled selected>Choose</option>
+                            <option value="Laki-Laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >Lingkungan</label>
+                        <select class="form-control" id='lingkungan_id_baru' name='lingkungan_id_baru'>
+                        <option value="" disabled selected>Choose</option>
+                        @foreach($ling as $l)
+                        <option value="{{ $l->id }}">{{ $l->nama_lingkungan }} ({{$l->batasan_wilayah}})</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >KBG</label>
+                        <select class="form-control" id='kbg_id_baru' name='kbg_id_baru'>
+                            <option value="" disabled selected>Choose</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >Alamat</label>
+                        <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
+                    </div>
+                    <div class="form-group">
+                        <label >Telepon</label>
+                        <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Foto KTP / Tanda Pengenal Yang Berisi Informasi Agama</label>
+                        <input type="file" class="form-control" name="foto_ktp"  id="foto_ktp" placeholder="Foto Tanda Pengenal" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                        <img id="output" width="200px" height="200px">
+                    </div>
+                    <div class="form-group">
+                        <label >Nomor Kartu Keluarga</label>
+                        <input type="number" class="form-control" id='no_kk' name='no_kk' placeholder="Nomor Kartu Keluarga" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Baru"
+                    </div>
+                    <input type="hidden" value="" id='event_id' name='event_id'>
+                    <input type="hidden" value="" id='jenis_event' name='jenis_event'>
+                    <button type="submit" class="btn btn-primary">Ajukan Formulir</button> 
+                </form>
             </div>
             @else
             <div class="card-body">
-            @if(Auth::User()->lingkungan_id !== null && Auth::User()->kbg_id !== null)
-                @foreach($umatlama as $d)
-                @if($d->status == 'Ditolak') 
-                <div class="alert alert-danger" role="alert">
-                    <b>DITOLAK</b><br><br><small><b>Lingkungan:</b> {{$d->lingkungan->nama_lingkungan}}<br> <b>KBG:</b> {{$d->kbg->nama_kbg}}<b><br>
-                        Pada:</b> {{tanggal_indonesia($d->updated_at)}}, {{waktu_indonesia($d->updated_at)}}<br><br><b>Silahkan Mendaftar Kembali!</b></small>  
-                </div>
-                @endif
-                @endforeach
-            @endif
-            
-
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Pilih Pendaftaran</label>
-                <div class="d-flex justify-content-between">
-                    <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatLamaTab" value="umatLama" checked>
-                        <label class="form-check-label" for="umatLamaTab">
-                            Umat Lama
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" onclick="tabSelect(this.value)" type="radio" name="jenis" id="umatBaruTab" value="umatBaru">
-                        <label class="form-check-label" for="umatBaruTab">
-                            Umat Baru
-                        </label>
-                    </div>
-                </div>
-            </div>
             <form id="formLama" class="mb-2" method="POST" action="{{ url('pendaftaranumat/InputFormLama') }}" enctype="multipart/form-data">
+                @if(Auth::User()->lingkungan_id !== null && Auth::User()->kbg_id !== null)
+                    @foreach($umatlama as $d)
+                    @if($d->statusRiwayat == 'Ditolak') 
+                    <div class="alert alert-danger" role="alert">
+                        <b>DITOLAK</b><br><br><small><b>Lingkungan:</b> {{$d->lingkungan->nama_lingkungan}}<br> <b>KBG:</b> {{$d->kbg->nama_kbg}}<b><br>
+                            Pada:</b> {{tanggal_indonesia($d->riwayatupdated)}}, {{waktu_indonesia($d->riwayatupdated)}}
+                            <br><b>Alasan:</b> {{$d->alasan_penolakan}}
+                            <br><br><b>Silahkan Mendaftar Kembali!</b></small>  
+                            <input type="hidden" name="riwayatID" value="{{$d->riwayatID}}">
+                    </div>
+                    @endif
+                    @endforeach
+                @endif    
                 @csrf
                 <div class="form-group">
                     <label >Lingkungan</label>
                     <select class="form-control" id='lingkungan_id_lama' name='lingkungan_id_lama' required>
-                    <option value="" selected>Choose</option>
+                    <option value="" disabled selected>Choose</option>
                     @foreach($ling as $l)
                     <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
                     @endforeach
@@ -162,7 +317,7 @@
                     <input type="text" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
                 </div> 
                 <div class="form-group">
-                <label >Hubungan Darah</label>
+                    <label >Hubungan Darah</label>
                     <select class="form-control" id='hubungan_darah' name='hubungan_darah' required>
                         <option value="" disabled selected>Choose</option>
                         <option value="Kepala Keluarga">Kepala Keluarga</option>
@@ -183,7 +338,7 @@
                     <select class="form-control" id='lingkungan_id_baru' name='lingkungan_id_baru'>
                     <option value="" disabled selected>Choose</option>
                     @foreach($ling as $l)
-                    <option value="{{ $l->id }}">{{ $l->nama_lingkungan }}</option>
+                    <option value="{{ $l->id }}">{{ $l->nama_lingkungan }} ({{$l->batasan_wilayah}})</option>
                     @endforeach
                     </select>
                 </div>
@@ -193,7 +348,6 @@
                         <option value="" disabled selected>Choose</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label >Alamat</label>
                     <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
@@ -205,8 +359,12 @@
                 <div class="form-group">
                     <label>Foto KTP / Tanda Pengenal Yang Berisi Informasi Agama</label>
                     <input type="file" class="form-control" name="foto_ktp"  id="foto_ktp" placeholder="Foto Tanda Pengenal" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" required>
+                    <img id="output" width="200px" height="200px">
                 </div>
-                <img id="output" src="" width="200px" height="200px">
+                <div class="form-group">
+                    <label >Nomor Kartu Keluarga</label>
+                    <input type="number" class="form-control" id='no_kk' name='no_kk' placeholder="Nomor Kartu Keluarga" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
+                </div>
                 <div class="alert alert-info" role="alert">
                     Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat Baru"
                 </div>
@@ -218,7 +376,8 @@
         </div>
     </div>
 </div>
-<div class="row mb-4 mt-4">
+@if(count($umatbaru)!=0)
+<div class="col mb-4 mt-4">
     <div class="col-md-12">
         <div class="card shadow">
             <div class="card-header py-3">
@@ -237,6 +396,8 @@
                             <th>KBG</th>
                             <th>Alamat</th>
                             <th>Telepon</th>
+                            <th>Foto KTP / Tanda Pengenal</th>
+                            <th>Nomor KK</th>
                             <th>Status</th>
                             <th>Tindakan</th>
                             </tr>
@@ -254,45 +415,38 @@
                                 <td st>{{$d->kbg->nama_kbg}}</td>
                                 <td st>{{$d->alamat}}</td>
                                 <td st>{{$d->telepon}}</td>
+                                <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('tanda_pengenal/'.$d->foto_ktp)}}" height='80px'/></td>
+                                <td st>{{$d->no_kk}}</td>
                                 <td st>
-                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
-                                    
+                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG")
                                     <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-info" onclick="detail({{ $d->id }})">Lacak</a>
                                     
+                                    @elseif($d->status == "Disetujui Lingkungan")
+                                    <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-success" onclick="detail({{ $d->id }})">Lacak</a>
+
                                     @else
                                     <a href="#modaltracking" data-toggle="modal" class="btn btn-xs btn-danger" onclick="detail({{ $d->id }})">Lacak</a>
                                     @endif
                                 </td>
                                 <td st>
-                                    @if($d->status == "Diproses" || $d->status == "Disetujui KBG")
-                                    <a href="#modal{{$d->id}}" data-toggle="modal" class="btn btn-xs btn-flat btn-danger">Batal</a>
+                                    @if($d->status == "Diproses")
+                                    <form role="form" method="POST" action="{{ url('pendaftaranumat/'.$d->id) }}">
+                                    <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a></div>
+                                    @method('DELETE')
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-xs btn-flat btn-danger mt-1" onclick="if(!confirm('apakah anda yakin ingin menghapus pendaftaran ini?')) return false"><i class="fa fa-trash"></i></button>
+                                    </form>
                                     @endif
                                 </td>
                             </tr>
-                            <!-- EDIT WITH MODAL
-                            <div class="modal fade" id="modal{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
-                                <div class="modal-dialog">
+                            <!-- POP UP WITH MODAL -->
+                            <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                                <div class="modal-dialog" style="width:400px; height=400px;">
                                     <div class="modal-content" >
-                                        <form role="form" method="POST" action="{{ url('pendaftaranbaptis/Pembatalan') }}" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                <h4 class="modal-title">Pembatalan Baptis Bayi</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                @csrf
-                                                <label>Alasan Pembatalan:</label>
-                                                <input type="hidden" name="id" value="{{$d->id}}">
-                                                <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-info">Submit</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                            </div>
-                                        </form>
+                                        <img src="{{asset('tanda_pengenal/'.$d->foto_ktp)}}">
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -301,62 +455,91 @@
         </div>
     </div>
 <div>
+@endif
 <!-- /.container-fluid -->
 @endsection
 
 @section('javascript')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-    <script>
-        $(document).ready(function(){
-            $("#umatLamaTab").trigger("click");
-            
-        });
-        function tabSelect(value) {
-            if(value === "umatLama"){
-                document.getElementById("formLama").style.display = "block";
-                document.getElementById("formBaru").style.display = "none";
-            }else{
-                document.getElementById("formLama").style.display = "none";
-                document.getElementById("formBaru").style.display = "block";
-            }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+<script>
+    $(document).ready(function(){
+        $("#umatLamaTab").trigger("click");
+        
+    });
+    function tabSelect(value) {
+        if(value === "umatLama"){
+            document.getElementById("formLama").style.display = "block";
+            document.getElementById("formBaru").style.display = "none";
+        }else{
+            document.getElementById("formLama").style.display = "none";
+            document.getElementById("formBaru").style.display = "block";
         }
+    }
 
-        $('#lingkungan_id_lama').change(function(){
-            if($(this).val() != '') {
-                var value = $(this).val();
-                $.ajax({
-                    url:`{{ url('fetchkbg') }}`,
-                    method:"POST",
-                    data:{
-                        id:value, 
-                        _token: $('[name=csrf-token]').attr('content'), 
-                    },
-                    success:function(result) {
-                        // console.log(result);
-                        $('#kbg_id_lama').html(result);
-                    }
-                })
-            }
-        });
+    $('#lingkungan_id_lama').change(function(){
+        if($(this).val() != '') {
+            var value = $(this).val();
+            $.ajax({
+                url:`{{ url('fetchkbg') }}`,
+                method:"POST",
+                data:{
+                    id:value, 
+                    _token: $('[name=csrf-token]').attr('content'), 
+                },
+                success:function(result) {
+                    // console.log(result);
+                    $('#kbg_id_lama').html(result);
+                }
+            })
+        }
+    });
 
-        $('#lingkungan_id_baru').change(function(){
-            if($(this).val() != '') {
-                var value = $(this).val();
-                $.ajax({
-                    url:`{{ url('fetchkbgbaru') }}`,
-                    method:"POST",
-                    data:{
-                        id:value, 
-                        _token: $('[name=csrf-token]').attr('content'), 
-                    },
-                    success:function(result) {
-                        // console.log(result);
-                        $('#kbg_id_baru').html(result);
-                    }
-                })
-            }
-        });
-    </script>
+    $('#lingkungan_id_baru').change(function(){
+        if($(this).val() != '') {
+            var value = $(this).val();
+            $.ajax({
+                url:`{{ url('fetchkbgbaru') }}`,
+                method:"POST",
+                data:{
+                    id:value, 
+                    _token: $('[name=csrf-token]').attr('content'), 
+                },
+                success:function(result) {
+                    // console.log(result);
+                    $('#kbg_id_baru').html(result);
+                }
+            })
+        }
+    });
+
+function EditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('pendaftaranumat.EditForm', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContent').html(data.msg)
+    }
+  });
+}
+
+function detail(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('pendaftaranumat.detail', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id
+         },
+    success: function(data){
+      $('#modalContentt').html(data.msg);
+    }
+  });
+}
+</script>
 @endsection

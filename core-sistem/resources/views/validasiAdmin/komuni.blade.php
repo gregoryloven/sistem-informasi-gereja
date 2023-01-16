@@ -43,8 +43,8 @@
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Tanggal Komuni</th>
-                        <th>Waktu</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Surat Baptis</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
@@ -140,8 +140,8 @@
                         <th>Lingkungan</th>
                         <th>KBG</th>
                         <th>Telepon</th>
-                        <th>Tanggal Komuni</th>
-                        <th>Waktu</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Waktu Pelaksanaan</th>
                         <th>Surat Baptis</th>
                         <th>Status</th>
                         <th>Tindakan</th>

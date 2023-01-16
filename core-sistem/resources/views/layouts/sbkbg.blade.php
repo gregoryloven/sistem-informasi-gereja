@@ -36,7 +36,7 @@
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/adminkbg">
                 <div class="sidebar-brand-text mx-3">KBG</div>
             </a>
 
@@ -98,6 +98,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('validasiKbg.umatBaru', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Umat Baru</a>
                         <a class="collapse-item" href="{{ route('validasiKbg.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Bayi</a>
                         <a class="collapse-item" href="{{ route('validasiKbg.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Baptis Dewasa</a>
                         <a class="collapse-item" href="{{ route('validasiKbg.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">Komuni Pertama</a>
@@ -275,8 +276,8 @@
     
 
     <!-- Page level custom scripts -->
-    <script src="{{ asset('layout/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{ asset('layout/js/demo/chart-pie-demo.js')}}"></script>
+    <!-- <script src="{{ asset('layout/js/demo/chart-area-demo.js')}}"></script>
+    <script src="{{ asset('layout/js/demo/chart-pie-demo.js')}}"></script> -->
 
     <script>
         jQuery(document).ready(function() {    

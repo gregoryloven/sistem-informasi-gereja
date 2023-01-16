@@ -3,6 +3,7 @@
 @push('css')
 <style>
     #myTable td {text-align: center; vertical-align: middle;}
+    #myTable2 td {text-align: center; vertical-align: middle;}
 </style>
 @endpush
 

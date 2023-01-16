@@ -144,13 +144,13 @@
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="lingkungan">Lingkungan</label>
-					<input type="text" class="form-control" value="{{$data->lingkungan->nama_lingkungan}}" id="lingkungan" placeholder="Lingkungan" readonly>
+					<input type="text" class="form-control" value="@if(isset($data->lingkungan->nama_lingkungan)){{$data->lingkungan->nama_lingkungan}}@endif" id="lingkungan" placeholder="Belum Ada Lingkungan" readonly>
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="kbg">KBG</label>
-					<input type="text" class="form-control" value="{{$data->kbg->nama_kbg}}" id="kbg" placeholder="Kbg" readonly>
+					<input type="text" class="form-control" value="@if(isset($data->kbg->nama_kbg)){{$data->kbg->nama_kbg}}@endif" id="kbg" placeholder="Belum Ada Kbg" readonly>
 				</div>
 			</div>
 		</div>

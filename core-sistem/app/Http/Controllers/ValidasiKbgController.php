@@ -9,6 +9,7 @@ use App\Models\Krisma;
 use App\Models\Kbg;
 use App\Models\Riwayat;
 use App\Models\ListEvent;
+use App\Models\Umat;
 use App\Models\PengurapanOrangSakit;
 use Illuminate\Http\Request;
 use Auth;
@@ -16,6 +17,62 @@ use DB;
 
 class ValidasiKbgController extends Controller
 {
+    public function umatBaru()
+    {
+        if(Auth::user()->role != 'ketua kbg')
+        {
+            return back();
+        }
+        else
+        {
+            $kbg = Auth::user()->kbg_id;
+            $kbg2 = Auth::user()->kbg->nama_kbg;
+    
+            $umatbaru = Umat::where([["status", "Diproses"], ['kbg_id', $kbg]])
+            ->orderBy('updated_at', 'ASC')
+            ->get();
+    
+            $umatbaru2 = Umat::where([["status", "Disetujui KBG"], ['kbg_id', $kbg]])
+            ->orwhere([['status', 'Ditolak'], ['kbg_id', $kbg]])
+            ->orderBy('updated_at', 'DESC')
+            ->get();
+    
+            return view('validasiKbg.umatBaru',compact("umatbaru", "umatbaru2", "kbg2"));
+        }
+    }
+
+    public function AcceptUmatBaru(Request $request)
+    {        
+        $umat=Umat::find($request->id);
+        $umat->status = "Disetujui KBG";
+        $umat->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $umat->id;
+        $riwayat->jenis_event =  "Umat Baru";
+        $riwayat->status =  "Disetujui KBG";
+        $riwayat->save();
+
+        return redirect()->route('validasiKbg.umatBaru', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Baru Berhasil');
+    }
+
+    public function DeclineUmatBaru(Request $request)
+    {        
+        $umat=Umat::find($request->id);
+        $umat->status = "Ditolak";
+        $umat->save();
+
+        $riwayat = new Riwayat();
+        $riwayat->user_id = Auth::user()->id;
+        $riwayat->event_id =  $umat->id;
+        $riwayat->jenis_event =  "Umat Baru";
+        $riwayat->status =  "Ditolak";
+        $riwayat->save();
+
+        return redirect()->route('validasiKbg.umatBaru', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Umat Baru Ditolak');
+    }
+    
     public function pelayanan()
     {
         if(Auth::user()->role != 'ketua kbg')

@@ -34,7 +34,6 @@
                 <thead>
                     <tr style="text-align: center;">
                         <th width="5%">No</th>    
-                        <th>Jenis Acara</th>
                         <th>Keterangan Kursus</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
@@ -45,7 +44,6 @@
                     @php $i += 1; @endphp
                     <tr>
                         <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->jenis_event}}</td>
                         <td st>{{$d->keterangan_kursus}}</td>
                         <td st>
                             <div class="btn-group" role="group" aria-label="Basic example">
