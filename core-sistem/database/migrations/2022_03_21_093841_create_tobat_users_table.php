@@ -13,12 +13,12 @@ class CreateTobatUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('tobat_users', function (Blueprint $table) {
-            $table->integer('jumlah_tiket');
-            $table->string('kode_booking');
-            $table->string('status');
-            $table->timestamps();
-        });
+        // Schema::create('tobat_users', function (Blueprint $table) {
+        //     $table->integer('jumlah_tiket');
+        //     $table->string('kode_booking');
+        //     $table->string('status');
+        //     $table->timestamps();
+        // });
     }
 
     /**

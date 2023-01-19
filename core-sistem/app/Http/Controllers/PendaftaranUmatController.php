@@ -25,20 +25,140 @@ class PendaftaranUmatController extends Controller
         }
         else
         {
-            $ling = Lingkungan::all();
-            $kbg = Kbg::all();
-            $umatlama = User::join('riwayats', 'users.id', '=', 'riwayats.user_id')
-            ->where([['users.status', 'Belum Tervalidasi'], ['users.id', Auth::user()->id], ['jenis_event', 'Umat Lama']])
-            ->orwhere([['users.status', 'Tervalidasi'], ['users.id', Auth::user()->id], ['jenis_event', 'Umat Lama']])
-            ->orwhere([['users.status', 'Ditolak'], ['users.id', Auth::user()->id], ['jenis_event', 'Umat Lama']])
-            ->get(['users.*','riwayats.id as riwayatID', 'riwayats.status as statusRiwayat',
-            'riwayats.created_at as riwayatcreated', 'riwayats.updated_at as riwayatupdated', 
-            'riwayats.alasan_penolakan']);
+            // $ling = Lingkungan::all();
+            // $kbg = Kbg::all();
+            // $umatlama = User::join('riwayats', 'users.id', '=', 'riwayats.user_id')
+            // ->where([['users.status', 'Belum Tervalidasi'], ['users.id', Auth::user()->id], ['jenis_event', 'Umat Lama']])
+            // ->orwhere([['users.status', 'Tervalidasi'], ['users.id', Auth::user()->id], ['jenis_event', 'Umat Lama']])
+            // ->orwhere([['users.status', 'Ditolak'], ['users.id', Auth::user()->id], ['jenis_event', 'Umat Lama']])
+            // ->get(['users.*','riwayats.id as riwayatID', 'riwayats.status as statusRiwayat',
+            // 'riwayats.created_at as riwayatcreated', 'riwayats.updated_at as riwayatupdated', 
+            // 'riwayats.alasan_penolakan']);
 
-            $umatbaru = Umat::where('user_id', Auth::user()->id)->get();
+            // $umatbaru = Umat::where('user_id', Auth::user()->id)->get();
     
-            return view('pendaftaranumat.index',compact("ling","kbg","umatlama","umatbaru"));
+            // return view('pendaftaranumat.index',compact("ling","kbg","umatlama","umatbaru"));
+
+            $cek = User::where('users.id', Auth::user()->id)->first();
+
+            $data = User::where('no_kk', Auth::user()->no_kk)->get();
+
+            return view('pendaftaranumat.index',compact("data","cek"));
+
         }
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $ling = Lingkungan::all();
+        $kbg = Kbg::all();
+        $data=User::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('pendaftaranumat.EditForm',compact("data","ling","kbg"))->render()),200);
+    }
+
+    public function fetchkbg(Request $request)
+    {
+        $kbg = Kbg::where('lingkungan_id', $request->id)->get();
+
+        // $output = '<option value="">Choose</option>';
+        $output = "";
+        foreach($kbg as $o) {
+            $output .= '<option value="'.$o->id.'">'.$o->nama_kbg.' ('.$o->batasan_wilayah.')</option>';
+        }
+        echo $output;
+    }
+
+    public function validasilingkungan(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->lingkungan_id = $request->get("lingkungan_id");
+        $user->kbg_id = $request->get("kbg_id");
+        $user->status = "Belum Tervalidasi";
+
+        $file=$request->file('surat_baptis');
+        if(isset($file))
+        {
+            $imgFolder = 'file_sertifikat/surat_baptis/';
+            $extension = $request->file('surat_baptis')->extension();
+            $imgFile=time()."_".$request->get('nama').".".$extension;
+            $file->move($imgFolder,$imgFile);
+            $user->surat_baptis=$imgFile;
+        }
+
+        $file2=$request->file('sertifikat_komuni');
+        if(isset($file2))
+        {
+            $imgFolder2 = 'file_sertifikat/sertifikat_komuni/';
+            $extension2 = $request->file('sertifikat_komuni')->extension();
+            $imgFile2=time()."_".$request->get('nama').".".$extension2;
+            $file2->move($imgFolder2,$imgFile2);
+            $user->sertifikat_komuni=$imgFile2;
+        }
+
+        $user->save();
+
+        return redirect('/pendaftaranumat')->with('status', 'Pendaftaran Umat Berhasil Diproses');
+    }
+
+    public function create()
+    {
+        $ling = Lingkungan::all();
+        $kbg = Kbg::all();
+        return view('pendaftaranumat.InputForm', compact('ling','kbg'));
+    }
+
+    public function store(Request $request)
+    {
+        if($request->no_kk == Auth::user()->no_kk)
+        {
+            $user = new User();
+            $user->nama_lengkap = $request->get("nama_lengkap");
+            $user->hubungan = $request->get("hubungan");
+            $user->no_kk = $request->get("no_kk");
+            $user->tempat_lahir = $request->get("tempat_lahir");
+            $user->tanggal_lahir = $request->get("tanggal_lahir");
+            $user->jenis_kelamin = $request->get("jenis_kelamin");
+            $user->alamat = $request->get("alamat");
+            $user->telepon = $request->get("telepon");
+            $user->lingkungan_id = $request->get("lingkungan_id");
+            $user->kbg_id = $request->get("kbg_id");
+            $user->email = "";
+            $user->password = "";
+
+            $file=$request->file('surat_baptis');
+            if(isset($file))
+            {
+                $imgFolder = 'file_sertifikat/surat_baptis/';
+                $extension = $request->file('surat_baptis')->extension();
+                $imgFile=time()."_".$request->get('nama').".".$extension;
+                $file->move($imgFolder,$imgFile);
+                $user->surat_baptis=$imgFile;
+            }
+
+            $file2=$request->file('sertifikat_komuni');
+            if(isset($file2))
+            {
+                $imgFolder2 = 'file_sertifikat/sertifikat_komuni/';
+                $extension2 = $request->file('sertifikat_komuni')->extension();
+                $imgFile2=time()."_".$request->get('nama').".".$extension2;
+                $file2->move($imgFolder2,$imgFile2);
+                $user->sertifikat_komuni=$imgFile2;
+            }
+
+            $user->status = "Tervalidasi";
+
+            $user->save();
+
+            return redirect('/pendaftaranumat')->with('status', 'Pendaftaran Anggota Keluarga Berhasil');
+        }
+        else
+        {
+            return redirect('/pendaftaranumat')->with('error', 'Pendaftaran Anggota Keluarga Gagal. Pastikan Nomor Kartu Keluarga Sesuai');
+        }
+
     }
 
     public function showKbg($id)
@@ -126,40 +246,6 @@ class PendaftaranUmatController extends Controller
             'msg'=>view('pendaftaranumat.detail', compact("log"))->render()),200);
     }
 
-    public function EditForm(Request $request)
-    {
-        $id=$request->get("id");
-        $data=Umat::find($id);
-        return response()->json(array(
-            'status'=>'oke',
-            'msg'=>view('pendaftaranumat.EditForm',compact("data"))->render()),200);
-    }
-
-    public function fetchkbg(Request $request)
-    {
-        $kbg = Kbg::where('lingkungan_id', $request->id)->get();
-
-        // $output = '<option value="">Choose</option>';
-        $output = "";
-        foreach($kbg as $o) {
-            $output .= '<option value="'.$o->id.'">'.$o->nama_kbg.'</option>';
-        }
-        echo $output;
-
-    }
-
-    public function fetchkbgbaru(Request $request)
-    {
-        $kbg = Kbg::where('lingkungan_id', $request->id)->get();
-
-        // $output = '<option value="">Choose</option>';
-        $output = "";
-        foreach($kbg as $o) {
-            $output .= '<option value="'.$o->id.'">'.$o->nama_kbg.' ('.$o->batasan_wilayah.')</option>';
-        }
-        echo $output;
-    }
-
     public function update(Request $request)
     {
         $user=Umat::find($request->id);
@@ -209,26 +295,6 @@ class PendaftaranUmatController extends Controller
         return redirect()->route('pendaftaranumat.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Umat Berhasil Dibatalkan');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.

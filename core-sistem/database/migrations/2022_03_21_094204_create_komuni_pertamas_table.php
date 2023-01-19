@@ -16,6 +16,7 @@ class CreateKomuniPertamasTable extends Migration
         Schema::create('komuni_pertamas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->integer('user_id_penerima');
             $table->string('nama_lengkap');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');

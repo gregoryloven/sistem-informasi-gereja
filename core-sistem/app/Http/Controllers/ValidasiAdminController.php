@@ -329,6 +329,8 @@ class ValidasiAdminController extends Controller
     {
         $baptis=Baptis::find($request->id);
         $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+        $cek = User::find($request->user_id_penerima);
+        $user = User::where([['no_kk', $cek->no_kk],['nama_lengkap', $cek->nama_lengkap]])->first();
 
         if($baptis->jenis == "Baptis Bayi")
         {
@@ -342,7 +344,10 @@ class ValidasiAdminController extends Controller
             $riwayat->jenis_event =  "Baptis Bayi";
             $riwayat->status =  "Disetujui Paroki";
             $riwayat->save();
-    
+
+            $user->status_baptis = "Sudah Baptis";
+            $user->save();
+
             return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Bayi Telah Disetujui');
         }
         else
@@ -357,6 +362,9 @@ class ValidasiAdminController extends Controller
             $riwayat->jenis_event =  "Baptis Dewasa";
             $riwayat->status =  "Disetujui Paroki";
             $riwayat->save();
+
+            $user->status_baptis = "Sudah Baptis";
+            $user->save();
     
             return redirect()->route('validasiAdmin.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Permohonan Baptis Dewasa Telah Disetujui');
         }
@@ -405,6 +413,8 @@ class ValidasiAdminController extends Controller
     {
         $data=Baptis::find($request->id);
         $list_event = ListEvent::where('jadwal_pelaksanaan', $request->jadwal)->first();
+        $cek = User::find($request->user_id_penerima);
+        $user = User::where([['no_kk', $cek->no_kk],['nama_lengkap', $cek->nama_lengkap]])->first();
         
         if($data->jenis == "Baptis Bayi")
         {
@@ -419,6 +429,9 @@ class ValidasiAdminController extends Controller
             $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
             $riwayat->save();
             $data->save();
+
+            $user->status_baptis = "";
+            $user->save();
     
             return redirect()->route('validasiAdmin.baptis', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Baptis Bayi Telah Dibatalkan');
         }
@@ -435,6 +448,9 @@ class ValidasiAdminController extends Controller
             $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
             $riwayat->save();
             $data->save();
+
+            $user->status_baptis = "";
+            $user->save();
     
             return redirect()->route('validasiAdmin.baptisDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Baptis Dewasa Telah Dibatalkan');
         }

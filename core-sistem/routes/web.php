@@ -271,6 +271,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/fetchkbg', [PendaftaranUmatController::class, 'fetchkbg'])->name('fetchkbg');
         Route::post('/fetchkbgbaru', [PendaftaranUmatController::class, 'fetchkbgbaru'])->name('fetchkbgbaru');
         Route::post('/pendaftaranumat/Pembatalan', [PendaftaranUmatController::class, 'Pembatalan']);
+        Route::post('/pendaftaranumat/validasilingkungan/{id}', [PendaftaranUmatController::class, 'validasilingkungan']);
 
         //Pendaftaran Petugas Liturgi
         Route::resource('pendaftaranpetugas', PendaftaranPetugasController::class);
@@ -286,6 +287,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/pendaftaranbaptis/Pembatalan', [PendaftaranBaptisController::class, 'Pembatalan'])->name('pendaftaranbaptis.Pembatalan');
         Route::post('/pendaftaranbaptis/detail', [PendaftaranBaptisController::class, 'detail'])->name('pendaftaranbaptis.detail');
         Route::post('/pendaftaranbaptis/EditForm', [PendaftaranBaptisController::class, 'EditForm'])->name('pendaftaranbaptis.EditForm');
+
+        Route::post('/pendaftaranbaptis/fetchidentitas', [PendaftaranBaptisController::class, 'FetchIdentitas'])->name('pendaftaranbaptis.FetchIdentitas');
 
         //Pendaftaran Baptis Dewasa
         Route::get('pendaftaranbaptisdewasa', [PendaftaranBaptisController::class, 'indexDewasa'])->name('pendaftaranbaptis.indexDewasa');
@@ -418,6 +421,10 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
 
 
     // validasi KL
+    Route::get('validasiKLUmat', [ValidasiKLController::class, 'umat'])->name('validasiKL.umat');
+    Route::post('/validasiKL/EditForm', [ValidasiKLController::class, 'EditForm'])->name('validasiKL.EditForm');
+    Route::post('/validasiKL/validasiumat/{id}', [ValidasiKLController::class, 'validasiumat'])->name('validasiKL.validasiumat');
+
     Route::get('validasiKLUmatLama', [ValidasiKLController::class, 'umatLama'])->name('validasiKL.umatLama');
     Route::post('/validasiKL/acceptumatlama', [ValidasiKLController::class, 'AcceptUmatLama'])->name('validasiKL.AcceptUmatLama');
     Route::post('/validasiKL/declineumatlama', [ValidasiKLController::class, 'DeclineUmatLama'])->name('validasiKL.DeclineUmatLama');

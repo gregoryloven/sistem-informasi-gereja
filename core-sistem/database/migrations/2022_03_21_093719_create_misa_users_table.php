@@ -13,12 +13,12 @@ class CreateMisaUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('misa_users', function (Blueprint $table) {
-            $table->integer('jumlah_tiket');
-            $table->string('kode_booking');
-            $table->string('status');
-            $table->timestamps();
-        });
+        // Schema::create('misa_users', function (Blueprint $table) {
+        //     $table->integer('jumlah_tiket');
+        //     $table->string('kode_booking');
+        //     $table->string('status');
+        //     $table->timestamps();
+        // });
     }
 
     /**

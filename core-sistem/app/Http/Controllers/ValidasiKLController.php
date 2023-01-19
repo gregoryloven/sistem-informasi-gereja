@@ -17,6 +17,65 @@ use DB;
 
 class ValidasiKLController extends Controller
 {
+    public function umat()
+    {
+        if(Auth::user()->role != 'ketua lingkungan')
+        {
+            return back();
+        }
+        else
+        {
+            $lingkungan = Auth::user()->lingkungan_id;
+            $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
+
+            $umat = User::where([['status', 'Belum Tervalidasi'], ['lingkungan_id', $lingkungan]])
+            ->orwhere([['status_baptis', null], ['lingkungan_id', $lingkungan], ['role', 'umat']])
+            ->orwhere([['status_komuni', null], ['lingkungan_id', $lingkungan], ['role', 'umat']])
+            ->orderby('created_at', 'ASC')
+            ->get();
+
+            $umat2 = User::where([['status', 'Tervalidasi'], ['lingkungan_id', $lingkungan]])
+            ->orwhere([['status_baptis', 'Sudah Baptis'], ['lingkungan_id', $lingkungan]])
+            ->orwhere([['status_komuni', 'Sudah Komuni'], ['lingkungan_id', $lingkungan]])
+            ->orderby('created_at', 'DESC')
+            ->get();
+            dd($umat2);
+
+            return view('validasiKL.umat',compact("umat", "lingkungan2"));
+        }
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id=$request->get("id");
+        $data=User::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('validasiKL.EditForm',compact("data"))->render()),200);
+    }
+
+    public function validasiumat(Request $request)
+    {
+        $data = User::find($request->id);
+        
+        if($request->lingkungan == true)
+        {
+            $data->status = "Tervalidasi";
+        }
+        if($request->baptis == true)
+        {
+            $data->status_baptis = "Sudah Baptis";
+        }
+        if($request->komuni == true)
+        {
+            $data->status_komuni = "Sudah Komuni";
+        }
+
+        $data->save();
+
+        return redirect()->route('validasiKL.umat', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Data Umat Berhasil');
+    }
+
     public function umatLama()
     {
         if(Auth::user()->role != 'ketua lingkungan')

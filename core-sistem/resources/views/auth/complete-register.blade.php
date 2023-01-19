@@ -15,6 +15,21 @@
             </div>
 
             <div class="mt-4">
+                <x-jet-label for="hubungan" value="{{ __('Hubungan') }}" /> 
+                <select name="hubungan" class="block mt-1 w-full" id="hubungan" required>
+                    <option value="" disabled selected></option>
+                    <option value="Kepala Keluarga" @if (old('hubungan') == "Kepala Keluarga") {{ 'selected' }} @endif>Kepala Keluarga</option>
+                    <option value="Istri" @if (old('hubungan') == "Istri") {{ 'selected' }} @endif>Istri</option>
+                    <option value="Anak" @if (old('hubungan') == "Anak") {{ 'selected' }} @endif>Anak</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="no_kk" value="{{ __('No KK') }}" />
+                <x-jet-input id="no_kk" class="block mt-1 w-full" type="number" name="no_kk" :value="old('no_kk')" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required autofocus autocomplete="no_kk" />
+            </div>
+
+            <div class="mt-4">
                 <x-jet-label for="tempat_lahir" value="{{ __('Tempat Lahir') }}" />
                 <x-jet-input id="tempat_lahir" class="block mt-1 w-full" type="text" name="tempat_lahir" :value="old('tempat_lahir')" required autofocus autocomplete="tempat_lahir" />
             </div>
@@ -24,18 +39,6 @@
                 <x-jet-input id="tanggal_lahir" class="block mt-1 w-full" type="date" name="tanggal_lahir" :value="old('tanggal_lahir')" required autofocus autocomplete="tanggal_lahir" />
             </div>
 
-            <div class="mt-4">
-                <x-jet-label for="agama" value="{{ __('Agama') }}" /> 
-                <select name="agama" class="block mt-1 w-full" id="agama" required>
-                    <option value="" disabled selected></option>
-                    <option value="Katolik" @if (old('agama') == "Katolik") {{ 'selected' }} @endif>Katolik</option>
-                    <option value="Kristen" @if (old('agama') == "Kristen") {{ 'selected' }} @endif>Kristen</option>
-                    <option value="Islam" @if (old('agama') == "Islam") {{ 'selected' }} @endif>Islam</option>
-                    <option value="Hindu" @if (old('agama') == "Hindu") {{ 'selected' }} @endif>Hindu</option>
-                    <option value="Buddha" @if (old('agama') == "Buddha") {{ 'selected' }} @endif>Buddha</option>
-                    <option value="Khonghucu" @if (old('agama') == "Khonghucu") {{ 'selected' }} @endif>Khonghucu</option>
-                </select>
-            </div>
 
             <div class="mt-4">
                 <x-jet-label for="jenis_kelamin" value="{{ __('Jenis Kelamin') }}" /> 
@@ -44,6 +47,11 @@
                     <option value="Laki-Laki" @if (old('jenis_kelamin') == "Laki-Laki") {{ 'selected' }} @endif>Laki-Laki</option>
                     <option value="Perempuan" @if (old('jenis_kelamin') == "Perempuan") {{ 'selected' }} @endif>Perempuan</option>
                 </select>
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="alamat" value="{{ __('Alamat') }}" />
+                <x-jet-input id="alamat" class="block mt-1 w-full" type="text" name="alamat" :value="old('alamat')" required autofocus autocomplete="alamat" />
             </div>
 
             <div class="mt-4">
@@ -70,7 +78,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('Sudah Punya Akun?') }}
                 </a>
 
                 <x-jet-button class="ml-4">

@@ -98,10 +98,12 @@ class UserController extends Controller
         $id = Auth::user()->id;
         $user=User::find($id);
         $user->nama_lengkap=$request->get('nama_lengkap');
+        $user->hubungan=$request->get('hubungan');
+        $user->no_kk=$request->get('no_kk');
         $user->tempat_lahir=$request->get('tempat_lahir');
         $user->tanggal_lahir=$request->get('tanggal_lahir');
-        $user->agama=$request->get('agama');
         $user->jenis_kelamin=$request->get('jenis_kelamin');
+        $user->alamat=$request->get('alamat');
         $user->telepon=$request->get('telepon');
 
         $user->save();
@@ -132,7 +134,6 @@ class UserController extends Controller
         $data->password = Hash::make($request->password);
         $data->lingkungan_id = $request->get('lingkungan_id');
         $data->role = "ketua lingkungan";
-        $data->agama = "Katolik";
         $data->save();
         
         return redirect()->route('user.kl', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Akun Berhasil');
@@ -153,7 +154,6 @@ class UserController extends Controller
                 $data->password = Hash::make('12345');
                 $data->lingkungan_id = $l->id;
                 $data->role = "ketua lingkungan";
-                $data->agama = "Katolik";
                 $data->save();
             }
         }
@@ -183,7 +183,6 @@ class UserController extends Controller
         $data->password = Hash::make($request->password);
         $data->kbg_id = $request->get('kbg_id');
         $data->role = "ketua kbg";
-        $data->agama = "Katolik";
         $data->save();
         
         return redirect()->route('user.kkbg', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Tambah Akun Berhasil');
@@ -204,7 +203,6 @@ class UserController extends Controller
                 $data->password = Hash::make('12345');
                 $data->kbg_id = $k->id;
                 $data->role = "ketua kbg";
-                $data->agama = "Katolik";
                 $data->save();
             }
         }

@@ -74,6 +74,7 @@
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
+                                <input type="text" name="user_id_penerima" class="d-none" value="{{$d->user_id_penerima}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
                             <form action="/validasiAdmin/declinebaptis" class="ml-2" method="post">
@@ -201,6 +202,7 @@
                                         <input type="hidden" name="id" value="{{$da->id}}">
                                         <input type="hidden" name="riwayatID" value="{{$da->riwayatID}}">
                                         <input type="text" name="jadwal" class="d-none" value="{{$da->jadwal}}">
+                                        <input type="text" name="user_id_penerima" class="d-none" value="{{$da->user_id_penerima}}">
                                         <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                     </div>
                                     <div class="modal-footer">
