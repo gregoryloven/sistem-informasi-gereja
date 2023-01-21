@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ListEvent;
 use App\Models\Baptis;
 use App\Models\User;
+use App\Models\Umat;
 use App\Models\Riwayat;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -63,7 +64,8 @@ class PendaftaranBaptisController extends Controller
             $id = $request->id;
             $list = DB::table('list_events')->where('id', $id)->get();
 
-            $user = User::where('no_kk', Auth::user()->no_kk)->get();
+            $user = Umat::join('users', 'umats.user_id', '=', 'users.id')
+            ->where('user_id', Auth::user()->id)->get(['umats.*', 'users.id as userid']);
 
             return view('pendaftaranbaptis.InputForm',compact("list", "user"));
         }
@@ -71,8 +73,8 @@ class PendaftaranBaptisController extends Controller
 
     public function FetchIdentitas(Request $request)
     {
-        $data=$request->get("nama_lengkap");
-        $user = User::where('nama_lengkap', $data)->get();
+        $data=$request->get("id");
+        $user = Umat::where('id', $data)->get();
         return response()->json($user);
     }
 
@@ -83,11 +85,9 @@ class PendaftaranBaptisController extends Controller
         } else {
             $id = $request->id;
             $list = DB::table('list_events')->where('id', $id)->get();
-            $user = DB::table('users')
-                ->join('lingkungans', 'users.lingkungan_id', '=', 'lingkungans.id')
-                ->join('kbgs', 'users.kbg_id', '=', 'kbgs.id')
-                ->where('users.id', Auth::user()->id)
-                ->get();
+            
+            $user = Umat::join('users', 'umats.user_id', '=', 'users.id')
+            ->where('user_id', Auth::user()->id)->get(['umats.*', 'users.id as userid']);
 
             return view('pendaftaranbaptis.InputForm',compact("list", "user"));
         }
@@ -95,130 +95,113 @@ class PendaftaranBaptisController extends Controller
 
     public function InputForm(Request $request)
     {
-        $cek = User::where('no_kk', $request->no_kk)->get();
+        $cek = Umat::where('id', $request->user_id_penerima)->first();
         $setting = Setting::first();
+
+        $date = new DateTime($request->get("tanggal_lahir"));
+        $now = new DateTime();
+        $a = $now->diff($date);
+        $umur = (int)$a->y;
 
         if($request->jenis == "Baptis Bayi")
         {
-            if(count($cek)!=0)
+            if($cek->status_baptis == 'Sudah Baptis')
             {
-                foreach($cek as $c)
+                return redirect()->route('pendaftaranbaptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error2', 'Pendaftaran Baptis Bayi Gagal. Identitas Yang Diinputkan Telah Menerima Baptis');
+            }
+            else
+            {
+                if($umur < $setting->umur_baptis)
                 {
-                    if($c->nama_lengkap == $request->nama_lengkap && $c->status_baptis == 'Sudah Baptis')
-                    {
-                        return redirect()->route('pendaftaranbaptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error2', 'Pendaftaran Baptis Bayi Gagal. Identitas Yang Diinputkan Telah Menerima Baptis');
-                    }
-                    else
-                    {
-                        $date = new DateTime($request->get("tanggal_lahir"));
-                        $now = new DateTime();
-                        $a = $now->diff($date);
-                        $umur = (int)$a->y;
+                    $data = new Baptis();
+                    $data->user_id = Auth::user()->id;
+                    $data->user_id_penerima = $request->get("user_id_penerima");
+                    $data->nama_lengkap = $request->get("nama_lengkap");
+                    $data->tempat_lahir = $request->get("tempat_lahir");
+                    $data->tanggal_lahir = $request->get("tanggal_lahir");            
+                    $data->orangtua_ayah = $request->get("orangtua_ayah");
+                    $data->orangtua_ibu = $request->get("orangtua_ibu");
+                    $data->wali_baptis_ayah = $request->get("wali_baptis_ayah");
+                    $data->wali_baptis_ibu = $request->get("wali_baptis_ibu");
+                    $data->lingkungan = $request->get("lingkungan");
+                    $data->kbg = $request->get("kbg");
+                    $data->telepon = $request->get("telepon");
+                    $data->jenis = $request->get("jenis");
+                    $data->jadwal = $request->get("jadwal");
+                    $data->lokasi = $request->get("lokasi");
+                    $data->romo = $request->get("romo");
+                    $data->status = "Diproses";
+                    $data->save();
 
-                        if($umur < $setting->umur_baptis)
-                        {
-                            $data = new Baptis();
-                            $data->user_id = Auth::user()->id;
-                            $data->user_id_penerima = $request->get("user_id_penerima");
-                            $data->nama_lengkap = $request->get("nama_lengkap");
-                            $data->tempat_lahir = $request->get("tempat_lahir");
-                            $data->tanggal_lahir = $request->get("tanggal_lahir");            
-                            $data->orangtua_ayah = $request->get("orangtua_ayah");
-                            $data->orangtua_ibu = $request->get("orangtua_ibu");
-                            $data->wali_baptis_ayah = $request->get("wali_baptis_ayah");
-                            $data->wali_baptis_ibu = $request->get("wali_baptis_ibu");
-                            $data->lingkungan = $request->get("lingkungan");
-                            $data->kbg = $request->get("kbg");
-                            $data->telepon = $request->get("telepon");
-                            $data->jenis = $request->get("jenis");
-                            $data->jadwal = $request->get("jadwal");
-                            $data->lokasi = $request->get("lokasi");
-                            $data->romo = $request->get("romo");
-                            $data->status = "Diproses";
-                            $data->save();
+                    $riwayat = new Riwayat();
+                    $riwayat->user_id = Auth::user()->id;
+                    $riwayat->list_event_id = $request->list_event_id;
+                    $riwayat->jenis_event =  $data->jenis;
+                    $riwayat->event_id =  $data->id;
+                    $riwayat->status =  "Diproses";
+                    $riwayat->save();
 
-                            $riwayat = new Riwayat();
-                            $riwayat->user_id = Auth::user()->id;
-                            $riwayat->list_event_id = $request->list_event_id;
-                            $riwayat->jenis_event =  $data->jenis;
-                            $riwayat->event_id =  $data->id;
-                            $riwayat->status =  "Diproses";
-                            $riwayat->save();
-
-                            return redirect()->route('pendaftaranbaptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Bayi Berhasil');
-                        }
-                        else
-                        {
-                            return redirect()->route('pendaftaranbaptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error2', 'Pendaftaran Baptis Bayi Gagal. Pastikan Umur Sesuai Dengan Batas Ketentuan Baptis Bayi & Anak');
-                        }
-                    }
-                }    
-            }    
+                    return redirect()->route('pendaftaranbaptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Bayi Berhasil');
+                }
+                else
+                {
+                    return redirect()->route('pendaftaranbaptis.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error2', 'Pendaftaran Baptis Bayi Gagal. Pastikan Umur Sesuai Dengan Batas Ketentuan Baptis Bayi & Anak');
+                }
+            }
         }
         else
         {
-            if(count($cek)!=0)
+            if($cek->status_baptis == 'Sudah Baptis')
             {
-                foreach($cek as $c)
+                return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error2', 'Pendaftaran Baptis Dewasa Gagal. Identitas Yang Diinputkan Telah Menerima Baptis');
+            }
+            else
+            {
+                if($umur > $setting->umur_baptis)
                 {
-                    if($c->nama_lengkap == $request->nama_lengkap && $c->status_baptis == 'Sudah Baptis')
-                    {
-                        return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error2', 'Pendaftaran Baptis Dewasa Gagal. Identitas Yang Diinputkan Telah Menerima Baptis');
-                    }
-                    else
-                    {
-                        $date = new DateTime($request->get("tanggal_lahir"));
-                        $now = new DateTime();
-                        $a = $now->diff($date);
-                        $umur = (int)$a->y;
+                    $data = new Baptis();
+                    $data->user_id = Auth::user()->id;
+                    $data->user_id_penerima = $request->get("user_id_penerima");
+                    $data->nama_lengkap = $request->get("nama_lengkap");
+                    $data->tempat_lahir = $request->get("tempat_lahir");
+                    $data->tanggal_lahir = $request->get("tanggal_lahir");
+                    $data->orangtua_ayah = $request->get("orangtua_ayah");
+                    $data->orangtua_ibu = $request->get("orangtua_ibu");
+                    $data->wali_baptis_ayah = $request->get("wali_baptis_ayah");
+                    $data->wali_baptis_ibu = $request->get("wali_baptis_ibu");
+                    $data->lingkungan = $request->get("lingkungan");
+                    $data->kbg = $request->get("kbg");
+                    $data->telepon = $request->get("telepon");
+                    $data->jenis = $request->get("jenis");
+                    $data->jadwal = $request->get("jadwal");
+                    $data->lokasi = $request->get("lokasi");
+                    $data->romo = $request->get("romo");
+                    $data->status = "Diproses";
 
-                        if($umur > $setting->umur_baptis)
-                        {
-                            $data = new Baptis();
-                            $data->user_id = Auth::user()->id;
-                            $data->user_id_penerima = $request->get("user_id_penerima");
-                            $data->nama_lengkap = $request->get("nama_lengkap");
-                            $data->tempat_lahir = $request->get("tempat_lahir");
-                            $data->tanggal_lahir = $request->get("tanggal_lahir");
-                            $data->orangtua_ayah = $request->get("orangtua_ayah");
-                            $data->orangtua_ibu = $request->get("orangtua_ibu");
-                            $data->wali_baptis_ayah = $request->get("wali_baptis_ayah");
-                            $data->wali_baptis_ibu = $request->get("wali_baptis_ibu");
-                            $data->lingkungan = $request->get("lingkungan");
-                            $data->kbg = $request->get("kbg");
-                            $data->telepon = $request->get("telepon");
-                            $data->jenis = $request->get("jenis");
-                            $data->jadwal = $request->get("jadwal");
-                            $data->lokasi = $request->get("lokasi");
-                            $data->romo = $request->get("romo");
-                            $data->status = "Diproses";
+                    $file=$request->file('surat_pernyataan');
+                    $imgFolder = 'file_sertifikat/surat_pernyataan';
+                    $extension = $request->file('surat_pernyataan')->extension();
+                    $imgFile=time()."_".$request->get('nama').".".$extension;
+                    $file->move($imgFolder,$imgFile);
+                    $data->surat_pernyataan=$imgFile;
 
-                            $file=$request->file('surat_pernyataan');
-                            $imgFolder = 'file_sertifikat/surat_pernyataan';
-                            $extension = $request->file('surat_pernyataan')->extension();
-                            $imgFile=time()."_".$request->get('nama').".".$extension;
-                            $file->move($imgFolder,$imgFile);
-                            $data->surat_pernyataan=$imgFile;
+                    $data->save();
 
-                            $data->save();
+                    $riwayat = new Riwayat();
+                    $riwayat->user_id = Auth::user()->id;
+                    $riwayat->list_event_id = $request->list_event_id;
+                    $riwayat->jenis_event =  $data->jenis;
+                    $riwayat->event_id =  $data->id;
+                    $riwayat->status =  "Diproses";
+                    $riwayat->save();
 
-                            $riwayat = new Riwayat();
-                            $riwayat->user_id = Auth::user()->id;
-                            $riwayat->list_event_id = $request->list_event_id;
-                            $riwayat->jenis_event =  $data->jenis;
-                            $riwayat->event_id =  $data->id;
-                            $riwayat->status =  "Diproses";
-                            $riwayat->save();
-
-                            return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Dewasa Berhasil');
-                        }
-                        else
-                        {
-                            return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error2', 'Pendaftaran Baptis Dewasa Gagal. Pastikan Umur Sesuai Dengan Batas Ketentuan Baptis Dewasa');
-                        }     
-                    }
+                    return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pendaftaran Baptis Dewasa Berhasil');
                 }
-            }  
+                else
+                {
+                    return redirect()->route('pendaftaranbaptis.indexDewasa', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('error2', 'Pendaftaran Baptis Dewasa Gagal. Pastikan Umur Sesuai Dengan Batas Ketentuan Baptis Dewasa');
+                }     
+            }
         }
     }
 

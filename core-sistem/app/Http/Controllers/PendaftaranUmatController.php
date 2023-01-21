@@ -41,7 +41,8 @@ class PendaftaranUmatController extends Controller
 
             $cek = User::where('users.id', Auth::user()->id)->first();
 
-            $data = User::where('no_kk', Auth::user()->no_kk)->get();
+            $data = Umat::join('users', 'umats.user_id', '=', 'users.id')
+            ->where('user_id', Auth::user()->id)->get();
 
             return view('pendaftaranumat.index',compact("data","cek"));
 
@@ -73,10 +74,14 @@ class PendaftaranUmatController extends Controller
 
     public function validasilingkungan(Request $request)
     {
-        $user = User::find($request->id);
+        $user = User::find($request->user_id);
         $user->lingkungan_id = $request->get("lingkungan_id");
         $user->kbg_id = $request->get("kbg_id");
         $user->status = "Belum Tervalidasi";
+
+        $umat = Umat::find($request->id);
+        $umat->lingkungan_id = $request->get("lingkungan_id");
+        $umat->kbg_id = $request->get("kbg_id");
 
         $file=$request->file('surat_baptis');
         if(isset($file))
@@ -85,7 +90,7 @@ class PendaftaranUmatController extends Controller
             $extension = $request->file('surat_baptis')->extension();
             $imgFile=time()."_".$request->get('nama').".".$extension;
             $file->move($imgFolder,$imgFile);
-            $user->surat_baptis=$imgFile;
+            $umat->surat_baptis=$imgFile;
         }
 
         $file2=$request->file('sertifikat_komuni');
@@ -95,70 +100,60 @@ class PendaftaranUmatController extends Controller
             $extension2 = $request->file('sertifikat_komuni')->extension();
             $imgFile2=time()."_".$request->get('nama').".".$extension2;
             $file2->move($imgFolder2,$imgFile2);
-            $user->sertifikat_komuni=$imgFile2;
+            $umat->sertifikat_komuni=$imgFile2;
         }
 
         $user->save();
+        $umat->save();
 
         return redirect('/pendaftaranumat')->with('status', 'Pendaftaran Umat Berhasil Diproses');
     }
 
     public function create()
     {
-        $ling = Lingkungan::all();
-        $kbg = Kbg::all();
-        return view('pendaftaranumat.InputForm', compact('ling','kbg'));
+        $user = User::join('umats', 'users.id', '=', 'umats.user_id')
+        ->where('users.id', Auth::user()->id)->first();
+        return view('pendaftaranumat.InputForm', compact('user'));
     }
 
     public function store(Request $request)
     {
-        if($request->no_kk == Auth::user()->no_kk)
+        $umat = new Umat();
+        $umat->user_id = Auth::user()->id;
+        $umat->nama_lengkap = $request->get("nama_lengkap");
+        $umat->hubungan = $request->get("hubungan");
+        $umat->no_kk = $request->get("no_kk");
+        $umat->tempat_lahir = $request->get("tempat_lahir");
+        $umat->tanggal_lahir = $request->get("tanggal_lahir");
+        $umat->jenis_kelamin = $request->get("jenis_kelamin");
+        $umat->alamat = $request->get("alamat");
+        $umat->telepon = $request->get("telepon");
+        $umat->lingkungan_id = $request->get("lingkungan_id");
+        $umat->kbg_id = $request->get("kbg_id");
+
+        $file=$request->file('surat_baptis');
+        if(isset($file))
         {
-            $user = new User();
-            $user->nama_lengkap = $request->get("nama_lengkap");
-            $user->hubungan = $request->get("hubungan");
-            $user->no_kk = $request->get("no_kk");
-            $user->tempat_lahir = $request->get("tempat_lahir");
-            $user->tanggal_lahir = $request->get("tanggal_lahir");
-            $user->jenis_kelamin = $request->get("jenis_kelamin");
-            $user->alamat = $request->get("alamat");
-            $user->telepon = $request->get("telepon");
-            $user->lingkungan_id = $request->get("lingkungan_id");
-            $user->kbg_id = $request->get("kbg_id");
-            $user->email = "";
-            $user->password = "";
-
-            $file=$request->file('surat_baptis');
-            if(isset($file))
-            {
-                $imgFolder = 'file_sertifikat/surat_baptis/';
-                $extension = $request->file('surat_baptis')->extension();
-                $imgFile=time()."_".$request->get('nama').".".$extension;
-                $file->move($imgFolder,$imgFile);
-                $user->surat_baptis=$imgFile;
-            }
-
-            $file2=$request->file('sertifikat_komuni');
-            if(isset($file2))
-            {
-                $imgFolder2 = 'file_sertifikat/sertifikat_komuni/';
-                $extension2 = $request->file('sertifikat_komuni')->extension();
-                $imgFile2=time()."_".$request->get('nama').".".$extension2;
-                $file2->move($imgFolder2,$imgFile2);
-                $user->sertifikat_komuni=$imgFile2;
-            }
-
-            $user->status = "Tervalidasi";
-
-            $user->save();
-
-            return redirect('/pendaftaranumat')->with('status', 'Pendaftaran Anggota Keluarga Berhasil');
-        }
-        else
-        {
-            return redirect('/pendaftaranumat')->with('error', 'Pendaftaran Anggota Keluarga Gagal. Pastikan Nomor Kartu Keluarga Sesuai');
+            $imgFolder = 'file_sertifikat/surat_baptis/';
+            $extension = $request->file('surat_baptis')->extension();
+            $imgFile=time()."_".$request->get('nama').".".$extension;
+            $file->move($imgFolder,$imgFile);
+            $umat->surat_baptis=$imgFile;
         }
 
+        $file2=$request->file('sertifikat_komuni');
+        if(isset($file2))
+        {
+            $imgFolder2 = 'file_sertifikat/sertifikat_komuni/';
+            $extension2 = $request->file('sertifikat_komuni')->extension();
+            $imgFile2=time()."_".$request->get('nama').".".$extension2;
+            $file2->move($imgFolder2,$imgFile2);
+            $umat->sertifikat_komuni=$imgFile2;
+        }
+
+        $umat->save();
+
+        return redirect('/pendaftaranumat')->with('status', 'Pendaftaran Anggota Keluarga Berhasil');
     }
 
     public function showKbg($id)

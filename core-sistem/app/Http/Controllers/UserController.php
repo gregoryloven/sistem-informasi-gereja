@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Umat;
 use App\Models\Lingkungan;
 use App\Models\Kbg;
 use Illuminate\Http\Request;
@@ -96,7 +97,8 @@ class UserController extends Controller
     public function complete_register(Request $request)
     {
         $id = Auth::user()->id;
-        $user=User::find($id);
+        $user = new Umat();
+        $user->user_id = Auth::user()->id;
         $user->nama_lengkap=$request->get('nama_lengkap');
         $user->hubungan=$request->get('hubungan');
         $user->no_kk=$request->get('no_kk');

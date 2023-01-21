@@ -57,7 +57,9 @@
 @endif
 
 @if($cek->lingkungan_id != 'Tervalidasi')
-<small style="color:red;"><label >*Keterangan: Silahkan melengkapi Lingkungan & KBG asal terlebih dahulu untuk menambahkan anggota keluarga lainnya hingga tervalidasi</label></small>
+<small style="color:red;"><label >*Keterangan: 
+    <br>- Hanya kepala keluarga yang dapat menambah anggota keluarga
+    <br>- Silahkan melengkapi Lingkungan & KBG asal terlebih dahulu untuk menambahkan anggota keluarga lainnya</label></small>
 @endif
 
 <div class="card shadow mb-4">
@@ -112,7 +114,7 @@
                             </div></small>
                             @endif
                         </td>
-                        <td st>@if(isset($d->lingkungan_id)) {{$d->kbg->nama_kbg}} @endif
+                        <td st>@if(isset($d->kbg_id)) {{$d->kbg->nama_kbg}} @endif
                             @if($d->status == 'Belum Tervalidasi' || $d->status == 'Ditolak') 
                             <small><div class="alert alert-warning" role="alert">
                                 {{$d->status}}

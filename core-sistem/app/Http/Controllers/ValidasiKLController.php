@@ -28,20 +28,17 @@ class ValidasiKLController extends Controller
             $lingkungan = Auth::user()->lingkungan_id;
             $lingkungan2 = Auth::user()->lingkungan->nama_lingkungan;
 
-            $umat = User::where([['status', 'Belum Tervalidasi'], ['lingkungan_id', $lingkungan]])
-            ->orwhere([['status_baptis', null], ['lingkungan_id', $lingkungan], ['role', 'umat']])
-            ->orwhere([['status_komuni', null], ['lingkungan_id', $lingkungan], ['role', 'umat']])
-            ->orderby('created_at', 'ASC')
+            $umat = User::join('umats', 'users.id', '=', 'umats.user_id')
+            ->where([['status', 'Belum Tervalidasi'], ['users.lingkungan_id', $lingkungan]])
+            ->orderby('users.created_at', 'ASC')
             ->get();
 
-            $umat2 = User::where([['status', 'Tervalidasi'], ['lingkungan_id', $lingkungan]])
-            ->orwhere([['status_baptis', 'Sudah Baptis'], ['lingkungan_id', $lingkungan]])
-            ->orwhere([['status_komuni', 'Sudah Komuni'], ['lingkungan_id', $lingkungan]])
-            ->orderby('created_at', 'DESC')
+            $umat2 = User::join('umats', 'users.id', '=', 'umats.user_id')
+            ->where([['status', 'Tervalidasi'], ['users.lingkungan_id', $lingkungan]])
+            ->orderby('users.created_at', 'DESC')
             ->get();
-            dd($umat2);
 
-            return view('validasiKL.umat',compact("umat", "lingkungan2"));
+            return view('validasiKL.umat',compact("umat","umat2","lingkungan2"));
         }
     }
 
@@ -49,14 +46,16 @@ class ValidasiKLController extends Controller
     {
         $id=$request->get("id");
         $data=User::find($id);
+        $umat=Umat::where('user_id', $id)->first();
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('validasiKL.EditForm',compact("data"))->render()),200);
+            'msg'=>view('validasiKL.EditForm',compact("data","umat"))->render()),200);
     }
 
     public function validasiumat(Request $request)
     {
-        $data = User::find($request->id);
+        $data = User::find($request->user_id);
+        $umat = Umat::find($request->id);
         
         if($request->lingkungan == true)
         {
@@ -64,14 +63,15 @@ class ValidasiKLController extends Controller
         }
         if($request->baptis == true)
         {
-            $data->status_baptis = "Sudah Baptis";
+            $umat->status_baptis = "Sudah Baptis";
         }
         if($request->komuni == true)
         {
-            $data->status_komuni = "Sudah Komuni";
+            $umat->status_komuni = "Sudah Komuni";
         }
 
         $data->save();
+        $umat->save();
 
         return redirect()->route('validasiKL.umat', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Data Umat Berhasil');
     }

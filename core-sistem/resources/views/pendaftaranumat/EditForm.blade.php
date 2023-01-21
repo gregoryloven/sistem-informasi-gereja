@@ -6,6 +6,7 @@
     <div class="modal-body">
         @csrf
         <div class="form-group">
+            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
             <input type="hidden" name="id" value="{{$data->id}}">
             <label >Lingkungan</label>
             <select class="form-control" id='lingkungan_id' name='lingkungan_id'>

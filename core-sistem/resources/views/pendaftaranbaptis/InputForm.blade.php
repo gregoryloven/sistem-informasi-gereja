@@ -47,10 +47,10 @@
                 </div> 
                 <div class="form-group">
                     <label >Nama Lengkap Penerima Baptis</label>
-                    <select class="form-control" id='nama_lengkap' name='nama_lengkap' required>
+                    <select class="form-control" id='user_id_penerima' name='user_id_penerima' required>
                     <option value="" disabled selected>Choose</option>
                     @foreach($user as $u)
-                    <option value="{{ $u->nama_lengkap }}">{{ $u->nama_lengkap }}</option>
+                    <option value="{{ $u->id }}">{{ $u->nama_lengkap }}</option>
                     @endforeach
                     </select>
                 </div>  
@@ -126,10 +126,7 @@
                    Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Baptis"
                 </div>
                 <input type="hidden" value="{{$list[0]->id}}" id='list_event_id' name='list_event_id'>
-                <input type="hidden" id='user_id_penerima' name='user_id_penerima'>
-                @foreach($user as $u)
-                <input type="hidden" value="{{$u->no_kk}}" id='no_kk' name='no_kk'>
-                @endforeach
+                <input type="hidden" id='nama_lengkap' name='nama_lengkap'>
                 <button type="submit" class="btn btn-primary" id="button" disabled>Ajukan Formulir</button> 
             </form>
             </div>
@@ -141,29 +138,22 @@
 
 @section('javascript')
 <script>
-
-
-
-$('#nama_lengkap').on('change',function(){   
+$('#user_id_penerima').on('change',function(){   
     $.ajax({
     type:'POST',
     url:'{{ route('pendaftaranbaptis.FetchIdentitas', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
     data:{'_token':'<?php echo csrf_token() ?>',        
-          'nama_lengkap':$('#nama_lengkap').val(),          
+          'id':$('#user_id_penerima').val(),          
          },
     success: function(data){
         $.each(data, function(idx, obj){
             $('#tempat_lahir').val(obj.tempat_lahir);
             $('#tanggal_lahir').val(obj.tanggal_lahir);
             $('#telepon').val(obj.telepon);
-            $('#user_id_penerima').val(obj.id); 
+            $('#nama_lengkap').val(obj.nama_lengkap); 
         })
-        
-    
-        
     }
   });
-
 })
 function checkbox()
 {

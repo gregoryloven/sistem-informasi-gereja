@@ -28,10 +28,18 @@ class DashboardAdminController extends Controller
         }
         else
         {
-            $jumlah_umat = User::where('status', 'Disetujui Lingkungan')->count();
-            $jumlah_umat_pria = User::where([['jenis_kelamin', 'Laki-Laki'], ['status', 'Disetujui Lingkungan']])->count();
-            $jumlah_umat_wanita = User::where([['jenis_kelamin', 'Perempuan'], ['status', 'Disetujui Lingkungan']])->count();
-            $jumlah_kepala_keluarga = User::where([['hubungan', 'Kepala Keluarga'], ['status', 'Disetujui Lingkungan']])->count();
+            $kl = User::where('role', 'ketua lingkungan')->first();
+            // dd($kl);
+
+            $jumlah_umat =0;
+            $jumlah_umat_pria=0;
+            $jumlah_umat_wanita=0;
+            $jumlah_kepala_keluarga=0;
+
+            // $jumlah_umat = Umat::where('status', 'Disetujui Lingkungan')->count();
+            // $jumlah_umat_pria = Umat::where([['jenis_kelamin', 'Laki-Laki'], ['status', 'Disetujui Lingkungan']])->count();
+            // $jumlah_umat_wanita = Umat::where([['jenis_kelamin', 'Perempuan'], ['status', 'Disetujui Lingkungan']])->count();
+            // $jumlah_kepala_keluarga = Umat::where([['hubungan', 'Kepala Keluarga'], ['status', 'Disetujui Lingkungan']])->count();
             $jumlah_kbg = Kbg::count();
             $jumlah_lingkungan = Lingkungan::count();
     
@@ -61,10 +69,10 @@ class DashboardAdminController extends Controller
             $kbg = Auth::user()->kbg->id;
             $kbg2 = Auth::user()->kbg->nama_kbg;
 
-            $jumlah_umat = User::where([['kbg_id', $kbg], ['status', 'Disetujui Lingkungan']])->count();
-            $jumlah_umat_pria = User::where([['kbg_id', $kbg], ['jenis_kelamin', 'Laki-Laki'], ['status', 'Disetujui Lingkungan']])->count();
-            $jumlah_umat_wanita = User::where([['kbg_id', $kbg], ['jenis_kelamin', 'Perempuan'], ['status', 'Disetujui Lingkungan']])->count();
-            $jumlah_kepala_keluarga = User::where([['kbg_id', $kbg], ['hubungan', 'Kepala Keluarga'], ['status', 'Disetujui Lingkungan']])->count();
+            $jumlah_umat = Umat::where([['kbg_id', $kbg], ['user_id', Auth::user()->id]])->count();
+            $jumlah_umat_pria = Umat::where([['kbg_id', $kbg], ['jenis_kelamin', 'Laki-Laki'], ['user_id', Auth::user()->id]])->count();
+            $jumlah_umat_wanita = Umat::where([['kbg_id', $kbg], ['jenis_kelamin', 'Perempuan'], ['user_id', Auth::user()->id]])->count();
+            $jumlah_kepala_keluarga = Umat::where([['kbg_id', $kbg], ['hubungan', 'Kepala Keluarga'], ['user_id', Auth::user()->id]])->count();
     
             $jumlah_baptis_bayi = Baptis::where([['jenis', 'Baptis Bayi'], ['kbg', $kbg2], ['status', 'Diproses']])->count();
             $jumlah_baptis_dewasa = Baptis::where([['jenis', 'Baptis Dewasa'], ['kbg', $kbg2], ['status', 'Diproses']])->count();
@@ -73,7 +81,7 @@ class DashboardAdminController extends Controller
             $jumlah_pelayanan_lainnya = PendaftaranPelayananLainnya::where([['status', 'Diproses'], ['kbg', $kbg2]])->count();
             $jumlah_pengurapan = PengurapanOrangSakit::where([['status', 'Diproses'], ['kbg', $kbg2]])->count();
     
-            $pendaftaran_umat_baru = User::where([['status', 'Diproses'], ['kbg_id', $kbg]])->count();
+            $pendaftaran_umat_baru = 0;
             
             return view('dashboardadmin.indexkbg', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_baptis_bayi', 'jumlah_baptis_dewasa', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'pendaftaran_umat_baru', 'jumlah_pengurapan'));
         }
@@ -90,10 +98,10 @@ class DashboardAdminController extends Controller
             $ling = Auth::user()->lingkungan->id;
             $ling2 = Auth::user()->lingkungan->nama_lingkungan;
 
-            $jumlah_umat = User::where([['lingkungan_id', $ling], ['status', 'Disetujui Lingkungan']])->count();
-            $jumlah_umat_pria = User::where([['lingkungan_id', $ling], ['jenis_kelamin', 'Laki-Laki'], ['status', 'Disetujui Lingkungan']])->count();
-            $jumlah_umat_wanita = User::where([['lingkungan_id', $ling], ['jenis_kelamin', 'Perempuan'], ['status', 'Disetujui Lingkungan']])->count();
-            $jumlah_kepala_keluarga = User::where([['lingkungan_id', $ling], ['hubungan', 'Kepala Keluarga'], ['status', 'Disetujui Lingkungan']])->count();
+            $jumlah_umat = Umat::where([['lingkungan_id', $ling], ['user_id', Auth::user()->id]])->count();
+            $jumlah_umat_pria = Umat::where([['lingkungan_id', $ling], ['jenis_kelamin', 'Laki-Laki'], ['user_id', Auth::user()->id]])->count();
+            $jumlah_umat_wanita = Umat::where([['lingkungan_id', $ling], ['jenis_kelamin', 'Perempuan'], ['user_id', Auth::user()->id]])->count();
+            $jumlah_kepala_keluarga = Umat::where([['lingkungan_id', $ling], ['hubungan', 'Kepala Keluarga'], ['user_id', Auth::user()->id]])->count();
             $jumlah_kbg = Kbg::where('lingkungan_id', $ling)->count();
     
             $jumlah_baptis_bayi = Baptis::where([['jenis', 'Baptis Bayi'], ['lingkungan', $ling2], ['status', 'Disetujui KBG']])->count();
@@ -104,9 +112,8 @@ class DashboardAdminController extends Controller
             $jumlah_pengurapan = PengurapanOrangSakit::where([['status', 'Disetujui KBG'], ['lingkungan', $ling2]])->count();
     
             $pendaftaran_umat_lama = User::where([['status', 'Belum Tervalidasi'], ['lingkungan_id', $ling]])->count();
-            $pendaftaran_umat_baru = User::where([['status', 'Disetujui KBG'], ['lingkungan_id', $ling]])->count();
     
-            return view('dashboardadmin.indexlingkungan', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_kbg', 'jumlah_baptis_bayi', 'jumlah_baptis_dewasa', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'pendaftaran_umat_lama', 'pendaftaran_umat_baru', 'jumlah_pengurapan'));
+            return view('dashboardadmin.indexlingkungan', compact('jumlah_umat', 'jumlah_umat_pria', 'jumlah_umat_wanita', 'jumlah_kepala_keluarga', 'jumlah_kbg', 'jumlah_baptis_bayi', 'jumlah_baptis_dewasa', 'jumlah_krisma', 'jumlah_komuni_pertama', 'jumlah_pelayanan_lainnya', 'pendaftaran_umat_lama', 'jumlah_pengurapan'));
         }
     }
 }

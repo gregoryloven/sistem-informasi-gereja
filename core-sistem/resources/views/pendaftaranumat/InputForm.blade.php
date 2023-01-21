@@ -47,14 +47,13 @@
                     <label >Hubungan</label>
                     <select class="form-control" id='hubungan' name='hubungan' required>
                         <option value="" disabled selected>Choose</option>
-                        <option value="Kepala Keluarga">Kepala Keluarga</option>
                         <option value="Istri">Istri</option>
                         <option value="Anak">Anak</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label >Nomor Kartu Keluarga</label>
-                    <input type="number" class="form-control" id='no_kk' name='no_kk' placeholder="Nomor Kartu Keluarga" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
+                    <input type="number" value="{{$user->no_kk}}" class="form-control" id='no_kk' name='no_kk' placeholder="Nomor Kartu Keluarga" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required readonly>
                 </div>
                 <div class="form-group">
                     <label >Tempat Lahir</label>
@@ -74,29 +73,24 @@
                 </div>  
                 <div class="form-group">
                     <label >Alamat</label>
-                    <input type="text"  class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
+                    <input type="text" value="{{$user->alamat}}" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
                 </div> 
                 <div class="form-group">
                     <label >Telepon</label>
-                    <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
+                    <input type="text" value="{{$user->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
                 </div>
                 <div class="form-group">
                     <label >Lingkungan</label>
-                    <select class="form-control" id='lingkungan_id' name='lingkungan_id'>
-                    <option value="" disabled selected>Choose</option>
-                    @foreach($ling as $l)
-                    <option value="{{ $l->id }}">{{ $l->nama_lingkungan }} ({{$l->batasan_wilayah}})</option>
-                    @endforeach
-                    </select>
+                    <input type="hidden" value="{{$user->lingkungan_id}}" id='lingkungan_id' name='lingkungan_id'>
+                    <input type="text" value="{{$user->lingkungan->nama_lingkungan}}" class="form-control" required readonly>
                 </div>
                 <div class="form-group">
                     <label >KBG</label>
-                    <select class="form-control" id='kbg_id' name='kbg_id'>
-                        <option value="" disabled selected>Choose</option>
-                    </select>
+                    <input type="hidden" value="{{$user->kbg_id}}" class="form-control" id='kbg_id' name='kbg_id'>
+                    <input type="text" value="{{$user->kbg->nama_kbg}}" class="form-control" required readonly>
                 </div>
                 
-                <small style="color:red;"><label >*Lampiran dibawah ini dapat dikosongi terlebih dahulu</label></small>
+                <small style="color:red;"><label >*Lampiran dibawah ini dapat dikosongi terlebih dahulu apabila belum baptis / komuni</label></small>
                 
                 <div class="form-group">
                     <label>Surat Baptis</label>
@@ -114,7 +108,7 @@
                     <label>Saya Menyetujui Formulir Pendaftaran Ini</label>
                 </div><br>
                 <div class="alert alert-info" role="alert">
-                   Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Sakramen Baptis"
+                   Jika sudah mendaftar, silahkan lihat status pada "Riwayat Pendaftaran Umat"
                 </div>
                 <button type="submit" class="btn btn-primary" id="button" disabled>Ajukan Formulir</button> 
             </form>
@@ -127,23 +121,6 @@
 
 @section('javascript')
 <script>
-    $('#lingkungan_id').change(function(){
-        if($(this).val() != '') {
-            var value = $(this).val();
-            $.ajax({
-                url:`{{ url('fetchkbg') }}`,
-                method:"POST",
-                data:{
-                    id:value, 
-                    _token: $('[name=csrf-token]').attr('content'), 
-                },
-                success:function(result) {
-                    // console.log(result);
-                    $('#kbg_id').html(result);
-                }
-            })
-        }
-    });
 
 function checkbox()
 {

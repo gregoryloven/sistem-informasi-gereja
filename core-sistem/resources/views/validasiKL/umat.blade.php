@@ -127,7 +127,125 @@
                         </td>
                         <td st>
                             @if($d->status != 'Ditolak')
-                            <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->id }})">Detail</a></div>
+                            <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->user_id }})">Detail</a></div>
+                            @endif
+                        </td>
+                    </tr>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp2{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}">
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        Riwayat Validasi Umat
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="myTable">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th width="5%">No</th>
+                        <th>Nama Lengkap</th>
+                        <th>Hubungan</th>
+                        <th>No KK</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
+                        <th>KBG</th>
+                        <th>Telepon</th>
+                        <th>Surat Baptis</th>
+                        <th>Sertifikat Komuni</th>
+                        <th>Status</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $i = 0; @endphp
+                    @foreach($umat2 as $d)
+                    @php $i += 1; @endphp
+                    <tr>
+                        <td>@php echo $i; @endphp</td>
+                        <td st>{{$d->nama_lengkap}}</td>
+                        <td st>{{$d->hubungan}}</td>
+                        <td st>{{$d->no_kk}}</td>
+                        <td st>{{$d->jenis_kelamin}}</td>
+                        <td st>{{$d->tempat_lahir}}</td>
+                        <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
+                        <td st>{{$d->kbg->nama_kbg}}</td>
+                        <td st>{{$d->telepon}}</td>
+                        <td st>@if(isset($d->surat_baptis))<a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_baptis/'.$d->surat_baptis)}}" height='80px'/>
+                            @else -
+                            @endif
+                        </td>
+                        <td st>@if(isset($d->sertifikat_komuni))<a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}" height='80px'/>
+                            @else -
+                            @endif
+                        </td>
+                        <td st>
+                            @if($d->status == 'Belum Tervalidasi')
+                            <small><div class="alert alert-warning" role="alert">
+                                Lingkungan: {{$d->status}}
+                            </div></small>
+                            @elseif($d->status == 'Ditolak')
+                            <small><div class="alert alert-danger" role="alert">
+                                Lingkungan: {{$d->status}}
+                            </div></small>
+                            @elseif($d->status == 'Tervalidasi')
+                            <small><div class="alert alert-success" role="alert">
+                                Lingkungan: {{$d->status}}
+                            </div></small>
+                            @endif
+
+                            @if($d->status_baptis == 'Belum Baptis')
+                            <small><div class="alert alert-warning" role="alert">
+                                Baptis: {{$d->status_baptis}}
+                            </div></small>
+                            @elseif($d->status_baptis == '')
+                            <small><div class="alert alert-warning" role="alert">
+                                Baptis: -
+                            </div></small>
+                            @else
+                            <small><div class="alert alert-success" role="alert">
+                                Baptis: Sudah
+                            </div></small>
+                            @endif
+
+                            @if($d->status_komuni == 'Belum Komuni')
+                            <small><div class="alert alert-warning" role="alert">
+                                Komuni: {{$d->status_komuni}}
+                            </div></small>
+                            @elseif($d->status_komuni == '')
+                            <small><div class="alert alert-warning" role="alert">
+                                Komuni: -
+                            </div></small>
+                            @else
+                            <small><div class="alert alert-success" role="alert">
+                                Komuni: Sudah
+                            </div></small>
+                            @endif
+                        </td>
+                        <td st>
+                            @if($d->status != 'Ditolak')
+                            <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->user_id }})">Detail</a></div>
                             @endif
                         </td>
                     </tr>
