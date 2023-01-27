@@ -11,6 +11,7 @@ use App\Models\Riwayat;
 use App\Models\ListEvent;
 use App\Models\Umat;
 use App\Models\PengurapanOrangSakit;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -239,8 +240,10 @@ class ValidasiKbgController extends Controller
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+            $setting = Setting::first();
     
-            return view('validasiKbg.baptis',compact("reservasi", "reservasiAll", "kbg"));
+            return view('validasiKbg.baptis',compact("reservasi", "reservasiAll", "kbg", "setting"));
         }
     }
 
@@ -269,8 +272,10 @@ class ValidasiKbgController extends Controller
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+            $setting = Setting::first();
     
-            return view('validasiKbg.baptisDewasa',compact("reservasi", "reservasiAll", "kbg"));
+            return view('validasiKbg.baptisDewasa',compact("reservasi", "reservasiAll", "kbg", "setting"));
         }
     }
 

@@ -129,6 +129,12 @@
                         <th>Lokasi</th>
                         <th>Romo</th>
                         <th>Surat Pernyataan</th>
+                        @if($setting->akta_kelahiran == 1)
+                        <th>Akta Kelahiran</th>
+                        @endif
+                        @if($setting->kartu_keluarga == 1)
+                        <th>Kartu Keluarga</th>
+                        @endif
                         <th>Status</th>
                         <th>Tindakan</th>
                         </tr>
@@ -154,6 +160,12 @@
                             <td st>{{$d->lokasi}}</td>
                             <td st>{{$d->romo}}</td>
                             <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}" height='80px'/></td>
+                            @if($setting->akta_kelahiran == 1)
+                            <td st>@if(isset($d->akta_kelahiran))<a href="#modalPopUp3{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/akta_kelahiran/'.$d->akta_kelahiran)}}" height='80px'/>@else - @endif</td>
+                            @endif
+                            @if($setting->kartu_keluarga == 1)
+                            <td st>@if(isset($d->kartu_keluarga))<a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/kartu_keluarga/'.$d->kartu_keluarga)}}" height='80px'/>@else - @endif</td>
+                            @endif
                             <td st>
                                 @if($d->status == "Diproses" || $d->status == "Disetujui KBG" || $d->status == "Disetujui Lingkungan")
                                 
@@ -215,6 +227,22 @@
                             <div class="modal-dialog" style="width:400px; height=400px;">
                                 <div class="modal-content" >
                                     <img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp3{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/akta_kelahiran/'.$d->akta_kelahiran)}}">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POP UP WITH MODAL -->
+                        <div class="modal fade" id="modalPopUp2{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                            <div class="modal-dialog" style="width:400px; height=400px;">
+                                <div class="modal-content" >
+                                    <img src="{{asset('file_sertifikat/kartu_keluarga/'.$d->kartu_keluarga)}}">
                                 </div>
                             </div>
                         </div>

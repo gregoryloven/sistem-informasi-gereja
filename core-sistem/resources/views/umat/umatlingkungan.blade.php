@@ -55,12 +55,32 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label >Nomor Kartu Keluarga</label>
+                    <input type="number" class="form-control" id='no_kk' name='no_kk' placeholder="No KK" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
+                </div>
+                <div class="form-group">
+                    <label >Tempat Lahir</label>
+                    <input type="text" class="form-control" id='tempat_lahir' name='tempat_lahir' placeholder="Tempat Lahir" required>
+                </div>   
+                <div class="form-group">
+                    <label >Tanggal Lahir</label>
+                    <input type="date" class="form-control" id='tanggal_lahir' name='tanggal_lahir' placeholder="Tanggal Lahir" required>
+                </div>
+                <div class="form-group">
                     <label >Jenis Kelamin</label>
                     <select class="form-control" id='jenis_kelamin' name='jenis_kelamin' required>
                         <option value="" disabled selected>Choose</option>
                         <option value="Laki-Laki">Laki-Laki</option>
                         <option value="Perempuan">Perempuan</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label >Alamat</label>
+                    <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
+                </div>
+                <div class="form-group">
+                    <label >Telepon</label>
+                    <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
                 </div>
                 <div class="form-group">
                     <label >Lingkungan</label>
@@ -76,18 +96,6 @@
                     <select class="form-control" id='kbg_id' name='kbg_id' required>
                     <option value="" disabled selected>Choose</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label >Alamat</label>
-                    <input type="text" class="form-control" id='alamat' name='alamat' placeholder="Alamat" required>
-                </div>
-                <div class="form-group">
-                    <label >Telepon</label>
-                    <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
-                </div>
-                <div class="form-group">
-                    <label >Nomor Kartu Keluarga</label>
-                    <input type="number" class="form-control" id='no_kk' name='no_kk' placeholder="No KK" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==16) return false;" required>
                 </div>
                 </div> 
                 <div class="modal-footer">
@@ -121,13 +129,15 @@
                     <tr style="text-align: center;">
                         <th width="5%">No</th>
                         <th>Nama Lengkap</th>
-                        <th>Hubungan Darah</th>
+                        <th>Hubungan</th>
+                        <th>Nomor KK</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
                         <th>Jenis Kelamin</th>
                         <th>Alamat</th>
                         <th>Telepon</th>
                         <th>Lingkungan</th>
                         <th>KBG</th>
-                        <th>No KK</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -139,12 +149,14 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->nama_lengkap}}</td>
                         <td st>{{$d->hubungan}}</td>
+                        <td st>{{$d->no_kk}}</td>
+                        <td st>{{$d->tempat_lahir}}</td>
+                        <td st>{{tanggal_indonesia($d->tanggal_lahir)}}</td>
                         <td st>{{$d->jenis_kelamin}}</td>
                         <td st>{{$d->alamat}}</td>
                         <td st>{{$d->telepon}}</td>
                         <td st>{{$d->lingkungan->nama_lingkungan}}</td>
                         <td st>{{$d->kbg->nama_kbg}}</td>
-                        <td st>{{$d->no_kk}}</td>
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-warning" onclick="EditFormUmatLingkungan({{ $d->id }})"><i class="fa fa-pen"></i></a>

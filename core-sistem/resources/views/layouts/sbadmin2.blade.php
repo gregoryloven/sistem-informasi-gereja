@@ -205,6 +205,12 @@
                 </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('setting.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Pengaturan</span></a>
+            </li>
+
             <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('lingkungans.index', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}">
                     <i class="fas fa-fw fa-users"></i>

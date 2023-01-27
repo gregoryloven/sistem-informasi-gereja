@@ -37,6 +37,7 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\KppController;
 use App\Http\Controllers\BaptisDewasaController;
 use App\Http\Controllers\PendaftaranPengurapanController;
+use App\Http\Controllers\SettingController;
 
 use App\Http\Controllers\LandlordController;
 
@@ -140,6 +141,12 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::post('/listevent/EditForm', [ListEventController::class, 'EditForm'])->name('listevent.EditForm');
     Route::post('/listevent/selesai', [ListEventController::class, 'selesai'])->name('listevent.selesai');
     Route::post('listevent/laporan', [ListEventController::class, 'laporan'])->name('listevent.laporan');
+
+    //Setting Admin
+    Route::resource('setting', SettingController::class);
+    Route::post('/setting/EditForm', [SettingController::class, 'EditForm'])->name('setting.EditForm');
+    Route::post('/setting/EditFormKomuni', [SettingController::class, 'EditFormKomuni'])->name('setting.EditFormKomuni');
+    Route::post('/setting/updatekomuni/{id}', [SettingController::class, 'updatekomuni'])->name('setting.updatekomuni');
 
     //Daftar Umat 
     Route::get('umat', [UmatController::class, 'umatAll'])->name('umat.umatAll');
@@ -287,7 +294,6 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::post('/pendaftaranbaptis/Pembatalan', [PendaftaranBaptisController::class, 'Pembatalan'])->name('pendaftaranbaptis.Pembatalan');
         Route::post('/pendaftaranbaptis/detail', [PendaftaranBaptisController::class, 'detail'])->name('pendaftaranbaptis.detail');
         Route::post('/pendaftaranbaptis/EditForm', [PendaftaranBaptisController::class, 'EditForm'])->name('pendaftaranbaptis.EditForm');
-
         Route::post('/pendaftaranbaptis/fetchidentitas', [PendaftaranBaptisController::class, 'FetchIdentitas'])->name('pendaftaranbaptis.FetchIdentitas');
 
         //Pendaftaran Baptis Dewasa
@@ -302,6 +308,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::get('/pendaftarankomuni/OpenForm/{id}', [PendaftaranKomuniController::class, 'OpenForm'])->name('pendaftarankomuni.OpenForm');
         Route::post('/pendaftarankomuni/detail', [PendaftaranKomuniController::class, 'detail'])->name('pendaftarankomuni.detail');
         Route::post('/pendaftarankomuni/EditForm', [PendaftaranKomuniController::class, 'EditForm'])->name('pendaftarankomuni.EditForm');
+        Route::post('/pendaftarankomuni/fetchidentitas', [PendaftaranKomuniController::class, 'FetchIdentitas'])->name('pendaftarankomuni.FetchIdentitas');
 
         //Pendaftaran Krisma
         Route::resource('pendaftarankrisma', PendaftaranKrismaController::class);
@@ -310,6 +317,7 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
         Route::get('/pendaftarankrisma/OpenForm/{id}', [PendaftaranKrismaController::class, 'OpenForm'])->name('pendaftarankrisma.OpenForm');
         Route::post('/pendaftarankrisma/detail', [PendaftaranKrismaController::class, 'detail'])->name('pendaftarankrisma.detail');
         Route::post('/pendaftarankrisma/EditForm', [PendaftaranKrismaController::class, 'EditForm'])->name('pendaftarankrisma.EditForm');
+        Route::post('/pendaftarankrisma/fetchidentitas', [PendaftaranKrismaController::class, 'FetchIdentitas'])->name('pendaftarankrisma.FetchIdentitas');
 
         //Pendaftaran Perkawinan
         Route::resource('pendaftaranperkawinan', PendaftaranPerkawinanController::class);
@@ -424,6 +432,8 @@ Route::domain('{tenant}.localhost')->middleware('tenant')->group(function(){
     Route::get('validasiKLUmat', [ValidasiKLController::class, 'umat'])->name('validasiKL.umat');
     Route::post('/validasiKL/EditForm', [ValidasiKLController::class, 'EditForm'])->name('validasiKL.EditForm');
     Route::post('/validasiKL/validasiumat/{id}', [ValidasiKLController::class, 'validasiumat'])->name('validasiKL.validasiumat');
+    Route::post('/validasiKL/EditFormRiwayat', [ValidasiKLController::class, 'EditFormRiwayat'])->name('validasiKL.EditFormRiwayat');
+    Route::post('/validasiKL/validasiumatriwayat/{id}', [ValidasiKLController::class, 'validasiumatriwayat'])->name('validasiKL.validasiumatriwayat');
 
     Route::get('validasiKLUmatLama', [ValidasiKLController::class, 'umatLama'])->name('validasiKL.umatLama');
     Route::post('/validasiKL/acceptumatlama', [ValidasiKLController::class, 'AcceptUmatLama'])->name('validasiKL.AcceptUmatLama');

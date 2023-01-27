@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        // Tenant::checkCurrent()
-        //    ? $this->runTenantSpecificSeeders()
-        //    : $this->runLandlordSpecificSeeders();
+        Tenant::checkCurrent()
+           ? $this->runTenantSpecificSeeders()
+           : $this->runLandlordSpecificSeeders();
         // $this->call(ParokiSeeder::class);
         $this->call(LingkunganSeeder::class);
         $this->call(KbgSeeder::class);

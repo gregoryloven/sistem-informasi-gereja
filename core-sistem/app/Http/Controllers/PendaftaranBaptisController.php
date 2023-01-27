@@ -35,7 +35,8 @@ class PendaftaranBaptisController extends Controller
             ->get();
             $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis B%']])->get();
             $user = User::all();
-            return view('pendaftaranbaptis.index',compact("data", "baptis", "user"));
+            $setting = Setting::first();
+            return view('pendaftaranbaptis.index',compact("data", "baptis", "user","setting"));
         }
     }
 
@@ -52,7 +53,8 @@ class PendaftaranBaptisController extends Controller
             ->get();
             $baptis = Baptis::where([['user_id', Auth::user()->id], ['jenis', 'like', 'Baptis D%']])->get();
             $user = User::all();
-            return view('pendaftaranbaptis.indexDewasa',compact("data", "baptis", "user"));
+            $setting = Setting::first();
+            return view('pendaftaranbaptis.indexDewasa',compact("data", "baptis", "user", "setting"));
         }
     }
 
@@ -67,7 +69,9 @@ class PendaftaranBaptisController extends Controller
             $user = Umat::join('users', 'umats.user_id', '=', 'users.id')
             ->where('user_id', Auth::user()->id)->get(['umats.*', 'users.id as userid']);
 
-            return view('pendaftaranbaptis.InputForm',compact("list", "user"));
+            $setting = Setting::first();
+
+            return view('pendaftaranbaptis.InputForm',compact("list","user","setting"));
         }
     }
 
@@ -89,7 +93,9 @@ class PendaftaranBaptisController extends Controller
             $user = Umat::join('users', 'umats.user_id', '=', 'users.id')
             ->where('user_id', Auth::user()->id)->get(['umats.*', 'users.id as userid']);
 
-            return view('pendaftaranbaptis.InputForm',compact("list", "user"));
+            $setting = Setting::first();
+
+            return view('pendaftaranbaptis.InputForm',compact("list", "user", "setting"));
         }
     }
 
@@ -111,7 +117,7 @@ class PendaftaranBaptisController extends Controller
             }
             else
             {
-                if($umur < $setting->umur_baptis)
+                if($umur <= $setting->umur_baptis)
                 {
                     $data = new Baptis();
                     $data->user_id = Auth::user()->id;
@@ -130,6 +136,27 @@ class PendaftaranBaptisController extends Controller
                     $data->jadwal = $request->get("jadwal");
                     $data->lokasi = $request->get("lokasi");
                     $data->romo = $request->get("romo");
+
+                    $file=$request->file('akta_kelahiran');
+                    if(isset($file))
+                    {
+                        $imgFolder = 'file_sertifikat/akta_kelahiran';
+                        $extension = $request->file('akta_kelahiran')->extension();
+                        $imgFile=time()."_".$request->get('nama').".".$extension;
+                        $file->move($imgFolder,$imgFile);
+                        $data->akta_kelahiran=$imgFile;
+                    }
+
+                    $file2=$request->file('kartu_keluarga');
+                    if(isset($file2))
+                    {
+                        $imgFolder2 = 'file_sertifikat/kartu_keluarga';
+                        $extension2 = $request->file('kartu_keluarga')->extension();
+                        $imgFile2=time()."_".$request->get('nama').".".$extension2;
+                        $file2->move($imgFolder2,$imgFile2);
+                        $data->kartu_keluarga=$imgFile2;
+                    }
+
                     $data->status = "Diproses";
                     $data->save();
 
@@ -157,7 +184,7 @@ class PendaftaranBaptisController extends Controller
             }
             else
             {
-                if($umur > $setting->umur_baptis)
+                if($umur >= $setting->umur_baptis)
                 {
                     $data = new Baptis();
                     $data->user_id = Auth::user()->id;

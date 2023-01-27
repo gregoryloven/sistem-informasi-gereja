@@ -31,7 +31,11 @@
 @endif
 
 <br>
-<small style="color:red;"><label >*Keterangan: Anda dapat mendaftarkan anggota keluarga lainnya</label></small>
+<small style="color:red;"><label >*Keterangan: <br>
+- Anda dapat mendaftarkan anggota keluarga lainnya <br>
+- Umur Penerima Baptis Bayi & Anak: Kurang dari sama dengan {{$setting->umur_baptis}} Tahun <br>
+- Umur Penerima Baptis Dewasa: Lebih dari sama dengan {{$setting->umur_baptis}} Tahun
+</label></small>
 
 <div class="row mb-4 mt-4">
     <div class="col-md-12">
@@ -43,7 +47,7 @@
             <form id="formIndividu" class="mb-2" method="post" action="/pendaftaranbaptis/InputForm" enctype="multipart/form-data">
             @csrf
                 <div class="form-group">
-                    <small style="color:red;"><label >*Dibawah ini adalah data akun anda yang terisi otomatis</label></small>
+                    <small style="color:red;"><label >*Data di bawah akan disesuaikan dengan identitas anggota keluarga yang dipilih</label></small>
                 </div> 
                 <div class="form-group">
                     <label >Nama Lengkap Penerima Baptis</label>
@@ -111,6 +115,20 @@
                     <label >Romo</label>
                     <input type="text" value="{{$list[0]->romo}}" class="form-control" id='romo' name='romo' placeholder="Romo" required readonly>
                 </div>
+                @if($setting->akta_kelahiran == 1)
+                <div class="form-group">
+                    <label >Akta Kelahiran</label>
+                    <input type="file" value="" class="form-control" id='akta_kelahiran' name='akta_kelahiran' placeholder="Akta Kelahiran" onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" required>
+                    <img id="output2" width="200px" height="200px">
+                </div>
+                @endif
+                @if($setting->kartu_keluarga == 1)
+                <div class="form-group">
+                    <label >Kartu Keluarga</label>
+                    <input type="file" value="" class="form-control" id='kartu_keluarga' name='kartu_keluarga' placeholder="Kartu Keluarga" onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])" required>
+                    <img id="output3" width="200px" height="200px">
+                </div>
+                @endif
                 @if($list[0]->jenis_event == 'Baptis Dewasa')
                 <div class="form-group">
                     <label >Surat Pernyataan</label>

@@ -30,6 +30,8 @@ class CreateUmatsTable extends Migration
             $table->string('surat_baptis')->nullable();
             $table->string('status_komuni')->nullable();
             $table->string('sertifikat_komuni')->nullable();
+            $table->string('status_krisma')->nullable();
+            $table->integer('status')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('lingkungan_id')->references('id')->on('lingkungans');
             $table->foreign('kbg_id')->references('id')->on('kbgs');

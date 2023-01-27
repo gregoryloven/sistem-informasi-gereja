@@ -48,6 +48,12 @@
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Surat Pernyataan</th>
+                        @if($setting->akta_kelahiran == 1)
+                        <th>Akta Kelahiran</th>
+                        @endif
+                        @if($setting->kartu_keluarga == 1)
+                        <th>Kartu Keluarga</th>
+                        @endif
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -70,12 +76,19 @@
                         <td st>{{tanggal_indonesia( $d->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $d->jadwal)}}</td>
                         <td st><a href="#modalPopUp{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$d->surat_pernyataan)}}" height='80px'/></td>
+                        @if($setting->akta_kelahiran == 1)
+                        <td st>@if(isset($d->akta_kelahiran))<a href="#modalPopUp3{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/akta_kelahiran/'.$d->akta_kelahiran)}}" height='80px'/>@else - @endif</td>
+                        @endif
+                        @if($setting->kartu_keluarga == 1)
+                        <td st>@if(isset($d->kartu_keluarga))<a href="#modalPopUp2{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/kartu_keluarga/'.$d->kartu_keluarga)}}" height='80px'/>@else - @endif</td>                          
+                        @endif
                         <td >
                             @if($d->status == "Disetujui Lingkungan")
                             <form action="/validasiAdmin/acceptbaptis" method="post">
                                 @csrf
                                 <input type="text" name="id" class="d-none" value="{{$d->id}}">
                                 <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
+                                <input type="text" name="user_id_penerima" class="d-none" value="{{$d->user_id_penerima}}">
                                 <button class="btn btn-success" type="submit">Terima</button>
                             </form>
                             <form action="/validasiAdmin/declinebaptis" class="ml-2" method="post">
@@ -119,6 +132,22 @@
                             </div>
                         </div>
                     </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp3{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/akta_kelahiran/'.$d->akta_kelahiran)}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp2{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/kartu_keluarga/'.$d->kartu_keluarga)}}">
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>
@@ -148,6 +177,12 @@
                         <th>Tanggal Pelaksanaan</th>
                         <th>Waktu Pelaksanaan</th>
                         <th>Surat Pernyataan</th>
+                        @if($setting->akta_kelahiran == 1)
+                        <th>Akta Kelahiran</th>
+                        @endif
+                        @if($setting->kartu_keluarga == 1)
+                        <th>Kartu Keluarga</th>
+                        @endif
                         <th>Status</th>
                         <th>Tindakan</th>
                     </tr>
@@ -171,6 +206,12 @@
                         <td st>{{tanggal_indonesia( $da->jadwal)}}</td>
                         <td st>{{waktu_indonesia( $da->jadwal)}} WITA</td>
                         <td st><a href="#modalPopUp{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}" height='80px'/></td>
+                        @if($setting->akta_kelahiran == 1)
+                        <td st>@if(isset($da->akta_kelahiran))<a href="#modalPopUp3{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/akta_kelahiran/'.$da->akta_kelahiran)}}" height='80px'/>@else - @endif</td>
+                        @endif
+                        @if($setting->kartu_keluarga == 1)
+                        <td st>@if(isset($da->kartu_keluarga))<a href="#modalPopUp2{{$da->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/kartu_keluarga/'.$da->kartu_keluarga)}}" height='80px'/>@else - @endif</td>                          
+                        @endif
                         <td st >
                             @if($da->statusRiwayat == 'Disetujui Paroki') 
                             <div class="alert alert-success" role="alert">
@@ -213,6 +254,7 @@
                                         <input type="hidden" name="id" value="{{$da->id}}">
                                         <input type="hidden" name="riwayatID" value="{{$da->riwayatID}}">
                                         <input type="text" name="jadwal" class="d-none" value="{{$da->jadwal}}">
+                                        <input type="text" name="user_id_penerima" class="d-none" value="{{$da->user_id_penerima}}">
                                         <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                     </div>
                                     <div class="modal-footer">
@@ -228,6 +270,22 @@
                         <div class="modal-dialog" style="width:400px; height=400px;">
                             <div class="modal-content" >
                                 <img src="{{asset('file_sertifikat/surat_pernyataan/'.$da->surat_pernyataan)}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp3{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/akta_kelahiran/'.$d->akta_kelahiran)}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp2{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/kartu_keluarga/'.$d->kartu_keluarga)}}">
                             </div>
                         </div>
                     </div>

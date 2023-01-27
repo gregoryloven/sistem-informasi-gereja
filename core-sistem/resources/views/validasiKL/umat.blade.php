@@ -36,6 +36,17 @@
     </div>
 </div>
 
+<!-- EDIT WITH MODAL-->
+<div class="modal fade" id="modalEdit2" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContentt">
+            <div style="text-align: center;">
+                <!-- <img src="{{ asset('res/loading.gif') }}"> -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         Daftar Validasi Umat
@@ -56,6 +67,7 @@
                         <th>Telepon</th>
                         <th>Surat Baptis</th>
                         <th>Sertifikat Komuni</th>
+                        <th>Sertifikat Krisma</th>
                         <th>Status</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
@@ -82,6 +94,10 @@
                             @else -
                             @endif
                         </td>
+                        <td st>@if(isset($d->sertifikat_krisma))<a href="#modalPopUp3{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_krisma/'.$d->sertifikat_krisma)}}" height='80px'/>
+                            @else -
+                            @endif
+                        </td>
                         <td st>
                             @if($d->status == 'Belum Tervalidasi')
                             <small><div class="alert alert-warning" role="alert">
@@ -97,11 +113,7 @@
                             </div></small>
                             @endif
 
-                            @if($d->status_baptis == 'Belum Baptis')
-                            <small><div class="alert alert-warning" role="alert">
-                                Baptis: {{$d->status_baptis}}
-                            </div></small>
-                            @elseif($d->status_baptis == '')
+                            @if($d->status_baptis == '')
                             <small><div class="alert alert-warning" role="alert">
                                 Baptis: -
                             </div></small>
@@ -111,11 +123,7 @@
                             </div></small>
                             @endif
 
-                            @if($d->status_komuni == 'Belum Komuni')
-                            <small><div class="alert alert-warning" role="alert">
-                                Komuni: {{$d->status_komuni}}
-                            </div></small>
-                            @elseif($d->status_komuni == '')
+                            @if($d->status_komuni == '')
                             <small><div class="alert alert-warning" role="alert">
                                 Komuni: -
                             </div></small>
@@ -124,10 +132,20 @@
                                 Komuni: Sudah
                             </div></small>
                             @endif
+
+                            @if($d->status_krisma == '')
+                            <small><div class="alert alert-warning" role="alert">
+                                Krisma: -
+                            </div></small>
+                            @else
+                            <small><div class="alert alert-success" role="alert">
+                                Krisma: Sudah
+                            </div></small>
+                            @endif
                         </td>
                         <td st>
                             @if($d->status != 'Ditolak')
-                            <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->user_id }})">Detail</a></div>
+                            <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->id }})">Detail</a></div>
                             @endif
                         </td>
                     </tr>
@@ -144,6 +162,14 @@
                         <div class="modal-dialog" style="width:400px; height=400px;">
                             <div class="modal-content" >
                                 <img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp3{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/sertifikat_krisma/'.$d->sertifikat_krisma)}}">
                             </div>
                         </div>
                     </div>
@@ -174,6 +200,7 @@
                         <th>Telepon</th>
                         <th>Surat Baptis</th>
                         <th>Sertifikat Komuni</th>
+                        <th>Sertifikat Krisma</th>
                         <th>Status</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
@@ -200,6 +227,10 @@
                             @else -
                             @endif
                         </td>
+                        <td st>@if(isset($d->sertifikat_krisma))<a href="#modalPopUp3{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_krisma/'.$d->sertifikat_krisma)}}" height='80px'/>
+                            @else -
+                            @endif
+                        </td>
                         <td st>
                             @if($d->status == 'Belum Tervalidasi')
                             <small><div class="alert alert-warning" role="alert">
@@ -215,11 +246,7 @@
                             </div></small>
                             @endif
 
-                            @if($d->status_baptis == 'Belum Baptis')
-                            <small><div class="alert alert-warning" role="alert">
-                                Baptis: {{$d->status_baptis}}
-                            </div></small>
-                            @elseif($d->status_baptis == '')
+                            @if($d->status_baptis == '')
                             <small><div class="alert alert-warning" role="alert">
                                 Baptis: -
                             </div></small>
@@ -229,11 +256,7 @@
                             </div></small>
                             @endif
 
-                            @if($d->status_komuni == 'Belum Komuni')
-                            <small><div class="alert alert-warning" role="alert">
-                                Komuni: {{$d->status_komuni}}
-                            </div></small>
-                            @elseif($d->status_komuni == '')
+                            @if($d->status_komuni == '')
                             <small><div class="alert alert-warning" role="alert">
                                 Komuni: -
                             </div></small>
@@ -242,10 +265,21 @@
                                 Komuni: Sudah
                             </div></small>
                             @endif
+
+                            @if($d->status_krisma == '')
+                            <small><div class="alert alert-warning" role="alert">
+                                Krisma: -
+                            </div></small>
+                            @else
+                            <small><div class="alert alert-success" role="alert">
+                                Krisma: Sudah
+                            </div></small>
+                            @endif
+                            
                         </td>
                         <td st>
                             @if($d->status != 'Ditolak')
-                            <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->user_id }})">Detail</a></div>
+                            <div><a href="#modalEdit2" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm2({{ $d->id }})">Ubah</a></div>
                             @endif
                         </td>
                     </tr>
@@ -262,6 +296,14 @@
                         <div class="modal-dialog" style="width:400px; height=400px;">
                             <div class="modal-content" >
                                 <img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp3{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/sertifikat_krisma/'.$d->sertifikat_krisma)}}">
                             </div>
                         </div>
                     </div>
@@ -287,6 +329,45 @@ function EditForm(id)
          },
     success: function(data){
       $('#modalContent').html(data.msg);
+    }
+  });
+}
+
+function EditForm2(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'{{ route('validasiKL.EditFormRiwayat', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',
+          'id':id,
+         },
+    success: function(data){
+      $('#modalContentt').html(data.msg);
+
+    if(data.data.status_baptis == 'Sudah Baptis')
+      {
+        $('#baptiss').attr('checked',true)
+      }
+      else if(data.data.status_baptis == null)
+      {
+        $('#baptiss').attr('checked',false)
+      }
+      if(data.data.status_komuni == 'Sudah Komuni')
+      {
+        $('#komunii').attr('checked',true)
+      }
+      else if(data.data.status_komuni == null)
+      {
+        $('#komunii').attr('checked',false)
+      }
+      if(data.data.status_krisma == 'Sudah Krisma')
+      {
+        $('#krismaa').attr('checked',true)
+      }
+      else if(data.data.status_krisma == null)
+      {
+        $('#krismaa').attr('checked',false)
+      }
 
     }
   });

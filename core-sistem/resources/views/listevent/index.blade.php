@@ -29,7 +29,14 @@
         {{ session('error') }}
     </div>
 @endif
+
+@if(!isset($setting))
+<label style='color:red;'>*Mohon buat ketentuan administrasi penerimaan sakramen terlebih dahulu agar dapat membuat sesi. <a href="/setting">Klik Disini.</a></label>
+@endif
+
+@if(isset($setting))
 <a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Sesi</a><br><br>
+@endif
 
 <!-- CREATE WITH MODAL -->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
@@ -53,8 +60,6 @@
                                 <option value="Komuni Pertama">Komuni Pertama</option>
                                 <option value="Krisma">Krisma</option>
                                 <option value="Kursus Persiapan Perkawinan">Kursus Persiapan Perkawinan</option>
-                                <option value="Misa">Misa</option>
-                                <option value="Tobat">Pengakuan Dosa</option>
                                 <option value="Petugas Liturgi">Petugas Liturgi</option>
                             </select>
                         </div>
@@ -479,7 +484,7 @@
     </div>
 </div>
 
-<div class="card shadow mb-4">
+<!-- <div class="card shadow mb-4">
     <div class="card-header py-3">
         Sesi Misa & Pengakuan Dosa
     </div>
@@ -553,7 +558,7 @@
             </table>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">

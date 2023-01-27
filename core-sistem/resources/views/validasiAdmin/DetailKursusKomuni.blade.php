@@ -26,7 +26,7 @@
 @endif
 
 <div style="display:none" class="alert alert-success">
-    Status Pendaftar Komuni Berhasil Diubah
+    Status Pendaftar Komuni Berhasil Diubah 
 </div>
 
 
@@ -77,6 +77,7 @@
                         <td>
                             <div class="form-group">
                                 <input type="hidden" id="riwayatID_{{$d->id}}" value="{{$d->riwayatID}}">
+                                <input type="hidden" id="user_id_penerima_{{$d->id}}" value="{{$d->user_id_penerima}}">
                                 <input type="checkbox" id="lulus_{{$d->id}}" name="lulus">
                             </div>
                         </td>
@@ -92,13 +93,14 @@
 
 @section('javascript')
 <script>
+    
 function CekLulus(lulus)
 {
     array = []
 
     $("input[name='lulus']:checked").each(function(){
-        var id = $(this).attr('id').split('_')[1]
-        var cek = {'id':id, 'riwayatID':$('#riwayatID_'+id).val()}
+        var id = $(this).attr('id').split('_')[1]        
+        var cek = {'id':id, 'riwayatID':$('#riwayatID_'+id).val(), 'user_id_penerima':$('#user_id_penerima_'+id).val()}
         array.push(cek)
     })
     console.log(array)
@@ -109,12 +111,16 @@ function CekLulus(lulus)
           'data':array,
           'status':lulus,
           'id':$('#list_event_id').val(),
-          'riwayatID':$('#riwayatID_').val()
+          'riwayatID':$('#riwayatID_').val(),
+          'user_id_penerima':$('#user_id_penerima_').val()
          },
     success: function(data){
-        if(data.status == 'oke')
         window.location.reload()
-        $('.alert-success').show()
+        if(data.status == 'oke')
+        {
+            $('.alert-success').show()
+        }       
+
     }
   });
 }

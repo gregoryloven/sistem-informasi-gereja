@@ -15,6 +15,7 @@ use App\Models\ListEvent;
 use App\Models\Kpp;
 use App\Models\Perkawinan;
 use App\Models\PengurapanOrangSakit;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -292,8 +293,10 @@ class ValidasiAdminController extends Controller
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+            $setting = Setting::first();
     
-            return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll"));
+            return view('validasiAdmin.baptis',compact("reservasi", "reservasiAll", "setting"));
         }
     }
 
@@ -321,8 +324,10 @@ class ValidasiAdminController extends Controller
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['baptiss.*', 'riwayats.id as riwayatID', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+            $setting = Setting::first();
     
-            return view('validasiAdmin.baptisDewasa',compact("reservasi", "reservasiAll"));
+            return view('validasiAdmin.baptisDewasa',compact("reservasi", "reservasiAll", "setting"));
         }
     }
 
@@ -541,6 +546,10 @@ class ValidasiAdminController extends Controller
         $riwayat->save();
         $data->save();
 
+        $umat = Umat::find($request->user_id_penerima);
+        $umat->status_komuni = null;
+        $umat->save();
+
         return redirect()->route('validasiAdmin.komuni', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Komuni Pertama Berhasil Dibatalkan');
     }
 
@@ -568,7 +577,7 @@ class ValidasiAdminController extends Controller
         }
         else
         {
-            $id = $request->id;
+            $id = $request->id;        
             $komuni = DB::table('komuni_pertamas')
             ->join('riwayats', 'komuni_pertamas.id', '=', 'riwayats.event_id')
             ->where([['riwayats.list_event_id', $id], ['riwayats.status', 'Disetujui Paroki']])
@@ -584,11 +593,13 @@ class ValidasiAdminController extends Controller
         $array=$request->get("data");
         $status=$request->get("status");
         $list_event_id=$request->get("id");
+        $user_id_penerima=$request->get("user_id_penerima");
 
         foreach($array as $d)
         {
             $komuni=KomuniPertama::find($d['id']);
-            
+            $umat = Umat::find($d['user_id_penerima']);
+
             if($status == 'lulus')
             {
                 $komuni->kursus = "Lulus";
@@ -597,6 +608,9 @@ class ValidasiAdminController extends Controller
                 $riwayat = Riwayat::find($d['riwayatID']);
                 $riwayat->kursus = "Lulus";
                 $riwayat->save();
+
+                $umat->status_komuni = "Sudah Komuni";
+                $umat->save();
             }
             else
             {
@@ -606,6 +620,9 @@ class ValidasiAdminController extends Controller
                 $riwayat = Riwayat::find($d['riwayatID']);
                 $riwayat->kursus = "Tidak Lulus";
                 $riwayat->save();
+
+                $umat->status_komuni = null;
+                $umat->save();
             }
         }
         return response()->json(array(
@@ -752,6 +769,10 @@ class ValidasiAdminController extends Controller
         $riwayat->save();
         $data->save();
 
+        $umat = Umat::find($request->user_id_penerima);
+        $umat->status_komuni = null;
+        $umat->save();
+
         return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Krisma Berhasil Dibatalkan');
     }
 
@@ -771,6 +792,10 @@ class ValidasiAdminController extends Controller
         $riwayat->alasan_pembatalan = $request->get("alasan_pembatalan");
         $riwayat->save();
         $data->save();
+
+        $umat = Umat::find($request->user_id_penerima);
+        $umat->status_komuni = null;
+        $umat->save();
 
         return redirect()->route('validasiAdmin.krisma', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Pembatalan Krisma Lintas Paroki Berhasil Dibatalkan');
     }
@@ -815,10 +840,12 @@ class ValidasiAdminController extends Controller
         $array=$request->get("data");
         $status=$request->get("status");
         $list_event_id=$request->get("id");
+        $user_id_penerima=$request->get("user_id_penerima");
 
         foreach($array as $d)
         {
             $krisma=Krisma::find($d['id']);
+            $umat = Umat::find($d['user_id_penerima']);
             
             if($status == 'lulus')
             {
@@ -828,6 +855,9 @@ class ValidasiAdminController extends Controller
                 $riwayat = Riwayat::find($d['riwayatID']);
                 $riwayat->kursus = "Lulus";
                 $riwayat->save();
+
+                $umat->status_krisma = "Sudah Krisma";
+                $umat->save();
             }
             else
             {
@@ -837,6 +867,9 @@ class ValidasiAdminController extends Controller
                 $riwayat = Riwayat::find($d['riwayatID']);
                 $riwayat->kursus = "Tidak Lulus";
                 $riwayat->save();
+
+                $umat->status_krisma = null;
+                $umat->save();
             }
         }
         return response()->json(array(

@@ -206,6 +206,7 @@
                                         <input type="hidden" name="id" value="{{$da->id}}">
                                         <input type="hidden" name="riwayatID" value="{{$da->riwayatID}}">
                                         <input type="text" name="jadwal" class="d-none" value="{{$da->jadwal}}">
+                                        <input type="text" name="user_id_penerima" class="d-none" value="{{$da->user_id_penerima}}">
                                         <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                     </div>
                                     <div class="modal-footer">

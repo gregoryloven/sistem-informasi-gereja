@@ -15,8 +15,10 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('umur_baptis')->nullable();
-            $table->string('umur_komuni')->nullable();
+            $table->integer('umur_baptis')->nullable();
+            $table->integer('umur_komuni')->nullable();
+            $table->integer('akta_kelahiran')->nullable();
+            $table->integer('kartu_keluarga')->nullable();
             $table->timestamps();
         });
     }

@@ -101,6 +101,11 @@
                     <label>Sertifikat Komuni</label>
                     <input type="file" value="" name="sertifikat_komuni" class="form-control" id="sertifikat_komuni" placeholder="Sertifikat Komuni" onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])">
                     <img id="output2" width="200px" height="200px">
+                </div>
+                <div class="form-group">
+                    <label>Sertifikat Krisma</label>
+                    <input type="file" value="" name="sertifikat_krisma" class="form-control" id="sertifikat_krisma" placeholder="Sertifikat Krisma" onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])">
+                    <img id="output3" width="200px" height="200px">
                 </div>              
                 <br><br>
                 <div class="form-group">

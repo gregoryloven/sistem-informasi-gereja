@@ -345,6 +345,7 @@
                                             <input type="hidden" name="id" value="{{$d->id}}">
                                             <input type="hidden" name="riwayatID" value="{{$d->riwayatID}}">
                                             <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
+                                            <input type="text" name="user_id_penerima" class="d-none" value="{{$d->user_id_penerima}}">
                                             <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                         </div>
                                         <div class="modal-footer">
@@ -467,6 +468,7 @@
                                             <input type="hidden" name="id" value="{{$d->id}}">
                                             <input type="hidden" name="riwayatID" value="{{$d->riwayatID}}">
                                             <input type="text" name="jadwal" class="d-none" value="{{$d->jadwal}}">
+                                            <input type="text" name="user_id_penerima" class="d-none" value="{{$d->user_id_penerima}}">
                                             <textarea name="alasan_pembatalan" class="form-control" id="" cols="30" rows="10" required></textarea>
                                         </div>
                                         <div class="modal-footer">

@@ -13,6 +13,7 @@ use App\Models\PendaftaranPetugas;
 use App\Models\Riwayat;
 use App\Models\Kpp;
 use App\Models\Perkawinan;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
@@ -99,8 +100,10 @@ class ListEventController extends Controller
             // 'list_events.tgl_tutup_pendaftaran','list_events.jadwal_pelaksanaan','list_events.lokasi', 'list_events.keterangan_kursus', 
             // 'list_events.romo', 'list_events.status'
             // ]);
+
+            $setting = Setting::first();
     
-            return view('listevent.index',compact("data", "petugas", "data2", "data3", "data4", "data5", "data6", "data7"));
+            return view('listevent.index',compact("setting","data", "petugas", "data2", "data3", "data4", "data5", "data6", "data7"));
         }
     }
 

@@ -84,6 +84,7 @@
                         <th>KBG</th>
                         <th>Surat Baptis</th>
                         <th>Sertifikat Komuni</th>
+                        <th>Sertifikat Krisma</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -145,6 +146,15 @@
                             </div></small>
                             @endif
                         </td>
+                        <td st>@if(isset($d->sertifikat_krisma))<a href="#modalPopUp3{{$d->id}}" data-toggle="modal"><img src="{{asset('file_sertifikat/sertifikat_krisma/'.$d->sertifikat_krisma)}}" height='80px'/></a>
+                            @else -
+                            @endif
+                            @if($d->status_krisma == 'Sudah Krisma')
+                            <small><div class="alert alert-success mt-1" role="alert">
+                                {{$d->status_krisma}}
+                            </div></small>
+                            @endif
+                        </td>
                         <td>
                             @if($d->status == '' || $d->status == 'Ditolak')
                             <div><a href="#modalEdit" data-toggle="modal" class="btn btn-xs btn-flat btn-info" onclick="EditForm({{ $d->id }})">Validasi Lingkungan</a></div>
@@ -164,6 +174,14 @@
                         <div class="modal-dialog" style="width:400px; height=400px;">
                             <div class="modal-content" >
                                 <img src="{{asset('file_sertifikat/sertifikat_komuni/'.$d->sertifikat_komuni)}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POP UP WITH MODAL -->
+                    <div class="modal fade" id="modalPopUp3{{$d->id}}" tabindex="-1" role="basic" aria-hidden="true">
+                        <div class="modal-dialog" style="width:400px; height=400px;">
+                            <div class="modal-content" >
+                                <img src="{{asset('file_sertifikat/sertifikat_krisma/'.$d->sertifikat_krisma)}}">
                             </div>
                         </div>
                     </div>

@@ -10,6 +10,7 @@ use App\Models\Riwayat;
 use App\Models\User;
 use App\Models\Umat;
 use App\Models\ListEvent;
+use App\Models\Setting;
 use App\Models\PengurapanOrangSakit;
 use Illuminate\Http\Request;
 use Auth;
@@ -31,12 +32,12 @@ class ValidasiKLController extends Controller
             $umat = User::join('umats', 'users.id', '=', 'umats.user_id')
             ->where([['status', 'Belum Tervalidasi'], ['users.lingkungan_id', $lingkungan]])
             ->orderby('users.created_at', 'ASC')
-            ->get();
+            ->get(['umats.*', 'users.status']);
 
             $umat2 = User::join('umats', 'users.id', '=', 'umats.user_id')
             ->where([['status', 'Tervalidasi'], ['users.lingkungan_id', $lingkungan]])
             ->orderby('users.created_at', 'DESC')
-            ->get();
+            ->get(['umats.*', 'users.id as userid', 'users.status']);
 
             return view('validasiKL.umat',compact("umat","umat2","lingkungan2"));
         }
@@ -45,11 +46,10 @@ class ValidasiKLController extends Controller
     public function EditForm(Request $request)
     {
         $id=$request->get("id");
-        $data=User::find($id);
-        $umat=Umat::where('user_id', $id)->first();
+        $data=Umat::find($id);
         return response()->json(array(
             'status'=>'oke',
-            'msg'=>view('validasiKL.EditForm',compact("data","umat"))->render()),200);
+            'msg'=>view('validasiKL.EditForm',compact("data"))->render()),200);
     }
 
     public function validasiumat(Request $request)
@@ -69,11 +69,59 @@ class ValidasiKLController extends Controller
         {
             $umat->status_komuni = "Sudah Komuni";
         }
+        if($request->krisma == true)
+        {
+            $umat->status_krisma = "Sudah Krisma";
+        }
 
         $data->save();
         $umat->save();
 
         return redirect()->route('validasiKL.umat', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Validasi Data Umat Berhasil');
+    }
+
+    public function EditFormRiwayat(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Umat::find($id);
+        return response()->json(array(
+            'status'=>'oke',
+            'data'=>$data,
+            'msg'=>view('validasiKL.EditFormRiwayat',compact("data"))->render()),200);
+    }
+
+    public function validasiumatriwayat(Request $request)
+    {
+        $umat = Umat::find($request->id);
+        
+        if($request->baptis == true)
+        {
+            $umat->status_baptis = "Sudah Baptis";
+        }
+        else
+        {
+            $umat->status_baptis = null;
+        }
+        if($request->komuni == true)
+        {
+            $umat->status_komuni = "Sudah Komuni";
+        }
+        else
+        {
+            $umat->status_komuni = null;
+        }
+        if($request->krisma == true)
+        {
+            $umat->status_krisma = "Sudah Krisma";
+        }
+        else
+        {
+            $umat->status_krisma = null;
+        }
+
+        $umat->save();
+
+        return redirect()->route('validasiKL.umat', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) )->with('status', 'Ubah Validasi Data Umat Berhasil');
     }
 
     public function umatLama()
@@ -390,8 +438,10 @@ class ValidasiKLController extends Controller
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+            $setting = Setting::first();
     
-            return view('validasiKL.baptis',compact("reservasi", "reservasiAll", "lingkungan"));
+            return view('validasiKL.baptis',compact("reservasi", "reservasiAll", "lingkungan", "setting"));
         }
     }
 
@@ -420,8 +470,10 @@ class ValidasiKLController extends Controller
             ->orderBy('riwayats.updated_at', 'DESC')
             ->get(['baptiss.*', 'riwayats.status as statusRiwayat', 'riwayats.alasan_penolakan', 
             'riwayats.alasan_pembatalan', 'riwayats.created_at', 'riwayats.updated_at', 'users.role']);
+
+            $setting = Setting::first();
     
-            return view('validasiKL.baptisDewasa',compact("reservasi", "reservasiAll", "lingkungan"));
+            return view('validasiKL.baptisDewasa',compact("reservasi", "reservasiAll", "lingkungan", "setting"));
         }
     }
 

@@ -79,25 +79,18 @@ class UmatController extends Controller
         return redirect('/umatKbg')->with('status', 'Pendaftaran Umat Berhasil');
     }
 
-    public function TambahUmatLingkungan(Request $request)
-    {
-        $data = new Umat();
-        $data->user_id = Auth::user()->id;
-        $data->nama_lengkap = $request->get("nama_lengkap");
-        $data->hubungan = $request->get("hubungan_darah");
-        $data->jenis_kelamin = $request->get("jenis_kelamin");
-        $data->lingkungan_id = $request->get("lingkungan_id");
-        $data->kbg_id = $request->get("kbg_id");
-        $data->alamat = $request->get("alamat");
-        $data->telepon = $request->get("telepon");
-        $data->no_kk = $request->get("no_kk");
-        $data->status = "Disetujui Lingkungan";
-        $data->save();
-
-        return redirect('/umatLingkungan')->with('status', 'Pendaftaran Umat Berhasil');
-    }
 
     public function EditFormUmatKBG(Request $request)
+    {
+        $id=$request->get("id");
+        $data=Umat::find($id);
+        $kbg=Kbg::all();
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('umat.EditFormUmatKBG',compact('data','kbg'))->render()),200);
+    }
+
+    public function EditFormUmatLingkungan(Request $request)
     {
         $id=$request->get("id");
         $data=Umat::find($id);
@@ -134,12 +127,33 @@ class UmatController extends Controller
 
             $ling = Lingkungan::all();
             $kbg = Kbg::all();
-            $data = Umat::where([['lingkungan_id', $lingkungan], ['status', 'Disetujui Lingkungan']])
+            $data = Umat::where([['lingkungan_id', $lingkungan], ['status', 'Import']])
             ->orderby('no_kk', 'ASC')
             ->get();
     
             return view('umat.umatlingkungan',compact('data','ling','kbg','lingkungan2'));
         }
+    }
+
+        public function TambahUmatLingkungan(Request $request)
+    {
+        $data = new Umat();
+        $data->user_id = Auth::user()->id;
+        $data->nama_lengkap = $request->get("nama_lengkap");
+        $data->hubungan = $request->get("hubungan_darah");
+        $data->no_kk = $request->get("no_kk");
+        $data->tempat_lahir = $request->get("tempat_lahir");
+        $data->tanggal_lahir = $request->get("tanggal_lahir");
+        $data->jenis_kelamin = $request->get("jenis_kelamin");
+        $data->lingkungan_id = $request->get("lingkungan_id");
+        $data->kbg_id = $request->get("kbg_id");
+        $data->alamat = $request->get("alamat");
+        $data->telepon = $request->get("telepon");
+        $data->no_kk = $request->get("no_kk");
+        $data->status = "Import";
+        $data->save();
+
+        return redirect('/umatLingkungan')->with('status', 'Pendaftaran Umat Berhasil');
     }
 
     public function DownloadExcelLingkungan(Request $request)

@@ -42,7 +42,7 @@ class PendaftaranUmatController extends Controller
             $cek = User::where('users.id', Auth::user()->id)->first();
 
             $data = Umat::join('users', 'umats.user_id', '=', 'users.id')
-            ->where('user_id', Auth::user()->id)->get();
+            ->where('user_id', Auth::user()->id)->get(['umats.*','users.status']);
 
             return view('pendaftaranumat.index',compact("data","cek"));
 
@@ -54,7 +54,7 @@ class PendaftaranUmatController extends Controller
         $id=$request->get("id");
         $ling = Lingkungan::all();
         $kbg = Kbg::all();
-        $data=User::find($id);
+        $data=Umat::find($id);
         return response()->json(array(
             'status'=>'oke',
             'msg'=>view('pendaftaranumat.EditForm',compact("data","ling","kbg"))->render()),200);
@@ -103,6 +103,16 @@ class PendaftaranUmatController extends Controller
             $umat->sertifikat_komuni=$imgFile2;
         }
 
+        $file3=$request->file('sertifikat_krisma');
+        if(isset($file3))
+        {
+            $imgFolder3 = 'file_sertifikat/sertifikat_krisma/';
+            $extension3 = $request->file('sertifikat_krisma')->extension();
+            $imgFile3=time()."_".$request->get('nama').".".$extension3;
+            $file3->move($imgFolder3,$imgFile3);
+            $umat->sertifikat_krisma=$imgFile3;
+        }
+
         $user->save();
         $umat->save();
 
@@ -149,6 +159,16 @@ class PendaftaranUmatController extends Controller
             $imgFile2=time()."_".$request->get('nama').".".$extension2;
             $file2->move($imgFolder2,$imgFile2);
             $umat->sertifikat_komuni=$imgFile2;
+        }
+
+        $file3=$request->file('sertifikat_krisma');
+        if(isset($file3))
+        {
+            $imgFolder3 = 'file_sertifikat/sertifikat_krisma/';
+            $extension3 = $request->file('sertifikat_krisma')->extension();
+            $imgFile3=time()."_".$request->get('nama').".".$extension3;
+            $file3->move($imgFolder3,$imgFile3);
+            $umat->sertifikat_krisma=$imgFile3;
         }
 
         $umat->save();

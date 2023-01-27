@@ -31,7 +31,12 @@
 @endif
 
 <br>
-<small style="color:red;"><label >*Keterangan: Anda dapat mendaftarkan anggota keluarga lainnya</label></small>
+<small style="color:red;"><label >*Keterangan: <br>
+    - Anda dapat mendaftarkan anggota keluarga lainnya <br>
+    - Telah menerima baptis <br>
+    - Umur penerima komuni pertama minimal {{$setting->umur_komuni}} Tahun <br>
+    - Wajib mengikuti kursus
+</label></small>
 
 <div class="row mb-4 mt-4">
     <div class="col-md-12">
@@ -43,19 +48,24 @@
             <form id="formIndividu" class="mb-2" method="POST" action="/pendaftarankomuni/InputForm" enctype="multipart/form-data">
             @csrf
                 <div class="form-group">
-                    <small style="color:red;"><label >*Dibawah ini adalah data akun anda yang terisi otomatis</label></small>
+                    <small style="color:red;"><label >*Data di bawah akan disesuaikan dengan identitas anggota keluarga yang dipilih</label></small>
                 </div> 
                 <div class="form-group">
                     <label >Nama Lengkap Penerima Komuni Pertama</label>
-                    <input type="text" value="{{$user[0]->nama_lengkap}}" class="form-control" id='nama_lengkap' name='nama_lengkap' placeholder="Nama Lengkap" required>
-                </div>    
+                    <select class="form-control" id='user_id_penerima' name='user_id_penerima' required>
+                    <option value="" disabled selected>Choose</option>
+                    @foreach($user as $u)
+                    <option value="{{ $u->id }}">{{ $u->nama_lengkap }}</option>
+                    @endforeach
+                    </select>
+                </div>     
                 <div class="form-group">
                     <label >Tempat Lahir</label>
-                    <input type="text" value="{{$user[0]->tempat_lahir}}" class="form-control" id='tempat_lahir' name='tempat_lahir' placeholder="Tempat Lahir" required>
+                    <input type="text" class="form-control" id='tempat_lahir' name='tempat_lahir' placeholder="Tempat Lahir" required>
                 </div>   
                 <div class="form-group">
                     <label >Tanggal Lahir</label>
-                    <input type="date" value="{{$user[0]->tanggal_lahir}}" class="form-control" id='tanggal_lahir' name='tanggal_lahir' placeholder="Tanggal Lahir" required>
+                    <input type="date" class="form-control" id='tanggal_lahir' name='tanggal_lahir' placeholder="Tanggal Lahir" required>
                 </div>   
                 <div class="form-group">
                     <label >Orang Tua Ayah</label>
@@ -67,15 +77,15 @@
                 </div>  
                 <div class="form-group">
                     <label >Lingkungan</label>
-                    <input type="text" value="{{$user[0]->nama_lingkungan}}" class="form-control" id='lingkungan' name='lingkungan' placeholder="Lingkungan" required readonly>
+                    <input type="text" value="{{$user[0]->lingkungan->nama_lingkungan}}" class="form-control" id='lingkungan' name='lingkungan' placeholder="Lingkungan" required readonly>
                 </div>       
                 <div class="form-group">
                     <label >KBG</label>
-                    <input type="text" value="{{$user[0]->nama_kbg}}" class="form-control" id='kbg' name='kbg' placeholder="KBG" required readonly>
+                    <input type="text" value="{{$user[0]->kbg->nama_kbg}}" class="form-control" id='kbg' name='kbg' placeholder="KBG" required readonly>
                 </div>           
                 <div class="form-group">
                     <label >Telepon</label>
-                    <input type="text" value="{{$user[0]->telepon}}" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
+                    <input type="text" class="form-control" id='telepon' name='telepon' placeholder="Telepon" required>
                 </div>
                 <div class="form-group">
                     <label >Tanggal Pelaksanaan</label>
@@ -108,6 +118,7 @@
                 </div>
                 <input type="hidden" value="{{$list[0]->id}}" id='event_id' name='event_id'>
                 <input type="hidden" value="{{$list[0]->jenis_event}}" id='jenis_event' name='jenis_event'>
+                <input type="hidden" id='nama_lengkap' name='nama_lengkap'>
                 <button type="submit" class="btn btn-primary" id="button" disabled>Ajukan Formulir</button> 
             </form>
             </div>
@@ -119,6 +130,23 @@
 
 @section('javascript')
 <script>
+$('#user_id_penerima').on('change',function(){   
+    $.ajax({
+    type:'POST',
+    url:'{{ route('pendaftarankomuni.FetchIdentitas', substr(app('currentTenant')->domain, 0, strpos(app('currentTenant')->domain, ".localhost")) ) }}',
+    data:{'_token':'<?php echo csrf_token() ?>',        
+          'id':$('#user_id_penerima').val(),          
+         },
+    success: function(data){
+        $.each(data, function(idx, obj){
+            $('#tempat_lahir').val(obj.tempat_lahir);
+            $('#tanggal_lahir').val(obj.tanggal_lahir);
+            $('#telepon').val(obj.telepon);
+            $('#nama_lengkap').val(obj.nama_lengkap); 
+        })
+    }
+  });
+})
 function checkbox()
 {
     var cek = $('#terms').is(':checked')
